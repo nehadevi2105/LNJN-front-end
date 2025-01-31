@@ -80,6 +80,14 @@ const Sidebar = ({ data }) => {
             </Link>
           </li>
 
+          <li className="nav-item">
+            <Link to="/Department/DepartmentForm" className="nav-link">
+              <DashboardIcon />
+              Department
+              {/* <span className="badge badge-sm bg-info ms-auto">NEW</span> */}
+            </Link>
+          </li>
+
           <li className="nav-title"></li>
           <ul>
             <li className="nav-item">
