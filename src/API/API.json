@@ -1,4 +1,5 @@
 {
     "topMenu" : "/api/Topmenu/",
-    "navmenu": "api/Topmenu"
+    "navmenu": "api/Topmenu",
+    "departmentPost": "/Department" 
 }

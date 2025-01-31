@@ -1,68 +1,106 @@
-import React from 'react'
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import { useState } from "react";
-import { Button, Container, Typography } from "@mui/material"; 
+import React, { useState, useEffect } from "react";
+import { Box, TextField, Button, Container, Typography, Paper } from "@mui/material";
 
 const Department = () => {
-    const [departmentName, setDepartmentName] = useState(""); // State to hold input value
-  
-    // Handle form submission
-    const handleSubmit = (e) => {
-      e.preventDefault(); // Prevent page reload on form submit
-      alert(`Department Name: ${departmentName}`); // Show alert with department name
-      setDepartmentName(""); // Clear the input field
-    };
-  
-    return (
-    <>
-      <Container maxWidth="xs">  {/* Center the form within a container */}
-        <Box
-          sx={{
-            display: "flex",
-            maxWidth: "full",
-            flexDirection: "column",
-            justifyContent: "center",
-            padding: "20px",
-            backgroundColor: "#f5f5f5", // Light grey background
-            borderRadius: "8px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          }}
-        >
-          <Typography variant="h6" align="center" sx={{ marginBottom: "15px", fontWeight: "bold" }}>
-            Add New Department
-          </Typography>
-  
-          {/* Department Name Input Field */}
+  const [departmentName, setDepartmentName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [apiUrl, setApiUrl] = useState(""); // State to store API URL
+
+  // Fetch API URLs from API.json
+  useEffect(() => {
+    fetch("/API.json") // Load the JSON file
+      .then((response) => response.json())
+      .then((data) => {
+        setApiUrl(data.departmentPost); // Get the POST API URL from JSON
+      })
+      .catch((error) => console.error("Error loading API URLs:", error));
+  }, []);
+
+  // Function to handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!departmentName.trim()) {
+      alert("Please enter a department name.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ departmentName }),
+      });
+
+      if (response.ok) {
+        alert("Department added successfully!");
+        setDepartmentName(""); // Clear input field
+      } else {
+        alert("Failed to add department.");
+      }
+    } catch (error) {
+      console.error("API Error:", error);
+      alert("Error submitting data.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Container
+      maxWidth="sm"
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <Paper
+        elevation={6}
+        sx={{
+          padding: "30px",
+          borderRadius: "12px",
+          textAlign: "center",
+          backgroundColor: "#fff",
+          boxShadow: "0 6px 15px rgba(0, 0, 0, 0.1)",
+        }}
+      >
+        <Typography variant="h5" fontWeight="bold" color="primary" gutterBottom>
+          Add New Department
+        </Typography>
+
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
           <TextField
             label="Department Name"
             variant="outlined"
             fullWidth
             value={departmentName}
-            onChange={(e) => setDepartmentName(e.target.value)} // Handle input change
-            sx={{ marginBottom: "20px" }} // Spacing between input fields
+            onChange={(e) => setDepartmentName(e.target.value)}
+            sx={{ mb: 3 }}
             required
           />
-  
-          {/* Submit Button */}
+
           <Button
+            type="submit"
             variant="contained"
-            color="primary"
             fullWidth
-            onClick={handleSubmit}
+            disabled={loading}
             sx={{
-              padding: "10px",
-              backgroundColor: "#3f51b5", // Primary color for button
-              '&:hover': {
-                backgroundColor: "#303f9f", // Hover effect color
-              }
+              padding: "12px",
+              fontSize: "16px",
+              backgroundColor: "#3f51b5",
+              "&:hover": { backgroundColor: "#303f9f" },
             }}
           >
-            Submit
+            {loading ? "Submitting..." : "Submit"}
           </Button>
         </Box>
-      </Container>
-    </>
-    );
-  };
-export default Department
+      </Paper>
+    </Container>
+  );
+};
+
+export default Department;
