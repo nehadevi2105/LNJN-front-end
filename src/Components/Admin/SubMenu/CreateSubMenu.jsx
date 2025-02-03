@@ -1,60 +1,41 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { ToastContainer, toast } from "react-toastify";
-//import { Link } from "react-router-dom";
-import JoditEditor from "jodit-react";
+import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 import DialogActions from "@mui/material/DialogActions";
 import Alert from "@mui/material/Alert";
 import {
-  Button,
   Snackbar,
   DialogTitle, // Add this import
   DialogContent,
   Dialog,
+  Button,
 } from "@mui/material";
+//import { Col, Form, Row } from "react-bootstrap";
+import JoditEditor from "jodit-react";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
-//import { Col, Row } from "react-bootstrap";
-//import Footer from '../../footer/Footer';
-//import Header from '../../header/Header';
-//import Sidebar from '../../sidebar/Sidebar';
 
-// function EAlert(props) {
-//   return <Alert elevation={6} variant="filled" {...props} />;
-// }
-
-const CreateMenu = () => {
+const CreateSubMenu = () => {
   const [html, setHtml] = useState("");
   const [file, setFile] = useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  //const [editorContent, setEditorContent] = useState("");
+  const [data, Setdata] = useState([]);
+  const [selectedRole, setSelectedRole] = useState("");
+  const [selectedRole1, setSelectedRole1] = useState("");
   const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(false);
   const [dropdownOptions, setDropdownOptions] = useState([]);
-  //const [formErrors, setFormErrors] = useState({});
-
-  const config = useMemo(
-    () => ({
-      readonly: false,
-    }),
-    []
-  );
-
-  const onChange = useCallback((newContent) => {
-    setContent(newContent);
-  }, []);
-
-  // const handleEditorChange = (content) => {
-  //   setEditorContent(content);
-  // };
+  const [formErrors, setFormErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     menuname: "",
     contenttype: "",
     external_link: "",
     internal_link: "",
-    submenu_id: 0,
+    submenu_id: "",
     file: "",
     html: "",
     languagetype: "",
@@ -68,11 +49,22 @@ const CreateMenu = () => {
       contenttype: "",
       external_link: "",
       internal_link: "",
-      submenu_id: 0,
+      submenu_id: "",
       file: "",
       html: "",
       languagetype: "",
     });
+  }, []);
+
+  const config = useMemo(
+    () => ({
+      readonly: false,
+    }),
+    []
+  );
+
+  const onChange = useCallback((newContent) => {
+    setContent(newContent);
   }, []);
 
   const handleEditorChange = (content) => {
@@ -85,29 +77,20 @@ const CreateMenu = () => {
     if (!formData.menuname) {
       newErrors.menuname = "Name is required";
     }
-    if (!formData.menuname) {
-      errors.menuname = "Please enter your Menu Name";
-    } else if (
-      !/^[A-Za-z ]+$/.test(formData.menuname) &&
-      parseInt(formData.languagetype) == 1
-    ) {
-      errors.menuname = "Please input alphabet characters only";
-    } else if (
-      !/^[\u0900-\u097F\s]+$/.test(formData.menuname) &&
-      parseInt(formData.languagetype) == 2
-    ) {
-      errors.menuname = "कृपया केवल हिंदी शब्द ही इनपुट करें";
-    }
 
     if (!formData.contenttype) {
       newErrors.contenttype = "Select a content type";
     }
-    if (!formData.languagetype) {
-      newErrors.languagetype = "Select a Language";
+    if (!selectedRole) {
+      newErrors.contenttype = "Select Contnet Type";
     }
 
     if (formData.contenttype === "4" && !formData.external_link) {
       newErrors.external_link = "External Link is required";
+    }
+
+    if (formData.contenttype === "3" && !formData.internal_link) {
+      newErrors.internal_link = "Internal Link is required";
     }
 
     if (formData.contenttype === "2") {
@@ -116,6 +99,14 @@ const CreateMenu = () => {
       } else if (file.type !== "application/pdf") {
         newErrors.file = "Only PDF files are allowed";
       }
+    }
+
+    if (!formData.languagetype) {
+      newErrors.languagetype = "Select Language";
+    }
+
+    if (!formData.submenu_id) {
+      newErrors.submenu_id = "Select Menu";
     }
 
     setErrors(newErrors);
@@ -129,6 +120,8 @@ const CreateMenu = () => {
   };
 
   const handleInputChange = (event) => {
+    setSelectedRole(event.target.value);
+    setSelectedRole1(event.target.value);
     const { name, value, type } = event.target;
 
     if (type === "file") {
@@ -137,6 +130,8 @@ const CreateMenu = () => {
         [name]: event.target.files[0],
       });
     } else {
+      setSelectedRole(event.target.value);
+      setSelectedRole(event.target.value);
       setFormData({
         ...formData,
         [name]: value,
@@ -161,10 +156,10 @@ const CreateMenu = () => {
       const formDataToSend = new FormData();
       formDataToSend.append("menuname", formData.menuname);
       formDataToSend.append("contenttype", formData.contenttype);
-      formDataToSend.append("MenuUrl", formData.MenuUrl);
+
+      // formDataToSend.append('subsubmenu_id', formData.subsubmenu_id);
       formDataToSend.append("submenu_id", formData.submenu_id);
       formDataToSend.append("languagetype", formData.languagetype);
-      formDataToSend.append("CreatedBy", "Neha");
 
       if (formData.contenttype === "4") {
         formDataToSend.append("external_link", formData.external_link);
@@ -181,60 +176,91 @@ const CreateMenu = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      if (response.status === 200) {
-        setFormData({
-          menuname: "",
-          contenttype: "",
-          external_link: "",
-          internal_link: "",
-          submenu_id: 0,
-          file: "",
-          html: "",
-          languagetype: "",
-          CreatedBy: "Neha",
-        });
+      // console.log('Data saved:', response.data);
+      toast.success("Data saved successfully!");
+      setModalMessage("Data saved successfully!");
+      setSnackbarOpen(true);
 
-        toast.success("Data saved successfully!");
-        setModalMessage("Data saved successfully!");
-        setSnackbarOpen(true);
-      }
+      setFormData({
+        menuname: "",
+        contenttype: "",
+        external_link: "",
+        internal_link: "",
+        submenu_id: "",
+        file: "",
+        html: "",
+        languagetype: "",
+      });
     } catch (error) {
-      console.error("Error saving data:", error);
-      toast.error("Failed to save data. Please try again.");
+      if (error.response && error.response.status === 401) {
+        toast.error("Unauthorized access. Please log in.");
+      } else {
+        toast.error("Something Went Wrong!");
+        console.error("Error saving/updating data:", error);
+      }
     }
   };
   useEffect(() => {
-    async function fetchData1() {
+    const fetchRoles = async () => {
       try {
-        setLoading(true);
         const response = await APIClient.get(apis.TopMenu);
-        setDropdownOptions(response.data);
-        setLoading(false);
+        Setdata(response.data);
       } catch (error) {
-        if (error.response && error.response.status === 401) {
-          toast.error("Unauthorized access. Please log in.");
-        } else {
-          toast.error("Something Went Wrong!");
-          console.error("Error saving/updating data:", error);
-        }
+        console.error("Error fetching roles:", error);
       }
-    }
-    fetchData1();
+    };
+    fetchRoles();
   }, []);
+  // useEffect(() => {
+  //    const fetchData1= async()=> {
+  //     try {
+  //       setLoading(true);
+  //       const response = await apiClient.get(apis.getmenuname);
+  //       setDropdownOptions(response.data);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error('Error fetching user data:', error);
+  //       setLoading(false);
+  //     }
+  //   }
+  //   fetchData1();
+  // }, []);
+
+  // console.log(formData)
 
   return (
     <div>
       <div>
-        <div className="row justify-content-center">
-          <div>
+        <main id="main" className="main">
+          <div className="pagetitle">
+            <div className="pagetitle-lft">
+              {/* <h1>Create Sub-Menu</h1> */}
+              <nav>
+                <ol className="breadcrumb">
+                  <li className="breadcrumb-item">Dashboard</li>
+                  <li className="breadcrumb-item  ">CMS</li>
+                  <li className="breadcrumb-item active ">SubMenu</li>
+                </ol>
+              </nav>
+            </div>
+            <div className="pagetitle-rgt">
+              <Link to="/dashboard">
+                <button type="button" className="btn btn-info">
+                  Back
+                </button>
+              </Link>
+            </div>
+          </div>
+          <div className="row justify-content-center">
             <div className="card">
               <div className="card-body">
                 <div className="mb-3 mt-md-4">
                   <div className="box-sec">
-                    <h1 className="text-center text-dark heading-main">Menu</h1>
+                    <h1 className="text-center text-dark">Sub Menu</h1>
+                    {/* <Form.Group className="mb-3" controlId="Usertype"> */}
                     <div className="mb-3">
                       <label className="form-label text-dark">
-                        Select a Language
+                        Language Type
                       </label>
                       <select
                         className="form-select"
@@ -250,6 +276,31 @@ const CreateMenu = () => {
                         <div className="text-danger">{errors.languagetype}</div>
                       )}
                     </div>
+
+                    <div className="mb-12">
+                      <label className="form-label text-dark">Menu Names</label>
+                      {/* <Form.Label className="text-center" style={{ color: "black" }}>Menu Names</Form.Label> */}
+                      <select
+                        className="form-control"
+                        name="submenu_id"
+                        value={formData.submenu_id}
+                        onChange={handleInputChange}
+                      >
+                        <option value="" style={{ color: "black" }}>
+                          Select a Menu
+                        </option>
+                        {data.map((data) => (
+                          <option key={data.id} value={data.id}>
+                            {data.menuname}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.submenu_id && (
+                        <div className="text-danger">{errors.submenu_id}</div>
+                      )}
+                    </div>
+                    {/* </Form.Group> */}
+
                     {/* Input for Name */}
                     <div className="mb-3">
                       <label className="form-label text-dark">Name</label>
@@ -321,12 +372,12 @@ const CreateMenu = () => {
                           //isInvalid={!!formErrors.internal_link}
                         >
                           <option value="" style={{ color: "black" }}>
-                            Select Menu
+                            Select a role
                           </option>
-                          {dropdownOptions.map((data) => (
+                          {data.map((data) => (
                             <option
-                              key={data.u_id}
-                              value={"/menu/" + data.u_menu_url}
+                              key={data.id}
+                              value={"/menu/" + data.menu_url}
                             >
                               {"Menu Name" + ":-" + data.menuname}
                             </option>
@@ -364,13 +415,19 @@ const CreateMenu = () => {
                         <label className="form-label text-dark">
                           HTML Editor
                         </label>
-                        <div></div>
-                        <JoditEditor
-                          value={content}
-                          config={config}
-                          tabIndex={1}
-                          onChange={onChange}
-                        />
+                        <div>
+                          {/* <textarea
+                  className="form-control"
+                  value={html}
+                  onChange={(e) => handleEditorChange(e.target.value)}
+                ></textarea> */}
+                          <JoditEditor
+                            value={content}
+                            config={config}
+                            tabIndex={1}
+                            onChange={onChange}
+                          />
+                        </div>
                         {errors.editorContent && (
                           <div className="text-danger">
                             {errors.editorContent}
@@ -378,70 +435,71 @@ const CreateMenu = () => {
                         )}
                       </div>
                     )}
-                  </div>
 
-                  {/* Submit Button */}
-                  <div className="btnsubmit">
-                    <button
-                      className="btn btn-primary"
-                      onClick={handleOpenConfirmation}
-                    >
-                      Submit
-                    </button>
+                    {/* Submit Button */}
+                    <div className="btnsubmit">
+                      <button
+                        className="btn btn-primary"
+                        onClick={handleOpenConfirmation}
+                      >
+                        Submit
+                      </button>
 
-                    <Dialog
-                      open={confirmDialogOpen}
-                      onClose={handleCloseConfirmation}
-                    >
-                      <DialogTitle>Confirm Submit</DialogTitle>
-                      <DialogContent>
-                        Are you sure you want to submit this data?
-                      </DialogContent>
-                      <DialogActions>
-                        <Button
-                          onClick={handleCloseConfirmation}
-                          color="primary"
+                      <Dialog
+                        open={confirmDialogOpen}
+                        onClose={handleCloseConfirmation}
+                      >
+                        <DialogTitle>Confirm Submit</DialogTitle>
+                        <DialogContent>
+                          Are you sure you want to submit this data?
+                        </DialogContent>
+                        <DialogActions>
+                          <Button
+                            onClick={handleCloseConfirmation}
+                            color="primary"
+                          >
+                            Cancel
+                          </Button>
+                          <Button onClick={handleConfirmSubmit} color="primary">
+                            Confirm
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
+                      <Snackbar
+                        open={snackbarOpen}
+                        autoHideDuration={3000} // Adjust as needed
+                        onClose={() => setSnackbarOpen(false)}
+                      >
+                        <Alert
+                          severity="success"
+                          onClose={() => setSnackbarOpen(false)}
                         >
-                          Cancel
-                        </Button>
-                        <Button onClick={handleConfirmSubmit} color="primary">
-                          Confirm
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
-                    <Snackbar
-                      open={snackbarOpen}
-                      autoHideDuration={3000} // Adjust as needed
-                      onClose={() => setSnackbarOpen(false)}
-                    >
-                      <Alert
-                        severity="success"
+                          {modalMessage}
+                        </Alert>
+                      </Snackbar>
+                      <Snackbar
+                        open={snackbarOpen}
+                        autoHideDuration={3000} // Adjust as needed
                         onClose={() => setSnackbarOpen(false)}
                       >
-                        {modalMessage}
-                      </Alert>
-                    </Snackbar>
-                    <Snackbar
-                      open={snackbarOpen}
-                      autoHideDuration={3000} // Adjust as needed
-                      onClose={() => setSnackbarOpen(false)}
-                    >
-                      <Alert
-                        severity="success"
-                        onClose={() => setSnackbarOpen(false)}
-                      >
-                        Data Save successfully.
-                      </Alert>
-                    </Snackbar>
-                    <ToastContainer />
+                        <Alert
+                          severity="success"
+                          onClose={() => setSnackbarOpen(false)}
+                        >
+                          Data save successfully.
+                        </Alert>
+                      </Snackbar>
+                      <ToastContainer />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </main>
       </div>
     </div>
   );
 };
-export default CreateMenu;
+
+export default CreateSubMenu;

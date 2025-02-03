@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import DescriptionIcon from "@mui/icons-material/Description";
+//import DescriptionIcon from "@mui/icons-material/Description";
 
 //import { CSidebarNavDropdown, CSidebarNavItem } from "@coreui/react";
 
@@ -81,6 +81,13 @@ const Sidebar = ({ data }) => {
           </li>
 
           <li className="nav-item">
+            <Link to="/MenuSubMenu/MenuSubMenu" className="nav-link">
+              <DashboardIcon />
+              Menu Table
+            </Link>
+          </li>
+
+          <li className="nav-item">
             <Link to="/Department/DepartmentForm" className="nav-link">
               <DashboardIcon />
               Department
@@ -102,155 +109,26 @@ const Sidebar = ({ data }) => {
             </Link>
           </li>
 
-          <li className="nav-title"></li>
-          <ul>
-            <li className="nav-item">
-              {/* <Link to="/MonthlyReport" className="nav-link"> */}
-              <a className="nav-link">Monthly Report</a>
-              {/* </Link> */}
-            </li>
-            <li className="nav-item">
-              {/* <Link to="/comparativereport" className="nav-link"> */}
-              <a className="nav-link">Comparative Report</a>
-              {/* </Link> */}
-            </li>
-          </ul>
           <li className="nav-item">
-            <Link to="/mis-report" className="nav-link">
-              <DescriptionIcon /> MIS Reports
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link to="/cgst" className="nav-link">
+            <Link to="/SubMenu/CreateSubMenu" className="nav-link">
               <DashboardIcon />
-              All Zones Graph
+              SubMenu
             </Link>
           </li>
 
-          {/* <li className="nav-group">
-            <a className="nav-link nav-group-toggle">
-             <DescriptionIcon/>
-             {" "}
-              Zonal Report
-            </a>
-            <ul className="nav-group-items compact">
-              <li className="nav-item">
-                <a className="nav-link" href="/MonthlyReport">
-                  <span className="nav-icon">
-                    <span className="nav-icon-bullet"></span>
-                  </span>{" "}
-                  Monthly Report
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/comparativereport">
-                  <span className="nav-icon">
-                    <span className="nav-icon-bullet"></span>
-                  </span>{" "}
-                  Comparative Report
-                </a>
-              </li>
-            </ul>
-          </li> */}
-          {/* <li className="nav-group">
-            <a className="nav-link nav-group-toggle" href="#">
-            <DescriptionIcon/>{" "}
-              Commissionerate Report
-            </a>
-            <ul className="nav-group-items compact">
-              <li className="nav-item">
-                <a className="nav-link" href="base/accordion.html">
-                  <span className="nav-icon">
-                    <span className="nav-icon-bullet"></span>
-                  </span>{" "}
-                  Monthly Report
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="base/breadcrumb.html">
-                  <span className="nav-icon">
-                    <span className="nav-icon-bullet"></span>
-                  </span>{" "}
-                  Comparative Report
-                </a>
-              </li>
-            </ul>
-          </li> */}
-          {/* <li className="nav-title">AUDIT REPORTS</li>
-          <ul>
-            <li className="nav-item">
-              <a className="nav-link">
-              Monthly Report
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link">
-              Comparative Report
-              </a>
-            </li>
-          </ul> */}
-          {/* <li className="nav-group">
-            <a className="nav-link nav-group-toggle" href="/">
-              <DescriptionIcon /> Commissionerate Report
-            </a>
-            <ul className="nav-group-items compact">
-              <li className="nav-item nav-link">
-                <a className="nav-link" href="base/accordion.html"> 
-                <span className="nav-icon">
-                  <span className="nav-icon-bullet"></span>
-                </span>{" "}
-                Monthly Report
-                </a> 
-              </li>
-              <li className="nav-item nav-link">
-                {/* <a className="nav-link" href="base/breadcrumb.html"> 
-                <span className="nav-icon">
-                  <span className="nav-icon-bullet"></span>
-                </span>{" "}
-                Comparative Report
-                 </a> 
-              </li>
-            </ul>
-          </li> */}
-          {/* 
-          <li className="nav-divider"></li>
-          <li className="nav-title">APPEALS REPORTS</li>
-          <ul>
-            <li className="nav-item">
-              <a className="nav-link">
-              Monthly Report
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link">
-              Comparative Report
-              </a>
-            </li>
-          </ul> */}
-          {/* <li className="nav-group">
-            <a className="nav-link nav-group-toggle" href="/">
-              <DescriptionIcon /> Commissionerate Report
-            </a>
-            <ul className="nav-group-items compact">
-              <li className="nav-item nav-link">
-                {/* <a className="nav-link" href="login.html" target="_top"> 
-                  <span className="nav-icon">
-                    <span className="nav-icon-bullet"></span>
-                  </span>{" "}
-                  Monthly Report
-                {/* </a> 
-              </li>
-              <li className="nav-item nav-link">
-                {/* <a className="nav-link" href="register.html" target="_top"> 
-                  <span className="nav-icon">
-                    <span className="nav-icon-bullet"></span>
-                  </span>{" "}
-                  Comparative Report
-                {/</a> 
-              </li>
-            </ul>
-          </li> */}
+          <li className="nav-item">
+            <Link to="/custom/custom" className="nav-link">
+              <DashboardIcon />
+              Custom
+            </Link>
+          </li>
+
+          <li className="nav-item">
+            <Link to="/custom/custom" className="nav-link">
+              <DashboardIcon />
+              Custom Table
+            </Link>
+          </li>
         </ul>
 
         <div className="sidebar-footer border-top d-none d-md-flex">
