@@ -87,6 +87,20 @@ const Sidebar = ({ data }) => {
               {/* <span className="badge badge-sm bg-info ms-auto">NEW</span> */}
             </Link>
           </li>
+          <li className="nav-item">
+            <Link to="/Department/AllDepartment" className="nav-link">
+              <DashboardIcon />
+              Department List
+              {/* <span className="badge badge-sm bg-info ms-auto">NEW</span> */}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/Course/CreateCourse" className="nav-link">
+              <DashboardIcon />
+              Create Course
+              {/* <span className="badge badge-sm bg-info ms-auto">NEW</span> */}
+            </Link>
+          </li>
 
           <li className="nav-title"></li>
           <ul>
