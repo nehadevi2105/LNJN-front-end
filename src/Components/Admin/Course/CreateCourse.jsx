@@ -35,7 +35,7 @@ const CreateCourse = () => {
     const errors = {};
     if (!name.trim()) errors.name = "Please enter a course name";
     if (!coursedetails.trim()) errors.coursedetails = "Please enter a course description";
-    if (!did) errors.did = "Please select a department";
+    if (!deptid) errors.deptid = "Please select a department";
     if (!imgsrc) errors.imgsrc = "Please upload a file";
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
@@ -59,7 +59,7 @@ const CreateCourse = () => {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("coursedetails", coursedetails);
-    formData.append("did", did);
+    formData.append("did", deptid); // using deptid instead of did
     formData.append("imgsrc", imgsrc);
 
     try {

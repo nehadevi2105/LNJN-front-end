@@ -1,13 +1,12 @@
 {
     "topMenu" : "/api/Topmenu/",
     "navmenu": "/api/Topmenu",
-    "departmentPost": "/Department" ,
-    "getDepartments": "/Department",
-    "deleteDepartment" : "/Department/delete",
-    "editDepartment": "/Department/put",
-    "createCourse": "/Course",
+    "departmentPost": "/api/Department" ,
+    "getDepartments": "/api/Department",
+    "deleteDepartment" : "/api/Department/delete",
+    "editDepartment": "/api/Department/put",
+    "createCourse": "/api/Course",
     "getmenuname": "/api/Topmenu/",
     "getmenudatabyid": "/api/Topmenu/",
     "customdata": "/api/Topmenu/customdata"
-  }
 }
