@@ -1,36 +1,17 @@
 {
-    "topMenu" : "/api/Topmenu/",
-    "navmenu": "/api/Topmenu",
-    "departmentPost": "/api/Department" ,
-    "getDepartments": "/api/Department",
-    "deleteDepartment" : "/api/Department/delete",
-    "editDepartment": "/api/Department/put",
-    "createCourse": "/api/Course/postcourse_data",
-    
-    "getmenuname": "/api/Topmenu/",
-    "getmenudatabyid": "/api/Topmenu/",
-    "customdata": "/api/Topmenu/customdata",
-
-
-
-
-
-
-    
-    "getCourses": "/api/Course",
-    "deleteCourse": "/api/Course/delete",
-    "editCourse": "/api/Course/put"
-  "topMenu": "/api/Topmenu",
-  "navmenu": "/api/Topmenu/",
-  "departmentPost": "/Department",
-  "getDepartments": "/Department",
-  "deleteDepartment": "/Department/delete",
-  "editDepartment": "/Department/put",
-  "createCourse": "/Course",
-  "getmenuname": "/api/Topmenu",
+  "topMenu": "/api/Topmenu/",
+  "navmenu": "/api/Topmenu",
+  "departmentPost": "/api/Department",
+  "getDepartments": "/api/Department",
+  "deleteDepartment": "/api/Department/delete",
+  "editDepartment": "/api/Department/put",
+  "createCourse": "/api/Course/postcourse_data",
+  "getmenuname": "/api/Topmenu/",
   "getmenudatabyid": "/api/Topmenu/",
   "customdata": "/api/Topmenu/customdata",
+  "getCourses": "/api/Course",
+  "deleteCourse": "/api/Course/delete",
+  "editCourse": "/api/Course/put",
   "Getallcustom": "/api/Topmenu/Getallcustom",
-  "getcustomdatabyid" : "/api/Topmenu/"
+  "getcustomdatabyid": "/api/Topmenu/"
 }
-
