@@ -63,6 +63,7 @@ export const EditDepartment = () => {
         setTimeout(() => {
           setLoading(false);
           setSuccessDialogOpen(true);
+          setFormData({ dname: '' });
         }, 1000);
       } else {
         toast.error('Failed to update department');
