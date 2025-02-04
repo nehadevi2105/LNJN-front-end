@@ -1,44 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Card, Col, Container, Form, Spinner } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import { Container, Row, Col, Card, Form, Button, Spinner } from "react-bootstrap";
+import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
-import { Link, useParams } from 'react-router-dom';
-import { Row } from 'react-bootstrap/esm';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-export const EditCourse = () => {
-  const { id } = useParams();
+const EditCourse = () => {
+  const { id } = useParams(); // Get course ID from route parameters
+  const [name, setCourseName] = useState("");
+  const [coursedetails, setCourseDescription] = useState("");
+  const [deptid, setDepartmentId] = useState("");
+  const [imgsrc, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [formErrors, setFormErrors] = useState({});
-  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    coursedetails: '',
-    deptid: '',
-    coursefilepath1: '',  // File upload field
-  });
   const [departments, setDepartments] = useState([]);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
 
-  // Fetch course data
   useEffect(() => {
     const fetchCourse = async () => {
+      setLoading(true);
       try {
-        const response = await APIClient.get(`${apis.getCourses}/${id}`)
-        console.log("Fetched Course Data:", response.data);  // Debugging
-
-        if (response.data) {
-          setFormData((prevState) => ({
-            ...prevState,
-            name: response.data.name || '',
-            coursedetails: response.data.coursedetails || '',
-            deptid: response.data.deptid || '',
-            coursefilepath1: response.data.coursefilepath1 || '', 
-          }));
-
-          console.log("form Data:", formData);  // Debugging 
+        const response = await APIClient.get(`${apis.getCourses}/${id}`);
+        if (response.status === 200) {
+          const course = response.data;
+          setCourseName(course.name);
+          setCourseDescription(course.coursedetails);
+          setDepartmentId(course.deptid);
+          setFile(course.imgsrc);
+        } else {
+          toast.error("Failed to fetch course details");
         }
       } catch (error) {
         console.error('Error fetching course:', error);
@@ -51,7 +44,7 @@ export const EditCourse = () => {
     fetchCourse();
   }, [id]);
 
-  // Fetch all departments for dropdown
+  // Fetch all departments for the dropdown
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
@@ -59,71 +52,43 @@ export const EditCourse = () => {
         setDepartments(response.data || []);
       } catch (error) {
         console.error("Error fetching departments:", error);
+        toast.error("Error fetching departments");
       }
     };
     fetchDepartments();
   }, []);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
   const handleFileChange = (event) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      coursefilepath1: event.target.files[0],
-    }));
+    setFile(event.target.files[0]);
   };
 
-  const validateForm = () => {
-    const errors = {};
-    if (!formData.name.trim()) errors.name = 'Course name is required';
-    if (!formData.coursedetails.trim()) errors.coursedetails = 'Course description is required';
-    if (!formData.deptid) errors.deptid = 'Please select a department';
-    setFormErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (validateForm()) {
-      setConfirmDialogOpen(true);
-    }
-  };
-
-  const handleUpdateConfirm = async () => {
-    setConfirmDialogOpen(false);
+  const handleConfirmSubmit = async (e) => {
+    e.preventDefault();
     setLoading(true);
 
-    const formDataToSend = new FormData();
-    formDataToSend.append("name", formData.name);
-    formDataToSend.append("coursedetails", formData.coursedetails);
-    formDataToSend.append("deptid", formData.deptid);
-    if (formData.coursefilepath1) {
-      formDataToSend.append("coursefile", formData.coursefilepath1);
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("coursedetails", coursedetails);
+    formData.append("deptid", deptid);
+    if (imgsrc) {
+      formData.append("imgsrc", imgsrc);
     }
 
     try {
-      const response = await APIClient.post(`${apis.editCourse}/${id}`, formDataToSend, {
+      const response = await APIClient.post(`${apis.editCourse}/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
       if (response.status === 200) {
-        setTimeout(() => {
-          setLoading(false);
-          setSuccessDialogOpen(true);
-        }, 1000);
+        toast.success("Course updated successfully");
+        setSuccessDialogOpen(true);
       } else {
-        toast.error('Failed to update course');
-        setLoading(false);
+        toast.error("Failed to update course");
       }
     } catch (error) {
-      console.error('Error updating course:', error);
-      toast.error('Something went wrong');
+      console.error("Error updating course:", error);
+      toast.error("Something went wrong");
+    } finally {
       setLoading(false);
     }
   };
@@ -147,22 +112,15 @@ export const EditCourse = () => {
                         
                         {/* Show Spinner while loading */}
                         {loading ? (
-                          <div className="d-flex justify-content-center">
-                            <Spinner animation="border" role="status">
-                              <span className="visually-hidden">Loading...</span>
-                            </Spinner>
-                          </div>
+                          <Spinner animation="border" />
                         ) : (
-                          <Form onSubmit={handleSubmit}>
-                            {/* Course Name */}
-                            <Form.Group className="mb-3" controlId="name">
+                          <Form onSubmit={handleConfirmSubmit}>
+                            <Form.Group controlId="formCourseName">
                               <Form.Label>Course Name</Form.Label>
                               <Form.Control
                                 type="text"
-                                placeholder="Enter Course Name"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
+                                value={name}
+                                onChange={(e) => setCourseName(e.target.value)}
                                 isInvalid={!!formErrors.name}
                               />
                               <Form.Control.Feedback type="invalid">
@@ -170,16 +128,13 @@ export const EditCourse = () => {
                               </Form.Control.Feedback>
                             </Form.Group>
 
-                            {/* Course Description */}
-                            <Form.Group className="mb-3" controlId="coursedetails">
+                            <Form.Group controlId="formCourseDescription">
                               <Form.Label>Course Description</Form.Label>
                               <Form.Control
                                 as="textarea"
                                 rows={3}
-                                placeholder="Enter Course Description"
-                                name="coursedetails"
-                                value={formData.coursedetails}
-                                onChange={handleChange}
+                                value={coursedetails}
+                                onChange={(e) => setCourseDescription(e.target.value)}
                                 isInvalid={!!formErrors.coursedetails}
                               />
                               <Form.Control.Feedback type="invalid">
@@ -187,13 +142,11 @@ export const EditCourse = () => {
                               </Form.Control.Feedback>
                             </Form.Group>
 
-                            {/* Department Dropdown */}
-                            <Form.Group className="mb-3" controlId="deptid">
+                            <Form.Group controlId="formDepartment">
                               <Form.Label>Department</Form.Label>
                               <Form.Select
-                                name="deptid"
-                                value={formData.deptid}
-                                onChange={handleChange}
+                                value={deptid}
+                                onChange={(e) => setDepartmentId(e.target.value)}
                                 isInvalid={!!formErrors.deptid}
                               >
                                 <option value="">Select Department</option>
@@ -208,17 +161,24 @@ export const EditCourse = () => {
                               </Form.Control.Feedback>
                             </Form.Group>
 
-                            {/* File Upload */}
-
-                            <Form.Group className="mb-3" controlId="coursefilepath1">
+                            <Form.Group className="mb-3" controlId="imgsrc">
                               <Form.Label>Upload Course File</Form.Label>
                               <Form.Control
                                 type="file"
-                                 name="coursefilepath1"
-                                // value={formData.coursefilepath1}
+                                name="imgsrc"
                                 onChange={handleFileChange}
                               />
                             </Form.Group>
+
+                            {/* Display existing uploaded file */}
+                            {imgsrc && typeof imgsrc === 'string' && (
+                              <div className="mb-3">
+                                <Form.Label>Existing Uploaded File</Form.Label>
+                                <div>
+                                  <img src={imgsrc} alt="Uploaded File" style={{ maxWidth: "100%", height: "auto" }} />
+                                </div>
+                              </div>
+                            )}
 
                             <div className="d-flex justify-content-between">
                               <Button variant="primary" type="submit">Submit</Button>
@@ -234,6 +194,25 @@ export const EditCourse = () => {
           </div>
         </main>
       </div>
+
+      <Dialog open={confirmDialogOpen} onClose={() => setConfirmDialogOpen(false)}>
+        <DialogTitle>Confirm Update</DialogTitle>
+        <DialogContent>Are you sure you want to update this course?</DialogContent>
+        <DialogActions>
+          <Button onClick={() => setConfirmDialogOpen(false)} color="primary">Cancel</Button>
+          <Button onClick={handleConfirmSubmit} color="primary">Confirm</Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={successDialogOpen} onClose={() => setSuccessDialogOpen(false)}>
+        <DialogTitle>Success</DialogTitle>
+        <DialogContent>Course updated successfully!</DialogContent>
+        <DialogActions>
+          <Button onClick={() => setSuccessDialogOpen(false)} color="primary">OK</Button>
+        </DialogActions>
+      </Dialog>
+
+      <ToastContainer />
     </>
   );
 };
