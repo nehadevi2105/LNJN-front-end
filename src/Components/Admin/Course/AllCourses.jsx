@@ -24,6 +24,8 @@ const AllCourses = () => {
   useEffect(() => {
     async function fetchCourses() {
       try {
+        debugger;
+        console.log(apis.getCourses);
         const response = await APIClient.get(apis.getCourses);
         // Map API response to include an "id" field for DataGrid
         const dataWithIds = response.data.map((row, index) => ({
