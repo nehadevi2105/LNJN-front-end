@@ -7,8 +7,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 
 const CreateCourse = () => {
+  // State for course name, description, department selection, and file upload
   const [name, setCourseName] = useState("");
-  const [did, setDepartmentId] = useState("");
+  const [coursedetails, setCourseDescription] = useState("");
+  const [deptid, setDepartmentId] = useState("");
   const [departments, setDepartments] = useState([]);
   const [imgsrc, setFile] = useState(null);
   const [formErrors, setFormErrors] = useState({});
@@ -32,7 +34,8 @@ const CreateCourse = () => {
   const validateForm = () => {
     const errors = {};
     if (!name.trim()) errors.name = "Please enter a course name";
-    if (!did) errors.did = "Please select a department";
+    if (!coursedetails.trim()) errors.coursedetails = "Please enter a course description";
+    if (!deptid) errors.deptid = "Please select a department";
     if (!imgsrc) errors.imgsrc = "Please upload a file";
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
@@ -44,8 +47,9 @@ const CreateCourse = () => {
     setConfirmDialogOpen(true);
   };
 
+  // Corrected file change handler using e.target.files
   const handleFileChange = (e) => {
-    setFile(e.target.imgsrc[0]);
+    setFile(e.target.files[0]);
   };
 
   const handleConfirmSubmit = async () => {
@@ -53,11 +57,13 @@ const CreateCourse = () => {
     setLoading(true);
 
     const formData = new FormData();
-    formData.append("courseName", name);
-    formData.append("departmentId", did);
-    formData.append("file", imgsrc);
+    formData.append("name", name);
+    formData.append("coursedetails", coursedetails);
+    formData.append("deptid", deptid); // using deptid instead of did
+    formData.append("imgsrc", imgsrc);
 
     try {
+        debugger;
       const response = await APIClient.post(apis.createCourse, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -66,12 +72,15 @@ const CreateCourse = () => {
         setTimeout(() => {
           setLoading(false);
           setSuccessDialogOpen(true);
+          // Reset form values after success
           setCourseName("");
+          setCourseDescription("");
           setDepartmentId("");
           setFile(null);
         }, 1000);
       } else {
         toast.error("Something went wrong");
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error submitting data:", error);
@@ -93,7 +102,7 @@ const CreateCourse = () => {
                     <h2 className="fw-bold mb-4 text-center text-uppercase">Create Course</h2>
                     <Form onSubmit={handleSubmit}>
                       {/* Course Name */}
-                      <Form.Group className="mb-3" controlId="courseName">
+                      <Form.Group className="mb-3" controlId="name">
                         <Form.Label>Course Name</Form.Label>
                         <Form.Control
                           type="text"
@@ -107,13 +116,29 @@ const CreateCourse = () => {
                         </Form.Control.Feedback>
                       </Form.Group>
 
+                      {/* Course Description */}
+                      <Form.Group className="mb-3" controlId="coursedetails">
+                        <Form.Label>Course Description</Form.Label>
+                        <Form.Control
+                          as="textarea"
+                          rows={3}
+                          placeholder="Enter Course Description"
+                          value={coursedetails}
+                          onChange={(e) => setCourseDescription(e.target.value)}
+                          isInvalid={!!formErrors.coursedetails}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {formErrors.coursedetails}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+
                       {/* Department Dropdown */}
                       <Form.Group className="mb-3" controlId="department">
                         <Form.Label>Department</Form.Label>
                         <Form.Select
-                          value={did}
+                          value={deptid}
                           onChange={(e) => setDepartmentId(e.target.value)}
-                          isInvalid={!!formErrors.did}
+                          isInvalid={!!formErrors.deptid}
                         >
                           <option value="">Select Department</option>
                           {departments.map((dept) => (
@@ -123,12 +148,12 @@ const CreateCourse = () => {
                           ))}
                         </Form.Select>
                         <Form.Control.Feedback type="invalid">
-                          {formErrors.did}
+                          {formErrors.deptid}
                         </Form.Control.Feedback>
                       </Form.Group>
 
                       {/* File Upload */}
-                      <Form.Group className="mb-3" controlId="fileUpload">
+                      <Form.Group className="mb-3" controlId="imgsrc">
                         <Form.Label>Upload File</Form.Label>
                         <Form.Control
                           type="file"
@@ -142,7 +167,9 @@ const CreateCourse = () => {
 
                       {/* Submit Button */}
                       <div className="d-flex justify-content-between">
-                        <Button variant="primary" type="submit">Submit</Button>
+                        <Button variant="primary" type="submit">
+                          Submit
+                        </Button>
                       </div>
 
                       {/* Loading Spinner */}
@@ -167,8 +194,12 @@ const CreateCourse = () => {
         <DialogTitle>Confirm Create</DialogTitle>
         <DialogContent>Are you sure you want to create this course?</DialogContent>
         <DialogActions>
-          <Button onClick={() => setConfirmDialogOpen(false)} color="primary">Cancel</Button>
-          <Button onClick={handleConfirmSubmit} color="primary">Confirm</Button>
+          <Button onClick={() => setConfirmDialogOpen(false)} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirmSubmit} color="primary">
+            Confirm
+          </Button>
         </DialogActions>
       </Dialog>
 
@@ -177,7 +208,9 @@ const CreateCourse = () => {
         <DialogTitle>Success</DialogTitle>
         <DialogContent>Course created successfully!</DialogContent>
         <DialogActions>
-          <Button onClick={() => setSuccessDialogOpen(false)} color="primary">OK</Button>
+          <Button onClick={() => setSuccessDialogOpen(false)} color="primary">
+            OK
+          </Button>
         </DialogActions>
       </Dialog>
     </>

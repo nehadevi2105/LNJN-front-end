@@ -45,7 +45,7 @@ const AllDepartments = () => {
   // Confirm delete
   const handleConfirmDelete = async () => {
     try {
-      const response = await APIClient.post(`${apis.deleteDepartment}/${selectedDepartment.id}`, {
+      const response = await APIClient.post(`${apis.deleteDepartment}/${selectedDepartment.did}`, {
         headers: { "Content-Type": "application/json" } // Explicitly set content type
       });
   
