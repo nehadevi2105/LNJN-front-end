@@ -1,335 +1,370 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Col, Container, Form, Row, Spinner } from "react-bootstrap";
+import { Button, Card, Col, Container, Form, Row, Spinner, Table } from "react-bootstrap";
+import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 
 const Candidate = () => {
-  // State for course name, description, department selection, and file upload
-  const [name, setCourseName] = useState("");
-  const [coursedetails, setCourseDescription] = useState("");
-  const [deptid, setDepartmentId] = useState("");
+  // Candidate personal info
+  const [candidateInfo, setCandidateInfo] = useState({
+    name: "",
+    mobileno: "",
+    email: "",
+    aadharno: ""
+  });
+
+  // Current course selection inputs
+  const [courseSelection, setCourseSelection] = useState({
+    deptid: "",
+    courseid: "",
+    view: false,
+    download: false
+  });
+
+  // Array of added course selections
+  const [candidateCourses, setCandidateCourses] = useState([]);
+
+  // Options fetched from API
   const [departments, setDepartments] = useState([]);
-  const [imgsrc, setFile] = useState(null);
-  const [formErrors, setFormErrors] = useState({});
+  const [courses, setCourses] = useState([]);
+
+  // Dialog states
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleAdd = () => {
-    const newData = {
-      name,
-      mobile,
-      department,
-      course,
-      isView,
-      isLoading,
-    };
-    setData([...data, newData]);
-    // Clear the form fields
-    setName('');
-    setMobile('');
-    setDepartment('');
-    setCourse('');
-    setIsView(false);
-    setIsLoading(false);
-  };
+  // Validation errors
+  const [formErrors, setFormErrors] = useState({});
 
-  // Fetch all departments for dropdown
+  // Fetch departments and courses on mount
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
         const response = await APIClient.get(apis.getDepartments);
-        const res = await APIClient.get(apis.getCourses);
-        setDepartments(response.data);
-        setCourseName(res.data);
+        setDepartments(response.data || []);
       } catch (error) {
         console.error("Error fetching departments:", error);
+        toast.error("Error fetching departments");
       }
     };
+
+    const fetchCourses = async () => {
+      try {
+        const response = await APIClient.get(apis.getCourses);
+        setCourses(response.data || []);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+        toast.error("Error fetching courses");
+      }
+    };
+
     fetchDepartments();
+    fetchCourses();
   }, []);
 
-  const validateForm = () => {
+  // Handle candidate personal info change
+  const handleCandidateChange = (e) => {
+    const { name, value } = e.target;
+    setCandidateInfo((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Handle course selection change (for dropdowns and checkboxes)
+  const handleCourseSelectionChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setCourseSelection((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value
+    }));
+  };
+
+  // Validate candidate info (for example, required fields)
+  const validateCandidateInfo = () => {
     const errors = {};
-    if (!name.trim()) errors.name = "Please enter a course name";
-    if (!coursedetails.trim()) errors.coursedetails = "Please enter a course description";
-    if (!deptid) errors.deptid = "Please select a department";
-    if (!imgsrc) errors.imgsrc = "Please upload a file";
+    if (!candidateInfo.name.trim()) errors.name = "Name is required";
+    if (!candidateInfo.mobileno.trim()) errors.mobileno = "Mobile number is required";
+    if (!candidateInfo.email.trim()) errors.email = "Email is required";
+    if (!candidateInfo.aadharno.trim()) errors.aadharno = "Aadhar number is required";
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
+  // Validate course selection before adding to table
+  const validateCourseSelection = () => {
+    const errors = {};
+    if (!courseSelection.deptid) errors.deptid = "Please select a department";
+    if (!courseSelection.courseid) errors.courseid = "Please select a course";
+    // You can add more validations if needed.
+    return Object.keys(errors).length === 0;
+  };
+
+  // Handle Add button click to add the current course selection to the table
+  const handleAddCourse = () => {
+    if (!validateCourseSelection()) {
+      toast.error("Please fill in required course selection fields.");
+      return;
+    }
+    setCandidateCourses((prev) => [...prev, courseSelection]);
+    // Reset course selection (optional)
+    setCourseSelection({
+      deptid: "",
+      courseid: "",
+      view: false,
+      download: false
+    });
+  };
+
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    // First validate candidate info
+    if (!validateCandidateInfo()) {
+      toast.error("Please fill in all required candidate info fields.");
+      return;
+    }
+    // You may also check that at least one course selection is added:
+    if (candidateCourses.length === 0) {
+      toast.error("Please add at least one course selection.");
+      return;
+    }
+    // Open confirmation dialog
     setConfirmDialogOpen(true);
   };
 
-  // Corrected file change handler using e.target.files
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
+  // When user confirms, send the data to backend
   const handleConfirmSubmit = async () => {
     setConfirmDialogOpen(false);
     setLoading(true);
 
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("coursedetails", coursedetails);
-    formData.append("deptid", deptid); // using deptid instead of did
-    formData.append("imgsrc", imgsrc);
+    // Prepare payload: candidate personal info plus an array of course selections
+    const payload = {
+      ...candidateInfo,
+      courses: candidateCourses
+    };
 
     try {
-        debugger;
-      const response = await APIClient.post(apis.createCourse, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      const response = await APIClient.post(apis.createCandidate, payload, {
+        headers: { "Content-Type": "application/json" }
       });
-
       if (response.status === 200) {
-        setTimeout(() => {
-          setLoading(false);
-          setSuccessDialogOpen(true);
-          // Reset form values after success
-          setCourseName("");
-          setCourseDescription("");
-          setDepartmentId("");
-          setFile(null);
-        }, 1000);
+        toast.success("Candidate created successfully!");
+        setSuccessDialogOpen(true);
+        // Optionally, reset the form
+        setCandidateInfo({
+          name: "",
+          mobileno: "",
+          email: "",
+          aadharno: ""
+        });
+        setCandidateCourses([]);
       } else {
-        toast.error("Something went wrong");
-        setLoading(false);
+        toast.error("Failed to create candidate");
       }
     } catch (error) {
-      console.error("Error submitting data:", error);
-      toast.error(error.response?.data || "Error submitting data");
+      console.error("Error submitting candidate data:", error);
+      toast.error("Something went wrong");
+    } finally {
       setLoading(false);
     }
   };
 
   return (
     <>
-      <main id="main" className="main">
-        <div className="pagetitle"></div>
-        <div className="home">
-          <div className="homeContainer">
-            <Row className="vh-100 d-flex justify-content-center align-items-left">
-              <Col md={10} lg={12} xs={12}>
-                <Card>
-                  <Card.Body>
-                    <h2 className="fw-bold mb-4 text-center text-uppercase">Create Candidate</h2>
-                    <Form onSubmit={handleSubmit}>
-                    <Row>
-                    <Col>
-                      {/* Course Name */}
-                      <Form.Group className="mb-3" controlId="name">
-                        <Form.Label> Name</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter Candidate Name"
-                          //value={name}
-                          onChange={(e) => setCourseName(e.target.value)}
-                          isInvalid={!!formErrors.name}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {formErrors.name}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                     
-                      </Col>
-                      <Col>
-                      <Form.Group className="mb-3" controlId="name">
-                        <Form.Label>Mobile No</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter Mobile no"
-                         // value={name}
-                          onChange={(e) => setCourseName(e.target.value)}
-                          isInvalid={!!formErrors.name}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {formErrors.name}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                      </Col>
-                      </Row>
-                      <Row>
-                      <Col>
-                      <Form.Group className="mb-3" controlId="name">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter Email"
-                         // value={name}
-                          onChange={(e) => setCourseName(e.target.value)}
-                          isInvalid={!!formErrors.name}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {formErrors.name}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                      </Col>
-                      <Col>
-                      <Form.Group className="mb-3" controlId="name">
-                        <Form.Label>Aadhar </Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter Aadhar"
-                        //  value={name}
-                          onChange={(e) => setCourseName(e.target.value)}
-                          isInvalid={!!formErrors.name}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {formErrors.name}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                      </Col>
-                      </Row>
-                    
-<Row>
-    <Col>
+      <Container className="my-4">
+        <Card>
+          <Card.Body>
+            <h2 className="text-center text-uppercase mb-4">Candidate Registration</h2>
+            <Form onSubmit={handleSubmit}>
+              {/* Candidate Personal Info */}
+              <Row className="mb-3">
+                <Col md={6}>
+                  <Form.Group controlId="candidateName">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter name"
+                      name="name"
+                      value={candidateInfo.name}
+                      onChange={handleCandidateChange}
+                      isInvalid={!!formErrors.name}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {formErrors.name}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group controlId="candidateMobile">
+                    <Form.Label>Mobile No.</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter mobile number"
+                      name="mobileno"
+                      value={candidateInfo.mobileno}
+                      onChange={handleCandidateChange}
+                      isInvalid={!!formErrors.mobileno}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {formErrors.mobileno}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+              </Row>
 
-                      {/* Department Dropdown */}
-                      <Form.Group className="mb-3" controlId="department">
-                        <Form.Label>Department</Form.Label>
-                        <Form.Select
-                          value={deptid}
-                          onChange={(e) => setDepartmentId(e.target.value)}
-                          isInvalid={!!formErrors.deptid}
-                        >
-                          <option value="">Select Department</option>
-                          {departments.map((dept) => (
-                            <option key={dept.did} value={dept.did}>
-                              {dept.dname}
-                            </option>
-                          ))}
-                        </Form.Select>
-                        <Form.Control.Feedback type="invalid">
-                          {formErrors.deptid}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    </Col>
-                    <Col>
+              <Row className="mb-3">
+                <Col md={6}>
+                  <Form.Group controlId="candidateEmail">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter email"
+                      name="email"
+                      value={candidateInfo.email}
+                      onChange={handleCandidateChange}
+                      isInvalid={!!formErrors.email}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {formErrors.email}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+                <Col md={6}>
+                  <Form.Group controlId="candidateAadhar">
+                    <Form.Label>Aadhar No.</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter Aadhar number"
+                      name="aadharno"
+                      value={candidateInfo.aadharno}
+                      onChange={handleCandidateChange}
+                      isInvalid={!!formErrors.aadharno}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {formErrors.aadharno}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+              </Row>
 
-                      <Form.Group className="mb-3" controlId="department">
-                        <Form.Label>Course</Form.Label>
-                        <Form.Select
-                          value={deptid}
-                          onChange={(e) => setDepartmentId(e.target.value)}
-                          isInvalid={!!formErrors.deptid}
-                        >
-                          <option value="">Select Course</option>
-                          {departments.map((dept) => (
-                            <option key={dept.did} value={dept.did}>
-                              {dept.dname}
-                            </option>
-                          ))}
-                        </Form.Select>
-                        <Form.Control.Feedback type="invalid">
-                          {formErrors.deptid}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-</Col>
-</Row>
+              <hr />
 
-<Row    >
-    <Col>
-                     {/* Checkbox */}
- <Form.Group className="mb-3" controlId="Isview">
-    <Form.Check
-        type="checkbox"
-        label="Isview"
-        //checked={isChecked}
-        onChange={(e) => setIsChecked(e.target.checked)}
-    />
-</Form.Group>
-</Col>
-<Col>
-<Form.Group className="mb-3" controlId="Isdownloading">
-    <Form.Check
-        type="checkbox"
-        label="Isdownloading"
-        //checked={isChecked}
-        onChange={(e) => setIsChecked(e.target.checked)}
-    />
-</Form.Group>
-</Col>
-</Row>
-<Row className="mt-3">
-    <Col>
- {/* Add Button */}
- <div className="d-flex justify-content-between">
-                        <Button variant="primary" onClick={handleAdd}>
-                          Add
-                        </Button>
-                      </div>
-                      </Col>
-                     
-                        <Col>
-                      {/* Submit Button */}
-                      <div className="d-flex justify-content-between">
-                        <Button variant="primary" onClick={handleSubmit}>
-                          Submit
-                        </Button>
-                      </div>
-</Col>
-</Row>
+              {/* Candidate Course Selection */}
+              <h4 className="mb-3">Select Course Details</h4>
+              <Row className="mb-3">
+                <Col md={4}>
+                  <Form.Group controlId="deptid">
+                    <Form.Label>Department</Form.Label>
+                    <Form.Select
+                      name="deptid"
+                      value={courseSelection.deptid}
+                      onChange={handleCourseSelectionChange}
+                    >
+                      <option value="">Select Department</option>
+                      {departments.map((dept) => (
+                        <option key={dept.did} value={dept.did}>
+                          {dept.dname}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+                <Col md={4}>
+                  <Form.Group controlId="courseid">
+                    <Form.Label>Course</Form.Label>
+                    <Form.Select
+                      name="courseid"
+                      value={courseSelection.courseid}
+                      onChange={handleCourseSelectionChange}
+                    >
+                      <option value="">Select Course</option>
+                      {courses.map((course) => (
+                        <option key={course.cid} value={course.cid}>
+                          {course.name}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+                <Col md={2}>
+                  <Form.Group controlId="view">
+                    <Form.Check
+                      type="checkbox"
+                      label="View"
+                      name="view"
+                      checked={courseSelection.view}
+                      onChange={handleCourseSelectionChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={2}>
+                  <Form.Group controlId="download">
+                    <Form.Check
+                      type="checkbox"
+                      label="Download"
+                      name="download"
+                      checked={courseSelection.download}
+                      onChange={handleCourseSelectionChange}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Button variant="secondary" onClick={handleAddCourse}>
+                Add Course Selection
+              </Button>
 
-{/* 
-<Row className="mt-3">
-        <Col>
-          <Table >
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Mobile No</th>
-                <th>Department</th>
-                <th>Course</th>
-                <th>Is View</th>
-                <th>Is Loading</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.name}</td>
-                  <td>{item.mobile}</td>
-                  <td>{item.department}</td>
-                  <td>{item.course}</td>
-                  <td>{item.isView ? 'Yes' : 'No'}</td>
-                  <td>{item.isLoading ? 'Yes' : 'No'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </Col>
-      </Row> */}
+              {/* Display DataTable if candidateCourses array is not empty */}
+              {candidateCourses.length > 0 && (
+                <>
+                  <h5 className="mt-4">Course Selections</h5>
+                  <Table striped bordered hover responsive>
+                    <thead>
+                      <tr>
+                        <th>Sr. No.</th>
+                        <th>Department</th>
+                        <th>Course</th>
+                        <th>View</th>
+                        <th>Download</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {candidateCourses.map((entry, index) => {
+                        // Get the department and course names from the fetched lists
+                        const dept = departments.find(d => d.did === entry.deptid);
+                        const course = courses.find(c => c.cid === entry.courseid);
+                        return (
+                          <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td>{dept ? dept.dname : entry.deptid}</td>
+                            <td>{course ? course.name : entry.courseid}</td>
+                            <td>{entry.view ? "Yes" : "No"}</td>
+                            <td>{entry.download ? "Yes" : "No"}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </Table>
+                </>
+              )}
 
-
-                      {/* Loading Spinner */}
-                      <Dialog open={loading}>
-                        <Spinner animation="border" role="status">
-                          <span className="visually-hidden">Loading...</span>
-                        </Spinner>
-                      </Dialog>
-                    </Form>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-          </div>
-        </div>
-      </main>
-
-      <ToastContainer />
+              {/* Submit Button for entire candidate form */}
+              <div className="mt-4">
+                <Button variant="primary" type="submit" onClick={handleSubmit}>
+                  Submit Candidate
+                </Button>
+              </div>
+            </Form>
+          </Card.Body>
+        </Card>
+      </Container>
 
       {/* Confirmation Dialog */}
       <Dialog open={confirmDialogOpen} onClose={() => setConfirmDialogOpen(false)}>
-        <DialogTitle>Confirm Create</DialogTitle>
-        <DialogContent>Are you sure you want to create this course?</DialogContent>
+        <DialogTitle>Confirm Submit</DialogTitle>
+        <DialogContent>
+          Are you sure you want to submit the candidate details along with course selections?
+        </DialogContent>
         <DialogActions>
           <Button onClick={() => setConfirmDialogOpen(false)} color="primary">
             Cancel
@@ -343,13 +378,15 @@ const Candidate = () => {
       {/* Success Dialog */}
       <Dialog open={successDialogOpen} onClose={() => setSuccessDialogOpen(false)}>
         <DialogTitle>Success</DialogTitle>
-        <DialogContent>Course created successfully!</DialogContent>
+        <DialogContent>Candidate created successfully!</DialogContent>
         <DialogActions>
           <Button onClick={() => setSuccessDialogOpen(false)} color="primary">
             OK
           </Button>
         </DialogActions>
       </Dialog>
+
+      <ToastContainer />
     </>
   );
 };

@@ -37,7 +37,7 @@ function Router() {
       <Route path="/Department/AllDepartment" element = {<AllDepartments/>} />
       <Route path="/Department/EditDepartment/:id" element = {<EditDepartment/>}/>
       <Route path="/Course/CreateCourse" element = {<CreateCourse/>}/>
-      <Route path="/Candidate/Candidate" element = {<Candidate/>}/>
+      <Route path="/Candidate/CreateCandidate" element = {<Candidate/>}/>
       <Route path="/custom/CustomTable" element = {<CustomTable/>}/>
       <Route path="/custom/Editcustomdata/:id" element = {<Editcustomdata/>}/>
       
