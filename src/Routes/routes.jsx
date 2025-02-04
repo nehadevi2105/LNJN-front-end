@@ -7,11 +7,18 @@ import CreateDepartment from "../Components/Admin/Department/CreateDepartment";
 import AllDepartments from "../Components/Admin/Department/AllDepartment";
 import { EditDepartment } from "../Components/Admin/Department/EditDepartment";
 import CreateCourse from "../Components/Admin/Course/CreateCourse";
+
 import MenuSubMenu from "../Components/Admin/MenuSubMenu/MenuSubMenu";
 import EditMenu from "../Components/Admin/EditMenuSubmeu/EditMenu";
 import EditSubMenu from "../Components/Admin/EditMenuSubmeu/EditSubMenu";
 import CreateSubMenu from "../Components/Admin/SubMenu/CreateSubMenu";
 import Custom from "../Components/Admin/custom/custom";
+
+
+
+
+import AllCourses from "../Components/Admin/Course/AllCourses";
+import EditCourse from "../Components/Admin/Course/EditCourse";
 
 function Router() {
   return (
@@ -27,6 +34,12 @@ function Router() {
       <Route path="/Department/AllDepartment" element = {<AllDepartments/>} />
       <Route path="/Department/EditDepartment/:id" element = {<EditDepartment/>}/>
       <Route path="/Course/CreateCourse" element = {<CreateCourse/>}/>
+      
+
+
+
+      <Route path="/Course/AllCourse" element = {<AllCourses/>}/>
+      <Route path="/Course/EditCourse/:id" element = {<EditCourse/>}/>
     </Routes>
   );
 }

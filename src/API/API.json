@@ -5,8 +5,19 @@
     "getDepartments": "/api/Department",
     "deleteDepartment" : "/api/Department/delete",
     "editDepartment": "/api/Department/put",
-    "createCourse": "/api/Course",
+    "createCourse": "/api/Course/postcourse_data",
+    
     "getmenuname": "/api/Topmenu/",
     "getmenudatabyid": "/api/Topmenu/",
-    "customdata": "/api/Topmenu/customdata"
+    "customdata": "/api/Topmenu/customdata",
+
+
+
+
+
+
+    
+    "getCourses": "/api/Course",
+    "deleteCourse": "/api/Course/delete",
+    "editCourse": "/api/Course/put"
 }

@@ -59,10 +59,11 @@ const CreateCourse = () => {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("coursedetails", coursedetails);
-    formData.append("did", deptid); // using deptid instead of did
+    formData.append("deptid", deptid); // using deptid instead of did
     formData.append("imgsrc", imgsrc);
 
     try {
+        debugger;
       const response = await APIClient.post(apis.createCourse, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });

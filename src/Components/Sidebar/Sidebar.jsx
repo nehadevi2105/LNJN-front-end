@@ -102,6 +102,13 @@ const Sidebar = ({ data }) => {
             </Link>
           </li>
           <li className="nav-item">
+            <Link to="/Course/AllCourse" className="nav-link">
+              <DashboardIcon />
+              Course List
+              {/* <span className="badge badge-sm bg-info ms-auto">NEW</span> */}
+            </Link>
+          </li>
+          <li className="nav-item">
             <Link to="/Course/CreateCourse" className="nav-link">
               <DashboardIcon />
               Create Course
