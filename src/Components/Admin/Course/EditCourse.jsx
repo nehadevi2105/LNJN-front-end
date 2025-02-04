@@ -13,6 +13,7 @@ const EditCourse = () => {
   const [coursedetails, setCourseDescription] = useState("");
   const [deptid, setDepartmentId] = useState("");
   const [imgsrc, setFile] = useState(null);
+  const [existingImgSrc, setExistingImgSrc] = useState(null); // State to hold existing image URL
   const [loading, setLoading] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const [departments, setDepartments] = useState([]);
@@ -29,7 +30,7 @@ const EditCourse = () => {
           setCourseName(course.name);
           setCourseDescription(course.coursedetails);
           setDepartmentId(course.deptid);
-          setFile(course.imgsrc);
+          setExistingImgSrc(course.imgsrc); // Set existing image URL
         } else {
           toast.error("Failed to fetch course details");
         }
@@ -62,15 +63,20 @@ const EditCourse = () => {
     setFile(event.target.files[0]);
   };
 
-  const handleConfirmSubmit = async (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
+    setConfirmDialogOpen(true);
+  };
+
+  const handleConfirmSubmit = async () => {
     setLoading(true);
+    setConfirmDialogOpen(false);
 
     const formData = new FormData();
     formData.append("name", name);
     formData.append("coursedetails", coursedetails);
     formData.append("deptid", deptid);
-    if (imgsrc) {
+    if (imgsrc instanceof File) {
       formData.append("imgsrc", imgsrc);
     }
 
@@ -114,7 +120,7 @@ const EditCourse = () => {
                         {loading ? (
                           <Spinner animation="border" />
                         ) : (
-                          <Form onSubmit={handleConfirmSubmit}>
+                          <Form onSubmit={handleFormSubmit}>
                             <Form.Group controlId="formCourseName">
                               <Form.Label>Course Name</Form.Label>
                               <Form.Control
@@ -171,11 +177,11 @@ const EditCourse = () => {
                             </Form.Group>
 
                             {/* Display existing uploaded file */}
-                            {imgsrc && typeof imgsrc === 'string' && (
+                            {existingImgSrc && (
                               <div className="mb-3">
                                 <Form.Label>Existing Uploaded File</Form.Label>
                                 <div>
-                                  <img src={imgsrc} alt="Uploaded File" style={{ maxWidth: "100%", height: "auto" }} />
+                                  <img src={existingImgSrc} alt="Uploaded File" style={{ maxWidth: "100%", height: "auto" }} />
                                 </div>
                               </div>
                             )}
