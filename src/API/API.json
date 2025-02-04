@@ -1,13 +1,15 @@
 {
-    "topMenu" : "/api/Topmenu/",
-    "navmenu": "/api/Topmenu",
-    "departmentPost": "/Department" ,
-    "getDepartments": "/Department",
-    "deleteDepartment" : "/Department/delete",
-    "editDepartment": "/Department/put",
-    "createCourse": "/Course",
-    "getmenuname": "/api/Topmenu/",
-    "getmenudatabyid": "/api/Topmenu/",
-    "customdata": "/api/Topmenu/customdata"
-  }
+  "topMenu": "/api/Topmenu",
+  "navmenu": "/api/Topmenu/",
+  "departmentPost": "/Department",
+  "getDepartments": "/Department",
+  "deleteDepartment": "/Department/delete",
+  "editDepartment": "/Department/put",
+  "createCourse": "/Course",
+  "getmenuname": "/api/Topmenu",
+  "getmenudatabyid": "/api/Topmenu/",
+  "customdata": "/api/Topmenu/customdata",
+  "Getallcustom": "/api/Topmenu/Getallcustom",
+  "getcustomdatabyid" : "/api/Topmenu/"
 }
+

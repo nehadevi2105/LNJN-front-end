@@ -124,7 +124,7 @@ const Sidebar = ({ data }) => {
           </li>
 
           <li className="nav-item">
-            <Link to="/custom/custom" className="nav-link">
+            <Link to="custom/CustomTable" className="nav-link">
               <DashboardIcon />
               Custom Table
             </Link>

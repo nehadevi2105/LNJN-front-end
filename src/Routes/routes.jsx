@@ -12,21 +12,28 @@ import EditMenu from "../Components/Admin/EditMenuSubmeu/EditMenu";
 import EditSubMenu from "../Components/Admin/EditMenuSubmeu/EditSubMenu";
 import CreateSubMenu from "../Components/Admin/SubMenu/CreateSubMenu";
 import Custom from "../Components/Admin/custom/custom";
+import CustomTable from "../Components/Admin/custom/CustomTable";
+import Editcustomdata from "../Components/Admin/custom/Editcustomdata";
 
 function Router() {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/cms/Createmenu" element={<CreateMenu />} />
-      <Route path="/Department/DepartmentForm" element ={<CreateDepartment/>} />
-      <Route path="/MenuSubMenu/MenuSubMenu" element ={<MenuSubMenu/>} />
-      <Route path="/EditMenuSubmeu/EditMenu/:id" element ={<EditMenu/>} />
-      <Route path="/EditMenuSubmeu/EditSubMenu/:id" element ={<EditSubMenu/>} />
-      <Route path="/SubMenu/CreateSubMenu" element ={<CreateSubMenu/>} />
-      <Route path="/custom/custom" element ={<Custom/>} />
-      <Route path="/Department/AllDepartment" element = {<AllDepartments/>} />
-      <Route path="/Department/EditDepartment/:id" element = {<EditDepartment/>}/>
-      <Route path="/Course/CreateCourse" element = {<CreateCourse/>}/>
+      <Route path="/Department/DepartmentForm" element={<CreateDepartment />} />
+      <Route path="/MenuSubMenu/MenuSubMenu" element={<MenuSubMenu />} />
+      <Route path="/EditMenuSubmeu/EditMenu/:id" element={<EditMenu />} />
+      <Route path="/EditMenuSubmeu/EditSubMenu/:id" element={<EditSubMenu />} />
+      <Route path="/SubMenu/CreateSubMenu" element={<CreateSubMenu />} />
+      <Route path="/custom/custom" element={<Custom />} />
+      <Route path="/Department/AllDepartment" element={<AllDepartments />} />
+      <Route
+        path="/Department/EditDepartment/:id"
+        element={<EditDepartment />}
+      />
+      <Route path="/Course/CreateCourse" element={<CreateCourse />} />
+      <Route path="/custom/CustomTable" element={<CustomTable />} />
+      <Route path="/custom/Editcustomdata/:id" element={<Editcustomdata />} />
     </Routes>
   );
 }

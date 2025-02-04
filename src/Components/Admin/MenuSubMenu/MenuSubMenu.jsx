@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import axios from "axios";
+//import axios from "axios";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
@@ -104,7 +104,7 @@ function MenuSubMenu() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await APIClient.get(apis.TopMenu);
+        const response = await APIClient.get(apis.topMenu);
         const dataWithIds = response.data.map((row, index) => ({
           id: index + 1,
           ...row,
@@ -141,9 +141,9 @@ function MenuSubMenu() {
           </div>
         </div>
         <div className="header-box">
-          <div className="header-box-lft">
+          {/* <div className="header-box-lft">
             <h1 className="maintitle">Table</h1>
-          </div>
+          </div> */}
           {/* <div className="header-box-rgt">
                     <Link to='/services/addwhatsnew'>
                     <p><AddIcon/>New Whats New</p>

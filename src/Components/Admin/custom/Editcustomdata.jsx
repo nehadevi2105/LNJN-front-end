@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import  { useState, useEffect, useCallback, useMemo } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link, useParams } from 'react-router-dom';
@@ -12,16 +12,14 @@ import {
   DialogContent,
   Dialog,
 } from '@mui/material';
-import { Col, Row } from 'react-bootstrap';
-import apiClient from '../../../Api/ApiClient';
-import apis from '../../../Api/api.json';
-import Header from '../header/Header';
-import Sidebar from '../sidebar/Sidebar';
-import Footer from '../footer/Footer';
+//import { Col, Row } from 'react-bootstrap';
+import APIClient from "../../../API/APIClient";
+import apis from "../../../API/API.json";
 
 
 
-export const Editcustomdata = () => {
+
+ const Editcustomdata = () => {
   const { id } = useParams()
   const [html, setHtml] = useState('');
   const [file, setFile] = useState(null);
@@ -90,7 +88,7 @@ export const Editcustomdata = () => {
     const newErrors = {};
 
     if (!formData.menuname) {
-      newErrors.MenuName = 'Name is required';
+      newErrors.menuName = 'Name is required';
     }
 
     if (!formData.contenttype) {
@@ -178,7 +176,7 @@ export const Editcustomdata = () => {
         formDataToSend.append('html', content);
       }
 
-      const response = await apiClient.post("/api/TopMenu/put/"+ id, formDataToSend, {
+      const response = await APIClient.post("/api/TopMenu/put/"+ id, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -201,10 +199,11 @@ export const Editcustomdata = () => {
     }
   };
   useEffect(() => {
-    async function fetchData1() {
+    //Function to fetch menuname from the dropdown
+    async function fetchData1() {       
       try {
         setLoading(true);
-        const response = await apiClient.get(apis.getmenuname);
+        const response = await APIClient.get(apis.getmenuname);
         setDropdownOptions(response.data);
         setLoading(false);
       } catch (error) {
@@ -218,7 +217,7 @@ export const Editcustomdata = () => {
     async function fetchData2() {
       try {
 
-        const response = await apiClient.get(apis.getcustomdatabyid + id);
+        const response = await APIClient.get(apis.getcustomdatabyid + id);
         setFormData(response.data);
 
       } catch (error) {
@@ -234,16 +233,11 @@ export const Editcustomdata = () => {
 
 
     <div  >
-      <Header />
-      <Sidebar />
-
-
-
       <div className="row justify-content-center">
     
-        <div class="container-fluid bg-white" >
+        <div className="container-fluid bg-white" >
 
-          <div class="box-sec">
+          <div className="box-sec">
             <h1 className="text-center heading-main">Edit Menu</h1>
 
             <div className="mb-3">
@@ -273,7 +267,7 @@ export const Editcustomdata = () => {
                 onChange={handleInputChange}
          
               />
-              {errors.MenuName && <div className="text-danger">{errors.MenuName}</div>}
+              {errors.menuname && <div className="text-danger">{errors.menuname}</div>}
             </div>
 
             {/* Input for Select a content type */}
@@ -291,7 +285,7 @@ export const Editcustomdata = () => {
                 <option value="2">File</option>
                 <option value="1">HTML</option>
               </select>
-              {errors.ContentType && <div className="text-danger">{errors.ContentType}</div>}
+              {errors.contenttype && <div className="text-danger">{errors.contenttype}</div>}
             </div>
 
             {/* Input for External Link */}
@@ -322,8 +316,8 @@ export const Editcustomdata = () => {
                 >
                   <option value='' style={{ color: "black" }}>Select a role</option>
                   {dropdownOptions.map((data) => (
-                    <option key={data.u_id} value={"/menu/" + data.u_menu_url}>
-                      {"Menu Name" + ":-" + data.u_menu_name}
+                    <option key={data.id} value={"/menu/" + data.menu_url}>
+                      {"Menu Name" + ":-" + data.menuname}
                     </option>
                   ))}
                 </select>
@@ -415,8 +409,7 @@ export const Editcustomdata = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };
+export default Editcustomdata;

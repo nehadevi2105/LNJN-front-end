@@ -171,7 +171,7 @@ const CreateSubMenu = () => {
         formDataToSend.append("html", content);
       }
 
-      const response = await APIClient.post(apis.TopMenu, formDataToSend, {
+      const response = await APIClient.post(apis.topMenu, formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -203,7 +203,7 @@ const CreateSubMenu = () => {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response = await APIClient.get(apis.TopMenu);
+        const response = await APIClient.get(apis.topMenu);
         Setdata(response.data);
       } catch (error) {
         console.error("Error fetching roles:", error);

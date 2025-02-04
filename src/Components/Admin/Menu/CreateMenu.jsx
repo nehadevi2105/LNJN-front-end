@@ -176,7 +176,7 @@ const CreateMenu = () => {
         formDataToSend.append("html", content);
       }
 
-      const response = await APIClient.post(apis.TopMenu, formDataToSend, {
+      const response = await APIClient.post(apis.topMenu, formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -207,7 +207,7 @@ const CreateMenu = () => {
     async function fetchData1() {
       try {
         setLoading(true);
-        const response = await APIClient.get(apis.TopMenu);
+        const response = await APIClient.get(apis.topMenu);
         setDropdownOptions(response.data);
         setLoading(false);
       } catch (error) {
@@ -325,8 +325,8 @@ const CreateMenu = () => {
                           </option>
                           {dropdownOptions.map((data) => (
                             <option
-                              key={data.u_id}
-                              value={"/menu/" + data.u_menu_url}
+                              key={data.id}
+                              value={"/menu/" + data.menu_url}
                             >
                               {"Menu Name" + ":-" + data.menuname}
                             </option>
