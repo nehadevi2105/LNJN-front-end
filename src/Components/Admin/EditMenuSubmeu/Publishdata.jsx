@@ -16,7 +16,7 @@ import {
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 
-const EditMenu = () => {
+const Publishdata = () => {
   const { id } = useParams();
   const [html, setHtml] = useState("");
   const [file, setFile] = useState(null);
@@ -40,9 +40,7 @@ const EditMenu = () => {
     setContent(html);
   }, []);
 
-  // const handleEditorChange = (content) => {
-  //   setEditorContent(content);
-  // };
+ 
 
   const [formData, setFormData] = useState({
     menu_id: "",
@@ -123,6 +121,7 @@ const EditMenu = () => {
     const imageFile = event.target.files[0];
     setFile(imageFile);
   };
+  
 
   const handleInputChange = (event) => {
     const { name, value, type } = event.target;
@@ -160,8 +159,8 @@ const EditMenu = () => {
       formDataToSend.append("menuurl", formData.menuurl);
       formDataToSend.append("submenu_id", formData.submenu_id);
       formDataToSend.append("languagetype", formData.languagetype);
-      formDataToSend.append("usertype", '1');
-
+      formDataToSend.append("usertype", '4');
+      formDataToSend.append("action", 'publish');
       if (formData.contenttype === "4") {
         formDataToSend.append("external_link", formData.external_link);
       } else if (formData.contenttype === "3") {
@@ -173,7 +172,7 @@ const EditMenu = () => {
       }
       
       const response = await APIClient.post(
-        "api/TopMenu/put/" + id,
+        "api/TopMenu/updatemenu/" + id,
         formDataToSend,
         {
           headers: {
@@ -182,8 +181,8 @@ const EditMenu = () => {
         }
       );
 
-      toast.success("Data saved successfully!");
-      setModalMessage("Data saved successfully!");
+      toast.success("Data publish successfully!");
+      setModalMessage("Data publish successfully!");
       setFormData({
         menuname: "",
         ContentType: "",
@@ -389,7 +388,7 @@ const EditMenu = () => {
                 className="btn btn-primary"
                 onClick={handleOpenConfirmation}
               >
-                Update
+                Approve
               </button>
 
               <Dialog
@@ -441,4 +440,4 @@ const EditMenu = () => {
     </div>
   );
 };
-export default EditMenu;
+export default Publishdata;

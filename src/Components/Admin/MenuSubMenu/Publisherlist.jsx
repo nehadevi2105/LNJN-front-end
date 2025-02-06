@@ -23,7 +23,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import './WhatsNewTable.scss'
 
-function Approvallist() {
+function Publisherlist() {
   const [apiData, setApiData] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -45,7 +45,7 @@ function Approvallist() {
       sortable: false,
       renderCell: (params) =>
         1 === 1 || null ? ( // Check the user role here
-          <Link to={"/menu/approval/" + params.row.id}>
+          <Link to={"/menu/publish/" + params.row.id}>
             <EditIcon style={{ cursor: "pointer" }} />
           </Link>
         ) : (
@@ -94,7 +94,7 @@ function Approvallist() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await APIClient.get(apis.approvallist);
+        const response = await APIClient.get(apis.publisherlist);
         const dataWithIds = response.data.map((row, index) => ({
           id: index + 1,
           ...row,
@@ -187,4 +187,4 @@ function Approvallist() {
   );
 }
 
-export default Approvallist;
+export default Publisherlist;

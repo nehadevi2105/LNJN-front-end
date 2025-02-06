@@ -1,6 +1,9 @@
 {
   "topMenu": "/api/Topmenu/",
   "navmenu": "/api/Topmenu",
+  "createMenu": "/api/Topmenu/createmenusubmenu",
+  "approvallist":"/api/Topmenu/Getapprovalist",
+  "publisherlist":"/api/Topmenu/Getpublisherlist",
   "departmentPost": "/api/Department",
   "getDepartments": "/api/Department",
   "deleteDepartment": "/api/Department/delete",

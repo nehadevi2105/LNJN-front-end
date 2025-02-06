@@ -68,35 +68,31 @@ function MenuSubMenu() {
           onClick={() => handleDeleteClick(params.row)}
         />
       ),
-    },
+    }
+    
   ];
 
   const handleDeleteClick = (item) => {
     setSelectedItem(item);
     setConfirmDialogOpen(true);
   };
-
+  
   const handleConfirmSubmit = async () => {
+    if (!selectedItem) return;
+  
     try {
       await APIClient.post("/api/Topmenu/delete/" + selectedItem.id);
-      setApiData((prevData) =>
-        prevData.filter((item) => item.id !== selectedItem.id)
-      );
-      setIsDeleting(false);
+      setApiData((prevData) => prevData.filter((item) => item.id !== selectedItem.id));
       setModalMessage("Data deleted successfully");
       setSnackbarOpen(true);
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        toast.error("Unauthorized access. Please log in.");
-      } else {
-        toast.error("Something Went Wrong!");
-        console.error("Error saving/updating data:", error);
-      }
+      toast.error("Something Went Wrong!");
+      console.error("Error deleting data:", error);
     } finally {
+      setSelectedItem(null);
       setConfirmDialogOpen(false);
     }
   };
-
   const handleCloseConfirmation = () => {
     setConfirmDialogOpen(false);
   };
@@ -136,6 +132,16 @@ function MenuSubMenu() {
             <Link to="/dashboard">
               <button type="button" className="btn btn-info">
                 Back
+              </button>
+            </Link>
+            <Link to="/approvallist">
+              <button type="button" className="btn btn-primary" style={{ marginLeft: "10px" }}>
+                Get Approval List
+              </button>
+            </Link>
+            <Link to="/publisherlist">
+              <button type="button" className="btn btn-primary" style={{ marginLeft: "10px" }}>
+                Get Publisher List
               </button>
             </Link>
           </div>
