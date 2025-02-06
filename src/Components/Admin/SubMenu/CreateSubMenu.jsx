@@ -171,7 +171,7 @@ const CreateSubMenu = () => {
         formDataToSend.append("html", content);
       }
 
-      const response = await APIClient.post(apis.topMenu, formDataToSend, {
+      const response = await APIClient.post(apis.createMenu, formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

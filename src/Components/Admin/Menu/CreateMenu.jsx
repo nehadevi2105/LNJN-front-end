@@ -179,7 +179,7 @@ const CreateMenu = () => {
         formDataToSend.append("html", content);
       }
 
-      const response = await APIClient.post(apis.topMenu, formDataToSend, {
+      const response = await APIClient.post(apis.createMenu, formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -197,8 +197,8 @@ const CreateMenu = () => {
           CreatedBy: "Neha",
         });
 
-        toast.success("Data saved successfully!");
-        setModalMessage("Data saved successfully!");
+        toast.success("Data saved and send for approval!");
+        setModalMessage("Data saved and send for approval!");
         setSnackbarOpen(true);
       }
     } catch (error) {

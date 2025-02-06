@@ -1,13 +1,11 @@
-//import React from 'react';
+
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "../Components/Dashboard/Dashboard";
-//import Sidebar from "../components/SideBar/Sidebar";
 import CreateMenu from "../Components/Admin/Menu/CreateMenu";
 import CreateDepartment from "../Components/Admin/Department/CreateDepartment";
 import AllDepartments from "../Components/Admin/Department/AllDepartment";
 import { EditDepartment } from "../Components/Admin/Department/EditDepartment";
 import CreateCourse from "../Components/Admin/Course/CreateCourse";
-
 import MenuSubMenu from "../Components/Admin/MenuSubMenu/MenuSubMenu";
 import EditMenu from "../Components/Admin/EditMenuSubmeu/EditMenu";
 import EditSubMenu from "../Components/Admin/EditMenuSubmeu/EditSubMenu";
@@ -22,6 +20,10 @@ import CreateWhatsNew from "../Components/Admin/WhatsNew/CreateWhatsNew/CreateWh
 
 import AllCourses from "../Components/Admin/Course/AllCourses";
 import EditCourse from "../Components/Admin/Course/EditCourse";
+import Approvallist from "../Components/Admin/MenuSubMenu/Approvallist";
+import Approvedata from "../Components/Admin/EditMenuSubmeu/approvedata";
+import Publisherlist from "../Components/Admin/MenuSubMenu/Publisherlist";
+import Publishdata from "../Components/Admin/EditMenuSubmeu/Publishdata";
 
 function Router() {
   return (
@@ -47,6 +49,10 @@ function Router() {
 
       <Route path="/Course/AllCourse" element={<AllCourses />} />
       <Route path="/Course/EditCourse/:id" element={<EditCourse />} />
+      <Route path="/approvallist" element = {<Approvallist/>}/>
+      <Route path="/publisherlist" element = {<Publisherlist/>}/>
+      <Route path="/menu/approval/:id" element = {<Approvedata/>}/>
+      <Route path="/menu/publish/:id" element = {<Publishdata/>}/>
       <Route path="/WhatsNew/CreateWhatsNew" element={<CreateWhatsNew />} />
     </Routes>
   );

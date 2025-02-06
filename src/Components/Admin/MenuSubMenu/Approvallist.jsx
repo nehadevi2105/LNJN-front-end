@@ -23,7 +23,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import './WhatsNewTable.scss'
 
-function MenuSubMenu() {
+function Approvallist() {
   const [apiData, setApiData] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -34,18 +34,18 @@ function MenuSubMenu() {
   const user = JSON.parse(storedUserString);
 
   const columns = [
-    { field: "id", headerName: "S.No", width: 50 },
-    { field: "menuname", headerName: "Title", width: 200 },
+    { field: "id", headerName: "S.No", width: 100 },
+    { field: "menuname", headerName: "Title", width: 250 },
     { field: "internal_link", headerName: "Internal Link", width: 120 },
     { field: "external_link", headerName: "External Link", width: 120 },
-    { field: "menuurl", headerName: "Menu Url", width: 200 },
+    { field: "menuurl", headerName: "Menu Url", width: 250 },
     {
       field: "edit",
-      headerName: "Edit",
+      headerName: "View Data",
       sortable: false,
       renderCell: (params) =>
         1 === 1 || null ? ( // Check the user role here
-          <Link to={"/EditMenuSubmeu/EditMenu/" + params.row.id}>
+          <Link to={"/menu/approval/" + params.row.id}>
             <EditIcon style={{ cursor: "pointer" }} />
           </Link>
         ) : (
@@ -57,42 +57,36 @@ function MenuSubMenu() {
             <EditIcon style={{ cursor: "pointer" }} />
           </Link>
         ),
-    },
-    {
-      field: "delete",
-      headerName: "Delete",
-      sortable: false,
-      renderCell: (params) => (
-        <DeleteIcon
-          style={{ cursor: "pointer" }}
-          onClick={() => handleDeleteClick(params.row)}
-        />
-      ),
     }
-    
+   
   ];
 
   const handleDeleteClick = (item) => {
     setSelectedItem(item);
     setConfirmDialogOpen(true);
   };
-  
+
   const handleConfirmSubmit = async () => {
-    if (!selectedItem) return;
-  
     try {
-      await APIClient.post("/api/Topmenu/delete/" + selectedItem.id);
-      setApiData((prevData) => prevData.filter((item) => item.id !== selectedItem.id));
+      await APIClient.post("/TopMenu/delete/" + selectedItem.id);
+      setApiData((prevData) =>
+        prevData.filter((item) => item.id !== selectedItem.id)
+      );
+      setIsDeleting(false);
       setModalMessage("Data deleted successfully");
       setSnackbarOpen(true);
     } catch (error) {
-      toast.error("Something Went Wrong!");
-      console.error("Error deleting data:", error);
+      if (error.response && error.response.status === 401) {
+        toast.error("Unauthorized access. Please log in.");
+      } else {
+        toast.error("Something Went Wrong!");
+        console.error("Error saving/updating data:", error);
+      }
     } finally {
-      setSelectedItem(null);
       setConfirmDialogOpen(false);
     }
   };
+
   const handleCloseConfirmation = () => {
     setConfirmDialogOpen(false);
   };
@@ -100,7 +94,7 @@ function MenuSubMenu() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await APIClient.get(apis.topMenu);
+        const response = await APIClient.get(apis.approvallist);
         const dataWithIds = response.data.map((row, index) => ({
           id: index + 1,
           ...row,
@@ -132,16 +126,6 @@ function MenuSubMenu() {
             <Link to="/dashboard">
               <button type="button" className="btn btn-info">
                 Back
-              </button>
-            </Link>
-            <Link to="/approvallist">
-              <button type="button" className="btn btn-primary" style={{ marginLeft: "10px" }}>
-                Get Approval List
-              </button>
-            </Link>
-            <Link to="/publisherlist">
-              <button type="button" className="btn btn-primary" style={{ marginLeft: "10px" }}>
-                Get Publisher List
               </button>
             </Link>
           </div>
@@ -203,4 +187,4 @@ function MenuSubMenu() {
   );
 }
 
-export default MenuSubMenu;
+export default Approvallist;
