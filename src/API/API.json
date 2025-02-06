@@ -12,6 +12,7 @@
   "getCourses": "/api/Course",
   "deleteCourse": "/api/Course/delete",
   "editCourse": "/api/Course/put",
+  "createCandidate": "/api/Candidate",
   "Getallcustom": "/api/Topmenu/Getallcustom",
   "getcustomdatabyid": "/api/Topmenu/",
   "postSlider": "api/Slider/postslider_data",
