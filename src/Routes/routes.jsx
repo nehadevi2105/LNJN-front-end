@@ -17,9 +17,8 @@ import CustomTable from "../Components/Admin/custom/CustomTable";
 import Editcustomdata from "../Components/Admin/custom/Editcustomdata";
 import Banner from "../Components/Admin/Banner/Banner";
 import Candidate from "../Components/Admin/Candidate/Candidate";
-
-
-
+//import CreateWhatsNew from "../Components/Admin/WhatsNew/CreateWhatsNew";
+import CreateWhatsNew from "../Components/Admin/WhatsNew/CreateWhatsNew/CreateWhatsNew";
 
 import AllCourses from "../Components/Admin/Course/AllCourses";
 import EditCourse from "../Components/Admin/Course/EditCourse";
@@ -41,13 +40,14 @@ function Router() {
         element={<EditDepartment />}
       />
       <Route path="/Course/CreateCourse" element={<CreateCourse />} />
-      <Route path="/Candidate/CreateCandidate" element = {<Candidate/>}/>
+      <Route path="/Candidate/CreateCandidate" element={<Candidate />} />
       <Route path="/custom/CustomTable" element={<CustomTable />} />
       <Route path="/custom/Editcustomdata/:id" element={<Editcustomdata />} />
       <Route path="/Banner/Banner" element={<Banner />} />
 
       <Route path="/Course/AllCourse" element={<AllCourses />} />
       <Route path="/Course/EditCourse/:id" element={<EditCourse />} />
+      <Route path="/WhatsNew/CreateWhatsNew" element={<CreateWhatsNew />} />
     </Routes>
   );
 }
