@@ -20,7 +20,7 @@ import Alert from "@mui/material/Alert";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 
-const CustomTable = () => {
+const Custompublisherlist = () => {
   const [apiData, setApiData] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -34,8 +34,6 @@ const CustomTable = () => {
   const columns = [
     { field: "id", headerName: "S.No", width: 50 },
     { field: "menuname", headerName: "Title", width: 200 },
-    // { field: "u_internal_link", headerName: "Internal Link",width: 120 },
-    // { field: "u_external_link", headerName: "External Link",width: 120 },
     { field: "menuurl", headerName: "Menu Url", width: 200 },
     {
       field: "edit",
@@ -43,33 +41,16 @@ const CustomTable = () => {
       sortable: false,
       renderCell: (params) =>
         2 === 2 || null ? (
-          <Link to={"/custom/Editcustomdata/" + params.row.id}>
+          <Link to={"/publishdata/" + params.row.id}>
             <EditIcon style={{ cursor: "pointer" }} />
           </Link>
         ) : (
-          <Link to={"/custom/Editcustomdata/" + params.row.id}>
+          <Link to={"/publishdata/" + params.row.id}>
             <EditIcon style={{ cursor: "pointer" }} />
           </Link>
         ),
-    },
-    {
-      field: "delete",
-      headerName: "Delete",
-      sortable: false,
-      renderCell: (params) =>
-        2 === 2 || null ? (
-          //user.r_usertype !== 2 || null ? (
-          <DeleteIcon
-            style={{ cursor: "pointer" }}
-            onClick={() => handleDeleteClick(params.row)}
-          />
-        ) : (
-          <DeleteIcon
-            style={{ cursor: "no-drop", color: "#808080" }}
-            disabled
-          />
-        ),
-    },
+    }
+   
   ];
 
   const handleDeleteClick = (item) => {
@@ -102,7 +83,7 @@ const CustomTable = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await APIClient.get(apis.Getallcustom);
+        const response = await APIClient.get(apis.Getpublishercustom);
         const dataWithIds = response.data.map((row, index) => ({
           id: index + 1,
           ...row,
@@ -164,17 +145,6 @@ const CustomTable = () => {
                 Back
               </button>
             </Link>
-           
-            <Link to="/customapproval">
-              <button type="button" className="btn btn-primary" style={{ color: "white", backgroundColor: "blue",marginLeft: "10px" }}>
-                approval list
-              </button>
-            </Link>
-            <Link to="/custompublisher">
-              <button type="button" className="btn btn-primary" style={{ color: "white", backgroundColor: "blue",marginLeft: "10px" }}>
-               publisher  list
-              </button>
-            </Link>
           </div>
           <DataGrid
             rows={apiData}
@@ -218,4 +188,4 @@ const CustomTable = () => {
   );
 };
 
-export default CustomTable;
+export default Custompublisherlist;

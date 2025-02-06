@@ -17,14 +17,16 @@ import Banner from "../Components/Admin/Banner/Banner";
 import Candidate from "../Components/Admin/Candidate/Candidate";
 //import CreateWhatsNew from "../Components/Admin/WhatsNew/CreateWhatsNew";
 import CreateWhatsNew from "../Components/Admin/WhatsNew/CreateWhatsNew/CreateWhatsNew";
-
 import AllCourses from "../Components/Admin/Course/AllCourses";
 import EditCourse from "../Components/Admin/Course/EditCourse";
 import Approvallist from "../Components/Admin/MenuSubMenu/Approvallist";
 import Approvedata from "../Components/Admin/EditMenuSubmeu/approvedata";
 import Publisherlist from "../Components/Admin/MenuSubMenu/Publisherlist";
 import Publishdata from "../Components/Admin/EditMenuSubmeu/Publishdata";
-
+import Customapprovallist from "../Components/Admin/custom/Customapprovallist";
+import Editcustomapproval from "../Components/Admin/custom/Editcustomapproval";
+import Custompublisherlist from "../Components/Admin/custom/Custompublisherlist";
+import Editpublisherapproval from "../Components/Admin/custom/Editcustompublisher";
 function Router() {
   return (
     <Routes>
@@ -38,8 +40,7 @@ function Router() {
       <Route path="/custom/custom" element={<Custom />} />
       <Route path="/Department/AllDepartment" element={<AllDepartments />} />
       <Route
-        path="/Department/EditDepartment/:id"
-        element={<EditDepartment />}
+        path="/Department/EditDepartment/:id"    element={<EditDepartment />}
       />
       <Route path="/Course/CreateCourse" element={<CreateCourse />} />
       <Route path="/Candidate/CreateCandidate" element={<Candidate />} />
@@ -54,6 +55,10 @@ function Router() {
       <Route path="/menu/approval/:id" element = {<Approvedata/>}/>
       <Route path="/menu/publish/:id" element = {<Publishdata/>}/>
       <Route path="/WhatsNew/CreateWhatsNew" element={<CreateWhatsNew />} />
+      <Route path="/customapproval" element={<Customapprovallist />} />
+      <Route path="/customapproval/:id" element = {<Editcustomapproval/>}/>
+      <Route path="/custompublisher" element={<Custompublisherlist />} />
+      <Route path="/publishdata/:id" element = {<Editpublisherapproval/>}/>
     </Routes>
   );
 }
