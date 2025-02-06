@@ -19,9 +19,11 @@ const Candidate = () => {
   // Current course selection inputs
   const [courseSelection, setCourseSelection] = useState({
     deptid: "",
-    courseid: "",
-    view: false,
-    download: false
+      dname: "",
+      courseid: "",
+      coursename: "",
+      isview: false,
+      isdownload: false
   });
 
   // Array of added course selections
@@ -47,23 +49,32 @@ const Candidate = () => {
         setDepartments(response.data || []);
       } catch (error) {
         console.error("Error fetching departments:", error);
-        toast.error("Error fetching departments");
-      }
-    };
-
-    const fetchCourses = async () => {
-      try {
-        const response = await APIClient.get(apis.getCourses);
-        setCourses(response.data || []);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
-        toast.error("Error fetching courses");
+         toast.error("Error fetching departments");
       }
     };
 
     fetchDepartments();
-    fetchCourses();
+    
   }, []);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await APIClient.get(apis.getCourses);
+        setCourses(response.data || []);
+        if (courseSelection.deptid) {
+          // Immediately filter courses based on selected department
+          const filteredCourses = response.data.filter(course => course.deptid === parseInt(courseSelection.deptid, 10));
+          setCourses(filteredCourses);
+        }
+      } catch (error) {
+        toast.error("Error fetching courses");
+      }
+    };
+  
+    fetchCourses();
+  }, [courseSelection.deptid]);  // Re-run only when deptid changes
+  
 
   // Handle candidate personal info change
   const handleCandidateChange = (e) => {
@@ -74,11 +85,38 @@ const Candidate = () => {
   // Handle course selection change (for dropdowns and checkboxes)
   const handleCourseSelectionChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setCourseSelection((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value
-    }));
+  
+    setCourseSelection((prev) => {
+      // Handling Department Selection
+      if (name === "deptid") {
+        const selectedIndex = e.target.selectedIndex;
+        const selectedDeptName = e.target.options[selectedIndex].text;
+        return {
+          ...prev,
+          deptid: value,
+          dname: selectedDeptName,
+        };
+      }
+      
+      // Handling Course Selection
+      if (name === "courseid") {
+        const selectedIndex = e.target.selectedIndex;
+        const selectedCourseName = e.target.options[selectedIndex].text;
+        return {
+          ...prev,
+          courseid: value,
+          coursename: selectedCourseName,
+        };
+      }
+  
+      // Handling Checkbox & Other Inputs
+      return {
+        ...prev,
+        [name]: type === "checkbox" ? checked : value,
+      };
+    });
   };
+  
 
   // Validate candidate info (for example, required fields)
   const validateCandidateInfo = () => {
@@ -100,6 +138,21 @@ const Candidate = () => {
     return Object.keys(errors).length === 0;
   };
 
+
+  const handleDeleteRow = (index) => {
+    // Confirmation prompt before deleting
+    // const confirmed = window.confirm("Are you sure you want to delete this row?");
+    // if (confirmed) {
+      // Remove the row from candidateCourses by filtering out the selected index
+      setCandidateCourses((prevCourses) => prevCourses.filter((_, i) => i !== index));
+     // toast.success("Row deleted successfully!");
+    // } else {
+    //   setConfirmDialogOpen(false);
+    // }
+    //  // Open confirmation dialog
+     setConfirmDialogOpen(false);
+  };
+
   // Handle Add button click to add the current course selection to the table
   const handleAddCourse = () => {
     if (!validateCourseSelection()) {
@@ -110,9 +163,11 @@ const Candidate = () => {
     // Reset course selection (optional)
     setCourseSelection({
       deptid: "",
+      dname: "",
       courseid: "",
-      view: false,
-      download: false
+      coursename: "",
+      isview: false,
+      isdownload: false
     });
   };
 
@@ -135,16 +190,24 @@ const Candidate = () => {
 
   // When user confirms, send the data to backend
   const handleConfirmSubmit = async () => {
+    debugger;
     setConfirmDialogOpen(false);
     setLoading(true);
 
+
+    const formattedCandidateCourses = candidateCourses.map(course => ({
+      ...course,
+      isview: course.isview ? 1 : 0,  // Convert true → 1, false → 0
+      isdownload: course.isdownload ? 1 : 0  // Convert true → 1, false → 0
+    }));
     // Prepare payload: candidate personal info plus an array of course selections
     const payload = {
       ...candidateInfo,
-      courses: candidateCourses
+      lstcand: formattedCandidateCourses
     };
 
     try {
+      debugger;
       const response = await APIClient.post(apis.createCandidate, payload, {
         headers: { "Content-Type": "application/json" }
       });
@@ -280,7 +343,7 @@ const Candidate = () => {
                     >
                       <option value="">Select Course</option>
                       {courses.map((course) => (
-                        <option key={course.cid} value={course.cid}>
+                        <option key={course.id} value={course.id}>
                           {course.name}
                         </option>
                       ))}
@@ -288,23 +351,23 @@ const Candidate = () => {
                   </Form.Group>
                 </Col>
                 <Col md={2}>
-                  <Form.Group controlId="view">
+                  <Form.Group controlId="isisview">
                     <Form.Check
                       type="checkbox"
                       label="View"
-                      name="view"
-                      checked={courseSelection.view}
+                      name="isview"
+                      checked={courseSelection.isisview}
                       onChange={handleCourseSelectionChange}
                     />
                   </Form.Group>
                 </Col>
                 <Col md={2}>
-                  <Form.Group controlId="download">
+                  <Form.Group controlId="isdownload">
                     <Form.Check
                       type="checkbox"
                       label="Download"
-                      name="download"
-                      checked={courseSelection.download}
+                      name="isdownload"
+                      checked={courseSelection.isdownload}
                       onChange={handleCourseSelectionChange}
                     />
                   </Form.Group>
@@ -321,26 +384,41 @@ const Candidate = () => {
                   <Table striped bordered hover responsive>
                     <thead>
                       <tr>
-                        <th>Sr. No.</th>
-                        <th>Department</th>
-                        <th>Course</th>
-                        <th>View</th>
-                        <th>Download</th>
+                      <th>Sr. No.</th>
+      <th>Department ID</th>
+      <th>Department Name</th>
+      <th>Course ID</th>
+      <th>Course Name</th>
+      <th>View</th>
+      <th>Download</th>
+      <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       {candidateCourses.map((entry, index) => {
                         // Get the department and course names from the fetched lists
                         const dept = departments.find(d => d.did === entry.deptid);
-                        const course = courses.find(c => c.cid === entry.courseid);
+                        const course = courses.find(c => c.id === entry.courseid);
                         return (
-                          <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{dept ? dept.dname : entry.deptid}</td>
-                            <td>{course ? course.name : entry.courseid}</td>
-                            <td>{entry.view ? "Yes" : "No"}</td>
-                            <td>{entry.download ? "Yes" : "No"}</td>
-                          </tr>
+                          // <tr key={index}>
+                          //   <td>{index + 1}</td>
+                          //   <td>{dept ? dept.dname : entry.deptid}</td>
+                          //   <td>{course ? course.name : entry.courseid}</td>
+                          //   <td>{entry.view ? "Yes" : "No"}</td>
+                          //   <td>{entry.download ? "Yes" : "No"}</td>
+                          // </tr>
+                           <tr key={index}>
+                           <td>{index + 1}</td>
+                           <td>{entry.deptid}</td>
+                           <td>{entry.dname}</td>
+                           <td>{entry.courseid}</td>
+                           <td>{entry.coursename}</td>
+                           <td>{entry.isview ? "Yes" : "No"}</td>
+                           <td>{entry.isdownload ? "Yes" : "No"}</td>
+                           <td>
+              <button variant="Danger" onClick={() => handleDeleteRow(index)}>Delete</button> {/* Delete button for each row */}
+            </td>
+                         </tr>
                         );
                       })}
                     </tbody>
