@@ -78,7 +78,7 @@ function MenuSubMenu() {
 
   const handleConfirmSubmit = async () => {
     try {
-      await APIClient.post("/TopMenu/delete/" + selectedItem.id);
+      await APIClient.post("/api/Topmenu/delete/" + selectedItem.id);
       setApiData((prevData) =>
         prevData.filter((item) => item.id !== selectedItem.id)
       );

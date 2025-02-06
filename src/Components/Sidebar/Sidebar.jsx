@@ -75,7 +75,7 @@ const Sidebar = ({ data }) => {
           <li className="nav-item">
             <Link to="/cms/Createmenu" className="nav-link">
               <DashboardIcon />
-              CMS
+              Menu 
               {/* <span className="badge badge-sm bg-info ms-auto">NEW</span> */}
             </Link>
           </li>
@@ -134,6 +134,13 @@ const Sidebar = ({ data }) => {
             <Link to="custom/CustomTable" className="nav-link">
               <DashboardIcon />
               Custom Table
+            </Link>
+          </li>
+
+          <li className="nav-item">
+            <Link to="/Banner/Banner" className="nav-link">
+              <DashboardIcon />
+              Slider
             </Link>
           </li>
         </ul>

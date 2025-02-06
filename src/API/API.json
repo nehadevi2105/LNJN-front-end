@@ -13,5 +13,8 @@
   "deleteCourse": "/api/Course/delete",
   "editCourse": "/api/Course/put",
   "Getallcustom": "/api/Topmenu/Getallcustom",
-  "getcustomdatabyid": "/api/Topmenu/"
+  "getcustomdatabyid": "/api/Topmenu/",
+  "postSlider": "api/Slider/postslider_data",
+  "getSlider": "/api/Slider",
+  "deleteSlider": "/api/Slider/delete/"
 }
