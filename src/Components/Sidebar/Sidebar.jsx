@@ -144,6 +144,20 @@ const Sidebar = ({ data }) => {
             </Link>
           </li>
           <li className="nav-item">
+            <Link to="/Rooms/CreateRoom" className="nav-link">
+              <DashboardIcon />
+              Create Room
+              {/* <span className="badge badge-sm bg-info ms-auto">NEW</span> */}
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/Rooms/AllRooms" className="nav-link">
+              <DashboardIcon />
+              Room List
+              {/* <span className="badge badge-sm bg-info ms-auto">NEW</span> */}
+            </Link>
+          </li>
+          <li className="nav-item">
             <Link to="/Hostel/Bookroom" className="nav-link">
               <DashboardIcon />
               Book Room
@@ -182,14 +196,27 @@ const Sidebar = ({ data }) => {
           <li className="nav-item">
             <Link to="/Banner/Banner" className="nav-link">
               <DashboardIcon />
-              Slider
+              Create Banner
             </Link>
           </li>
-
+          <li className="nav-item">
+            <Link to="/bannerdata" className="nav-link">
+              <DashboardIcon />
+              Banner Table
+            </Link>
+          </li>
+          
           <li className="nav-item">
             <Link to="/WhatsNew/CreateWhatsNew" className="nav-link">
               <DashboardIcon />
               What's New
+            </Link>
+          </li>
+
+          <li className="nav-item">
+            <Link to="/WhatsNew/WhatsNewTable" className="nav-link">
+              <DashboardIcon />
+              What's New Table
             </Link>
           </li>
         </ul>
