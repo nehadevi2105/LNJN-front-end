@@ -36,14 +36,13 @@ import Index from "../Components/Admin/EditMenuSubmeu/IndexEdit";
 import Approvaledit from "../Components/Admin/EditMenuSubmeu/Approvalindex";
 import Publishindex from "../Components/Admin/EditMenuSubmeu/Publishindex";
 import BannerTable from "../Components/Admin/Banner/BannerTable";
-
-import BannerTable from "../Components/Admin/Banner/BannerTable"
-import Approvebanner from "../Components/Admin/Banner/Approvebanner"
+import Approvebanner from "../Components/Admin/Banner/Approvebanner";
 import WhatsNewTable from "../Components/Admin/WhatsNew/WhtasNewTable/WhatsNewTable";
 import EditWhatsNew from "../Components/Admin/WhatsNew/EditWhatsNew/EditWhatsNew";
 import Createtender from "../Components/Admin/Tender/CreateTender/Createtender";
 import TenderTable from "../Components/Admin/Tender/TenderTable/TenderTable";
 import EditTender from "../Components/Admin/Tender/EditTender/EditTender";
+
 import WhatsNewapprovalTable from "../Components/Admin/WhatsNew/WhtasNewTable/Whatsnewapprovallist";
 import WhatsNewpublisherTable from "../Components/Admin/WhatsNew/WhtasNewTable/Whatsnewpublisherlist";
 import ApproveWhatsNew from "../Components/Admin/WhatsNew/EditWhatsNew/Approvewhatsnew";
@@ -112,6 +111,12 @@ function Router() {
       <Route path="/Hostel/CreateHostel" element={<CreateHostel />} />
       <Route path="/Hostel/AllHostel" element={<AllHostel />} />
       <Route path="/Hostel/EditHostel/:id" element={<EditHostel />} />
+      
+      <Route path="/WhatsNew/WhatsNewTable" element={<WhatsNewTable />} />
+      <Route path="/WhatsNew/EditWhatsNew/:id" element={<EditWhatsNew />} />
+      <Route path="/CreateTender/Createtender" element={<Createtender />} />
+      <Route path="/TenderTable/TenderTable" element={<TenderTable />} />
+      <Route path="/EditTender/EditTender/:id" element={<EditTender />} />
     </Routes>
   );
 }
