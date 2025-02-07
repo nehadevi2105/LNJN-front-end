@@ -27,6 +27,10 @@ import Customapprovallist from "../Components/Admin/custom/Customapprovallist";
 import Editcustomapproval from "../Components/Admin/custom/Editcustomapproval";
 import Custompublisherlist from "../Components/Admin/custom/Custompublisherlist";
 import Editpublisherapproval from "../Components/Admin/custom/Editcustompublisher";
+import WhatsNewTable from "../Components/Admin/WhatsNew/WhtasNewTable/WhatsNewTable";
+import EditWhatsNew from "../Components/Admin/WhatsNew/EditWhatsNew/EditWhatsNew";
+
+
 function Router() {
   return (
     <Routes>
@@ -56,6 +60,8 @@ function Router() {
       <Route path="/menu/publish/:id" element = {<Publishdata/>}/>
       <Route path="/WhatsNew/CreateWhatsNew" element={<CreateWhatsNew />} />
       <Route path="/EditMenuSubmeu/IndexEdit/:id" element={<IndexEdit />} />
+      <Route path="/WhatsNew/WhatsNewTable" element={<WhatsNewTable />} />
+      <Route path="/WhatsNew/EditWhatsNew/:id" element={<EditWhatsNew />} />
       
       <Route path="/customapproval" element={<Customapprovallist />} />
       <Route path="/customapproval/:id" element = {<Editcustomapproval/>}/>

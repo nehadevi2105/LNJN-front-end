@@ -157,6 +157,13 @@ const Sidebar = ({ data }) => {
               What's New
             </Link>
           </li>
+
+          <li className="nav-item">
+            <Link to="/WhatsNew/WhatsNewTable" className="nav-link">
+              <DashboardIcon />
+              What's New Table
+            </Link>
+          </li>
         </ul>
 
         <div className="sidebar-footer border-top d-none d-md-flex">

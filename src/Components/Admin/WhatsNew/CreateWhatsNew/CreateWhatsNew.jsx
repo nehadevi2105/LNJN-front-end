@@ -224,7 +224,7 @@ const CreateWhatsNew = () => {
           },
         });
         // console.log('Data updated:', response.data);
-        toast.success("Data updated successfully!");
+        toast.success("Data saved successfully!");
         setFormData({
           news_title: "",
           contenttype: "",

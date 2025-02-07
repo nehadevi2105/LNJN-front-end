@@ -30,6 +30,7 @@ const EditSubmenu = () => {
   const [data, Setdata] = useState([]);
   const [submenus, setSubMenu] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
+  const [editorContent, setEditorContent] = useState("");
   const [content, setContent] = useState("");
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [formErrors, setFormErrors] = useState({});
@@ -259,6 +260,8 @@ const EditSubmenu = () => {
       try {
         const response = await APIClient.get(apis.getmenudatabyid + id);
         setFormData(response.data);
+        setHtml(response.data.html); // Set the html state
+        setEditorContent(response.data.html); // Set the editor content
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
