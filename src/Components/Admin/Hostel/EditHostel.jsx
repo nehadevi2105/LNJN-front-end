@@ -1,76 +1,90 @@
-import React, { useState, useEffect } from "react";
-import { Button, Card, Col, Container, Form, Spinner } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Button, Card, Col, Container, Form, Spinner } from 'react-bootstrap';
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Link, useParams } from 'react-router-dom';
 
-const EditHostel = () => {
-  const { hid, hname } = useParams(); // Hostel ID and Name from route parameters
-
-  const [hostelName, setHostelName] = useState(hname || "");
-  const [loading, setLoading] = useState(false);
+export const EditHostel = () => {
+  const { id } = useParams(); // Getting hostel ID from the URL params
+  const [formErrors, setFormErrors] = useState({});
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    hname: ''  // Hostel name state
+  });
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
-  const [formError, setFormError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Fetch hostel details by ID
-    const fetchHostelDetails = async () => {
+    const fetchHostel = async () => {
       try {
+        debugger;
+        console.log("Fetching hostel data...");  // Log to check if API call is triggered
         const response = await APIClient.get(`${apis.getHostels}/${id}`);
-        if (response.status === 200) {
-          setHostelName(response.data.hname); // Assuming the hostel name is in response.data.name
+        
+        if (response && response.data) {
+          console.log("Fetched hostel data:", response.data); // Log the fetched data
+          setFormData({ hname: response.data.hname }); // Populate the form with fetched data
         } else {
-          toast.error("Failed to fetch hostel details");
+          toast.error('Hostel data is missing.');
         }
       } catch (error) {
-        toast.error("Something went wrong while fetching hostel details");
+        console.error('Error fetching hostel:', error);
+        toast.error('Error fetching hostel data. Please try again.');
       }
     };
-    fetchHostelDetails();
-  }, [hid]);
+    
+    if (id) {
+      fetchHostel();
+    } else {
+      toast.error("Hostel ID is missing");
+    }
+  }, [id]);
 
-  const handleInputChange = (e) => {
-    setHostelName(e.target.value);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
   const validateForm = () => {
-    if (!hostelName.trim()) {
-      setFormError("Hostel name is required");
-      return false;
+    const errors = {};
+    if (!formData.hname.trim()) {
+      errors.hname = 'Hostel name is required';
     }
-    setFormError("");
-    return true;
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!validateForm()) {
-      toast.error("Please fill in the hostel name.");
-      return;
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (validateForm()) {
+      setConfirmDialogOpen(true);
     }
-    setConfirmDialogOpen(true);
   };
 
-  const handleConfirmSubmit = async () => {
+  const handleUpdateConfirm = async () => {
     setConfirmDialogOpen(false);
     setLoading(true);
-
     try {
-      const response = await APIClient.post(`${apis.editHostel}${hid}`, { name: hostelName }, {
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await APIClient.post(`${apis.editHostel}/${id}`, formData, {headers: { "Content-Type": "application/json" },});
       if (response.status === 200) {
-        toast.success("Hostel name updated successfully!");
+        setTimeout(() => {
+          setLoading(false);
+          setSuccessDialogOpen(true);
+          setFormData({ hname: '' });
+        }, 1000);
       } else {
-        toast.error("Failed to update hostel name");
+        toast.error('Failed to update hostel');
+        setLoading(false);
       }
     } catch (error) {
-      toast.error("Something went wrong");
-    } finally {
+      console.error('Error updating hostel:', error);
+      toast.error('Something went wrong');
       setLoading(false);
     }
   };
@@ -82,39 +96,32 @@ const EditHostel = () => {
           <Card.Body>
             <h2 className="text-center text-uppercase mb-4">Edit Hostel</h2>
             <Form onSubmit={handleSubmit}>
-            {/* <Row className="mb-3"> */}
-              <Col md={6} className="mx-auto">
-                <Form.Group controlId="hostelName">
-                  <Form.Label>Hostel Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter hostel name"
-                    width={100}
-                    value={hostelName}
-                    onChange={handleInputChange}
-                    isInvalid={!!formError}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {formError}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-            {/* </Row> */}
-              <div className="text-center mt-3 d-flex" style={{ justifyContent: "space-between" }}>
-              <Link to="/Hostel/AllHostel">
-                    <Button
-                        variant="outline-secondary"
-                        type="button"
-                        className="btn"
-                        style={{ width: 100 }}>
-                        Back
-                    </Button>
+              <Form.Group className="mb-3" controlId="hname">
+                <Form.Label>Hostel Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Hostel Name"
+                  name="hname"
+                  value={formData.hname}
+                  onChange={handleChange}
+                  isInvalid={!!formErrors.hname}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {formErrors.hname}
+                </Form.Control.Feedback>
+              </Form.Group>
+
+              <div className="d-flex justify-content-between">
+                <Link to="/Hostel/AllHostel">
+                  <button type="button" className="btn btn-outline-secondary">Back</button>
                 </Link>
-                <Button variant="primary" type="submit">
-                  {loading ? <Spinner animation="border" size="sm" /> : "Update Hostel"}
-                </Button>
-                
+                <Button variant="primary" type="submit">Submit</Button>
               </div>
+              <Dialog open={loading}>
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </Dialog>
             </Form>
           </Card.Body>
         </Card>
@@ -122,18 +129,20 @@ const EditHostel = () => {
 
       <Dialog open={confirmDialogOpen} onClose={() => setConfirmDialogOpen(false)}>
         <DialogTitle>Confirm Update</DialogTitle>
-        <DialogContent>Are you sure you want to update the hostel ?</DialogContent>
+        <DialogContent>Are you sure you want to update this hostel?</DialogContent>
         <DialogActions>
-          <Button onClick={() => setConfirmDialogOpen(false)} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleConfirmSubmit} color="primary">
-            Confirm
-          </Button>
+          <Button onClick={() => setConfirmDialogOpen(false)} color="primary">Cancel</Button>
+          <Button onClick={handleUpdateConfirm} color="primary">Confirm</Button>
         </DialogActions>
       </Dialog>
 
-      <ToastContainer />
+      <Dialog open={successDialogOpen} onClose={() => setSuccessDialogOpen(false)}>
+        <DialogTitle>Success</DialogTitle>
+        <DialogContent>Hostel updated successfully!</DialogContent>
+        <DialogActions>
+          <Button onClick={() => setSuccessDialogOpen(false)} color="primary">OK</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

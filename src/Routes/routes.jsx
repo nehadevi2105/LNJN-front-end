@@ -24,6 +24,9 @@ import EditCandidate from "../Components/Admin/Candidate/EditCandidate";
 import CreateHostel from "../Components/Admin/Hostel/CreateHostel";
 import AllHostel from "../Components/Admin/Hostel/AllHostel";
 import EditHostel from "../Components/Admin/Hostel/EditHostel";
+import CreateRoom from "../Components/Admin/Rooms/CreateRoom";
+import AllRooms from "../Components/Admin/Rooms/AllRooms";
+import EditRoom from "../Components/Admin/Rooms/EditRoom";
 import Approvallist from "../Components/Admin/MenuSubMenu/Approvallist";
 import Approvedata from "../Components/Admin/EditMenuSubmeu/approvedata";
 import Publisherlist from "../Components/Admin/MenuSubMenu/Publisherlist";
@@ -77,6 +80,9 @@ function Router() {
       <Route path="/Hostel/CreateHostel" element = {<CreateHostel/>}/>
       <Route path="/Hostel/AllHostel" element = {<AllHostel/>}/>
       <Route path="/Hostel/EditHostel/:id" element = {<EditHostel/>}/>
+      <Route path="/Rooms/CreateRoom" element = {<CreateRoom/>}/>
+      <Route path="/Rooms/AllRooms" element = {<AllRooms/>}/>
+      <Route path="/Room/EditRoom/:id" element = {<EditRoom/>}/>
 
     </Routes>
   );

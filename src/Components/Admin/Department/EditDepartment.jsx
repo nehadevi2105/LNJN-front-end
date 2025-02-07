@@ -78,20 +78,18 @@ export const EditDepartment = () => {
 
   return (
     <>
-      <div>
-        <main id="main" className="main">
+      {/*<div>
+         <main id="main" className="main">
           <div className="pagetitle"></div>
           <div className="home">
             <div className="homeContainer">
               <Container>
                 <Row className="vh-100 d-flex justify-content-center align-items-left">
-                  <Col md={10} lg={12} xs={12}>
+                  <Col md={10} lg={12} xs={12}> */}
+                  <Container className="my-4">
                     <Card>
                       <Card.Body>
-                        <h2 className="fw-bold mb-4 text-center text-uppercase">Edit Department</h2>
-                        <Link to="/Department/AllDepartment">
-                          <button type="button" className="btn btn-info">Back</button>
-                        </Link>
+                        <h2 className="text-center text-uppercase mb-4">Edit Department</h2>
                         <Form onSubmit={handleSubmit}>
                           <Form.Group className="mb-3" controlId="dname">
                             <Form.Label>Name</Form.Label>
@@ -109,6 +107,9 @@ export const EditDepartment = () => {
                           </Form.Group>
 
                           <div className="d-flex justify-content-between">
+                            <Link to="/Department/AllDepartment">
+                              <button type="button" className="btn btn-outline-secondary">Back</button>
+                            </Link>
                             <Button variant="primary" type="submit">Submit</Button>
                           </div>
                           <Dialog open={loading}>
@@ -119,13 +120,14 @@ export const EditDepartment = () => {
                         </Form>
                       </Card.Body>
                     </Card>
-                  </Col>
+                  </Container>
+                  {/* </Col>
                 </Row>
               </Container>
             </div>
           </div>
         </main>
-      </div>
+      </div> */}
       
       <Dialog open={confirmDialogOpen} onClose={() => setConfirmDialogOpen(false)}>
         <DialogTitle>Confirm Update</DialogTitle>
@@ -146,3 +148,5 @@ export const EditDepartment = () => {
     </>
   );
 };
+
+export default EditDepartment;
