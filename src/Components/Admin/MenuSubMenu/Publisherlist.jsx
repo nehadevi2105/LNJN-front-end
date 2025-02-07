@@ -45,7 +45,7 @@ function Publisherlist() {
       sortable: false,
       renderCell: (params) =>
         1 === 1 || null ? ( // Check the user role here
-          <Link to={"/menu/publish/" + params.row.id}>
+          <Link to={"/publishdataindex/" + params.row.id}>
             <EditIcon style={{ cursor: "pointer" }} />
           </Link>
         ) : (
@@ -53,7 +53,7 @@ function Publisherlist() {
           //     style={{ cursor: 'no-drop', color: 'red' }}
           //     disabled
           // />
-          <Link to={"/cms/editdata/" + params.row.id}>
+          <Link to={"/publishdataindex/" + params.row.id}>
             <EditIcon style={{ cursor: "pointer" }} />
           </Link>
         ),
@@ -113,12 +113,12 @@ function Publisherlist() {
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1 className="maintitle">All Menu</h1>
+            <h1 className="maintitle">All Publisher List</h1>
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Service</li>
-                <li className="breadcrumb-item active">All Menu </li>
+                <li className="breadcrumb-item active">All Publisher List </li>
               </ol>
             </nav>
           </div>

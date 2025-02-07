@@ -173,7 +173,7 @@ const EditMenu = () => {
       }
       
       const response = await APIClient.post(
-        "api/TopMenu/put/" + id,
+        "api/TopMenu/updatemenu/" + id,
         formDataToSend,
         {
           headers: {

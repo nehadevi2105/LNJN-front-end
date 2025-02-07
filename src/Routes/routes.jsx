@@ -28,6 +28,8 @@ import Editcustomapproval from "../Components/Admin/custom/Editcustomapproval";
 import Custompublisherlist from "../Components/Admin/custom/Custompublisherlist";
 import Editpublisherapproval from "../Components/Admin/custom/Editcustompublisher";
 import Index from "../Components/Admin/EditMenuSubmeu/IndexEdit";
+import Approvaledit from "../Components/Admin/EditMenuSubmeu/Approvalindex";
+import Publishindex from "../Components/Admin/EditMenuSubmeu/Publishindex";
 
 function Router() {
   return (
@@ -63,7 +65,8 @@ function Router() {
       <Route path="/custompublisher" element={<Custompublisherlist />} />
       <Route path="/publishdata/:id" element = {<Editpublisherapproval/>}/>
       <Route path="editdata/:id" element={<Index />} />
-
+      <Route path="approvaleditdata/:id" element={<Approvaledit />} />
+      <Route path="publishdataindex/:id" element={<Publishindex />} />
     </Routes>
   );
 }

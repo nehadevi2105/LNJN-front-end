@@ -45,7 +45,7 @@ function Approvallist() {
       sortable: false,
       renderCell: (params) =>
         1 === 1 || null ? ( // Check the user role here
-          <Link to={"/menu/approval/" + params.row.id}>
+          <Link to={"/approvaleditdata/" + params.row.id}>
             <EditIcon style={{ cursor: "pointer" }} />
           </Link>
         ) : (
@@ -53,7 +53,7 @@ function Approvallist() {
           //     style={{ cursor: 'no-drop', color: 'red' }}
           //     disabled
           // />
-          <Link to={"/cms/editdata/" + params.row.id}>
+          <Link to={"/approvaleditdata/" + params.row.id}>
             <EditIcon style={{ cursor: "pointer" }} />
           </Link>
         ),
@@ -113,12 +113,12 @@ function Approvallist() {
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1 className="maintitle">All Menu</h1>
+            <h1 className="maintitle">All Approval List</h1>
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Service</li>
-                <li className="breadcrumb-item active">All Menu </li>
+                <li className="breadcrumb-item active">All Approval List</li>
               </ol>
             </nav>
           </div>

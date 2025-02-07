@@ -386,7 +386,7 @@ const Editpublisherapproval = () => {
                 className="btn btn-primary"
                 onClick={handleOpenConfirmation}
               >
-                Approve
+                Publish Data
               </button>
 
               <Dialog

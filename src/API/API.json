@@ -23,5 +23,5 @@
   "postSlider": "api/Slider/postslider_data",
   "getSlider": "/api/Slider",
   "deleteSlider": "/api/Slider/delete/",
-  "editSubMenu": "/api/Topmenu/put/"
+  "editSubMenu": "/api/Topmenu/updatemenu/"
 }
