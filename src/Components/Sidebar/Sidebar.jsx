@@ -147,10 +147,16 @@ const Sidebar = ({ data }) => {
           <li className="nav-item">
             <Link to="/Banner/Banner" className="nav-link">
               <DashboardIcon />
-              Slider
+              Create Banner
             </Link>
           </li>
-
+          <li className="nav-item">
+            <Link to="/bannerdata" className="nav-link">
+              <DashboardIcon />
+              Banner Table
+            </Link>
+          </li>
+          
           <li className="nav-item">
             <Link to="/WhatsNew/CreateWhatsNew" className="nav-link">
               <DashboardIcon />

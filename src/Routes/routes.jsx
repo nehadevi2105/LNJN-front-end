@@ -30,6 +30,7 @@ import Editpublisherapproval from "../Components/Admin/custom/Editcustompublishe
 import Index from "../Components/Admin/EditMenuSubmeu/IndexEdit";
 import Approvaledit from "../Components/Admin/EditMenuSubmeu/Approvalindex";
 import Publishindex from "../Components/Admin/EditMenuSubmeu/Publishindex";
+import BannerTable from "../Components/Admin/Banner/BannerTable"
 
 function Router() {
   return (
@@ -67,6 +68,7 @@ function Router() {
       <Route path="editdata/:id" element={<Index />} />
       <Route path="approvaleditdata/:id" element={<Approvaledit />} />
       <Route path="publishdataindex/:id" element={<Publishindex />} />
+      <Route path="/bannerdata" element={<BannerTable />} />
     </Routes>
   );
 }

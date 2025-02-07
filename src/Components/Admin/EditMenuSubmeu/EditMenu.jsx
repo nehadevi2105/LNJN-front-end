@@ -359,18 +359,9 @@ const EditMenu = () => {
               <div className="mb-3">
                 <label className="form-label text-dark">HTML Editor</label>
                 <div>
-                  {/* <textarea
-                  className="form-control"
-                  value={html}
-                  onChange={(e) => handleEditorChange(e.target.value)}
-                ></textarea> */}
+                 
                 </div>
-                {/* <FroalaEditorComponent
-      tag='textarea'
-      model={html}
-      onModelChange={handleEditorChange}
-    /> */}
-                {/* <HtmlEditor/> */}
+           
                 <JoditEditor
                   value={formData.html}
                   config={config}
