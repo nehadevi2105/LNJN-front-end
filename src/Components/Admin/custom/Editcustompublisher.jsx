@@ -16,7 +16,7 @@ import {
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 
-const Editcustomdata = () => {
+const Editpublisherapproval = () => {
   const { id } = useParams();
   const [html, setHtml] = useState("");
   const [file, setFile] = useState(null);
@@ -159,7 +159,8 @@ const Editcustomdata = () => {
       formDataToSend.append("menuurl", formData.menuurl);
       formDataToSend.append("submenu_id", formData.submenu_id);
       formDataToSend.append("languagetype", formData.languagetype);
-      formDataToSend.append("usertype", '1');
+      formDataToSend.append("usertype", '4');
+      formDataToSend.append("action", 'publish');
       if (formData.contenttype === "4") {
         formDataToSend.append("external_link", formData.external_link);
       } else if (formData.contenttype === "3") {
@@ -179,6 +180,7 @@ const Editcustomdata = () => {
           },
         }
       );
+      alert("Data published successfully! ");
       window.location.replace("/custom/CustomTable");
       toast.success("Data saved successfully!");
       setModalMessage("Data saved successfully!");
@@ -200,7 +202,7 @@ const Editcustomdata = () => {
     }
   };
   useEffect(() => {
-
+    //Function to fetch menuname from the dropdown
     async function fetchData1() {
       try {
         setLoading(true);
@@ -220,7 +222,6 @@ const Editcustomdata = () => {
         const response = await APIClient.get(apis.getcustomdatabyid + id);
         setFormData(response.data);
       } catch (error) {
-
         console.error("Error fetching user data:", error);
       }
     }
@@ -232,7 +233,7 @@ const Editcustomdata = () => {
       <div className="row justify-content-center">
         <div className="container-fluid bg-white">
           <div className="box-sec">
-            <h1 className="text-center heading-main">Edit Menu</h1>
+            <h1 className="text-center heading-main">Approve Custom Data</h1>
 
             <div className="mb-3">
               <label className="form-label text-dark">Select a Language</label>
@@ -385,7 +386,7 @@ const Editcustomdata = () => {
                 className="btn btn-primary"
                 onClick={handleOpenConfirmation}
               >
-                Update
+                Publish Data
               </button>
 
               <Dialog
@@ -437,4 +438,4 @@ const Editcustomdata = () => {
     </div>
   );
 };
-export default Editcustomdata;
+export default Editpublisherapproval;

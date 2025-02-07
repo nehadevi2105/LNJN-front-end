@@ -132,21 +132,21 @@ export const CreateFooterAddress = () => {
     <div>
       <Header />
       <Sidebar />
-      <main id="main" class="main">
-        <div class="pagetitle">
-          <div class="pagetitle-lft">
+      <main id="main">
+        <div className="pagetitle">
+          <div className="pagetitle-lft">
             <h1>Create Footer Address</h1>
             <nav>
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item">Home</li>
-                <li class="breadcrumb-item">Footer</li>
-                <li class="breadcrumb-item active">Create Footer Address</li>
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">Home</li>
+                <li className="breadcrumb-item">Footer</li>
+                <li className="breadcrumb-item active">Create Footer Address</li>
               </ol>
             </nav>
           </div>
-          <div class="pagetitle-rgt">
+          <div className="pagetitle-rgt">
           <Link to='/dashboard'>
-              <button type="button" class="btn btn-info">
+              <button type="button" className="btn btn-info">
                 Back
               </button>
             </Link>
@@ -154,9 +154,9 @@ export const CreateFooterAddress = () => {
         </div>
         <div className="container">
           <div className="row justify-content-center">
-            <div class="card">
-              <div class="card-body">
-                <div class="mb-3 mt-md-4">
+            <div className="card">
+              <div className="card-body">
+                <div className="mb-3 mt-md-4">
                   <div className="col-md-12">
                     <div className="box-sec">
                       <div className="mb-3">

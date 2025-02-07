@@ -36,7 +36,7 @@ const CustomTable = () => {
     { field: "menuname", headerName: "Title", width: 200 },
     // { field: "u_internal_link", headerName: "Internal Link",width: 120 },
     // { field: "u_external_link", headerName: "External Link",width: 120 },
-    { field: "menu_url", headerName: "Menu Url", width: 200 },
+    { field: "menuurl", headerName: "Menu Url", width: 200 },
     {
       field: "edit",
       headerName: "Edit",
@@ -162,6 +162,17 @@ const CustomTable = () => {
                 style={{ color: "white", backgroundColor: "blue", width: 90 }}
               >
                 Back
+              </button>
+            </Link>
+           
+            <Link to="/customapproval">
+              <button type="button" className="btn btn-primary" style={{ color: "white", backgroundColor: "blue",marginLeft: "10px" }}>
+                approval list
+              </button>
+            </Link>
+            <Link to="/custompublisher">
+              <button type="button" className="btn btn-primary" style={{ color: "white", backgroundColor: "blue",marginLeft: "10px" }}>
+               publisher  list
               </button>
             </Link>
           </div>

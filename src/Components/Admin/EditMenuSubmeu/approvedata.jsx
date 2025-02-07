@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useParams } from "react-router-dom";
@@ -16,7 +16,7 @@ import {
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 
-const Editcustomdata = () => {
+const Approvedata = () => {
   const { id } = useParams();
   const [html, setHtml] = useState("");
   const [file, setFile] = useState(null);
@@ -64,6 +64,7 @@ const Editcustomdata = () => {
     setFormData({
       menu_id: "",
       submenu_id: 0,
+
       menuname: "",
       menuurl: "",
       contenttype: "",
@@ -83,7 +84,7 @@ const Editcustomdata = () => {
     const newErrors = {};
 
     if (!formData.menuname) {
-      newErrors.menuName = "Name is required";
+      newErrors.menuname = "Name is required";
     }
 
     if (!formData.contenttype) {
@@ -159,7 +160,8 @@ const Editcustomdata = () => {
       formDataToSend.append("menuurl", formData.menuurl);
       formDataToSend.append("submenu_id", formData.submenu_id);
       formDataToSend.append("languagetype", formData.languagetype);
-      formDataToSend.append("usertype", '1');
+      formDataToSend.append("usertype", '4');
+      formDataToSend.append("action", 'approve');
       if (formData.contenttype === "4") {
         formDataToSend.append("external_link", formData.external_link);
       } else if (formData.contenttype === "3") {
@@ -169,9 +171,9 @@ const Editcustomdata = () => {
       } else if (formData.contenttype === "1") {
         formDataToSend.append("html", content);
       }
-
+      
       const response = await APIClient.post(
-        "/api/TopMenu/updatecustomdata/" + id,
+        "api/TopMenu/updatemenu/" + id,
         formDataToSend,
         {
           headers: {
@@ -179,28 +181,31 @@ const Editcustomdata = () => {
           },
         }
       );
-      window.location.replace("/custom/CustomTable");
-      toast.success("Data saved successfully!");
-      setModalMessage("Data saved successfully!");
 
-      // window.location.href("custom/allcustomdata");
+      toast.success("Data approved  and send for publish!");
+      setModalMessage("Data approved  and send for publish!");
+      setFormData({
+        menuname: "",
+        ContentType: "",
+        external_link: "",
+        internal_link: "",
+
+        submenu_id: 0,
+        file: "",
+        html: "",
+        languagetype: "",
+      });
       setSnackbarOpen(true);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         toast.error("Unauthorized access. Please log in.");
       } else {
-        if (error.response && error.response.data && error.response.data.errors) {
-          const errorMessages = Object.values(error.response.data.errors).flat().join(' ');
-          toast.error(`Validation Error: ${errorMessages}`);
-        } else {
-          toast.error("Something Went Wrong!");
-        }
+        toast.error("Something Went Wrong!");
         console.error("Error saving/updating data:", error);
       }
     }
   };
   useEffect(() => {
-
     async function fetchData1() {
       try {
         setLoading(true);
@@ -217,10 +222,9 @@ const Editcustomdata = () => {
   useEffect(() => {
     async function fetchData2() {
       try {
-        const response = await APIClient.get(apis.getcustomdatabyid + id);
+        const response = await APIClient.get(apis.getmenudatabyid + id);
         setFormData(response.data);
       } catch (error) {
-
         console.error("Error fetching user data:", error);
       }
     }
@@ -232,7 +236,7 @@ const Editcustomdata = () => {
       <div className="row justify-content-center">
         <div className="container-fluid bg-white">
           <div className="box-sec">
-            <h1 className="text-center heading-main">Edit Menu</h1>
+            <h1 className="text-center heading-main">Approve Menu Data</h1>
 
             <div className="mb-3">
               <label className="form-label text-dark">Select a Language</label>
@@ -284,8 +288,8 @@ const Editcustomdata = () => {
                 <option value="2">File</option>
                 <option value="1">HTML</option>
               </select>
-              {errors.contenttype && (
-                <div className="text-danger">{errors.contenttype}</div>
+              {errors.ContentType && (
+                <div className="text-danger">{errors.ContentType}</div>
               )}
             </div>
 
@@ -323,8 +327,8 @@ const Editcustomdata = () => {
                     Select a role
                   </option>
                   {dropdownOptions.map((data) => (
-                    <option key={data.id} value={"/menu/" + data.menu_url}>
-                      {"Menu Name" + ":-" + data.menuname}
+                    <option key={data.u_id} value={"/menu/" + data.u_menu_url}>
+                      {"Menu Name" + ":-" + data.u_menu_name}
                     </option>
                   ))}
                 </select>
@@ -385,7 +389,7 @@ const Editcustomdata = () => {
                 className="btn btn-primary"
                 onClick={handleOpenConfirmation}
               >
-                Update
+                Approve
               </button>
 
               <Dialog
@@ -437,4 +441,4 @@ const Editcustomdata = () => {
     </div>
   );
 };
-export default Editcustomdata;
+export default Approvedata;

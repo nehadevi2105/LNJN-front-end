@@ -1,6 +1,9 @@
 {
   "topMenu": "/api/Topmenu/",
   "navmenu": "/api/Topmenu",
+  "createMenu": "/api/Topmenu/createmenusubmenu",
+  "approvallist":"/api/Topmenu/Getapprovalist",
+  "publisherlist":"/api/Topmenu/Getpublisherlist",
   "departmentPost": "/api/Department",
   "getDepartments": "/api/Department",
   "deleteDepartment": "/api/Department/delete",
@@ -8,7 +11,7 @@
   "createCourse": "/api/Course/postcourse_data",
   "getmenuname": "/api/Topmenu/",
   "getmenudatabyid": "/api/Topmenu/",
-  "customdata": "/api/Topmenu/customdata",
+  "customdata": "/api/Topmenu/createcustom",
   "getCourses": "/api/Course",
   "deleteCourse": "/api/Course/delete",
   "editCourse": "/api/Course/put",
@@ -22,5 +25,11 @@
   "deleteHostel": "/api/Hostal/delete",
   "editHostel": "/api/Hostal/put",
   "Getallcustom": "/api/Topmenu/Getallcustom",
-  "getcustomdatabyid": "/api/Topmenu/"
+  "Getapprovalcustom": "/api/Topmenu/Getcustomapprovalist",
+  "Getpublishercustom": "/api/Topmenu/Getcustompublisherlist",
+  "getcustomdatabyid": "/api/Topmenu/",
+  "postSlider": "api/Slider/postslider_data",
+  "getSlider": "/api/Slider",
+  "deleteSlider": "/api/Slider/delete/",
+  "editSubMenu": "/api/Topmenu/updatemenu/"
 }

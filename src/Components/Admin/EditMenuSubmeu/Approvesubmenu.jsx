@@ -1,9 +1,10 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+//import ViewListIcon from '@mui/icons-material/ViewList';
 import { Link, useParams } from "react-router-dom";
-import JoditEditor from "jodit-react";
 import DialogActions from "@mui/material/DialogActions";
+
 import Alert from "@mui/material/Alert";
 import {
   Button,
@@ -12,22 +13,57 @@ import {
   DialogContent,
   Dialog,
 } from "@mui/material";
-//import { Col, Row } from 'react-bootstrap';
+import { Col, Form, Row } from "react-bootstrap";
+import { ElectricBike } from "@mui/icons-material";
+import JoditEditor from "jodit-react";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
+import baseURL from "../../../API/APIClient";
 
-const Editcustomdata = () => {
+const Approvesubmenudata = () => {
   const { id } = useParams();
   const [html, setHtml] = useState("");
   const [file, setFile] = useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [editorContent, setEditorContent] = useState("");
+  const [data, Setdata] = useState([]);
+  const [submenus, setSubMenu] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
   const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(false);
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [formErrors, setFormErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [filePath, setFilePath] = useState("");
+  const [formData, setFormData] = useState({
+    menu_id: "",
+    submenu_id: "",
+    menuname: "",
+    menuurl: "",
+    contenttype: "",
+    html: "",
+    file: "",
+    internal_link: "",
+    external_link: "",
+    languagetype: "",
+  });
+
+  const [errors, setErrors] = useState({});
+  const editor = useRef(null);
+  useEffect(() => {
+    setFormData({
+      menu_id: "",
+      menuname: "",
+      menuurl: "",
+      contenttype: "",
+      external_link: "",
+      internal_link: "",
+      submenu_id: "",
+      file: "",
+      html: "",
+      languagetype: "",
+    });
+  }, []);
 
   const config = useMemo(
     () => ({
@@ -40,67 +76,34 @@ const Editcustomdata = () => {
     setContent(html);
   }, []);
 
-  // const handleEditorChange = (content) => {
-  //   setEditorContent(content);
-  // };
-
-  const [formData, setFormData] = useState({
-    menu_id: "",
-    submenu_id: 0,
-
-    menuname: "",
-    menuurl: "",
-    contenttype: "",
-    html: "",
-    file: "",
-    internal_link: "",
-    external_link: "",
-    languagetype: "",
-  });
-
-  const [errors, setErrors] = useState({});
-
-  useEffect(() => {
-    setFormData({
-      menu_id: "",
-      submenu_id: 0,
-      menuname: "",
-      menuurl: "",
-      contenttype: "",
-      html: "",
-      file: "",
-      internal_link: "",
-      external_link: "",
-      languagetype: "",
-    });
-  }, []);
-
   const handleEditorChange = (content) => {
     setHtml(content);
   };
-
   const validateForm = () => {
     const newErrors = {};
 
     if (!formData.menuname) {
-      newErrors.menuName = "Name is required";
+      newErrors.menuname = "Name is required";
+    }
+    // if (!formData.menu_id) {
+    //   newErrors.menuname = 'Name is required';
+    // }
+    if (!formData.languagetype) {
+      newErrors.languagetype = "Select a Language";
     }
 
     if (!formData.contenttype) {
-      newErrors.ContentType = "Select a content type";
-    }
-
-    if (!formData.languagetype) {
-      newErrors.languagetype = "Select a Language";
+      newErrors.contenttype = "Select a content type";
     }
 
     if (formData.contenttype === "4" && !formData.external_link) {
       newErrors.external_link = "External Link is required";
     }
 
-    // if (formData.ContentType === '3' && !formData.internal_link) {
-    //   newErrors.internal_link = 'Internal Link is required';
-    // }
+    if (formData.contenttype === "3" && !formData.internal_link) {
+      newErrors.internal_link = "Internal Link is required";
+    }
+
     if (formData.contenttype === "2") {
       if (!file) {
         newErrors.file = "File is required";
@@ -108,8 +111,7 @@ const Editcustomdata = () => {
         newErrors.file = "Only PDF files are allowed";
       }
     }
-
-    // if (formData.ContentType === '1' && !html) {
+    // if (formData.contenttype === '1' && !html) {
     //   newErrors.html = 'HTML content is required';
     // }
 
@@ -122,8 +124,40 @@ const Editcustomdata = () => {
     const imageFile = event.target.files[0];
     setFile(imageFile);
   };
+  const handleuploadpdf = async (event) => {
+    const imageFile = event.target.files[0];
+    if (imageFile && imageFile.type === "application/pdf") {
+      setFile(imageFile);
 
+      const formDataToSend = new FormData();
+      formDataToSend.append("file", imageFile);
+      try {
+        const response = await APIClient.post(
+          "/api/TopMenu/uploadpdf",
+          formDataToSend,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        const filePath = response.data.filepath;
+        setFilePath(filePath);
+        if (editor.current) {
+          const range = editor.current.selection.range;
+          editor.current.selection.insertHTML(
+            `<a href="${filePath}">Download PDF</a>`
+          );
+        }
+      } catch (error) {
+        console.error("Error uploading PDF:", error);
+      }
+    }
+  };
   const handleInputChange = (event) => {
+    setSubMenu(event.target.value);
+    setSelectedRole(event.target.value);
+
     const { name, value, type } = event.target;
 
     if (type === "file") {
@@ -132,6 +166,8 @@ const Editcustomdata = () => {
         [name]: event.target.files[0],
       });
     } else {
+      setSubMenu(event.target.value);
+      setSelectedRole(event.target.value);
       setFormData({
         ...formData,
         [name]: value,
@@ -151,7 +187,7 @@ const Editcustomdata = () => {
 
   const handleConfirmSubmit = async () => {
     handleCloseConfirmation();
-
+    setLoading(true);
     try {
       const formDataToSend = new FormData();
       formDataToSend.append("menuname", formData.menuname);
@@ -159,7 +195,8 @@ const Editcustomdata = () => {
       formDataToSend.append("menuurl", formData.menuurl);
       formDataToSend.append("submenu_id", formData.submenu_id);
       formDataToSend.append("languagetype", formData.languagetype);
-      formDataToSend.append("usertype", '1');
+      formDataToSend.append("usertype", '4');
+      formDataToSend.append("action", 'approve');
       if (formData.contenttype === "4") {
         formDataToSend.append("external_link", formData.external_link);
       } else if (formData.contenttype === "3") {
@@ -169,9 +206,9 @@ const Editcustomdata = () => {
       } else if (formData.contenttype === "1") {
         formDataToSend.append("html", content);
       }
-
+      
       const response = await APIClient.post(
-        "/api/TopMenu/updatecustomdata/" + id,
+        "api/TopMenu/updatemenu/" + id,
         formDataToSend,
         {
           headers: {
@@ -179,28 +216,33 @@ const Editcustomdata = () => {
           },
         }
       );
-      window.location.replace("/custom/CustomTable");
-      toast.success("Data saved successfully!");
-      setModalMessage("Data saved successfully!");
 
-      // window.location.href("custom/allcustomdata");
+      toast.success("Data approved  and send for publish!");
+      setModalMessage("Data approved  and send for publish!");
       setSnackbarOpen(true);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         toast.error("Unauthorized access. Please log in.");
       } else {
-        if (error.response && error.response.data && error.response.data.errors) {
-          const errorMessages = Object.values(error.response.data.errors).flat().join(' ');
-          toast.error(`Validation Error: ${errorMessages}`);
-        } else {
-          toast.error("Something Went Wrong!");
-        }
+        toast.error("Something Went Wrong!");
         console.error("Error saving/updating data:", error);
       }
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
-
+    const fetchRoles = async () => {
+      try {
+        const response = await APIClient.get(apis.getmenuname);
+        Setdata(response.data);
+      } catch (error) {
+        console.error("Error fetching roles:", error);
+      }
+    };
+    fetchRoles();
+  }, []);
+  useEffect(() => {
     async function fetchData1() {
       try {
         setLoading(true);
@@ -217,10 +259,9 @@ const Editcustomdata = () => {
   useEffect(() => {
     async function fetchData2() {
       try {
-        const response = await APIClient.get(apis.getcustomdatabyid + id);
+        const response = await APIClient.get(apis.getmenudatabyid + id);
         setFormData(response.data);
       } catch (error) {
-
         console.error("Error fetching user data:", error);
       }
     }
@@ -232,24 +273,53 @@ const Editcustomdata = () => {
       <div className="row justify-content-center">
         <div className="container-fluid bg-white">
           <div className="box-sec">
-            <h1 className="text-center heading-main">Edit Menu</h1>
-
-            <div className="mb-3">
-              <label className="form-label text-dark">Select a Language</label>
-              <select
-                className="form-select"
-                name="languagetype"
-                value={formData.languagetype}
-                onChange={handleInputChange}
-              >
-                <option value="0">Select a Language</option>
-                <option value="1">English</option>
-                <option value="2">Hindi</option>
-              </select>
-              {errors.languagetype && (
-                <div className="text-danger">{errors.languagetype}</div>
-              )}
-            </div>
+            <h1 className="text-center">Approve SubMenu Data</h1>
+            <Form.Group className="mb-3" controlId="Usertype">
+              <div className="mb-3">
+                <label className="form-label text-dark">
+                  Select a Language
+                </label>
+                <select
+                  className="form-select"
+                  name="languagetype"
+                  value={formData.languagetype}
+                  onChange={handleInputChange}
+                >
+                  <option value="0">Select a Language</option>
+                  <option value="1">English</option>
+                  <option value="2">Hindi</option>
+                </select>
+                {errors.languagetype && (
+                  <div className="text-danger">{errors.languagetype}</div>
+                )}
+              </div>
+              <div className="mb-12">
+                <Form.Label className="text-center" style={{ color: "black" }}>
+                  Menu Names
+                </Form.Label>
+                <select
+                  className="form-control"
+                  name="submenu_id"
+                  value={formData.submenu_id}
+                  onChange={handleInputChange}
+                >
+                  <option value="" style={{ color: "black" }}>
+                    Select a Menu
+                  </option>
+                  {data.map((data) => (
+                    <option key={data.id} value={data.id}>
+                      {data.menuname}
+                    </option>
+                  ))}
+                </select>
+                <Form.Control.Feedback type="invalid">
+                  {/* {formErrors.usertype} */}
+                </Form.Control.Feedback>
+              </div>
+            </Form.Group>
+            {errors.selectedRole && (
+              <div className="text-danger">{errors.selectedRole}</div>
+            )}
 
             {/* Input for Name */}
             <div className="mb-3">
@@ -360,34 +430,43 @@ const Editcustomdata = () => {
                   value={html}
                   onChange={(e) => handleEditorChange(e.target.value)}
                 ></textarea> */}
+                  <JoditEditor
+                    value={formData.html}
+                    config={config}
+                    tabIndex={1}
+                    onChange={onChange}
+                  />
                 </div>
-                {/* <FroalaEditorComponent
-      tag='textarea'
-      model={html}
-      onModelChange={handleEditorChange}
-    /> */}
-                {/* <HtmlEditor/> */}
-                <JoditEditor
-                  value={formData.html}
-                  config={config}
-                  tabIndex={1}
-                  onChange={onChange}
-                />
                 {errors.editorContent && (
                   <div className="text-danger">{errors.editorContent}</div>
                 )}
               </div>
             )}
+            <div className="mb-3">
+              <label className="form-label text-dark">Choose File</label>
+              <input
+                className="form-control"
+                type="file"
+                name="file"
+                onChange={handleuploadpdf}
+              />
+              {errors.file && <div className="text-danger">{errors.file}</div>}
+            </div>
+            <div>
+              <a href={baseURL + filePath} target="_blank">
+                pdf file
+              </a>
+            </div>
 
             {/* Submit Button */}
             <div className="btnsubmit">
               <button
                 className="btn btn-primary"
                 onClick={handleOpenConfirmation}
+                disabled={loading}
               >
-                Update
+                Approve Submenu Data
               </button>
-
               <Dialog
                 open={confirmDialogOpen}
                 onClose={handleCloseConfirmation}
@@ -426,7 +505,7 @@ const Editcustomdata = () => {
                   severity="success"
                   onClose={() => setSnackbarOpen(false)}
                 >
-                  Menu updated successfully.
+                  Data save successfully.
                 </Alert>
               </Snackbar>
               <ToastContainer />
@@ -437,4 +516,4 @@ const Editcustomdata = () => {
     </div>
   );
 };
-export default Editcustomdata;
+export default Approvesubmenudata;

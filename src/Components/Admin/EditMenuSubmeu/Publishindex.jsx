@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import EditMenu from "../../Admin/EditMenuSubmeu/EditMenu";
+import Publishdata from "../EditMenuSubmeu/Publishdata";
 import EditSubmenu from "../EditMenuSubmeu/EditSubmenu";
-
+import Publishsubmenudata  from "../EditMenuSubmeu/Publishsubmenu"
 import { Link, useParams } from "react-router-dom";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 
-const Index = () => {
+const Publishindex = () => {
   const [data, setData] = useState([]);
   const { id } = useParams();
   useEffect(() => {
@@ -26,13 +27,13 @@ const Index = () => {
       <main id="main" className="main">
         <div className="pagetitle">
           {/* <h1>Edit Menu</h1> */}
-          <nav>
-            {/* <ol className="breadcrumb">
+          {/* <nav>
+            <ol className="breadcrumb">
               <li className="breadcrumb-item">Dashboard</li>
               <li className="breadcrumb-item  ">CMS</li>
               <li className="breadcrumb-item active ">Edit Menu</li>
-            </ol> */}
-          </nav>
+            </ol>
+          </nav> */}
         </div>
         <div className="pagetitle-rgt">
           {/* <Link to="/cms/allmenu">
@@ -44,12 +45,12 @@ const Index = () => {
 
         <div>
           <div>
-            {data.submenu_id === 0 && <EditMenu />}
-            {data.submenu_id !== 0 && <EditSubmenu />}
+            {data.submenu_id === 0 && <Publishdata />}
+            {data.submenu_id !== 0 && <Publishsubmenudata />}
           </div>
         </div>
       </main>
     </div>
   );
 };
-export default Index;
+export default Publishindex;
