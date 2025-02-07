@@ -24,6 +24,10 @@
   "getHostels": "/api/Hostal",
   "deleteHostel": "/api/Hostal/delete",
   "editHostel": "/api/Hostal/put",
+  "createRoom": "/api/Room/postroom_data",
+  "getRooms": "/api/Room",
+  "deleteRoom": "/api/Room/delete",
+  "editRoom": "/api/Room/put",
   "Getallcustom": "/api/Topmenu/Getallcustom",
   "Getapprovalcustom": "/api/Topmenu/Getcustomapprovalist",
   "Getpublishercustom": "/api/Topmenu/Getcustompublisherlist",
@@ -37,6 +41,12 @@
   "whatsnewapprovallist": "/api/Whatsnew/approvaallist",
   "whatspublisherlist": "/api/Whatsnew/publisherlist",
   "getwhatsnewbyid": "/api/Whatsnew/",
+  "editSubMenu": "/api/Topmenu/updatemenu/",
+  "getroomlist": "/api/Room",
+  "createbookroom": "/api/Bookroom/post_data",
+  "getbookroomlist": "/api/Bookroom",
+  "Tender": "/api/Tenders",
+  "Tenderbyid": "/api/Tenders/"
   "editSubMenu": "/api/Topmenu/updatemenu/",
   "updateSlider": "/api/Slider/updateslider/"
   
