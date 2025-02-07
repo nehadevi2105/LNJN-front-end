@@ -15,7 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
-
+import baseURL from "../../../API/APIClient"
 
 const BannerTable =() => {
     const [apiData, setApiData] = useState([]);
@@ -32,7 +32,7 @@ const BannerTable =() => {
           width: 100,
           height:300,
           renderCell: (params) => (
-            <img src={params.row.imgpath} alt="Image" style={{ width: '100%', height: '100%' }} />
+            <img src={`${baseURL}${params.row.imgpath}`}  alt="Image" style={{ width: '100%', height: '100%' }} />
           ),
         },
         { field: "u_content", headerName: "Content data" },

@@ -12,8 +12,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 
-//import AddIcon from '@mui/icons-material/Add';
-//import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import Alert from "@mui/material/Alert";
 
 import APIClient from "../../../API/APIClient";
