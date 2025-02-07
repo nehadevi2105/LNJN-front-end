@@ -40,8 +40,6 @@ import Approvaledit from "../Components/Admin/EditMenuSubmeu/Approvalindex";
 import Publishindex from "../Components/Admin/EditMenuSubmeu/Publishindex";
 import BannerTable from "../Components/Admin/Banner/BannerTable";
 import Approvebanner from "../Components/Admin/Banner/Approvebanner";
-import BannerTable from "../Components/Admin/Banner/BannerTable"
-
 import WhatsNewTable from "../Components/Admin/WhatsNew/WhtasNewTable/WhatsNewTable";
 import EditWhatsNew from "../Components/Admin/WhatsNew/EditWhatsNew/EditWhatsNew";
 import Createtender from "../Components/Admin/Tender/CreateTender/Createtender";
@@ -69,9 +67,7 @@ function Router() {
       <Route path="/SubMenu/CreateSubMenu" element={<CreateSubMenu />} />
       <Route path="/custom/custom" element={<Custom />} />
       <Route path="/Department/AllDepartment" element={<AllDepartments />} />
-      <Route
-        path="/Department/EditDepartment/:id"    element={<EditDepartment />}
-        path="/Department/EditDepartment/:id"    element={<EditDepartment />}
+      <Route path="/Department/EditDepartment/:id"    element={<EditDepartment />}
       />
       <Route path="/Course/CreateCourse" element={<CreateCourse />} />
       <Route path="/Candidate/CreateCandidate" element={<Candidate />} />
