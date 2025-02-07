@@ -8,7 +8,7 @@ import { EditDepartment } from "../Components/Admin/Department/EditDepartment";
 import CreateCourse from "../Components/Admin/Course/CreateCourse";
 import MenuSubMenu from "../Components/Admin/MenuSubMenu/MenuSubMenu";
 import EditMenu from "../Components/Admin/EditMenuSubmeu/EditMenu";
-import EditSubMenu from "../Components/Admin/EditMenuSubmeu/EditSubMenu";
+import EditSubMenu from "../Components/Admin/EditMenuSubmeu/EditSubmenu";
 import CreateSubMenu from "../Components/Admin/SubMenu/CreateSubMenu";
 import Custom from "../Components/Admin/custom/custom";
 import CustomTable from "../Components/Admin/custom/CustomTable";
@@ -27,6 +27,8 @@ import Customapprovallist from "../Components/Admin/custom/Customapprovallist";
 import Editcustomapproval from "../Components/Admin/custom/Editcustomapproval";
 import Custompublisherlist from "../Components/Admin/custom/Custompublisherlist";
 import Editpublisherapproval from "../Components/Admin/custom/Editcustompublisher";
+import Index from "../Components/Admin/EditMenuSubmeu/IndexEdit";
+
 function Router() {
   return (
     <Routes>
@@ -47,7 +49,6 @@ function Router() {
       <Route path="/custom/CustomTable" element={<CustomTable />} />
       <Route path="/custom/Editcustomdata/:id" element={<Editcustomdata />} />
       <Route path="/Banner/Banner" element={<Banner />} />
-
       <Route path="/Course/AllCourse" element={<AllCourses />} />
       <Route path="/Course/EditCourse/:id" element={<EditCourse />} />
       <Route path="/approvallist" element = {<Approvallist/>}/>
@@ -59,6 +60,8 @@ function Router() {
       <Route path="/customapproval/:id" element = {<Editcustomapproval/>}/>
       <Route path="/custompublisher" element={<Custompublisherlist />} />
       <Route path="/publishdata/:id" element = {<Editpublisherapproval/>}/>
+      <Route path="editdata/:id" element={<Index />} />
+
     </Routes>
   );
 }
