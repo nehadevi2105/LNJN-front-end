@@ -2,8 +2,8 @@
   "topMenu": "/api/Topmenu/",
   "navmenu": "/api/Topmenu",
   "createMenu": "/api/Topmenu/createmenusubmenu",
-  "approvallist":"/api/Topmenu/Getapprovalist",
-  "publisherlist":"/api/Topmenu/Getpublisherlist",
+  "approvallist": "/api/Topmenu/Getapprovalist",
+  "publisherlist": "/api/Topmenu/Getpublisherlist",
   "departmentPost": "/api/Department",
   "getDepartments": "/api/Department",
   "deleteDepartment": "/api/Department/delete",
@@ -35,5 +35,8 @@
   "postSlider": "api/Slider/postslider_data",
   "getSlider": "/api/Slider",
   "deleteSlider": "/api/Slider/delete/",
+  "editSubMenu1": "/api/Topmenu/put/",
+  "whatsnew": "/api/Whatsnew",
+  "getwhatsnewbyid": "/api/Whatsnew/",
   "editSubMenu": "/api/Topmenu/updatemenu/"
 }

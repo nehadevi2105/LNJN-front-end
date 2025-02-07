@@ -38,6 +38,11 @@ import Editpublisherapproval from "../Components/Admin/custom/Editcustompublishe
 import Index from "../Components/Admin/EditMenuSubmeu/IndexEdit";
 import Approvaledit from "../Components/Admin/EditMenuSubmeu/Approvalindex";
 import Publishindex from "../Components/Admin/EditMenuSubmeu/Publishindex";
+import BannerTable from "../Components/Admin/Banner/BannerTable"
+
+import WhatsNewTable from "../Components/Admin/WhatsNew/WhtasNewTable/WhatsNewTable";
+import EditWhatsNew from "../Components/Admin/WhatsNew/EditWhatsNew/EditWhatsNew";
+
 
 function Router() {
   return (
@@ -67,6 +72,8 @@ function Router() {
       <Route path="/menu/publish/:id" element = {<Publishdata/>}/>
       <Route path="/WhatsNew/CreateWhatsNew" element={<CreateWhatsNew />} />
       <Route path="/EditMenuSubmeu/IndexEdit/:id" element={<IndexEdit />} />
+      <Route path="/WhatsNew/WhatsNewTable" element={<WhatsNewTable />} />
+      <Route path="/WhatsNew/EditWhatsNew/:id" element={<EditWhatsNew />} />
       
       <Route path="/customapproval" element={<Customapprovallist />} />
       <Route path="/customapproval/:id" element = {<Editcustomapproval/>}/>
@@ -75,6 +82,7 @@ function Router() {
       <Route path="editdata/:id" element={<Index />} />
       <Route path="approvaleditdata/:id" element={<Approvaledit />} />
       <Route path="publishdataindex/:id" element={<Publishindex />} />
+      <Route path="/bannerdata" element={<BannerTable />} />
       <Route path="/Candidate/AllCandidates" element = {<AllCandidates/>}/>
       <Route path="/Candidate/EditCandidate/:id" element = {<EditCandidate/>}/>
       <Route path="/Hostel/CreateHostel" element = {<CreateHostel/>}/>
