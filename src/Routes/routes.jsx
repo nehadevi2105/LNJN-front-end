@@ -35,6 +35,8 @@ import Editpublisherapproval from "../Components/Admin/custom/Editcustompublishe
 import Index from "../Components/Admin/EditMenuSubmeu/IndexEdit";
 import Approvaledit from "../Components/Admin/EditMenuSubmeu/Approvalindex";
 import Publishindex from "../Components/Admin/EditMenuSubmeu/Publishindex";
+import Bookroom from "../Components/Admin/Hostel/Bookroom";
+import Bookroomlist from "../Components/Admin/Hostel/Bookroomlist";
 
 function Router() {
   return (
@@ -77,6 +79,8 @@ function Router() {
       <Route path="/Hostel/CreateHostel" element = {<CreateHostel/>}/>
       <Route path="/Hostel/AllHostel" element = {<AllHostel/>}/>
       <Route path="/Hostel/EditHostel/:id" element = {<EditHostel/>}/>
+       <Route path="/Hostel/Bookroom" element = {<Bookroom/>}/>
+       <Route path="/Hostel/Bookroomlist" element = {<Bookroomlist/>}/>
 
     </Routes>
   );

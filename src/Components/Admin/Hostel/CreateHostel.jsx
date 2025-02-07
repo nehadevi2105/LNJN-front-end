@@ -14,7 +14,7 @@ const CreateHostel = () => {
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // ✅ Validate the form input
+  // ✅ Validate the form input   
   const validateForm = () => {
     const errors = {};
     if (!hname.trim()) {

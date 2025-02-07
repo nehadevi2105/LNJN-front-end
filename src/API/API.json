@@ -31,5 +31,8 @@
   "postSlider": "api/Slider/postslider_data",
   "getSlider": "/api/Slider",
   "deleteSlider": "/api/Slider/delete/",
-  "editSubMenu": "/api/Topmenu/updatemenu/"
+  "editSubMenu": "/api/Topmenu/updatemenu/",
+  "getroomlist": "/api/Room",
+  "createbookroom": "/api/Bookroom/post_data",
+  "getbookroomlist": "/api/Bookroom"
 }
