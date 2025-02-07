@@ -453,12 +453,12 @@ const CreateWhatsNew = () => {
                       )}
                     </div>
 
-                    <div className="btnsubmit">
+                    <div className="btnsubmit my-1">
                       <button
                         className="btn btn-primary"
                         onClick={handleSubmit}
                       >
-                        Update
+                        Submit
                       </button>
 
                       {/* <CustomModal isOpen={isModalOpen} message={modalMessage} onClose={closeModal} />
