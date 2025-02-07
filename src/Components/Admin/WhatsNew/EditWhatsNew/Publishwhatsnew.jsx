@@ -3,7 +3,6 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-//import ViewListIcon from "@mui/icons-material/ViewList";
 import { Link, useParams } from "react-router-dom";
 import JoditEditor from "jodit-react";
 //import HomeIcon from "@mui/icons-material/Home";
@@ -19,7 +18,7 @@ import {
   DialogActions,
 } from "@mui/material";
 
-const EditWhatsNew = () => {
+const PublisWhatsNew = () => {
   const { id } = useParams();
   const [html, sethtml] = useState("");
   const [file, setFile] = useState(null);
@@ -202,7 +201,7 @@ const EditWhatsNew = () => {
         formDataToSend.append("news_title", formData.news_title);
         formDataToSend.append("contenttype", formData.contenttype);
         formDataToSend.append("languagetype", formData.languagetype);
-        formDataToSend.append("usertype", '1');
+
         if (formData.contenttype === 4) {
           formDataToSend.append("external_file", formData.external_file);
         } else if (formData.contenttype === 3) {
@@ -212,7 +211,8 @@ const EditWhatsNew = () => {
         } else if (formData.contenttype === 1) {
           formDataToSend.append("html", html);
         }
-
+        formDataToSend.append("usertype", '4');
+        formDataToSend.append("action", 'publish');
         formDataToSend.append("startdate", formData.startdate);
         formDataToSend.append("end_date", formData.end_date);
 
@@ -226,18 +226,18 @@ const EditWhatsNew = () => {
           }
         );
         // console.log('Data updated:', response.data);
-        toast.success("Data updated successfully!");
+        toast.success("Data published sucessfully!");
         setFormData({
-          news_title: "",
-          contenttype: "",
-          external_file: "",
-          internale_file: "",
-          file: "",
-          startdate: "",
-          end_date: "",
-          html: "",
-          languagetype: "",
-        });
+            news_title: "",
+            contenttype: "",
+            external_file: "",
+            internale_file: "",
+            file: "",
+            startdate: "",
+            end_date: "",
+            html: "",
+            languagetype: "",
+          });
       } catch (error) {
         if (error.response && error.response.status === 401) {
           toast.error("Unauthorized access. Please log in.");
@@ -254,20 +254,22 @@ const EditWhatsNew = () => {
     <div>
       <main id="main" className="main">
         <div className="pagetitle">
-          <h1>Edit What's New</h1>
+          {/* <h1>Edit What's New</h1> */}
           <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">Home</li>
-              <li className="breadcrumb-item">Edit What's New</li>
+              <li className="breadcrumb-item"> What's New Data</li>
             </ol>
           </nav>
         </div>
-        <div className="pagetitle-rgt d-flex justify-content-end mb-5">
-          <Link to="/services/allwhatsnew">
+        <div >
+          {/* <Link to="/services/allwhatsnew">
             <button type="button" className="btn btn-info">
               Back
             </button>
-          </Link>
+          </Link> */}
+            <h1 className="text-center heading-main">Publish  What's New Data</h1>
+                  
         </div>
         <div className="list">
           <div className="listContainer">
@@ -280,7 +282,6 @@ const EditWhatsNew = () => {
               <div className="row justify-content-center">
                 <div className="container-fluid bg-white">
                   <div className="box-sec">
-                    <h1 className="text-center heading-main">What's New</h1>
                     <div className="mb-3">
                       <label className="form-label text-dark">
                         Language Type
@@ -518,4 +519,4 @@ const EditWhatsNew = () => {
   );
 };
 
-export default EditWhatsNew;
+export default PublisWhatsNew;

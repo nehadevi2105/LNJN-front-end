@@ -20,7 +20,7 @@ import apis from "../../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
 import "./WhatsNewTable.scss";
 
-const WhatsNewTable = () => {
+const WhatsNewpublisherTable = () => {
   const [apiData, setApiData] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -35,26 +35,16 @@ const WhatsNewTable = () => {
     { field: "end_date", headerName: "End date", width: 120 },
     { field: "file ", headerName: "File", width: 200 },
     {
-      field: "edit",
+      field: "View Details",
       headerName: "Edit",
       sortable: false,
       renderCell: (params) => (
-        <Link to={"/WhatsNew/EditWhatsNew/" + params.row.id}>
+        <Link to={"/PublishWhatsNewdata/" + params.row.id}>
           <EditIcon style={{ cursor: "pointer" }} />
         </Link>
       ),
     },
-    {
-      field: "delete",
-      headerName: "Delete",
-      sortable: false,
-      renderCell: (params) => (
-        <DeleteIcon
-          style={{ cursor: "pointer" }}
-          onClick={() => handleDeleteClick(params.row)}
-        />
-      ),
-    },
+   
   ];
 
   const handleDeleteClick = (item) => {
@@ -85,7 +75,7 @@ const WhatsNewTable = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await APIClient.get(apis.whatsnew);
+        const response = await APIClient.get(apis.whatspublisherlist);
         //const response = await getwhatsnew();
         const dataWithIds = response.data.map((row, index) => ({
           id: index,
@@ -104,33 +94,16 @@ const WhatsNewTable = () => {
     <div>
       <main id="main" className="main">
         <div className="pagetitle">
-          <h2 className="maintitle">All Whats New</h2>
+          <h2 className="maintitle">Whats New Publisher list</h2>
           <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">Home</li>
               <li className="breadcrumb-item">Service</li>
-              <li className="breadcrumb-item active">All Whats New </li>
+              <li className="breadcrumb-item active"> Whats New Publisher list </li>
             </ol>
           </nav>
         </div>
-        <div className="header-box">
-         
-          <div className="header-box-rgt">
-            <Link to="/WhatsNewapprovallist">
-              <p>
-                Get Approval list
-              </p>
-            </Link>
-            
-          </div>
-          <div className="header-box-rgt">
-            <Link to="/WhatsNewpublisherlist">
-              <p>
-                Get Publisher list
-              </p>
-            </Link>
-          </div>
-        </div>
+      
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={apiData}
@@ -176,4 +149,4 @@ const WhatsNewTable = () => {
     </div>
   );
 };
-export default WhatsNewTable;
+export default WhatsNewpublisherTable;

@@ -36,10 +36,13 @@ import Index from "../Components/Admin/EditMenuSubmeu/IndexEdit";
 import Approvaledit from "../Components/Admin/EditMenuSubmeu/Approvalindex";
 import Publishindex from "../Components/Admin/EditMenuSubmeu/Publishindex";
 import BannerTable from "../Components/Admin/Banner/BannerTable"
-
+import Approvebanner from "../Components/Admin/Banner/Approvebanner"
 import WhatsNewTable from "../Components/Admin/WhatsNew/WhtasNewTable/WhatsNewTable";
 import EditWhatsNew from "../Components/Admin/WhatsNew/EditWhatsNew/EditWhatsNew";
-
+import WhatsNewapprovalTable from "../Components/Admin/WhatsNew/WhtasNewTable/Whatsnewapprovallist";
+import WhatsNewpublisherTable from "../Components/Admin/WhatsNew/WhtasNewTable/Whatsnewpublisherlist";
+import ApproveWhatsNew from "../Components/Admin/WhatsNew/EditWhatsNew/Approvewhatsnew";
+import PublisWhatsNew from "../Components/Admin/WhatsNew/EditWhatsNew//Publishwhatsnew";
 
 function Router() {
   return (
@@ -85,7 +88,12 @@ function Router() {
       <Route path="/Hostel/CreateHostel" element = {<CreateHostel/>}/>
       <Route path="/Hostel/AllHostel" element = {<AllHostel/>}/>
       <Route path="/Hostel/EditHostel/:id" element = {<EditHostel/>}/>
-
+      <Route path="/WhatsNewapprovallist" element = {<WhatsNewapprovalTable/>}/>
+      <Route path="/WhatsNewpublisherlist" element = {<WhatsNewpublisherTable/>}/>
+      <Route path="/ApproveWhatsNewdata/:id" element = {<ApproveWhatsNew/>}/>
+      <Route path="/PublishWhatsNewdata/:id" element = {<PublisWhatsNew/>}/>
+      <Route path="/approvebanner/:id" element = {<Approvebanner/>}/>
+      
     </Routes>
   );
 }

@@ -214,11 +214,11 @@ const CreateWhatsNew = () => {
         } else if (parseInt(formData.contenttype) === 1) {
           formDataToSend.append("html", html);
         }
-
+        formDataToSend.append("usertype", '1');
         formDataToSend.append("startdate", formData.startdate);
         formDataToSend.append("end_date", formData.end_date);
 
-        const response = await APIClient.post("/api/Whatsnew", formDataToSend, {
+        const response = await APIClient.post("/api/Whatsnew/createwhatsnew", formDataToSend, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -249,20 +249,16 @@ const CreateWhatsNew = () => {
     <div>
       <main id="main" className="main">
         <div className="pagetitle">
-          <h1>Edit What's New</h1>
+          {/* <h1>Create What's New</h1> */}
           <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">Home</li>
-              <li className="breadcrumb-item">Edit What's New</li>
+              <li className="breadcrumb-item">Create What's New</li>
             </ol>
           </nav>
         </div>
         <div className="pagetitle-rgt d-flex justify-content-end mb-5">
-          <Link to="/services/allwhatsnew">
-            <button type="button" className="btn btn-info">
-              Back
-            </button>
-          </Link>
+          
         </div>
         <div className="list">
           <div className="listContainer">

@@ -1,9 +1,9 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-//import axios from 'axios';
-//import EditIcon from '@mui/icons-material/Edit';
+import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Dialog from '@mui/material/Dialog';
@@ -13,42 +13,51 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import APIClient from "../../../API/APIClient";
-import apis from "../../../API/API.json";
-import baseURL from "../../../API/APIClient"
+import APIClient from '../../../API/APIClient';
+import apis from '../../../API/API.json';
 
-const BannerTable =() => {
+const BannerTable = () => {
     const [apiData, setApiData] = useState([]);
-    const [isDeleting, setIsDeleting] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
     const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
 
     const columns = [
-        { field: 1, headerName: "S.No", width: 50 },
-        { field: "imgpath", headerName: "Image", 
-          // Render the image using an <img> element
-          width: 100,
-          height:300,
-          renderCell: (params) => (
-            <img src={`${baseURL}${params.row.imgpath}`}  alt="Image" style={{ width: '100%', height: '100%' }} />
-          ),
+        { field: 'id', headerName: 'S.No', width: 50 },
+        { 
+            field: 'imgpath', 
+            headerName: 'Image', 
+            width: 150, 
+            renderCell: (params) => (
+                <img src={APIClient.defaults.baseURL + params.row.imgpath} alt="Image" style={{ width: '100%', height: '100%' }} />
+            ),
         },
-        { field: "u_content", headerName: "Content data" },
+        { field: 'u_content', headerName: 'Content Data',width: 200 },
         {
-            field: "delete",
-            headerName: "Delete",
+            field: 'edit',
+            headerName: 'Edit',
             sortable: false,
+            width: 80,
+            renderCell: (params) => (
+                <Link to={'/approvebanner/' + params.row.u_id}>
+                    <EditIcon style={{ cursor: 'pointer', color: 'blue' }} />
+                </Link>
+            ),
+        },
+        {
+            field: 'delete',
+            headerName: 'Delete',
+            sortable: false,
+            width: 80,
             renderCell: (params) => (
                 <DeleteIcon
-                    style={{ cursor: 'pointer' }}
+                    style={{ cursor: 'pointer', color: 'red' }}
                     onClick={() => handleDeleteClick(params.row)}
                 />
             ),
-        }
+        },
     ];
-
 
     const handleDeleteClick = (item) => {
         setSelectedItem(item);
@@ -59,90 +68,58 @@ const BannerTable =() => {
         try {
             await APIClient.post('/api/Slider/delete/' + selectedItem.u_id);
             setApiData((prevData) => prevData.filter((item) => item.u_id !== selectedItem.u_id));
-            setIsDeleting(false);
             setModalMessage('Data deleted successfully');
             setSnackbarOpen(true);
         } catch (error) {
-            if (error.response && error.response.status === 401) {
-                toast.error('Unauthorized access. Please log in.');
-              } else {
-              
-                toast.error('Something Went Wrong!');
-                console.error('Error saving/updating data:', error);
-              }
+            toast.error('Something Went Wrong!');
+            console.error('Error deleting data:', error);
         } finally {
             setConfirmDialogOpen(false);
         }
     };
 
-    const handleCloseConfirmation = () => {
-        setConfirmDialogOpen(false);
-    };
-    const generateSerialNumbers = () => {
-    return apiData.map((_, index) => ({ id: index + 1, ...apiData[index] }));
-}
-
     useEffect(() => {
         async function fetchData() {
             try {
                 const response = await APIClient.get(apis.getSlider);
-                const dataWithIds = response.data.map((row, index) => ({ id: index, ...row }));
+                const dataWithIds = response.data.map((row, index) => ({ id: index + 1, ...row }));
                 setApiData(dataWithIds);
-              
-
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         }
-
         fetchData();
     }, []);
 
     return (
-      <>
-                <Box sx={{ height: 400, width: '100%' }}>
-                    <DataGrid
-                        rows={apiData}
-                        columns={columns}
-                        disableColumnFilter
-                        disableColumnSelector
-                        disableDensitySelector
-                        components={{
-                            Toolbar: GridToolbar,
-                        }}
-                        componentsProps={{
-                            toolbar: {
-                                showQuickFilter: true,
-                            },
-                        }}
-                    />
-                </Box>
-           
-            <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
+        <>
+            <Box sx={{ height: 400, width: '100%' }}>
+                <DataGrid
+                    rows={apiData}
+                    columns={columns}
+                    disableColumnFilter
+                    disableColumnSelector
+                    disableDensitySelector
+                    components={{ Toolbar: GridToolbar }}
+                    componentsProps={{ toolbar: { showQuickFilter: true } }}
+                />
+            </Box>
+            <Dialog open={confirmDialogOpen} onClose={() => setConfirmDialogOpen(false)}>
                 <DialogTitle>Confirm Delete</DialogTitle>
                 <DialogContent>
                     Are you sure you want to delete this data?
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseConfirmation} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={handleConfirmSubmit} color="primary">
-                        Confirm
-                    </Button>
+                    <Button onClick={() => setConfirmDialogOpen(false)} color="primary">Cancel</Button>
+                    <Button onClick={handleConfirmSubmit} color="primary">Confirm</Button>
                 </DialogActions>
             </Dialog>
-            <Snackbar
-                open={snackbarOpen}
-                autoHideDuration={3000}
-                onClose={() => setSnackbarOpen(false)}
-            >
-                <MuiAlert severity="success" onClose={() => setSnackbarOpen(false)}>
-                    {modalMessage}
-                </MuiAlert>
+            <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
+                <MuiAlert severity="success" onClose={() => setSnackbarOpen(false)}>{modalMessage}</MuiAlert>
             </Snackbar>
-            <ToastContainer/>
-            </>
+            <ToastContainer />
+        </>
     );
-}
+};
+
 export default BannerTable;

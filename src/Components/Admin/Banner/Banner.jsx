@@ -13,46 +13,6 @@ const Banner = ({ id, onDelete }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageName, setImageName] = useState("");
 
-  // const handleVideoUpload = async () => {
-
-  //   if (!selectedImage) return;
-
-  //   const formData = new FormData();
-  //   formData.append('imgsrc', selectedImage);
-  //   formData.append('content', imageName);
-
-  //   try {
-  //     const response = await apiClient.post(api.imageAdd, formData, {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data',
-  //       },
-  //     });
-
-  //     const videoPath = response.data.videopath;
-
-  //     // Show a success toast notification
-  //     toast.success('Video uploaded successfully!', {
-  //       position: toast.POSITION.TOP_CENTER,
-  //     });
-
-  //     // Clear the form fields and reset state after successful upload
-  //     setSelectedImage(null);
-  //     setImageName('');
-
-  //     // Reset the input file element to allow selecting a new video
-  //     const inputFile = document.getElementById(`upload-input-${id}`);
-  //     if (inputFile) {
-  //       inputFile.value = ''; // Clear the selected file
-  //     }
-  //   } catch (error) {
-  //     console.error('Error uploading video:', error);
-
-  //     // Show an error toast notification
-  //     toast.error('Error uploading video', {
-  //       position: toast.POSITION.TOP_CENTER,
-  //     });
-  //   }
-  // };
   const handleVideoUpload = async () => {
     if (!selectedImage) return;
     if (!imageName.trim()) {

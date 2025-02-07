@@ -30,9 +30,14 @@
   "getcustomdatabyid": "/api/Topmenu/",
   "postSlider": "api/Slider/postslider_data",
   "getSlider": "/api/Slider",
+  "getSliderbyid": "/api/Slider/",
   "deleteSlider": "/api/Slider/delete/",
   "editSubMenu1": "/api/Topmenu/put/",
   "whatsnew": "/api/Whatsnew",
+  "whatsnewapprovallist": "/api/Whatsnew/approvaallist",
+  "whatspublisherlist": "/api/Whatsnew/publisherlist",
   "getwhatsnewbyid": "/api/Whatsnew/",
-  "editSubMenu": "/api/Topmenu/updatemenu/"
+  "editSubMenu": "/api/Topmenu/updatemenu/",
+  "updateSlider": "/api/Slider/updateslider/"
+  
 }
