@@ -1,38 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import EditMenu from "../../Admin/EditMenuSubmeu/EditMenu";
+import EditSubmenu from "../../Admin/EditMenuSubmeu/EditSubMenu";
 
-import { EditMenu } from './EditMenu';
-import { EditSubmenu } from './EditSubmenu';
-
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams } from "react-router-dom";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 
-
-
-
 const Index = () => {
-  const [data, setData] = useState([])
-  const { id } = useParams()
+  const [data, setData] = useState([]);
+  const { id } = useParams();
   useEffect(() => {
     async function fetchData2() {
       try {
-
         const response = await APIClient.get(apis.getmenudatabyid + id);
         setData(response.data);
-
       } catch (error) {
-        console.error('Error fetching user data:', error);
-
+        console.error("Error fetching user data:", error);
       }
     }
     fetchData2();
   }, [id]);
- 
-  return (
-    <div >
-      
-      <main id="main" className="main">
 
+  return (
+    <div>
+      <main id="main" className="main">
         <div className="pagetitle">
           <h1>Edit Menu</h1>
           <nav>
@@ -40,32 +31,25 @@ const Index = () => {
               <li className="breadcrumb-item">Dashboard</li>
               <li className="breadcrumb-item  ">CMS</li>
               <li className="breadcrumb-item active ">Edit Menu</li>
-
             </ol>
           </nav>
         </div>
         <div className="pagetitle-rgt">
-                        <Link to="/cms/allmenu">
-                            <button type="button" className="btn btn-info">
-                                Back
-                            </button>
-                        </Link>
-                    </div>
+          <Link to="/cms/allmenu">
+            <button type="button" className="btn btn-info">
+              Back
+            </button>
+          </Link>
+        </div>
 
-        <div >
-
+        <div>
           <div>
-            {data.submenu_id === 0 && (
-              <EditMenu />
-            )}
-            {data.submenu_id !== 0 && (
-              <EditSubmenu />
-            )}
+            {data.submenu_id === 0 && <EditMenu />}
+            {data.submenu_id !== 0 && <EditSubmenu />}
           </div>
         </div>
       </main>
     </div>
-  )
-}
+  );
+};
 export default Index;
-

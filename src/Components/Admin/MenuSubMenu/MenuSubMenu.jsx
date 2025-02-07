@@ -45,7 +45,7 @@ function MenuSubMenu() {
       sortable: false,
       renderCell: (params) =>
         1 === 1 || null ? ( // Check the user role here
-          <Link to={"/EditMenuSubmeu/EditMenu/" + params.row.id}>
+          <Link to={"/EditMenuSubmeu/IndexEdit/" + params.row.id}>
             <EditIcon style={{ cursor: "pointer" }} />
           </Link>
         ) : (
@@ -53,7 +53,7 @@ function MenuSubMenu() {
           //     style={{ cursor: 'no-drop', color: 'red' }}
           //     disabled
           // />
-          <Link to={"/cms/editdata/" + params.row.id}>
+          <Link to={"/EditMenuSubmeu/IndexEdit/" + params.row.id}>
             <EditIcon style={{ cursor: "pointer" }} />
           </Link>
         ),
@@ -68,21 +68,22 @@ function MenuSubMenu() {
           onClick={() => handleDeleteClick(params.row)}
         />
       ),
-    }
-    
+    },
   ];
 
   const handleDeleteClick = (item) => {
     setSelectedItem(item);
     setConfirmDialogOpen(true);
   };
-  
+
   const handleConfirmSubmit = async () => {
     if (!selectedItem) return;
-  
+
     try {
       await APIClient.post("/api/Topmenu/delete/" + selectedItem.id);
-      setApiData((prevData) => prevData.filter((item) => item.id !== selectedItem.id));
+      setApiData((prevData) =>
+        prevData.filter((item) => item.id !== selectedItem.id)
+      );
       setModalMessage("Data deleted successfully");
       setSnackbarOpen(true);
     } catch (error) {
@@ -135,12 +136,20 @@ function MenuSubMenu() {
               </button>
             </Link>
             <Link to="/approvallist">
-              <button type="button" className="btn btn-primary" style={{ marginLeft: "10px" }}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                style={{ marginLeft: "10px" }}
+              >
                 Get Approval List
               </button>
             </Link>
             <Link to="/publisherlist">
-              <button type="button" className="btn btn-primary" style={{ marginLeft: "10px" }}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                style={{ marginLeft: "10px" }}
+              >
                 Get Publisher List
               </button>
             </Link>

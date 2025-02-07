@@ -15,8 +15,8 @@ import CustomTable from "../Components/Admin/custom/CustomTable";
 import Editcustomdata from "../Components/Admin/custom/Editcustomdata";
 import Banner from "../Components/Admin/Banner/Banner";
 import Candidate from "../Components/Admin/Candidate/Candidate";
-//import CreateWhatsNew from "../Components/Admin/WhatsNew/CreateWhatsNew";
 import CreateWhatsNew from "../Components/Admin/WhatsNew/CreateWhatsNew/CreateWhatsNew";
+import IndexEdit from "../Components/Admin/EditMenuSubmeu/IndexEdit";
 import AllCourses from "../Components/Admin/Course/AllCourses";
 import EditCourse from "../Components/Admin/Course/EditCourse";
 import Approvallist from "../Components/Admin/MenuSubMenu/Approvallist";
@@ -56,6 +56,8 @@ function Router() {
       <Route path="/menu/approval/:id" element = {<Approvedata/>}/>
       <Route path="/menu/publish/:id" element = {<Publishdata/>}/>
       <Route path="/WhatsNew/CreateWhatsNew" element={<CreateWhatsNew />} />
+      <Route path="/EditMenuSubmeu/IndexEdit/:id" element={<IndexEdit />} />
+      
       <Route path="/customapproval" element={<Customapprovallist />} />
       <Route path="/customapproval/:id" element = {<Editcustomapproval/>}/>
       <Route path="/custompublisher" element={<Custompublisherlist />} />
