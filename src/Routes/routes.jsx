@@ -1,4 +1,3 @@
-
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "../Components/Dashboard/Dashboard";
 import CreateMenu from "../Components/Admin/Menu/CreateMenu";
@@ -35,17 +34,19 @@ import Editpublisherapproval from "../Components/Admin/custom/Editcustompublishe
 import Index from "../Components/Admin/EditMenuSubmeu/IndexEdit";
 import Approvaledit from "../Components/Admin/EditMenuSubmeu/Approvalindex";
 import Publishindex from "../Components/Admin/EditMenuSubmeu/Publishindex";
-import BannerTable from "../Components/Admin/Banner/BannerTable"
+import BannerTable from "../Components/Admin/Banner/BannerTable";
 
 import WhatsNewTable from "../Components/Admin/WhatsNew/WhtasNewTable/WhatsNewTable";
 import EditWhatsNew from "../Components/Admin/WhatsNew/EditWhatsNew/EditWhatsNew";
-
+import Createtender from "../Components/Admin/Tender/CreateTender/Createtender";
+import TenderTable from "../Components/Admin/Tender/TenderTable/TenderTable";
+import EditTender from "../Components/Admin/Tender/EditTender/EditTender";
 
 function Router() {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
-      <Route path="/cms/Createmenu" element={<CreateMenu />} />
+      <Route path="/Menu/CreateMenu" element={<CreateMenu />} />
       <Route path="/Department/DepartmentForm" element={<CreateDepartment />} />
       <Route path="/MenuSubMenu/MenuSubMenu" element={<MenuSubMenu />} />
       <Route path="/EditMenuSubmeu/EditMenu/:id" element={<EditMenu />} />
@@ -54,7 +55,8 @@ function Router() {
       <Route path="/custom/custom" element={<Custom />} />
       <Route path="/Department/AllDepartment" element={<AllDepartments />} />
       <Route
-        path="/Department/EditDepartment/:id"    element={<EditDepartment />}
+        path="/Department/EditDepartment/:id"
+        element={<EditDepartment />}
       />
       <Route path="/Course/CreateCourse" element={<CreateCourse />} />
       <Route path="/Candidate/CreateCandidate" element={<Candidate />} />
@@ -63,29 +65,31 @@ function Router() {
       <Route path="/Banner/Banner" element={<Banner />} />
       <Route path="/Course/AllCourse" element={<AllCourses />} />
       <Route path="/Course/EditCourse/:id" element={<EditCourse />} />
-      <Route path="/approvallist" element = {<Approvallist/>}/>
-      <Route path="/publisherlist" element = {<Publisherlist/>}/>
-      <Route path="/menu/approval/:id" element = {<Approvedata/>}/>
-      <Route path="/menu/publish/:id" element = {<Publishdata/>}/>
+      <Route path="/approvallist" element={<Approvallist />} />
+      <Route path="/publisherlist" element={<Publisherlist />} />
+      <Route path="/menu/approval/:id" element={<Approvedata />} />
+      <Route path="/menu/publish/:id" element={<Publishdata />} />
       <Route path="/WhatsNew/CreateWhatsNew" element={<CreateWhatsNew />} />
       <Route path="/EditMenuSubmeu/IndexEdit/:id" element={<IndexEdit />} />
       <Route path="/WhatsNew/WhatsNewTable" element={<WhatsNewTable />} />
       <Route path="/WhatsNew/EditWhatsNew/:id" element={<EditWhatsNew />} />
-      
+      <Route path="/CreateTender/Createtender" element={<Createtender />} />
+      <Route path="/TenderTable/TenderTable" element={<TenderTable />} />
+      <Route path="/EditTender/EditTender/:id" element={<EditTender />} />
+
       <Route path="/customapproval" element={<Customapprovallist />} />
-      <Route path="/customapproval/:id" element = {<Editcustomapproval/>}/>
+      <Route path="/customapproval/:id" element={<Editcustomapproval />} />
       <Route path="/custompublisher" element={<Custompublisherlist />} />
-      <Route path="/publishdata/:id" element = {<Editpublisherapproval/>}/>
+      <Route path="/publishdata/:id" element={<Editpublisherapproval />} />
       <Route path="editdata/:id" element={<Index />} />
       <Route path="approvaleditdata/:id" element={<Approvaledit />} />
       <Route path="publishdataindex/:id" element={<Publishindex />} />
       <Route path="/bannerdata" element={<BannerTable />} />
-      <Route path="/Candidate/AllCandidates" element = {<AllCandidates/>}/>
-      <Route path="/Candidate/EditCandidate/:id" element = {<EditCandidate/>}/>
-      <Route path="/Hostel/CreateHostel" element = {<CreateHostel/>}/>
-      <Route path="/Hostel/AllHostel" element = {<AllHostel/>}/>
-      <Route path="/Hostel/EditHostel/:id" element = {<EditHostel/>}/>
-
+      <Route path="/Candidate/AllCandidates" element={<AllCandidates />} />
+      <Route path="/Candidate/EditCandidate/:id" element={<EditCandidate />} />
+      <Route path="/Hostel/CreateHostel" element={<CreateHostel />} />
+      <Route path="/Hostel/AllHostel" element={<AllHostel />} />
+      <Route path="/Hostel/EditHostel/:id" element={<EditHostel />} />
     </Routes>
   );
 }

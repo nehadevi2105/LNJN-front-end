@@ -34,5 +34,7 @@
   "editSubMenu1": "/api/Topmenu/put/",
   "whatsnew": "/api/Whatsnew",
   "getwhatsnewbyid": "/api/Whatsnew/",
-  "editSubMenu": "/api/Topmenu/updatemenu/"
+  "editSubMenu": "/api/Topmenu/updatemenu/",
+  "Tender" : "/api/Tenders",
+  "Tenderbyid" : "/api/Tenders/"
 }
