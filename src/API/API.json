@@ -41,5 +41,7 @@
   "editSubMenu": "/api/Topmenu/updatemenu/",
   "getroomlist": "/api/Room",
   "createbookroom": "/api/Bookroom/post_data",
-  "getbookroomlist": "/api/Bookroom"
+  "getbookroomlist": "/api/Bookroom",
+  "Tender": "/api/Tenders",
+  "Tenderbyid": "/api/Tenders/"
 }

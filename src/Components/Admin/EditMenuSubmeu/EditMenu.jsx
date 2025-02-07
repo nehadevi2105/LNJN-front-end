@@ -18,16 +18,16 @@ import apis from "../../../API/API.json";
 
 const EditMenu = () => {
   const { id } = useParams();
-  const [html, setHtml] = useState("");
+  const [html, sethtml] = useState("");
   const [file, setFile] = useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [editorContent, setEditorContent] = useState("");
+  //const [editorContent, setEditorContent] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [dropdownOptions, setDropdownOptions] = useState([]);
-  const [formErrors, setFormErrors] = useState({});
+  //const [formErrors, setFormErrors] = useState({});
 
   const config = useMemo(
     () => ({
@@ -77,7 +77,7 @@ const EditMenu = () => {
   }, []);
 
   const handleEditorChange = (content) => {
-    setHtml(content);
+    sethtml(content);
   };
 
   const validateForm = () => {
@@ -110,9 +110,9 @@ const EditMenu = () => {
       }
     }
 
-    // if (formData.ContentType === '1' && !html) {
-    //   newErrors.html = 'HTML content is required';
-    // }
+    if (formData.ContentType === "1" && !html) {
+      newErrors.html = "HTML content is required";
+    }
 
     setErrors(newErrors);
 
@@ -169,7 +169,7 @@ const EditMenu = () => {
       } else if (formData.contenttype === "2") {
         formDataToSend.append("file", file);
       } else if (formData.contenttype === "1") {
-        formDataToSend.append("html", content);
+        formDataToSend.append("html", html);
       }
 
       const response = await APIClient.post(
@@ -224,7 +224,7 @@ const EditMenu = () => {
       try {
         const response = await APIClient.get(apis.getmenudatabyid + id);
         setFormData(response.data);
-        setEditorContent(response.data.html);
+        sethtml(response.data.html);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -328,8 +328,8 @@ const EditMenu = () => {
                     Select a role
                   </option>
                   {dropdownOptions.map((data) => (
-                    <option key={data.u_id} value={"/menu/" + data.u_menu_url}>
-                      {"Menu Name" + ":-" + data.u_menu_name}
+                    <option key={data.id} value={"/menu/" + data.menu_url}>
+                      {"Menu Name" + ":-" + data.menuname}
                     </option>
                   ))}
                 </select>
@@ -359,10 +359,8 @@ const EditMenu = () => {
             {formData.contenttype === "1" && (
               <div className="mb-3">
                 <label className="form-label text-dark">HTML Editor</label>
-                <div>
-                 
-                </div>
-           
+                <div></div>
+
                 <JoditEditor
                   value={formData.html}
                   config={config}

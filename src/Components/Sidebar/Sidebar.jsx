@@ -73,7 +73,7 @@ const Sidebar = ({ data }) => {
           </li>
 
           <li className="nav-item">
-            <Link to="/cms/Createmenu" className="nav-link">
+            <Link to="/Menu/CreateMenu" className="nav-link">
               <DashboardIcon />
               Menu
               {/* <span className="badge badge-sm bg-info ms-auto">NEW</span> */}
@@ -205,7 +205,7 @@ const Sidebar = ({ data }) => {
               Banner Table
             </Link>
           </li>
-          
+
           <li className="nav-item">
             <Link to="/WhatsNew/CreateWhatsNew" className="nav-link">
               <DashboardIcon />
@@ -217,6 +217,18 @@ const Sidebar = ({ data }) => {
             <Link to="/WhatsNew/WhatsNewTable" className="nav-link">
               <DashboardIcon />
               What's New Table
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/CreateTender/Createtender" className="nav-link">
+              <DashboardIcon />
+              Tender Form
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/TenderTable/TenderTable" className="nav-link">
+              <DashboardIcon />
+              Tender Table
             </Link>
           </li>
         </ul>
