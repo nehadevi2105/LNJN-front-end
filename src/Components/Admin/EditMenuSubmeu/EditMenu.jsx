@@ -160,7 +160,7 @@ const EditMenu = () => {
       formDataToSend.append("menuurl", formData.menuurl);
       formDataToSend.append("submenu_id", formData.submenu_id);
       formDataToSend.append("languagetype", formData.languagetype);
-      formDataToSend.append("usertype", '1');
+      formDataToSend.append("usertype", "1");
 
       if (formData.contenttype === "4") {
         formDataToSend.append("external_link", formData.external_link);
@@ -171,7 +171,7 @@ const EditMenu = () => {
       } else if (formData.contenttype === "1") {
         formDataToSend.append("html", content);
       }
-      
+
       const response = await APIClient.post(
         "api/TopMenu/updatemenu/" + id,
         formDataToSend,
@@ -224,6 +224,7 @@ const EditMenu = () => {
       try {
         const response = await APIClient.get(apis.getmenudatabyid + id);
         setFormData(response.data);
+        setEditorContent(response.data.html);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -359,18 +360,9 @@ const EditMenu = () => {
               <div className="mb-3">
                 <label className="form-label text-dark">HTML Editor</label>
                 <div>
-                  {/* <textarea
-                  className="form-control"
-                  value={html}
-                  onChange={(e) => handleEditorChange(e.target.value)}
-                ></textarea> */}
+                 
                 </div>
-                {/* <FroalaEditorComponent
-      tag='textarea'
-      model={html}
-      onModelChange={handleEditorChange}
-    /> */}
-                {/* <HtmlEditor/> */}
+           
                 <JoditEditor
                   value={formData.html}
                   config={config}

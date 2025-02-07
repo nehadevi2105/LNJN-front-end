@@ -8,12 +8,16 @@ import apis from "../../../API/API.json";
 
 const Index = () => {
   const [data, setData] = useState([]);
+  //const [html, setHtml] = useState("");
+  //const [editorContent, setEditorContent] = useState("");
   const { id } = useParams();
   useEffect(() => {
     async function fetchData2() {
       try {
         const response = await APIClient.get(apis.getmenudatabyid + id);
         setData(response.data);
+        //setHtml(response.data.html); // Set the html state
+        //setEditorContent(response.data.html); // Set the editor content
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
