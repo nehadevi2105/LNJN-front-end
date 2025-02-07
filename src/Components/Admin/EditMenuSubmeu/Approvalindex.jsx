@@ -1,23 +1,20 @@
 import { useState, useEffect } from "react";
 import EditMenu from "../../Admin/EditMenuSubmeu/EditMenu";
+import Approvedata from "./approvedata";
 import EditSubmenu from "../EditMenuSubmeu/EditSubmenu";
-
+import Approvesubmenudata  from "../EditMenuSubmeu/Approvesubmenu.jsx"
 import { Link, useParams } from "react-router-dom";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 
-const Index = () => {
+const Approvaledit = () => {
   const [data, setData] = useState([]);
-  //const [html, setHtml] = useState("");
-  //const [editorContent, setEditorContent] = useState("");
   const { id } = useParams();
   useEffect(() => {
     async function fetchData2() {
       try {
         const response = await APIClient.get(apis.getmenudatabyid + id);
         setData(response.data);
-        //setHtml(response.data.html); // Set the html state
-        //setEditorContent(response.data.html); // Set the editor content
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -30,13 +27,13 @@ const Index = () => {
       <main id="main" className="main">
         <div className="pagetitle">
           {/* <h1>Edit Menu</h1> */}
-          <nav>
-            {/* <ol className="breadcrumb">
+          {/* <nav>
+            <ol className="breadcrumb">
               <li className="breadcrumb-item">Dashboard</li>
               <li className="breadcrumb-item  ">CMS</li>
               <li className="breadcrumb-item active ">Edit Menu</li>
-            </ol> */}
-          </nav>
+            </ol>
+          </nav> */}
         </div>
         <div className="pagetitle-rgt">
           {/* <Link to="/cms/allmenu">
@@ -48,12 +45,12 @@ const Index = () => {
 
         <div>
           <div>
-            {data.submenu_id === 0 && <EditMenu />}
-            {data.submenu_id !== 0 && <EditSubmenu />}
+            {data.submenu_id === 0 && <Approvedata />}
+            {data.submenu_id !== 0 && <Approvesubmenudata />}
           </div>
         </div>
       </main>
     </div>
   );
 };
-export default Index;
+export default Approvaledit;

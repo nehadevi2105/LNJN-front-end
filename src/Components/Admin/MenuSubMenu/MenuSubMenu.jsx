@@ -120,12 +120,12 @@ function MenuSubMenu() {
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1 className="maintitle">All Menu</h1>
+            <h1 className="maintitle">All Menu Submenu List</h1>
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Service</li>
-                <li className="breadcrumb-item active">All Menu </li>
+                <li className="breadcrumb-item active">All Menu Submenu List </li>
               </ol>
             </nav>
           </div>

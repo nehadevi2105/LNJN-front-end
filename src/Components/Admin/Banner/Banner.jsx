@@ -8,10 +8,6 @@ import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
-//import HomeIcon from '@mui/icons-material/Home';
-//import { Link } from 'react-router-dom';
-
-import BannerTable from "./BannerTable";
 
 const Banner = ({ id, onDelete }) => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -137,7 +133,14 @@ const Banner = ({ id, onDelete }) => {
   return (
     <div>
       <form>
-        <Paper elevation={3} sx={{ padding: 2, position: "relative" }}>
+      <Paper elevation={15} sx={{ 
+    padding: 8, 
+    width: "100%", 
+    maxWidth: "1200px", 
+    margin: "auto", 
+    position: "relative" 
+  }}>
+
           <h1>Banner</h1>
           {selectedImage && (
             <Box
@@ -180,17 +183,17 @@ const Banner = ({ id, onDelete }) => {
               onClick={handleDelete}
               sx={{ position: "absolute", top: 5, right: 5 }}
             >
-              <DeleteIcon />
+              
             </IconButton>
           )}
 
           {/* Text field for video name */}
           <TextField
-            label="Video Name"
+            label=" Add Content  "
             value={imageName}
             onChange={handleContentChange}
             fullWidth
-            sx={{ marginTop: 2 }}
+            sx={{ marginTop: 5 }}
             required
           />
 
@@ -203,17 +206,13 @@ const Banner = ({ id, onDelete }) => {
             sx={{ marginTop: 2 }}
           >
             <UploadFileIcon />
-            Upload Video
+            Upload image/video
           </Button>
 
           <ToastContainer />
         </Paper>
       </form>
-      <div>
-        <h1>Table</h1>
-      </div>
-      <BannerTable />
-    </div>
+     </div>
   );
 };
 

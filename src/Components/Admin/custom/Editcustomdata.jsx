@@ -200,7 +200,7 @@ const Editcustomdata = () => {
     }
   };
   useEffect(() => {
-    //Function to fetch menuname from the dropdown
+
     async function fetchData1() {
       try {
         setLoading(true);
@@ -220,7 +220,7 @@ const Editcustomdata = () => {
         const response = await APIClient.get(apis.getcustomdatabyid + id);
         setFormData(response.data);
       } catch (error) {
-        
+
         console.error("Error fetching user data:", error);
       }
     }

@@ -206,6 +206,7 @@ const EditSubmenu = () => {
       } else if (formData.contenttype === "1") {
         formDataToSend.append("html", content);
       }
+      formDataToSend.append("usertype", '1');
 
       const response = await APIClient.post(
         apis.editSubMenu + id,
