@@ -13,6 +13,14 @@
   "deleteCourse": "/api/Course/delete",
   "editCourse": "/api/Course/put",
   "createCandidate": "/api/Candidate",
+  "getCandidates": "/api/Candidate",
+  "getCandidatebyId": "/api/Candidate/",
+  "editCandidate": "/api/Candidate/put/",
+  "deleteCandidate": "/api/Candidate/delete",
+  "createHostel": "/api/Hostal",
+  "getHostels": "/api/Hostal",
+  "deleteHostel": "/api/Hostal/delete",
+  "editHostel": "/api/Hostal/put",
   "Getallcustom": "/api/Topmenu/Getallcustom",
   "getcustomdatabyid": "/api/Topmenu/"
 }

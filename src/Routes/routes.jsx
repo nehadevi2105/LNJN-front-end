@@ -22,6 +22,11 @@ import Candidate from "../Components/Admin/Candidate/Candidate";
 
 import AllCourses from "../Components/Admin/Course/AllCourses";
 import EditCourse from "../Components/Admin/Course/EditCourse";
+import AllCandidates from "../Components/Admin/Candidate/AllCandidates";
+import EditCandidate from "../Components/Admin/Candidate/EditCandidate";
+import CreateHostel from "../Components/Admin/Hostel/CreateHostel";
+import AllHostel from "../Components/Admin/Hostel/AllHostel";
+import EditHostel from "../Components/Admin/Hostel/EditHostel";
 
 function Router() {
   return (
@@ -46,6 +51,12 @@ function Router() {
 
       <Route path="/Course/AllCourse" element = {<AllCourses/>}/>
       <Route path="/Course/EditCourse/:id" element = {<EditCourse/>}/>
+      <Route path="/Candidate/AllCandidates" element = {<AllCandidates/>}/>
+      <Route path="/Candidate/EditCandidate/:id" element = {<EditCandidate/>}/>
+      <Route path="/Hostel/CreateHostel" element = {<CreateHostel/>}/>
+      <Route path="/Hostel/AllHostel" element = {<AllHostel/>}/>
+      <Route path="/Hostel/EditHostel/:id" element = {<EditHostel/>}/>
+
     </Routes>
   );
 }
