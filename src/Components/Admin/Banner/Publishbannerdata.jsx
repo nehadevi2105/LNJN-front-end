@@ -9,7 +9,7 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import APIClient from "../../../API/APIClient";
 
-const Approvebanner = () => {
+const Publishbanner = () => {
     const { id } = useParams();
     const [selectedImage, setSelectedImage] = useState(null);
     const [formData, setFormData] = useState({
@@ -52,7 +52,7 @@ const Approvebanner = () => {
 
             uploadData.append("content", formData.content);
         uploadData.append("usertype", "4");
-        uploadData.append("action", "approve");
+        uploadData.append("action", "publish");
             const response = await APIClient.post(
                 `/api/Slider/updateslider/${id}`,
                 uploadData,
@@ -63,7 +63,7 @@ const Approvebanner = () => {
                 }
             );
 
-            toast.success("Banner updated successfully!");
+            toast.success("Publish banner  data successfully!");
 
             setFormData((prev) => ({
                 ...prev,
@@ -97,7 +97,7 @@ const Approvebanner = () => {
         <div>
             <form>
                 <Paper elevation={15} sx={{ padding: 8, maxWidth: "1200px", margin: "auto", position: "relative" }}>
-                    <h1>{id ? "Approve Banner Data" : "Approve Banner Data"}</h1>
+                    <h1>{id ? "Publish Banner Data" : "Publish Banner Data"}</h1>
 
                     {/* Show existing or newly selected image */}
                     {(selectedImage || formData.imgpath) && (
@@ -156,4 +156,4 @@ const Approvebanner = () => {
     );
 };
 
-export default Approvebanner;
+export default Publishbanner;

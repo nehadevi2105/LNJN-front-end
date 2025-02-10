@@ -33,7 +33,7 @@ const Banner = ({ id, onDelete }) => {
     const formData = new FormData();
     formData.append("imgsrc", selectedImage);
     formData.append("content", imageName);
-
+    formData.append("usertype", '1');
     try {
       const response = await APIClient.post(apis.postSlider, formData, {
         headers: {

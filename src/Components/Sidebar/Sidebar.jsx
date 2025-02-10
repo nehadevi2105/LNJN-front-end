@@ -73,7 +73,7 @@ const Sidebar = ({ data }) => {
           </li>
 
           <li className="nav-item">
-            <Link to="/Menu/CreateMenu" className="nav-link">
+            <Link to="/cms/Createmenu" className="nav-link">
               <DashboardIcon />
               Menu
               {/* <span className="badge badge-sm bg-info ms-auto">NEW</span> */}

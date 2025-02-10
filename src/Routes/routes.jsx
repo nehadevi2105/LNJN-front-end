@@ -56,13 +56,14 @@ import TenderPublisherlist from "../Components/Admin/Tender/TenderTable/Tenderpu
 import TenderApprovallist from "../Components/Admin/Tender/TenderTable/Tenderapporvallist";
 import ApproveTender from "../Components/Admin/Tender/EditTender/Edittenderapproval";
 import PublisherTender from "../Components/Admin/Tender/EditTender/Edittenderpublish";
-
+import ApprovalbannerList from "../Components/Admin/Banner/Approvebannerlist";
+import PublisherbannerList from "../Components/Admin/Banner/Bannerpublisherlist";
+import Publishbanner from "../Components/Admin/Banner/Publishbannerdata";
 
 function Router() {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
-      <Route path="/cms/Createmenu" element={<CreateMenu />} />
       <Route path="/cms/Createmenu" element={<CreateMenu />} />
       <Route path="/Department/DepartmentForm" element={<CreateDepartment />} />
       <Route path="/MenuSubMenu/MenuSubMenu" element={<MenuSubMenu />} />
@@ -141,7 +142,9 @@ function Router() {
       <Route path="/Rooms/CreateRoom" element = {<CreateRoom/>}/>
       <Route path="/Rooms/AllRooms" element = {<AllRooms/>}/>
       <Route path="/Room/EditRoom/:id" element = {<EditRoom/>}/>
-
+      <Route path="/bannerapprovallist" element = {<ApprovalbannerList/>}/>
+      <Route path="/bannerpublisherlist" element = {<PublisherbannerList/>}/>
+      <Route path="/publishbannerdata/:id" element = {<Publishbanner/>}/>
     </Routes>
   );
 }
