@@ -1,5 +1,18 @@
 import { useState, useEffect } from "react";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import MenuBookIcon from "@mui/icons-material/MenuBook"; // CMS
+import ApartmentIcon from "@mui/icons-material/Apartment"; // Department
+import SchoolIcon from "@mui/icons-material/School"; // Courses
+import PersonIcon from "@mui/icons-material/Person"; // Candidates
+import HotelIcon from "@mui/icons-material/Hotel"; // Hostels
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom"; // Rooms
+import EventSeatIcon from "@mui/icons-material/EventSeat"; // Book Room
+import BuildIcon from "@mui/icons-material/Build"; // Custom
+import NewReleasesIcon from "@mui/icons-material/NewReleases"; // What's New
+import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify"; // Footer
+import PanoramaIcon from "@mui/icons-material/Panorama"; // Banner
+import AssignmentIcon from "@mui/icons-material/Assignment"; // Tenders
+
 import { Link } from "react-router-dom";
 
 const Sidebar = ({ data }) => {
@@ -45,11 +58,12 @@ const Sidebar = ({ data }) => {
         {/* Dropdown: Menu Management */}
         <li className="nav-item">
           <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("menu")}>
-            <DashboardIcon /> Menu Management
+            <MenuBookIcon /> CMS
           </button>
           {openDropdown === "menu" && (
             <ul className="nav-dropdown">
               <li><Link to="/Menu/CreateMenu" className="nav-link">Create Menu</Link></li>
+              <li><Link to="/SubMenu/CreateSubMenu" className="nav-link">Create SubMenu</Link></li>
               <li><Link to="/MenuSubMenu/MenuSubMenu" className="nav-link">Menu Table</Link></li>
             </ul>
           )}
@@ -58,7 +72,7 @@ const Sidebar = ({ data }) => {
         {/* Dropdown: Department */}
         <li className="nav-item">
           <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("department")}>
-            <DashboardIcon /> Department
+            <ApartmentIcon /> Department
           </button>
           {openDropdown === "department" && (
             <ul className="nav-dropdown">
@@ -71,7 +85,7 @@ const Sidebar = ({ data }) => {
         {/* Dropdown: Course */}
         <li className="nav-item">
           <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("course")}>
-            <DashboardIcon /> Courses
+            <SchoolIcon /> Courses
           </button>
           {openDropdown === "course" && (
             <ul className="nav-dropdown">
@@ -84,7 +98,7 @@ const Sidebar = ({ data }) => {
         {/* Dropdown: Candidate */}
         <li className="nav-item">
           <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("candidate")}>
-            <DashboardIcon /> Candidates
+            <PersonIcon /> Candidates
           </button>
           {openDropdown === "candidate" && (
             <ul className="nav-dropdown">
@@ -97,7 +111,7 @@ const Sidebar = ({ data }) => {
         {/* Dropdown: Hostel */}
         <li className="nav-item">
           <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("hostel")}>
-            <DashboardIcon /> Hostels
+            <HotelIcon /> Hostels
           </button>
           {openDropdown === "hostel" && (
             <ul className="nav-dropdown">
@@ -110,7 +124,7 @@ const Sidebar = ({ data }) => {
         {/* Dropdown: Rooms */}
         <li className="nav-item">
           <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("room")}>
-            <DashboardIcon /> Rooms
+            <MeetingRoomIcon /> Rooms
           </button>
           {openDropdown === "room" && (
             <ul className="nav-dropdown">
@@ -123,7 +137,7 @@ const Sidebar = ({ data }) => {
         {/* Dropdown: Book Room */}
         <li className="nav-item">
           <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("bookroom")}>
-            <DashboardIcon /> Book Room
+            <EventSeatIcon /> Book Room
           </button>
           {openDropdown === "bookroom" && (
             <ul className="nav-dropdown">
@@ -136,7 +150,7 @@ const Sidebar = ({ data }) => {
         {/* Dropdown: Custom */}
         <li className="nav-item">
           <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("custom")}>
-            <DashboardIcon /> Custom
+            <BuildIcon /> Custom
           </button>
           {openDropdown === "custom" && (
             <ul className="nav-dropdown">
@@ -146,10 +160,39 @@ const Sidebar = ({ data }) => {
           )}
         </li>
 
+        {/* Dropdown: Whats new */}
+        <li className="nav-item">
+          <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("whatsnew")}>
+            <NewReleasesIcon /> What's New
+          </button>
+          {openDropdown === "whatsnew" && (
+            <ul className="nav-dropdown">
+              <li><Link to="/WhatsNew/CreateWhatsNew" className="nav-link">What's New</Link></li>
+              <li><Link to="/WhatsNew/WhatsNewTable" className="nav-link">What's New Table</Link></li>
+            </ul>
+          )}
+        </li>
+
+        {/* Dropdown: Footer */}
+        <li className="nav-item">
+          <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("footer")}>
+            <FormatAlignJustifyIcon /> Footer
+          </button>
+          {openDropdown === "footer" && (
+            <ul className="nav-dropdown">
+              <li><Link to="/CMSFooter/CreateFooter/CreateFooterDec" className="nav-link">Footer Description</Link></li>
+              <li><Link to="/CMSFooter/CreateFooter/CreateFooterAddress" className="nav-link">Footer Address</Link></li>
+              <li><Link to="/CMSFooter/CreateFooter/CreateFooterServices" className="nav-link">Footer Services</Link></li>
+              <li><Link to="/CMSFooter/CreateFooter/CreateFooterData" className="nav-link">Footer Data</Link></li>
+              <li><Link to="/CMSFooter/FooterTable/FooterTable" className="nav-link">Footer Table</Link></li>
+            </ul>
+          )}
+        </li>
+
         {/* Dropdown: Banner */}
         <li className="nav-item">
           <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("banner")}>
-            <DashboardIcon /> Banner
+            <PanoramaIcon /> Banner
           </button>
           {openDropdown === "banner" && (
             <ul className="nav-dropdown">
@@ -162,7 +205,7 @@ const Sidebar = ({ data }) => {
         {/* Dropdown: Tender */}
         <li className="nav-item">
           <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("tender")}>
-            <DashboardIcon /> Tenders
+            <AssignmentIcon /> Tenders
           </button>
           {openDropdown === "tender" && (
             <ul className="nav-dropdown">
