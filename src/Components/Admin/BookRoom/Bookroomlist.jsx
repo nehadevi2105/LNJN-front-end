@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { 
-    Dialog, DialogTitle, DialogContent, DialogActions 
-  } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import { Box, Snackbar } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
@@ -13,88 +11,87 @@ import AddIcon from "@mui/icons-material/Add";
 import { Button } from "react-bootstrap";
 
 const Bookroomlist = () => {
-  const [candidates, setCandidates] = useState([]);
+  const [bookroom, setBookroom] = useState([]);
+  const [hostels, setHostels] = useState([]);
+  const [rooms, setRooms] = useState([]);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
-  const [selectedCandidate, setSelectedCandidate] = useState(null);
+  const [selectedBookroom, setSelectedBookroom] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   useEffect(() => {
-    const fetchCandidates = async () => {
+    const fetchData = async () => {
       try {
-        const response = await APIClient.get(apis.getbookroomlist);
-        // Map the API response to add an "id" field for DataGrid
-        const dataWithIds = response.data.map((bookroom) => ({
-          id: bookroom.id, // Unique candidate ID
-          roomid: bookroom.roomid,
-          hostalid: bookroom.hostalid,
+        const [bookroomRes, hostelsRes, roomsRes] = await Promise.all([
+          APIClient.get(apis.getbookroomlist),
+          APIClient.get(apis.getHostels),
+          APIClient.get(apis.getRooms)
+        ]);
+
+        setHostels(hostelsRes.data);
+        setRooms(roomsRes.data);
+
+        const bookroomData = bookroomRes.data.map((bookroom) => ({
+          id: bookroom.id,
+          roomName: roomsRes.data.find((room) => room.id === bookroom.roomid)?.name || "Unknown Room",
+          hostelName: hostelsRes.data.find((hostel) => hostel.hid === bookroom.hostalid)?.hname || "Unknown Hostel",
           amount: bookroom.amount
         }));
-        setCandidates(dataWithIds);
+
+        setBookroom(bookroomData);
       } catch (error) {
-        console.error("Error fetching candidates:", error);
-        toast.error("Failed to load candidates");
+        console.error("Error fetching data:", error);
+        toast.error("Failed to load data");
       }
     };
 
-    fetchCandidates();
+    fetchData();
   }, []);
 
   // Handle Delete
-  const handleDeleteClick = (candidate) => {
-    setSelectedCandidate(candidate);
+  const handleDeleteClick = (bookroom) => {
+    setSelectedBookroom(bookroom);
     setConfirmDialogOpen(true);
   };
 
   const handleConfirmDelete = async () => {
     try {
       const response = await APIClient.post(
-        `${apis.deleteCandidate}/${selectedCandidate.id}`,
+        `${apis.deleteBookroom}/${selectedBookroom.id}`,
         null,
         { headers: { "Content-Type": "application/json" } }
       );
-  
+
       if (response.status === 200) {
-        setCandidates((prev) =>
-          prev.filter((candidate) => candidate.id !== selectedCandidate.id)
-        );
-        toast.success("Candidate deleted successfully");
+        setBookroom((prev) => prev.filter((b) => b.id !== selectedBookroom.id));
+        toast.success("Booked Room deleted successfully");
       } else {
-        toast.error("Failed to delete candidate");
+        toast.error("Failed to delete Booked room");
       }
     } catch (error) {
-      console.error("Error deleting candidate:", error);
-      toast.error(error.response?.data || "Failed to delete candidate");
+      console.error("Error deleting Booked room:", error);
+      toast.error(error.response?.data || "Failed to delete Booked room");
     } finally {
       setConfirmDialogOpen(false);
     }
   };
 
- 
-  // Define columns for the DataGrid. The action column provides Edit and Delete options.
+  // DataGrid columns
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "roomid", headerName: "Room No", width: 200 },
-    { field: "hostalid", headerName: "Hostal", width: 150 },
-    { field: "amount", headerName: "Amount", width: 200 },
-  
+    { field: "roomName", headerName: "Room Name", width: 200 },
+    { field: "hostelName", headerName: "Hostel Name", width: 200 },
+    { field: "amount", headerName: "Amount", width: 150 },
     {
       field: "action",
       headerName: "Action",
-      width: 150,
+      width: 200,
       sortable: false,
       renderCell: (params) => (
         <div>
-          {/* Edit candidate link */}
-          <Button variant="outline-primary" size="sm" as={Link} to={`/Candidate/EditCandidate/${params.row.id}`}>
+          <Button variant="outline-primary" size="sm" as={Link} to={`/BookRoom/EditBookRoom/${params.row.id}`}>
             Edit
           </Button>
-          {/* Delete candidate button */}
-          <Button
-            variant="outline-danger"
-            size="sm"
-            style={{ marginLeft: 8 }}
-            onClick={() => handleDeleteClick(params.row)}
-          >
+          <Button variant="outline-danger" size="sm" style={{ marginLeft: 8 }} onClick={() => handleDeleteClick(params.row)}>
             Delete
           </Button>
         </div>
@@ -106,7 +103,7 @@ const Bookroomlist = () => {
     <main id="main" className="main">
       <div className="header-box" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px" }}>
         <h2 className="maintitle">Book Room List</h2>
-        <Link to="/Hostel/Bookroom" style={{ textDecoration: "none", color: "inherit" }}>
+        <Link to="/BookRoom/Bookroom" style={{ textDecoration: "none", color: "inherit" }}>
           <Button variant="primary">
             <AddIcon /> Book Room
           </Button>
@@ -115,7 +112,7 @@ const Bookroomlist = () => {
 
       <Box sx={{ height: 600, width: "100%" }} style={{ backgroundColor: "#fff", padding: "16px" }}>
         <DataGrid
-          rows={candidates}
+          rows={bookroom}
           columns={columns}
           disableColumnFilter
           disableColumnSelector
@@ -129,14 +126,10 @@ const Bookroomlist = () => {
       {/* Delete Confirmation Dialog */}
       <Dialog open={confirmDialogOpen} onClose={() => setConfirmDialogOpen(false)}>
         <DialogTitle>Confirm Delete</DialogTitle>
-        <DialogContent>Are you sure you want to delete this candidate?</DialogContent>
+        <DialogContent>Are you sure you want to delete this Booked Room?</DialogContent>
         <DialogActions>
-          <Button onClick={() => setConfirmDialogOpen(false)} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleConfirmDelete} color="primary">
-            Confirm
-          </Button>
+          <Button onClick={() => setConfirmDialogOpen(false)} color="primary">Cancel</Button>
+          <Button onClick={handleConfirmDelete} color="primary">Confirm</Button>
         </DialogActions>
       </Dialog>
 
