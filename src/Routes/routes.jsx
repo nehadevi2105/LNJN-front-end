@@ -1,4 +1,3 @@
-
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "../Components/Dashboard/Dashboard";
 import CreateMenu from "../Components/Admin/Menu/CreateMenu";
@@ -42,6 +41,16 @@ import EditWhatsNew from "../Components/Admin/WhatsNew/EditWhatsNew/EditWhatsNew
 import Createtender from "../Components/Admin/Tender/CreateTender/Createtender";
 import TenderTable from "../Components/Admin/Tender/TenderTable/TenderTable";
 import EditTender from "../Components/Admin/Tender/EditTender/EditTender";
+import CreateFooterAddress from "../Components/Admin/CMSFooter/CreateFooter/CreateFooterAddress";
+import CreateFooterData from "../Components/Admin/CMSFooter/CreateFooter/CreateFooterData";
+import CreateFooterDec from "../Components/Admin/CMSFooter/CreateFooter/CreateFooterDec";
+import CreateFooterServices from "../Components/Admin/CMSFooter/CreateFooter/CreateFooterServices";
+import EditFooterDec from "../Components/Admin/CMSFooter/EditFooter/EditFooterDec";
+import EditFooterServices from "../Components/Admin/CMSFooter/EditFooter/EditFooterServices";
+import EditFooterData from "../Components/Admin/CMSFooter/EditFooter/EditFooterData";
+import EditFooterAddress from "../Components/Admin/CMSFooter/EditFooter/EditFooterAddress";
+import IndexEditFooter from "../Components/Admin/CMSFooter/EditFooter/IndexEditFooter";
+import FooterTable from "../Components/Admin/CMSFooter/FooterTable/FooterTable";
 
 function Router() {
   return (
@@ -91,6 +100,43 @@ function Router() {
       <Route path="/Hostel/CreateHostel" element={<CreateHostel />} />
       <Route path="/Hostel/AllHostel" element={<AllHostel />} />
       <Route path="/Hostel/EditHostel/:id" element={<EditHostel />} />
+
+      {/* CMSFooter */}
+      <Route
+        path="/CMSFooter/CreateFooter/CreateFooterAddress"
+        element={<CreateFooterAddress />}
+      />
+      <Route
+        path="/CMSFooter/CreateFooter/CreateFooterData"
+        element={<CreateFooterData />}
+      />
+      <Route
+        path="/CMSFooter/CreateFooter/CreateFooterDec"
+        element={<CreateFooterDec />}
+      />
+      <Route
+        path="/CMSFooter/CreateFooter/CreateFooterServices"
+        element={<CreateFooterServices />}
+      />
+      <Route
+        path="/CMSFooter/EditFooter/EditFooterDec/:id"
+        element={<EditFooterDec />}
+      />
+      <Route
+        path="/CMSFooter/EditFooter/EditFooterServices/:id"
+        element={<EditFooterServices />}
+      />
+      <Route
+        path="/CMSFooter/EditFooter/EditFooterData/:id"
+        element={<EditFooterData />}
+      />
+      <Route
+        path="/CMSFooter/EditFooter/EditFooterAddress/:id"
+        element={<EditFooterAddress />}
+      />
+      <Route path="/CMSFooter/EditFooter/IndexEditFooter/:id" element={<IndexEditFooter />} />
+      <Route path="/CMSFooter/FooterTable/FooterTable" element={<FooterTable />} />
+      
     </Routes>
   );
 }

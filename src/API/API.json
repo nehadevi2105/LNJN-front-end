@@ -43,5 +43,8 @@
   "createbookroom": "/api/Bookroom/post_data",
   "getbookroomlist": "/api/Bookroom",
   "Tender": "/api/Tenders",
-  "Tenderbyid": "/api/Tenders/"
+  "Tenderbyid": "/api/Tenders/",
+  "newfooter": "/api/lowerfooter",
+  "footerdata": "/api/lowerfooter",
+  "getfooterbyid": "/api/lowerfooter/"
 }

@@ -21,7 +21,9 @@ const Sidebar = ({ data }) => {
 
     handleResize(); // Call once to set initial state
 
-    handleResize();
+    // handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [data]); // Add 'data' to dependency array, not 'showhide'
 
   const toggleSidebar = () => {
@@ -229,6 +231,49 @@ const Sidebar = ({ data }) => {
             <Link to="/TenderTable/TenderTable" className="nav-link">
               <DashboardIcon />
               Tender Table
+            </Link>
+          </li>
+
+          <li className="nav-item">
+            <Link
+              to="/CMSFooter/CreateFooter/CreateFooterDec"
+              className="nav-link"
+            >
+              <DashboardIcon />
+              Footer Description
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/CMSFooter/CreateFooter/CreateFooterAddress"
+              className="nav-link"
+            >
+              <DashboardIcon />
+              Footer Address
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/CMSFooter/CreateFooter/CreateFooterServices"
+              className="nav-link"
+            >
+              <DashboardIcon />
+              Footer Services
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/CMSFooter/CreateFooter/CreateFooterData"
+              className="nav-link"
+            >
+              <DashboardIcon />
+              Footer Data
+            </Link>
+          </li>
+          <li>
+            <Link to="/CMSFooter/FooterTable/FooterTable" className="nav-link">
+              <DashboardIcon />
+              Footer Table
             </Link>
           </li>
         </ul>
