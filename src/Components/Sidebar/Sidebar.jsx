@@ -14,6 +14,10 @@ const Sidebar = ({ data }) => {
 
     handleResize();
   }, [data]);
+    // handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [data]); // Add 'data' to dependency array, not 'showhide'
 
   const toggleSidebar = () => {
     setShowHide(showhide === "show" ? "" : "show");
@@ -179,6 +183,68 @@ const Sidebar = ({ data }) => {
           )}
         </li>
       </ul>
+          <li className="nav-item">
+            <Link to="/WhatsNew/WhatsNewTable" className="nav-link">
+              <DashboardIcon />
+              What's New Table
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/CreateTender/Createtender" className="nav-link">
+              <DashboardIcon />
+              Tender Form
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/TenderTable/TenderTable" className="nav-link">
+              <DashboardIcon />
+              Tender Table
+            </Link>
+          </li>
+
+          <li className="nav-item">
+            <Link
+              to="/CMSFooter/CreateFooter/CreateFooterDec"
+              className="nav-link"
+            >
+              <DashboardIcon />
+              Footer Description
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/CMSFooter/CreateFooter/CreateFooterAddress"
+              className="nav-link"
+            >
+              <DashboardIcon />
+              Footer Address
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/CMSFooter/CreateFooter/CreateFooterServices"
+              className="nav-link"
+            >
+              <DashboardIcon />
+              Footer Services
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/CMSFooter/CreateFooter/CreateFooterData"
+              className="nav-link"
+            >
+              <DashboardIcon />
+              Footer Data
+            </Link>
+          </li>
+          <li>
+            <Link to="/CMSFooter/FooterTable/FooterTable" className="nav-link">
+              <DashboardIcon />
+              Footer Table
+            </Link>
+          </li>
+        </ul>
 
       <div className="sidebar-footer border-top d-none d-md-flex">
         <button className="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>

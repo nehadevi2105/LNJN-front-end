@@ -14,16 +14,14 @@ import {
   DialogContent,
   Dialog,
 } from '@mui/material';
-import apiClient from '../../../../Api/ApiClient';
-import apis from '../../../../Api/api.json';
-import Header from '../../header/Header';
-import Sidebar from '../../sidebar/Sidebar';
-import Footer from '../../footer/Footer';
+import APIClient from "../../../../API/APIClient";
+import apis from "../../../../API/API.json";
 
 
 
 
-export const CreateFooterService = () => {
+
+ const CreateFooterService = () => {
   const [html, sethtml] = useState('');
   const [file, setselectedfile] = useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
@@ -108,7 +106,7 @@ export const CreateFooterService = () => {
       formDataToSend.append('contenttype', formData.contenttype);
       formDataToSend.append('languagetype', formData.languagetype);
 
-      const response = await apiClient.post(apis.newfooter, formDataToSend, {
+      const response = await APIClient.post(apis.newfooter, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -131,23 +129,23 @@ export const CreateFooterService = () => {
 
   return (
     <div>
-    <Header />
-    <Sidebar />
-  <main id="main" class="main">
-    <div class="pagetitle">
-    <div class="pagetitle-lft">
+    
+    
+  <main id="main" className="main">
+    <div className="pagetitle">
+    <div className="pagetitle-lft">
       <h1>Create Footer Service</h1>
       <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">Home</li>
-          <li class="breadcrumb-item">Footer</li>
-          <li class="breadcrumb-item active">Create Footer Service</li>
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">Home</li>
+          <li className="breadcrumb-item">Footer</li>
+          <li className="breadcrumb-item active">Create Footer Service</li>
         </ol>
       </nav>
       </div>
-      <div class="pagetitle-rgt">
+      <div className="pagetitle-rgt">
       <Link to='/dashboard'>
-              <button type="button" class="btn btn-info">
+              <button type="button" className="btn btn-info">
                 Back
               </button>
             </Link>
@@ -164,7 +162,7 @@ export const CreateFooterService = () => {
       {/* <div className="main-body"> */}
       <div className="row justify-content-center">
         <div className="col-md-12">
-<div class="card"><div class="card-body"><div class="mb-3 mt-md-4"></div>
+<div className="card"><div className="card-body"><div className="mb-3 mt-md-4"></div>
 <div className="box-sec">
         <div className="mb-3">
         <h1 className="text-center heading-main">Footer Service</h1>
@@ -250,7 +248,8 @@ export const CreateFooterService = () => {
       </div>
     </div>
     </main>
-    <Footer />
+  
     </div>
   );
 };
+export default CreateFooterService;

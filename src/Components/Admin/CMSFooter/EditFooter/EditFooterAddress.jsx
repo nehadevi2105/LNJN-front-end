@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import ViewListIcon from '@mui/icons-material/ViewList';
-import apiClient from '../../../../Api/ApiClient';
-import apis from '../../../../Api/api.json';
+import APIClient from "../../../../API/APIClient";
+import apis from "../../../../API/API.json";
 
 import HomeIcon from '@mui/icons-material/Home';
-export const EditFooterAddress = () => {
+
+ const EditFooterAddress = () => {
   const {id}= useParams()
   const [html, setHtml] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
@@ -52,7 +53,7 @@ export const EditFooterAddress = () => {
     async function fetchData() {
       try {
        
-        const response = await apiClient.get(apis.getfooterbyid+id);
+        const response = await APIClient.get(apis.getfooterbyid+id);
         setFormData(response.data);
      
       } catch (error) {
@@ -75,7 +76,7 @@ export const EditFooterAddress = () => {
         formDataToSend.append('contenttype', formData.contenttype);
         formDataToSend.append('languagetype', formData.languagetype);
 
-        const response = await apiClient.put("/api/lowerfooter/put/"+id, formDataToSend, {
+        const response = await APIClient.post("/api/lowerfooter/put/"+id, formDataToSend, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -112,8 +113,8 @@ export const EditFooterAddress = () => {
   return (
     <div className="container">
       <div className="row">
-      <div class="card">
-              <div class="card-body">
+      <div className="card">
+              <div className="card-body">
       <h1 className="text-center">Office address</h1>
       </div>
       <div className="row justify-content-center">
@@ -186,3 +187,5 @@ export const EditFooterAddress = () => {
     </div>
   );
 };
+
+export default EditFooterAddress;
