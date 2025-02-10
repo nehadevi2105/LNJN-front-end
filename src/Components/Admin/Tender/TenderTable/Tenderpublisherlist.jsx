@@ -5,15 +5,6 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
-// import {
-//   getLinks,
-//   getTender,
-//   getReport,
-//   getwhatsnew,
-//   getMenuoptins, BASE_URL
-// } from "../../../../Api/ApiFunctions.jsx";
-
-//import Sidebar from '../../sidebar/Sidebar';
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -27,7 +18,7 @@ import apis from "../../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
 import "./TenderTable.scss";
 
-const TenderTable = () => {
+const TenderPublisherlist = () => {
   const [apiData, setApiData] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -42,26 +33,26 @@ const TenderTable = () => {
     { field: "end_date", headerName: "End date", width: 120 },
     { field: "file ", headerName: "File", width: 200 },
     {
-      field: "edit",
+      field: "View Details",
       headerName: "Edit",
       sortable: false,
       renderCell: (params) => (
-        <Link to={"/EditTender/EditTender/" + params.row.id}>
+        <Link to={"/PublishTenderdata/" + params.row.id}>
           <EditIcon style={{ cursor: "pointer" }} />
         </Link>
       ),
     },
-    {
-      field: "delete",
-      headerName: "Delete",
-      sortable: false,
-      renderCell: (params) => (
-        <DeleteIcon
-          style={{ cursor: "pointer" }}
-          onClick={() => handleDeleteClick(params.row)}
-        />
-      ),
-    },
+    // {
+    //   field: "delete",
+    //   headerName: "Delete",
+    //   sortable: false,
+    //   renderCell: (params) => (
+    //     <DeleteIcon
+    //       style={{ cursor: "pointer" }}
+    //       onClick={() => handleDeleteClick(params.row)}
+    //     />
+    //   ),
+    // },
   ];
 
   const handleDeleteClick = (item) => {
@@ -93,7 +84,7 @@ const TenderTable = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await APIClient.get(apis.Gettender);
+        const response = await APIClient.get(apis.tenderpubliserlist);
         //const response = await getTender();
         const dataWithIds = response.data.map((row, index) => ({
           id: index,
@@ -113,48 +104,26 @@ const TenderTable = () => {
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1 className="maintitle">All Tenders List</h1>
+            <h1 className="maintitle">Publisher  Tender List</h1>
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Service</li>
-                <li className="breadcrumb-item active">All Tender </li>
+                <li className="breadcrumb-item active">Publisher  Tender List</li>
               </ol>
             </nav>
           </div>
-          <div className="pagetitle-rgt">
-            {/* <Link to="/dashboard">
-              <button type="button" className="btn btn-info my-1">
-                Back
-              </button>
-            </Link> */}
-          </div>
+          
         </div>
         <div className="header-box">
           <div className="header-box-lft">
-            
+            {/* <h1 className="maintitle">Approval  Tender List</h1> */}
           </div>
           <div className="header-box-rgt">
-            <Link to="/CreateTender/Createtender">
+            <Link to="/services/createtender">
               <p>
                 <AddIcon />
                 New Tender
-              </p>
-            </Link>
-          </div>
-          <div className="header-box-rgt">
-            <Link to="/Tenderapprovallist">
-              <p>
-               
-                Get Approval List
-              </p>
-            </Link>
-          </div>
-          <div className="header-box-rgt">
-            <Link to="/Tenderpublisherlist">
-              <p>
-               
-                Get Publisher List
               </p>
             </Link>
           </div>
@@ -204,4 +173,4 @@ const TenderTable = () => {
     </div>
   );
 };
-export default TenderTable;
+export default TenderPublisherlist;

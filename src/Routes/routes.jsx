@@ -50,6 +50,12 @@ import WhatsNewapprovalTable from "../Components/Admin/WhatsNew/WhtasNewTable/Wh
 import WhatsNewpublisherTable from "../Components/Admin/WhatsNew/WhtasNewTable/Whatsnewpublisherlist";
 import ApproveWhatsNew from "../Components/Admin/WhatsNew/EditWhatsNew/Approvewhatsnew";
 import PublisWhatsNew from "../Components/Admin/WhatsNew/EditWhatsNew//Publishwhatsnew";
+import Bookroom from "../Components/Admin/Hostel/Bookroom";
+import Bookroomlist from "../Components/Admin/Hostel/Bookroomlist";
+import TenderPublisherlist from "../Components/Admin/Tender/TenderTable/Tenderpublisherlist";
+import TenderApprovallist from "../Components/Admin/Tender/TenderTable/Tenderapporvallist";
+import ApproveTender from "../Components/Admin/Tender/EditTender/Edittenderapproval";
+import PublisherTender from "../Components/Admin/Tender/EditTender/Edittenderpublish";
 import Bookroom from "../Components/Admin/BookRoom/Bookroom";
 import Bookroomlist from "../Components/Admin/BookRoom/Bookroomlist";
 import EditBookRoom from "../Components/Admin/BookRoom/EditBookRoom";
@@ -132,6 +138,10 @@ function Router() {
       <Route path="/CreateTender/Createtender" element={<Createtender />} />
       <Route path="/TenderTable/TenderTable" element={<TenderTable />} />
       <Route path="/EditTender/EditTender/:id" element={<EditTender />} />
+      <Route path="/Tenderapprovallist" element={<TenderApprovallist />} />
+      <Route path="/Tenderpublisherlist" element={<TenderPublisherlist />} />
+      <Route path="/ApproveTenderdata/:id" element={<ApproveTender />} />
+      <Route path="/PublishTenderdata/:id" element={<PublisherTender />} />
       <Route path="/Rooms/CreateRoom" element = {<CreateRoom/>}/>
       <Route path="/Rooms/AllRooms" element = {<AllRooms/>}/>
       <Route path="/Room/EditRoom/:id" element = {<EditRoom/>}/>
