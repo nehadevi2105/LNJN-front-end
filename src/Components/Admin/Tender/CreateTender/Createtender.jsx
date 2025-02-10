@@ -193,7 +193,7 @@ const CreateTender = () => {
         } else if (formData.contenttype === "1") {
           formDataToSend.append("html", html);
         }
-
+        formDataToSend.append("usertype", '1');
         formDataToSend.append("startdate", formData.startdate);
         formDataToSend.append("end_date", formData.end_date);
         formDataToSend.append("languagetype", formData.languagetype);
@@ -252,11 +252,11 @@ const CreateTender = () => {
             </nav>
           </div>
           <div className="pagetitle-rgt">
-            <Link to="/dashboard">
+            {/* <Link to="/dashboard">
               <button type="button" className="btn btn-info">
                 Back
               </button>
-            </Link>
+            </Link> */}
           </div>
         </div>
         <div className="container">
@@ -271,7 +271,7 @@ const CreateTender = () => {
                 <div className="card-body">
                   <div className="mb-3 mt-md-4">
                     <div className="box-sec">
-                      <h1 className="text-center heading-main">Tender</h1>
+                      <h1 className="text-center heading-main"></h1>
                       <div className="mb-3">
                         <label className="form-label text-dark">
                           Language Type

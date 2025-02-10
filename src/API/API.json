@@ -45,7 +45,10 @@
   "getroomlist": "/api/Room",
   "createbookroom": "/api/Bookroom/post_data",
   "getbookroomlist": "/api/Bookroom",
-  "Tender": "/api/Tenders",
+  "Tender": "/api/Tenders/createtender",
+  "Gettender": "/api/Tenders",
+  "tenderapprovallist": "/api/Tenders/approvalist",
+  "tenderpubliserlist": "/api/Tenders/publisherlist",
   "Tenderbyid": "/api/Tenders/",
   "updateSlider": "/api/Slider/updateslider/"
   

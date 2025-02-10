@@ -1,21 +1,17 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-//import ViewListIcon from '@mui/icons-material/ViewList';
 import { Link, useParams } from 'react-router-dom';
 import JoditEditor from 'jodit-react';
 import HomeIcon from '@mui/icons-material/Home';
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
-
 import { Button, Card, Col, Container, Form, Spinner } from 'react-bootstrap';
 import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
 
 
- const EditTender = () => {
+ const PublisherTender = () => {
   const { id } = useParams();
   const [html, sethtml] = useState('');
   const [file, setFile] = useState(null);
@@ -200,8 +196,8 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
         formDataToSend.append('startdate', formData.startdate);
         formDataToSend.append('end_date', formData.end_date);
         formDataToSend.append('languagetype', formData.languagetype);
-        formDataToSend.append("usertype", '1');
-        formDataToSend.append("action", 'approve');
+        formDataToSend.append("usertype", '4');
+        formDataToSend.append("action", 'publish');
         const response = await APIClient.post("/api/Tenders/updatetenderdata/" + id, formDataToSend, {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -210,18 +206,18 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
         
         // console.log('Data updated:', response.data);
         toast.success('Data updated successfully!');
-
         setFormData({
-          tender_tittle: "",
-          contenttype: "",
-          external_file: "",
-          internale_file: "",
-          file: "",
-          startdate: "",
-          end_date: "",
-          html: "",
-          languagetype: "",
-        });
+            tender_tittle: "",
+            contenttype: "",
+            external_file: "",
+            internale_file: "",
+            file: "",
+            startdate: "",
+            end_date: "",
+            html: "",
+            languagetype: "",
+          });
+    
       } catch (error) {
         console.error('Error saving/updating data:', error);
         toast.error('Something went wrong');
@@ -237,11 +233,11 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1>Edit Tender</h1>
+            <h1>Publish Tender Data</h1>
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
-                <li className="breadcrumb-item">Edit Tender</li>
+                <li className="breadcrumb-item">Publish Tender Data</li>
               </ol>
             </nav>
           </div>
@@ -268,7 +264,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
               <div className="row justify-content-center">
                 <div className="container-fluid bg-white">
                   <div className="box-sec">
-                    <h1 className="text-center heading-main">Tender</h1>
+                    {/* <h1 className="text-center heading-main">Tender</h1> */}
                     <div className="mb-3">
                       <label className="form-label text-dark">Language Type</label>
                       <select
@@ -360,7 +356,6 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
                           className="form-control"
                           type="file"
 
-
                           onChange={handleImageChange}
                         />
                         {errors.file && (
@@ -424,7 +419,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
 
                     <div className="btnsubmit">
                       <button className="btn btn-primary" onClick={handleSubmit}>
-                        Update
+                        Publish
                       </button>
 
                       {/* <CustomModal isOpen={isModalOpen} message={modalMessage} onClose={closeModal} /> */}
@@ -470,4 +465,4 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
   );
 };
 
-export default EditTender;
+export default PublisherTender;

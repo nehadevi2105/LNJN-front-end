@@ -49,6 +49,10 @@ import ApproveWhatsNew from "../Components/Admin/WhatsNew/EditWhatsNew/Approvewh
 import PublisWhatsNew from "../Components/Admin/WhatsNew/EditWhatsNew//Publishwhatsnew";
 import Bookroom from "../Components/Admin/Hostel/Bookroom";
 import Bookroomlist from "../Components/Admin/Hostel/Bookroomlist";
+import TenderPublisherlist from "../Components/Admin/Tender/TenderTable/Tenderpublisherlist";
+import TenderApprovallist from "../Components/Admin/Tender/TenderTable/Tenderapporvallist";
+import ApproveTender from "../Components/Admin/Tender/EditTender/Edittenderapproval";
+import PublisherTender from "../Components/Admin/Tender/EditTender/Edittenderpublish";
 
 function Router() {
   return (
@@ -117,6 +121,10 @@ function Router() {
       <Route path="/CreateTender/Createtender" element={<Createtender />} />
       <Route path="/TenderTable/TenderTable" element={<TenderTable />} />
       <Route path="/EditTender/EditTender/:id" element={<EditTender />} />
+      <Route path="/Tenderapprovallist" element={<TenderApprovallist />} />
+      <Route path="/Tenderpublisherlist" element={<TenderPublisherlist />} />
+      <Route path="/ApproveTenderdata/:id" element={<ApproveTender />} />
+      <Route path="/PublishTenderdata/:id" element={<PublisherTender />} />
     </Routes>
   );
 }
