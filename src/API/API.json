@@ -42,9 +42,10 @@
   "whatspublisherlist": "/api/Whatsnew/publisherlist",
   "getwhatsnewbyid": "/api/Whatsnew/",
   "editSubMenu": "/api/Topmenu/updatemenu/",
-  "getroomlist": "/api/Room",
-  "createbookroom": "/api/Bookroom/post_data",
+  "createBookroom": "/api/Bookroom/post_data",
   "getbookroomlist": "/api/Bookroom",
+  "deleteBookroom": "/api/Bookroom/delete",
+  "editBookroom": "/api/Bookroom/put",
   "Tender": "/api/Tenders",
   "Tenderbyid": "/api/Tenders/",
   "updateSlider": "/api/Slider/updateslider/"

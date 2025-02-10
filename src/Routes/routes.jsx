@@ -50,8 +50,9 @@ import WhatsNewapprovalTable from "../Components/Admin/WhatsNew/WhtasNewTable/Wh
 import WhatsNewpublisherTable from "../Components/Admin/WhatsNew/WhtasNewTable/Whatsnewpublisherlist";
 import ApproveWhatsNew from "../Components/Admin/WhatsNew/EditWhatsNew/Approvewhatsnew";
 import PublisWhatsNew from "../Components/Admin/WhatsNew/EditWhatsNew//Publishwhatsnew";
-import Bookroom from "../Components/Admin/Hostel/Bookroom";
-import Bookroomlist from "../Components/Admin/Hostel/Bookroomlist";
+import Bookroom from "../Components/Admin/BookRoom/Bookroom";
+import Bookroomlist from "../Components/Admin/BookRoom/Bookroomlist";
+import EditBookRoom from "../Components/Admin/BookRoom/EditBookRoom";
 
 
 function Router() {
@@ -104,8 +105,9 @@ function Router() {
       <Route path="/Hostel/CreateHostel" element = {<CreateHostel/>}/>
       <Route path="/Hostel/AllHostel" element = {<AllHostel/>}/>
       <Route path="/Hostel/EditHostel/:id" element = {<EditHostel/>}/>
-       <Route path="/Hostel/Bookroom" element = {<Bookroom/>}/>
-       <Route path="/Hostel/Bookroomlist" element = {<Bookroomlist/>}/>
+       <Route path="/BookRoom/Bookroom" element = {<Bookroom/>}/>
+       <Route path="/BookRoom/Bookroomlist" element = {<Bookroomlist/>}/>
+       <Route path="/BookRoom/EditBookRoom/:id" element = {<EditBookRoom/>}/>
 
       <Route path="/bannerdata" element={<BannerTable />} />
       <Route path="/Candidate/AllCandidates" element = {<AllCandidates/>}/>

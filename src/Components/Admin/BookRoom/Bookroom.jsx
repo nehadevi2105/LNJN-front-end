@@ -39,7 +39,7 @@ const Bookroom = () => {
   useEffect(() => {
     const fetchroom = async () => {
       try {
-        const response = await APIClient.get(apis.getroomlist);
+        const response = await APIClient.get(apis.getRooms);
         setRoomlist(response.data || []);
         if (Selection.hostalid) {
           const filteredrooms = response.data.filter(
@@ -91,7 +91,7 @@ const Bookroom = () => {
     setLoading(true);
 
     try {
-      const response = await APIClient.post(apis.createbookroom, Selection, {
+      const response = await APIClient.post(apis.createBookroom, Selection, {
         headers: { "Content-Type": "application/json" },
       });
 
@@ -192,6 +192,11 @@ const Bookroom = () => {
 
                       {/* Submit Button */}
                       <div className="d-flex" style={{ justifyContent: "space-between" }}>
+                      <Link to="/BookRoom/Bookroomlist">
+                          <Button variant="outline-secondary" style={{ width: 100 }}>
+                            Back
+                          </Button>
+                        </Link>
                         <Button
                           variant="primary"
                           type="submit"
@@ -200,11 +205,7 @@ const Bookroom = () => {
                         >
                           {loading ? "Submitting..." : "Submit"}
                         </Button>
-                        <Link to="/Hostel/AllHostel">
-                          <Button variant="outline-secondary" style={{ width: 100 }}>
-                            Back
-                          </Button>
-                        </Link>
+                        
                       </div>
                     </Form>
                   </Card.Body>
