@@ -202,7 +202,7 @@ const EditWhatsNew = () => {
         formDataToSend.append("news_title", formData.news_title);
         formDataToSend.append("contenttype", formData.contenttype);
         formDataToSend.append("languagetype", formData.languagetype);
-
+        formDataToSend.append("usertype", '1');
         if (formData.contenttype === 4) {
           formDataToSend.append("external_file", formData.external_file);
         } else if (formData.contenttype === 3) {
@@ -217,7 +217,7 @@ const EditWhatsNew = () => {
         formDataToSend.append("end_date", formData.end_date);
 
         const response = await APIClient.post(
-          "/api/Whatsnew/put/" + id,
+          "/api/Whatsnew/updatewhats_new/" + id,
           formDataToSend,
           {
             headers: {
@@ -227,6 +227,17 @@ const EditWhatsNew = () => {
         );
         // console.log('Data updated:', response.data);
         toast.success("Data updated successfully!");
+        setFormData({
+          news_title: "",
+          contenttype: "",
+          external_file: "",
+          internale_file: "",
+          file: "",
+          startdate: "",
+          end_date: "",
+          html: "",
+          languagetype: "",
+        });
       } catch (error) {
         if (error.response && error.response.status === 401) {
           toast.error("Unauthorized access. Please log in.");

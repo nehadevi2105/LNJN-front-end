@@ -16,7 +16,7 @@ import MuiAlert from '@mui/material/Alert';
 import APIClient from '../../../API/APIClient';
 import apis from '../../../API/API.json';
 
-const BannerTable = () => {
+const PublisherbannerList = () => {
     const [apiData, setApiData] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
     const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
@@ -34,29 +34,17 @@ const BannerTable = () => {
             ),
         },
         { field: 'content', headerName: 'Content Data',width: 200 },
-        // {
-        //     field: 'edit',
-        //     headerName: 'Edit',
-        //     sortable: false,
-        //     width: 80,
-        //     renderCell: (params) => (
-        //         <Link to={'/approvebanner/' + params.row.u_id}>
-        //             <EditIcon style={{ cursor: 'pointer', color: 'blue' }} />
-        //         </Link>
-        //     ),
-        // },
         {
-            field: 'delete',
-            headerName: 'Delete',
+            field: 'View Details',
+            headerName: 'Edit',
             sortable: false,
             width: 80,
             renderCell: (params) => (
-                <DeleteIcon
-                    style={{ cursor: 'pointer', color: 'red' }}
-                    onClick={() => handleDeleteClick(params.row)}
-                />
+                <Link to={'/publishbannerdata/' + params.row.id}>
+                    <EditIcon style={{ cursor: 'pointer', color: 'blue' }} />
+                </Link>
             ),
-        },
+        }
     ];
 
     const handleDeleteClick = (item) => {
@@ -66,7 +54,7 @@ const BannerTable = () => {
 
     const handleConfirmSubmit = async () => {
         try {
-            await APIClient.post('/api/Slider/delete/' + selectedItem.id);
+            await APIClient.post('/api/Slider/delete/' + selectedItem.u_id);
             setApiData((prevData) => prevData.filter((item) => item.u_id !== selectedItem.u_id));
             setModalMessage('Data deleted successfully');
             setSnackbarOpen(true);
@@ -81,7 +69,7 @@ const BannerTable = () => {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await APIClient.get(apis.getSlider);
+                const response = await APIClient.get(apis.getbannerpublisherlist);
                 const dataWithIds = response.data.map((row, index) => ({ id: index + 1, ...row }));
                 setApiData(dataWithIds);
             } catch (error) {
@@ -93,14 +81,6 @@ const BannerTable = () => {
 
     return (
         <>
-         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mb: 2 }}>
-                <Button variant="contained" color="primary" component={Link} to="/bannerapprovallist">
-                   Banner Approval List
-                </Button>
-                <Button variant="contained" color="secondary" component={Link} to="/bannerpublisherlist">
-                  Banner  Publisher List
-                </Button>
-            </Box>
             <Box sx={{ height: 400, width: '100%' }}>
                 <DataGrid
                     rows={apiData}
@@ -130,4 +110,4 @@ const BannerTable = () => {
     );
 };
 
-export default BannerTable;
+export default PublisherbannerList;

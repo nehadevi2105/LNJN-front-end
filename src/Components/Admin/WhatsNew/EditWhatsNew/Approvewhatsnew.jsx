@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-//import ViewListIcon from '@mui/icons-material/ViewList';
 import { Link, useParams } from "react-router-dom";
 import JoditEditor from "jodit-react";
-import HomeIcon from "@mui/icons-material/Home";
+//import HomeIcon from "@mui/icons-material/Home";
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
 
 import { Button, Card, Col, Container, Form, Spinner } from "react-bootstrap";
+// import {ToastContainer ,toast } from 'react-toastify'
 import {
   Dialog,
   DialogTitle,
@@ -18,25 +18,25 @@ import {
   DialogActions,
 } from "@mui/material";
 
-const EditTender = () => {
+const ApproveWhatsNew = () => {
   const { id } = useParams();
   const [html, sethtml] = useState("");
   const [file, setFile] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  const [selectedRole, setSelectedRole] = useState("");
+  const [menudata, setmenudata] = useState("");
   const [prevContentType, setPrevContentType] = useState("");
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
 
   const [formData, setFormData] = useState({
-    tender_tittle: "", // Corrected typo in the field name
+    news_title: "",
     contenttype: "",
     external_file: "",
-    internal_file: "", // Corrected field name
-    file: null, // Use null for file state
+    internale_file: "",
+    file: null,
     startdate: "",
-    end_date: "", // Corrected field name
+    end_date: "",
     html: "",
     languagetype: "",
   });
@@ -63,7 +63,7 @@ const EditTender = () => {
 
   useEffect(() => {
     if (id) {
-      APIClient.get(apis.Tenderbyid + id)
+      APIClient.get(apis.getwhatsnewbyid + id)
         .then((response) => {
           setFormData(response.data);
           sethtml(response.data.html);
@@ -73,10 +73,10 @@ const EditTender = () => {
         });
     } else {
       setFormData({
-        tender_tittle: "",
+        news_title: "",
         contenttype: 0,
         external_file: "",
-        internal_file: "",
+        internale_file: "",
         file: null,
         startdate: "",
         end_date: "",
@@ -86,26 +86,41 @@ const EditTender = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await APIClient.get(apis.getmenuname);
+        setmenudata(response.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    }
+    fetchData();
+  }, [id]);
+
+  const handleEditorChange = (content) => {
+    sethtml(content);
+  };
+
   const validateForm = () => {
     const errors = {};
 
-    if (!formData.tender_tittle) {
-      errors.tender_tittle = "Name is required";
-    }
-
-    if (!formData.contenttype) {
-      errors.contenttype = "Select a content type";
+    if (!formData.news_title) {
+      errors.news_title = "Name is required";
     }
     if (!formData.languagetype) {
-      errors.languagetype = "Select a Language";
+      errors.languagetype = "Select a Language ";
+    }
+    if (!formData.contenttype) {
+      errors.contenttype = "Select a content type";
     }
 
     if (formData.contenttype === "4" && !formData.external_file) {
       errors.external_file = "External Link is required";
     }
 
-    if (formData.contenttype === "3" && !formData.internal_file) {
-      errors.internal_file = "Internal Link is required";
+    if (formData.contenttype === "3" && !formData.internale_file) {
+      errors.internale_file = "Internal Link is required";
     }
 
     if (formData.contenttype === "2" && !file) {
@@ -137,7 +152,6 @@ const EditTender = () => {
   const handleInputChange = (event) => {
     const { name, value, type } = event.target;
 
-    // Store the previous content type
     setPrevContentType(formData.contenttype);
 
     if (type === "file") {
@@ -162,7 +176,6 @@ const EditTender = () => {
     setIsModalOpen(false);
     setModalMessage("");
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -181,50 +194,57 @@ const EditTender = () => {
 
   const handleDeleteConfirm = async () => {
     setConfirmDialogOpen(false);
+
     if (validateForm()) {
       try {
         const formDataToSend = new FormData();
-        formDataToSend.append("tender_tittle", formData.tender_tittle);
+        formDataToSend.append("news_title", formData.news_title);
         formDataToSend.append("contenttype", formData.contenttype);
+        formDataToSend.append("languagetype", formData.languagetype);
 
-        if (parseInt(formData.contenttype) === 4) {
+        if (formData.contenttype === 4) {
           formDataToSend.append("external_file", formData.external_file);
-        } else if (parseInt(formData.contenttype) === 3) {
-          formDataToSend.append("internale_file", formData.internal_file);
-        } else if (parseInt(formData.contenttype) === 2) {
+        } else if (formData.contenttype === 3) {
+          formDataToSend.append("internale_file", formData.internale_file);
+        } else if (formData.contenttype === 2) {
           formDataToSend.append("file", file); // Use file here
-        } else if (parseInt(formData.contenttype) === 1) {
+        } else if (formData.contenttype === 1) {
           formDataToSend.append("html", html);
         }
-
-        formDataToSend.append('startdate', formData.startdate);
-        formDataToSend.append('end_date', formData.end_date);
-        formDataToSend.append('languagetype', formData.languagetype);
-        formDataToSend.append("usertype", '1');
+        formDataToSend.append("usertype", '4');
         formDataToSend.append("action", 'approve');
-        const response = await APIClient.post("/api/Tenders/updatetenderdata/" + id, formDataToSend, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
-        
-        // console.log('Data updated:', response.data);
-        toast.success('Data updated successfully!');
+        formDataToSend.append("startdate", formData.startdate);
+        formDataToSend.append("end_date", formData.end_date);
 
+        const response = await APIClient.post(
+          "/api/Whatsnew/updatewhats_new/" + id,
+          formDataToSend,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        // console.log('Data updated:', response.data);
+        toast.success("Data approved and send for publisher!");
         setFormData({
-          tender_tittle: "",
-          contenttype: "",
-          external_file: "",
-          internale_file: "",
-          file: "",
-          startdate: "",
-          end_date: "",
-          html: "",
-          languagetype: "",
-        });
+            news_title: "",
+            contenttype: "",
+            external_file: "",
+            internale_file: "",
+            file: "",
+            startdate: "",
+            end_date: "",
+            html: "",
+            languagetype: "",
+          });
       } catch (error) {
-        console.error("Error saving/updating data:", error);
-        toast.error("Something went wrong");
+        if (error.response && error.response.status === 401) {
+          toast.error("Unauthorized access. Please log in.");
+        } else {
+          toast.error("Something Went Wrong!");
+          console.error("Error saving/updating data:", error);
+        }
       }
     }
   };
@@ -234,22 +254,22 @@ const EditTender = () => {
     <div>
       <main id="main" className="main">
         <div className="pagetitle">
-          <div className="pagetitle-lft">
-            <h3>Edit Tender</h3>
-            <nav>
-              <ol className="breadcrumb">
-                <li className="breadcrumb-item">Home</li>
-                <li className="breadcrumb-item">Edit Tender</li>
-              </ol>
-            </nav>
-          </div>
-          <div className="pagetitle-rgt d-flex justify-content-end">
-            <Link to="/services/alltender">
-              <button type="button" className="btn btn-info">
-                Back
-              </button>
-            </Link>
-          </div>
+          {/* <h1>Edit What's New</h1> */}
+          <nav>
+            <ol className="breadcrumb">
+              <li className="breadcrumb-item">Home</li>
+              <li className="breadcrumb-item"> What's New Data</li>
+            </ol>
+          </nav>
+        </div>
+        <div >
+          {/* <Link to="/services/allwhatsnew">
+            <button type="button" className="btn btn-info">
+              Back
+            </button>
+          </Link> */}
+            <h1 className="text-center heading-main">Approve  What's New Data</h1>
+                  
         </div>
         <div className="list">
           <div className="listContainer">
@@ -262,7 +282,6 @@ const EditTender = () => {
               <div className="row justify-content-center">
                 <div className="container-fluid bg-white">
                   <div className="box-sec">
-                    <h1 className="text-center heading-main">Tender</h1>
                     <div className="mb-3">
                       <label className="form-label text-dark">
                         Language Type
@@ -273,7 +292,7 @@ const EditTender = () => {
                         value={formData.languagetype}
                         onChange={handleInputChange}
                       >
-                        <option value="0">Select a Language</option>
+                        <option value=" ">Select a Language</option>
                         <option value="1">English</option>
                         <option value="2">Hindi</option>
                       </select>
@@ -287,14 +306,12 @@ const EditTender = () => {
                         className="form-control"
                         type="text"
                         placeholder="Name"
-                        name="tender_tittle"
-                        value={formData.tender_tittle}
+                        name="news_title"
+                        value={formData.news_title}
                         onChange={handleInputChange}
                       />
-                      {errors.tender_tittle && (
-                        <div className="text-danger">
-                          {errors.tender_tittle}
-                        </div>
+                      {errors.news_title && (
+                        <div className="text-danger">{errors.news_title}</div>
                       )}
                     </div>
 
@@ -307,6 +324,7 @@ const EditTender = () => {
                         name="contenttype"
                         value={formData.contenttype}
                         onChange={handleInputChange}
+                        // onClick={handleChangeOptions}
                       >
                         <option value="">Select a content type</option>
 
@@ -345,20 +363,28 @@ const EditTender = () => {
 
                     {parseInt(formData.contenttype) === 3 && (
                       <div className="mb-3">
-                        <label className="form-label text-dark">
-                          Enter Internal Link
-                        </label>
-                        <input
+                        <select
                           className="form-control"
-                          type="text"
-                          placeholder="Enter Internal Link"
-                          name="internal_file"
-                          value={formData.internal_file}
+                          name="internale_file"
+                          value={formData.internale_file}
                           onChange={handleInputChange}
-                        />
-                        {errors.internal_file && (
+                          // isInvalid={!!formErrors.internal_link}
+                        >
+                          <option value="" style={{ color: "black" }}>
+                            Select a Menu Name
+                          </option>
+                          {menudata.map((data) => (
+                            <option
+                              key={data.id}
+                              value={"/menu/" + data.menu_url}
+                            >
+                              {"Menu Name" + ":-" + data.menuname}
+                            </option>
+                          ))}
+                        </select>
+                        {errors.internale_file && (
                           <div className="text-danger">
-                            {errors.internal_file}
+                            {errors.internale_file}
                           </div>
                         )}
                       </div>
@@ -387,13 +413,6 @@ const EditTender = () => {
                         </label>{" "}
                         {/* Updated label */}
                         <div>
-                          {/* <FroalaEditorComponent
-                        tag="textarea"
-                        config={config}
-                        model={html}
-                        value={formData.html}
-                        onModelChange={handleEditorChange}
-                      /> */}
                           <JoditEditor
                             value={formData.html}
                             config={config}
@@ -448,7 +467,8 @@ const EditTender = () => {
                         Update
                       </button>
 
-                      {/* <CustomModal isOpen={isModalOpen} message={modalMessage} onClose={closeModal} /> */}
+                      {/* <CustomModal isOpen={isModalOpen} message={modalMessage} onClose={closeModal} />
+                       */}
                       <ToastContainer />
                       {/* Confirmation Dialog */}
                       <Dialog
@@ -499,4 +519,4 @@ const EditTender = () => {
   );
 };
 
-export default EditTender;
+export default ApproveWhatsNew;

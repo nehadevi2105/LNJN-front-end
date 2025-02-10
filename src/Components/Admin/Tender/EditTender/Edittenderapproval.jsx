@@ -1,57 +1,54 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-//import ViewListIcon from '@mui/icons-material/ViewList';
-import { Link, useParams } from "react-router-dom";
-import JoditEditor from "jodit-react";
-import HomeIcon from "@mui/icons-material/Home";
+import { Link, useParams } from 'react-router-dom';
+import JoditEditor from 'jodit-react';
+import HomeIcon from '@mui/icons-material/Home';
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
 
-import { Button, Card, Col, Container, Form, Spinner } from "react-bootstrap";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from "@mui/material";
+import { Button, Card, Col, Container, Form, Spinner } from 'react-bootstrap';
+import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
-const EditTender = () => {
+
+
+ const ApproveTender = () => {
   const { id } = useParams();
-  const [html, sethtml] = useState("");
+  const [html, sethtml] = useState('');
   const [file, setFile] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [selectedRole, setSelectedRole] = useState("");
-  const [prevContentType, setPrevContentType] = useState("");
+  const [modalMessage, setModalMessage] = useState('');
+  const [selectedRole, setSelectedRole] = useState('');
+  const [prevContentType, setPrevContentType] = useState('');
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
 
+
   const [formData, setFormData] = useState({
-    tender_tittle: "", // Corrected typo in the field name
-    contenttype: "",
-    external_file: "",
-    internal_file: "", // Corrected field name
-    file: null, // Use null for file state
-    startdate: "",
-    end_date: "", // Corrected field name
-    html: "",
-    languagetype: "",
+    tender_tittle: '',  // Corrected typo in the field name
+    contenttype: '',
+    external_file: '',
+    internal_file: '',  // Corrected field name
+    file: null,  // Use null for file state
+    startdate: '',
+    end_date: '',  // Corrected field name
+    html: '',
+    languagetype: '',
   });
   const [errors, setErrors] = useState({});
   const [editingItemId, setEditingItemId] = useState(null);
 
   const optionsData = [
-    { id: 4, label: "External Link" },
-    { id: 3, label: "Internal Link" },
-    { id: 2, label: "File" },
-    { id: 1, label: "HTML" }, // Updated label
+    { id: 4, label: 'External Link' },
+    { id: 3, label: 'Internal Link' },
+    { id: 2, label: 'File' },
+    { id: 1, label: 'HTML' },  // Updated label
   ];
   const config = useMemo(
     () => ({
-      readonly: false,
+      readonly: false
     }),
     []
   );
@@ -67,21 +64,22 @@ const EditTender = () => {
         .then((response) => {
           setFormData(response.data);
           sethtml(response.data.html);
+
         })
         .catch((error) => {
-          console.error("Error fetching data for editing:", error);
+          console.error('Error fetching data for editing:', error);
         });
     } else {
       setFormData({
-        tender_tittle: "",
+        tender_tittle: '',
         contenttype: 0,
-        external_file: "",
-        internal_file: "",
+        external_file: '',
+        internal_file: '',
         file: null,
-        startdate: "",
-        end_date: "",
-        html: "",
-        languagetype: "",
+        startdate: '',
+        end_date: '',
+        html: '',
+        languagetype: '',
       });
     }
   }, [id]);
@@ -90,38 +88,38 @@ const EditTender = () => {
     const errors = {};
 
     if (!formData.tender_tittle) {
-      errors.tender_tittle = "Name is required";
+      errors.tender_tittle = 'Name is required';
     }
 
     if (!formData.contenttype) {
-      errors.contenttype = "Select a content type";
+      errors.contenttype = 'Select a content type';
     }
     if (!formData.languagetype) {
-      errors.languagetype = "Select a Language";
+      errors.languagetype = 'Select a Language';
     }
 
-    if (formData.contenttype === "4" && !formData.external_file) {
-      errors.external_file = "External Link is required";
+    if (formData.contenttype === '4' && !formData.external_file) {
+      errors.external_file = 'External Link is required';
     }
 
-    if (formData.contenttype === "3" && !formData.internal_file) {
-      errors.internal_file = "Internal Link is required";
+    if (formData.contenttype === '3' && !formData.internal_file) {
+      errors.internal_file = 'Internal Link is required';
     }
 
-    if (formData.contenttype === "2" && !file) {
-      errors.file = "File is required";
+    if (formData.contenttype === '2' && !file) {
+      errors.file = 'File is required';
     }
 
-    if (formData.contenttype === "1" && !html) {
-      errors.html = "HTML content is required"; // Updated field name
+    if (formData.contenttype === '1' && !html) {
+      errors.html = 'HTML content is required';  // Updated field name
     }
 
     if (!formData.startdate) {
-      errors.startdate = "Starting Date is required";
+      errors.startdate = 'Starting Date is required';
     }
 
     if (!formData.end_date) {
-      errors.end_date = "Ending Date is required";
+      errors.end_date = 'Ending Date is required';
     }
 
     setErrors(errors);
@@ -134,13 +132,14 @@ const EditTender = () => {
     setFile(imageFile);
   };
 
+
   const handleInputChange = (event) => {
     const { name, value, type } = event.target;
 
     // Store the previous content type
     setPrevContentType(formData.contenttype);
 
-    if (type === "file") {
+    if (type === 'file') {
       setFormData({
         ...formData,
         [name]: event.target.files[0],
@@ -160,7 +159,7 @@ const EditTender = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setModalMessage("");
+    setModalMessage('');
   };
 
   const handleSubmit = async (event) => {
@@ -184,23 +183,23 @@ const EditTender = () => {
     if (validateForm()) {
       try {
         const formDataToSend = new FormData();
-        formDataToSend.append("tender_tittle", formData.tender_tittle);
-        formDataToSend.append("contenttype", formData.contenttype);
+        formDataToSend.append('tender_tittle', formData.tender_tittle);
+        formDataToSend.append('contenttype', formData.contenttype);
 
         if (parseInt(formData.contenttype) === 4) {
-          formDataToSend.append("external_file", formData.external_file);
+          formDataToSend.append('external_file', formData.external_file);
         } else if (parseInt(formData.contenttype) === 3) {
-          formDataToSend.append("internale_file", formData.internal_file);
+          formDataToSend.append('internale_file', formData.internal_file);
         } else if (parseInt(formData.contenttype) === 2) {
-          formDataToSend.append("file", file); // Use file here
+          formDataToSend.append('file', file); // Use file here
         } else if (parseInt(formData.contenttype) === 1) {
-          formDataToSend.append("html", html);
+          formDataToSend.append('html', html);
         }
 
         formDataToSend.append('startdate', formData.startdate);
         formDataToSend.append('end_date', formData.end_date);
         formDataToSend.append('languagetype', formData.languagetype);
-        formDataToSend.append("usertype", '1');
+        formDataToSend.append("usertype", '4');
         formDataToSend.append("action", 'approve');
         const response = await APIClient.post("/api/Tenders/updatetenderdata/" + id, formDataToSend, {
           headers: {
@@ -210,40 +209,42 @@ const EditTender = () => {
         
         // console.log('Data updated:', response.data);
         toast.success('Data updated successfully!');
-
         setFormData({
-          tender_tittle: "",
-          contenttype: "",
-          external_file: "",
-          internale_file: "",
-          file: "",
-          startdate: "",
-          end_date: "",
-          html: "",
-          languagetype: "",
-        });
+            tender_tittle: "",
+            contenttype: "",
+            external_file: "",
+            internale_file: "",
+            file: "",
+            startdate: "",
+            end_date: "",
+            html: "",
+            languagetype: "",
+          });
+    
       } catch (error) {
-        console.error("Error saving/updating data:", error);
-        toast.error("Something went wrong");
+        console.error('Error saving/updating data:', error);
+        toast.error('Something went wrong');
       }
     }
   };
 
   // console.log(formData)
   return (
+
     <div>
+      
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h3>Edit Tender</h3>
+            <h1>Approve Tender Data</h1>
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
-                <li className="breadcrumb-item">Edit Tender</li>
+                <li className="breadcrumb-item">Approve Tender Data</li>
               </ol>
             </nav>
           </div>
-          <div className="pagetitle-rgt d-flex justify-content-end">
+          <div className="pagetitle-rgt d-flex justify-content-end mb-5">
             <Link to="/services/alltender">
               <button type="button" className="btn btn-info">
                 Back
@@ -252,21 +253,23 @@ const EditTender = () => {
           </div>
         </div>
         <div className="list">
+
           <div className="listContainer">
+
             <div className="container">
               <div className="row">
                 <div className="col">
-                  <div className="col text-end"></div>
+                  <div className="col text-end">
+
+                  </div>
                 </div>
               </div>
               <div className="row justify-content-center">
                 <div className="container-fluid bg-white">
                   <div className="box-sec">
-                    <h1 className="text-center heading-main">Tender</h1>
+                    {/* <h1 className="text-center heading-main">Tender</h1> */}
                     <div className="mb-3">
-                      <label className="form-label text-dark">
-                        Language Type
-                      </label>
+                      <label className="form-label text-dark">Language Type</label>
                       <select
                         className="form-select"
                         name="languagetype"
@@ -277,9 +280,7 @@ const EditTender = () => {
                         <option value="1">English</option>
                         <option value="2">Hindi</option>
                       </select>
-                      {errors.languagetype && (
-                        <div className="text-danger">{errors.languagetype}</div>
-                      )}
+                      {errors.languagetype && <div className="text-danger">{errors.languagetype}</div>}
                     </div>
                     <div className="mb-3">
                       <label className="form-label text-dark">Name</label>
@@ -291,22 +292,18 @@ const EditTender = () => {
                         value={formData.tender_tittle}
                         onChange={handleInputChange}
                       />
-                      {errors.tender_tittle && (
-                        <div className="text-danger">
-                          {errors.tender_tittle}
-                        </div>
-                      )}
+                      {errors.tender_tittle && <div className="text-danger">{errors.tender_tittle}</div>}
                     </div>
 
                     <div className="mb-3">
-                      <label className="form-label text-dark">
-                        Select a content type
-                      </label>
+                      <label className="form-label text-dark">Select a content type</label>
                       <select
                         className="form-select"
                         name="contenttype"
                         value={formData.contenttype}
                         onChange={handleInputChange}
+
+
                       >
                         <option value="">Select a content type</option>
 
@@ -316,17 +313,14 @@ const EditTender = () => {
                           </option>
                         ))}
                       </select>
-                      {errors.contenttype && (
-                        <div className="text-danger">{errors.contenttype}</div>
-                      )}
+                      {errors.contenttype && <div className="text-danger">{errors.contenttype}</div>}
                     </div>
 
                     {/* Render fields based on contenttype */}
                     {parseInt(formData.contenttype) === 4 && (
+
                       <div className="mb-3">
-                        <label className="form-label text-dark">
-                          Enter External Link
-                        </label>
+                        <label className="form-label text-dark">Enter External Link</label>
                         <input
                           className="form-control"
                           type="text"
@@ -336,18 +330,14 @@ const EditTender = () => {
                           onChange={handleInputChange}
                         />
                         {errors.external_file && (
-                          <div className="text-danger">
-                            {errors.external_file}
-                          </div>
+                          <div className="text-danger">{errors.external_file}</div>
                         )}
                       </div>
                     )}
 
                     {parseInt(formData.contenttype) === 3 && (
                       <div className="mb-3">
-                        <label className="form-label text-dark">
-                          Enter Internal Link
-                        </label>
+                        <label className="form-label text-dark">Enter Internal Link</label>
                         <input
                           className="form-control"
                           type="text"
@@ -357,21 +347,19 @@ const EditTender = () => {
                           onChange={handleInputChange}
                         />
                         {errors.internal_file && (
-                          <div className="text-danger">
-                            {errors.internal_file}
-                          </div>
+                          <div className="text-danger">{errors.internal_file}</div>
                         )}
                       </div>
                     )}
 
                     {parseInt(formData.contenttype) === 2 && (
                       <div className="mb-3">
-                        <label className="form-label text-dark">
-                          Choose File
-                        </label>
+                        <label className="form-label text-dark">Choose File</label>
                         <input
                           className="form-control"
                           type="file"
+
+
                           onChange={handleImageChange}
                         />
                         {errors.file && (
@@ -382,10 +370,7 @@ const EditTender = () => {
 
                     {parseInt(formData.contenttype) === 1 && (
                       <div className="mb-3">
-                        <label className="form-label text-dark">
-                          HTML Editor
-                        </label>{" "}
-                        {/* Updated label */}
+                        <label className="form-label text-dark">HTML Editor</label>  {/* Updated label */}
                         <div>
                           {/* <FroalaEditorComponent
                         tag="textarea"
@@ -409,9 +394,7 @@ const EditTender = () => {
                     )}
 
                     <div className="mb-3">
-                      <label className="form-label text-dark">
-                        Starting Date
-                      </label>
+                      <label className="form-label text-dark">Starting Date</label>
                       <input
                         className="form-control"
                         type="date"
@@ -425,9 +408,7 @@ const EditTender = () => {
                     </div>
 
                     <div className="mb-3">
-                      <label className="form-label text-dark">
-                        Ending Date
-                      </label>
+                      <label className="form-label text-dark">Ending Date</label>
                       <input
                         className="form-control"
                         type="date"
@@ -441,20 +422,14 @@ const EditTender = () => {
                     </div>
 
                     <div className="btnsubmit">
-                      <button
-                        className="btn btn-primary"
-                        onClick={handleSubmit}
-                      >
-                        Update
+                      <button className="btn btn-primary" onClick={handleSubmit}>
+                        Approve
                       </button>
 
                       {/* <CustomModal isOpen={isModalOpen} message={modalMessage} onClose={closeModal} /> */}
                       <ToastContainer />
                       {/* Confirmation Dialog */}
-                      <Dialog
-                        open={confirmDialogOpen}
-                        onClose={handleDeleteCancel}
-                      >
+                      <Dialog open={confirmDialogOpen} onClose={handleDeleteCancel}>
                         <DialogTitle>Confirm Create</DialogTitle>
                         <DialogContent>
                           Are you sure you want to create this user?
@@ -475,14 +450,9 @@ const EditTender = () => {
                         onClose={() => setSuccessDialogOpen(false)}
                       >
                         <DialogTitle>Success</DialogTitle>
-                        <DialogContent>
-                          User created successfully!
-                        </DialogContent>
+                        <DialogContent>User created successfully!</DialogContent>
                         <DialogActions>
-                          <Button
-                            onClick={() => setSuccessDialogOpen(false)}
-                            color="primary"
-                          >
+                          <Button onClick={() => setSuccessDialogOpen(false)} color="primary">
                             OK
                           </Button>
                         </DialogActions>
@@ -499,4 +469,4 @@ const EditTender = () => {
   );
 };
 
-export default EditTender;
+export default ApproveTender;

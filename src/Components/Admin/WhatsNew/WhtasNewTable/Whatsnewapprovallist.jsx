@@ -5,15 +5,8 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
-// import {
-//   getLinks,
-//   getTender,
-//   getReport,
-//   getwhatsnew,
-//   getMenuoptins, BASE_URL
-// } from "../../../../Api/ApiFunctions.jsx";
+//import {getLinks,getTender,getReport,getwhatsnew,getMenuoptins, BASE_URL } from "../../../../Api/ApiFunctions.jsx";
 
-//import Sidebar from '../../sidebar/Sidebar';
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -25,9 +18,9 @@ import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
 
 import AddIcon from "@mui/icons-material/Add";
-import "./TenderTable.scss";
+import "./WhatsNewTable.scss";
 
-const TenderTable = () => {
+const WhatsNewapprovalTable = () => {
   const [apiData, setApiData] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -36,32 +29,22 @@ const TenderTable = () => {
   const [modalMessage, setModalMessage] = useState("");
 
   const columns = [
-    { field: "id", headerName: "S.No", width: 50 },
-    { field: "tender_tittle", headerName: "Title", width: 200 },
+    { field: "rowIndex", headerName: "S.No", width: 50 },
+    { field: "news_title", headerName: "Title", width: 200 },
     { field: "startdate", headerName: "Start Date", width: 120 },
     { field: "end_date", headerName: "End date", width: 120 },
     { field: "file ", headerName: "File", width: 200 },
     {
-      field: "edit",
+      field: "View Details",
       headerName: "Edit",
       sortable: false,
       renderCell: (params) => (
-        <Link to={"/EditTender/EditTender/" + params.row.id}>
+        <Link to={"/ApproveWhatsNewdata/" + params.row.id}>
           <EditIcon style={{ cursor: "pointer" }} />
         </Link>
       ),
     },
-    {
-      field: "delete",
-      headerName: "Delete",
-      sortable: false,
-      renderCell: (params) => (
-        <DeleteIcon
-          style={{ cursor: "pointer" }}
-          onClick={() => handleDeleteClick(params.row)}
-        />
-      ),
-    },
+   
   ];
 
   const handleDeleteClick = (item) => {
@@ -71,8 +54,7 @@ const TenderTable = () => {
 
   const handleConfirmSubmit = async () => {
     try {
-      // await apiClient.delete(api.getwhatsnewbyid  + selectedItem.u_id);   Tenderbyid
-      await APIClient.delete("/api/Tenders/delete/" + selectedItem.id);
+      await APIClient.delete("/api/Whatsnew/delete/" + selectedItem.id);
       setApiData((prevData) =>
         prevData.filter((item) => item.id !== selectedItem.id)
       );
@@ -93,8 +75,8 @@ const TenderTable = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await APIClient.get(apis.Gettender);
-        //const response = await getTender();
+        const response = await APIClient.get(apis.whatsnewapprovallist);
+        //const response = await getwhatsnew();
         const dataWithIds = response.data.map((row, index) => ({
           id: index,
           ...row,
@@ -112,53 +94,16 @@ const TenderTable = () => {
     <div>
       <main id="main" className="main">
         <div className="pagetitle">
-          <div className="pagetitle-lft">
-            <h1 className="maintitle">All Tenders List</h1>
-            <nav>
-              <ol className="breadcrumb">
-                <li className="breadcrumb-item">Home</li>
-                <li className="breadcrumb-item">Service</li>
-                <li className="breadcrumb-item active">All Tender </li>
-              </ol>
-            </nav>
-          </div>
-          <div className="pagetitle-rgt">
-            {/* <Link to="/dashboard">
-              <button type="button" className="btn btn-info my-1">
-                Back
-              </button>
-            </Link> */}
-          </div>
+          <h2 className="maintitle">Whats New Approval list</h2>
+          <nav>
+            <ol className="breadcrumb">
+              <li className="breadcrumb-item">Home</li>
+              <li className="breadcrumb-item">Service</li>
+              <li className="breadcrumb-item active"> Whats New Approval list </li>
+            </ol>
+          </nav>
         </div>
-        <div className="header-box">
-          <div className="header-box-lft">
-            
-          </div>
-          <div className="header-box-rgt">
-            <Link to="/CreateTender/Createtender">
-              <p>
-                <AddIcon />
-                New Tender
-              </p>
-            </Link>
-          </div>
-          <div className="header-box-rgt">
-            <Link to="/Tenderapprovallist">
-              <p>
-               
-                Get Approval List
-              </p>
-            </Link>
-          </div>
-          <div className="header-box-rgt">
-            <Link to="/Tenderpublisherlist">
-              <p>
-               
-                Get Publisher List
-              </p>
-            </Link>
-          </div>
-        </div>
+      
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={apiData}
@@ -204,4 +149,4 @@ const TenderTable = () => {
     </div>
   );
 };
-export default TenderTable;
+export default WhatsNewapprovalTable;

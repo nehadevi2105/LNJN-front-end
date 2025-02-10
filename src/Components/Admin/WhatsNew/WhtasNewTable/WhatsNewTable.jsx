@@ -114,14 +114,19 @@ const WhatsNewTable = () => {
           </nav>
         </div>
         <div className="header-box">
-          <div className="header-box-lft">
-            <h1 className="maintitle">Table</h1>
+         
+          <div className="header-box-rgt">
+            <Link to="/WhatsNewapprovallist">
+              <p>
+                Get Approval list
+              </p>
+            </Link>
+            
           </div>
           <div className="header-box-rgt">
-            <Link to="/services/addwhatsnew">
+            <Link to="/WhatsNewpublisherlist">
               <p>
-                <AddIcon />
-                New Whats New
+                Get Publisher list
               </p>
             </Link>
           </div>
