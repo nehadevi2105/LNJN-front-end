@@ -32,8 +32,10 @@
   "Getapprovalcustom": "/api/Topmenu/Getcustomapprovalist",
   "Getpublishercustom": "/api/Topmenu/Getcustompublisherlist",
   "getcustomdatabyid": "/api/Topmenu/",
-  "postSlider": "api/Slider/postslider_data",
+  "postSlider": "api/Slider/postslider",
   "getSlider": "/api/Slider",
+  "getbannerpublisherlist": "/api/Slider/publisher",
+  "bannerapprovallist": "/api/Slider/approvallist",
   "getSliderbyid": "/api/Slider/",
   "deleteSlider": "/api/Slider/delete/",
   "editSubMenu1": "/api/Topmenu/put/",
@@ -50,7 +52,9 @@
   "tenderpubliserlist": "/api/Tenders/publisherlist",
   "deleteBookroom": "/api/Bookroom/delete",
   "editBookroom": "/api/Bookroom/put",
+  "updateSlider": "/api/Slider/updateslider/",
   "Tenderbyid": "/api/Tenders/",
-  "updateSlider": "/api/Slider/updateslider/"
-  
+  "newfooter": "/api/lowerfooter",
+  "footerdata": "/api/lowerfooter",
+  "getfooterbyid": "/api/lowerfooter/"
 }

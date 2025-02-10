@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import apiClient from '../../../../Api/ApiClient';
-import apis from '../../../../Api/api.json';
+import APIClient from "../../../../API/APIClient";
+import apis from "../../../../API/API.json";
 // import MyEditor, { HtmlEditor } from '../htmlEditor/htmlEditor';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,7 +26,7 @@ function EAlert(props) {
   return <Alert elevation={6} variant="filled" {...props} />;
 }
 
-export const EditFooterData = () => {
+ const EditFooterData = () => {
   const { id } = useParams()
   const [cotent, setContent] = useState('');
   const [menudata, setMenudata] = useState('')
@@ -170,7 +170,7 @@ export const EditFooterData = () => {
         formDataToSend.append('html', cotent);
       }
 
-      const response = await apiClient.put("/api/lowerfooter/put/"+id, formDataToSend, {
+      const response = await APIClient.post("/api/lowerfooter/put/"+id, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -190,8 +190,8 @@ export const EditFooterData = () => {
     async function fetchData() {
       try {
 
-        const response = await apiClient.get(apis.getfooterbyid + id);
-        const menuresponse = await apiClient.get(apis.getmenuname)
+        const response = await APIClient.get(apis.getfooterbyid + id);
+        const menuresponse = await APIClient.get(apis.getmenuname)
         setFormData(response.data);
         setMenudata(menuresponse.data)
 
@@ -293,8 +293,8 @@ export const EditFooterData = () => {
                   >
                     <option value='' style={{ color: "black" }}>Select a Menu Name</option>
                     {menudata.map((data) => (
-                      <option key={data.u_id} value={"/menu/" + data.u_menu_url}>
-                        {"Menu Name" + ":-" + data.u_menu_name}
+                      <option key={data.id} value={"/menu/" + data.menu_url}>
+                        {"Menu Name" + ":-" + data.menuname}
                       </option>
                     ))}
                   </select>
@@ -371,3 +371,5 @@ export const EditFooterData = () => {
     </div>
   );
 };
+
+export default EditFooterData;

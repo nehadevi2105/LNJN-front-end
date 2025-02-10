@@ -1,4 +1,3 @@
-
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "../Components/Dashboard/Dashboard";
 import CreateMenu from "../Components/Admin/Menu/CreateMenu";
@@ -58,12 +57,24 @@ import ApproveTender from "../Components/Admin/Tender/EditTender/Edittenderappro
 import PublisherTender from "../Components/Admin/Tender/EditTender/Edittenderpublish";
 import EditBookRoom from "../Components/Admin/BookRoom/EditBookRoom";
 
+import ApprovalbannerList from "../Components/Admin/Banner/Approvebannerlist";
+import PublisherbannerList from "../Components/Admin/Banner/Bannerpublisherlist";
+import Publishbanner from "../Components/Admin/Banner/Publishbannerdata";
+import CreateFooterAddress from "../Components/Admin/CMSFooter/CreateFooter/CreateFooterAddress";
+import CreateFooterData from "../Components/Admin/CMSFooter/CreateFooter/CreateFooterData";
+import CreateFooterDec from "../Components/Admin/CMSFooter/CreateFooter/CreateFooterDec";
+import CreateFooterServices from "../Components/Admin/CMSFooter/CreateFooter/CreateFooterServices";
+import EditFooterDec from "../Components/Admin/CMSFooter/EditFooter/EditFooterDec";
+import EditFooterServices from "../Components/Admin/CMSFooter/EditFooter/EditFooterServices";
+import EditFooterData from "../Components/Admin/CMSFooter/EditFooter/EditFooterData";
+import EditFooterAddress from "../Components/Admin/CMSFooter/EditFooter/EditFooterAddress";
+import IndexEditFooter from "../Components/Admin/CMSFooter/EditFooter/IndexEditFooter";
+import FooterTable from "../Components/Admin/CMSFooter/FooterTable/FooterTable";
 
 function Router() {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
-      <Route path="/cms/Createmenu" element={<CreateMenu />} />
       <Route path="/cms/Createmenu" element={<CreateMenu />} />
       <Route path="/Department/DepartmentForm" element={<CreateDepartment />} />
       <Route path="/MenuSubMenu/MenuSubMenu" element={<MenuSubMenu />} />
@@ -143,7 +154,46 @@ function Router() {
       <Route path="/Rooms/CreateRoom" element = {<CreateRoom/>}/>
       <Route path="/Rooms/AllRooms" element = {<AllRooms/>}/>
       <Route path="/Room/EditRoom/:id" element = {<EditRoom/>}/>
+      <Route path="/bannerapprovallist" element = {<ApprovalbannerList/>}/>
+      <Route path="/bannerpublisherlist" element = {<PublisherbannerList/>}/>
+      <Route path="/publishbannerdata/:id" element = {<Publishbanner/>}/>
 
+      {/* CMSFooter */}
+      <Route
+        path="/CMSFooter/CreateFooter/CreateFooterAddress"
+        element={<CreateFooterAddress />}
+      />
+      <Route
+        path="/CMSFooter/CreateFooter/CreateFooterData"
+        element={<CreateFooterData />}
+      />
+      <Route
+        path="/CMSFooter/CreateFooter/CreateFooterDec"
+        element={<CreateFooterDec />}
+      />
+      <Route
+        path="/CMSFooter/CreateFooter/CreateFooterServices"
+        element={<CreateFooterServices />}
+      />
+      <Route
+        path="/CMSFooter/EditFooter/EditFooterDec/:id"
+        element={<EditFooterDec />}
+      />
+      <Route
+        path="/CMSFooter/EditFooter/EditFooterServices/:id"
+        element={<EditFooterServices />}
+      />
+      <Route
+        path="/CMSFooter/EditFooter/EditFooterData/:id"
+        element={<EditFooterData />}
+      />
+      <Route
+        path="/CMSFooter/EditFooter/EditFooterAddress/:id"
+        element={<EditFooterAddress />}
+      />
+      <Route path="/CMSFooter/EditFooter/IndexEditFooter/:id" element={<IndexEditFooter />} />
+      <Route path="/CMSFooter/FooterTable/FooterTable" element={<FooterTable />} />
+      
     </Routes>
   );
 }

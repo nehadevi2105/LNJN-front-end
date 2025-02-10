@@ -33,7 +33,7 @@ const Banner = ({ id, onDelete }) => {
     const formData = new FormData();
     formData.append("imgsrc", selectedImage);
     formData.append("content", imageName);
-
+    formData.append("usertype", '1');
     try {
       const response = await APIClient.post(apis.postSlider, formData, {
         headers: {
@@ -42,9 +42,9 @@ const Banner = ({ id, onDelete }) => {
       });
 
       const videoPath = response.data.videopath;
-
+alert("Data uploaded successfully!");
       // Show a success toast notification
-      toast.success("Video uploaded successfully!", {
+      toast.success("Data uploaded successfully!", {
         position: toast.POSITION.TOP_CENTER,
       });
 

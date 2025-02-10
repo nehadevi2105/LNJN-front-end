@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
 import ViewListIcon from '@mui/icons-material/ViewList';
@@ -14,16 +14,14 @@ import {
   DialogContent,
   Dialog,
 } from '@mui/material';
-import apiClient from '../../../../Api/ApiClient';
-import apis from '../../../../Api/api.json';
-import Header from '../../header/Header';
-import Sidebar from '../../sidebar/Sidebar';
-import Footer from '../../footer/Footer';
+import APIClient from "../../../../API/APIClient";
+import apis from "../../../../API/API.json";
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-export const CreateFooterAddress = () => {
+ const CreateFooterAddress = () => {
   const [html, setHtml] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
@@ -46,7 +44,7 @@ export const CreateFooterAddress = () => {
 
     if (!formData.tittle_name) {
       newErrors.tittle_name = 'Title is required';
-    } else if (!/^[A-Za-z\s]+$/.test(formData.title_name.trim())) {
+    } else if (!/^[A-Za-z\s]+$/.test(formData.tittle_name.trim())) {
       newErrors.tittle_name = 'Name should contain alphabets only';
     }
 
@@ -92,7 +90,7 @@ export const CreateFooterAddress = () => {
         formDataToSend.append('footertype', formData.footertype);
         formDataToSend.append('contenttype', formData.contenttype);
         formDataToSend.append('languagetype', formData.languagetype);
-        const response = await apiClient.post(apis.newfooter, formDataToSend, {
+        const response = await APIClient.post(apis.newfooter, formDataToSend, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -130,12 +128,11 @@ export const CreateFooterAddress = () => {
 
   return (
     <div>
-      <Header />
-      <Sidebar />
+     
       <main id="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1>Create Footer Address</h1>
+            {/* <h1>Create Footer Address</h1> */}
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -286,7 +283,9 @@ export const CreateFooterAddress = () => {
           </div>
         </div>
       </main>
-      <Footer />
+     
     </div>
   );
 };
+
+export default CreateFooterAddress;
