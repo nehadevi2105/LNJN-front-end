@@ -52,10 +52,7 @@
   "tenderpubliserlist": "/api/Tenders/publisherlist",
   "deleteBookroom": "/api/Bookroom/delete",
   "editBookroom": "/api/Bookroom/put",
-  "Tenderbyid": "/api/Tenders/",
-  "updateSlider": "/api/Slider/updateslider/"
-  
-  "Tender": "/api/Tenders",
+  "updateSlider": "/api/Slider/updateslider/",
   "Tenderbyid": "/api/Tenders/",
   "newfooter": "/api/lowerfooter",
   "footerdata": "/api/lowerfooter",
