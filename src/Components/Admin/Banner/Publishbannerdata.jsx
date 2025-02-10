@@ -137,7 +137,7 @@ const Publishbanner = () => {
                     {/* Upload or update button */}
                     <Button variant="contained" color="primary" onClick={handleUpload} sx={{ marginTop: 2 }}>
                         <UploadFileIcon />
-                        {id ? "Update Banner" : "Upload Banner"}
+                        {id ? "Publish Banner" : "Publish Banner"}
                     </Button>
 
                     {id && (
@@ -145,7 +145,7 @@ const Publishbanner = () => {
                             onClick={() => console.log("Delete function needs implementation")}
                             sx={{ position: "absolute", top: 5, right: 5 }}
                         >
-                            <DeleteIcon />
+                            {/* <DeleteIcon /> */}
                         </IconButton>
                     )}
 

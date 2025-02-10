@@ -65,6 +65,7 @@ const PublisherbannerList = () => {
             setConfirmDialogOpen(false);
         }
     };
+    
 
     useEffect(() => {
         async function fetchData() {

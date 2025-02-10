@@ -63,7 +63,7 @@ const Approvebanner = () => {
                 }
             );
 
-            toast.success("Banner updated successfully!");
+            toast.success("Approve banner Data successfully!");
 
             setFormData((prev) => ({
                 ...prev,
@@ -137,7 +137,7 @@ const Approvebanner = () => {
                     {/* Upload or update button */}
                     <Button variant="contained" color="primary" onClick={handleUpload} sx={{ marginTop: 2 }}>
                         <UploadFileIcon />
-                        {id ? "Update Banner" : "Upload Banner"}
+                        {id ? "Approve Banner" : "Approve Banner"}
                     </Button>
 
                     {id && (
