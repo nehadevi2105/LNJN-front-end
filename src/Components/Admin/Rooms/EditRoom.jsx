@@ -98,6 +98,8 @@ export const EditRoom = () => {
         setTimeout(() => {
           setLoading(false);
           setSuccessDialogOpen(true);
+          // Reset form values after success
+          setFormData({ name: "", hostalid: "" }); // Reset form after success
         }, 1000);
       } else {
         toast.error("Failed to update room");
