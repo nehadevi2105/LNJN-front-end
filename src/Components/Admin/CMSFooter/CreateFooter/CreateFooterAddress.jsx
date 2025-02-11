@@ -90,7 +90,7 @@ import 'react-toastify/dist/ReactToastify.css';
         formDataToSend.append('footertype', formData.footertype);
         formDataToSend.append('contenttype', formData.contenttype);
         formDataToSend.append('languagetype', formData.languagetype);
-        const response = await APIClient.post(apis.newfooter, formDataToSend, {
+        const response = await APIClient.post(apis.createfooter, formDataToSend, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

@@ -70,6 +70,10 @@ import EditFooterData from "../Components/Admin/CMSFooter/EditFooter/EditFooterD
 import EditFooterAddress from "../Components/Admin/CMSFooter/EditFooter/EditFooterAddress";
 import IndexEditFooter from "../Components/Admin/CMSFooter/EditFooter/IndexEditFooter";
 import FooterTable from "../Components/Admin/CMSFooter/FooterTable/FooterTable";
+import ApproveindexFooter from "../Components/Admin/CMSFooter/EditFooter/indexapprovefooter";
+import PublishindexFooter from "../Components/Admin/CMSFooter/EditFooter/indexpublishfooter";
+import PublisherFooterTable from "../Components/Admin/CMSFooter/FooterTable/Publishfooterlist";
+import ApproveFooterTable from "../Components/Admin/CMSFooter/FooterTable/Approvalfooterlist";
 
 function Router() {
   return (
@@ -193,7 +197,10 @@ function Router() {
       />
       <Route path="/CMSFooter/EditFooter/IndexEditFooter/:id" element={<IndexEditFooter />} />
       <Route path="/CMSFooter/FooterTable/FooterTable" element={<FooterTable />} />
-      
+      <Route path="/approvefooterdata/:id" element={<ApproveindexFooter />} />
+      <Route path="/PublishindexFooter/:id" element={<PublishindexFooter />} />
+      <Route path="/Publisherfooterlist" element={<PublisherFooterTable />} />
+      <Route path="/Approvalfooterlist" element={<ApproveFooterTable />} />
     </Routes>
   );
 }

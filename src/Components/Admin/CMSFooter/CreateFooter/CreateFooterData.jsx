@@ -175,7 +175,7 @@ const CreateFooterData = () => {
         formDataToSend.append("html", content);
       }
 
-      const response = await APIClient.post(apis.newfooter, formDataToSend, {
+      const response = await APIClient.post(apis.createfooter, formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
