@@ -17,6 +17,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment"; // Tenders
 const Sidebar = ({ data }) => {
   const [showhide, setShowHide] = useState("show");
   const [openDropdown, setOpenDropdown] = useState(null); // To track which dropdown is open
+  const [showSidebar, setShowSidebar] = useState(window.innerWidth >= 991);
 
   useEffect(() => {
     const handleResize = () => {
