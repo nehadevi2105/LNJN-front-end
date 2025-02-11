@@ -13,6 +13,7 @@ import NewReleasesIcon from "@mui/icons-material/NewReleases"; // What's New
 import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify"; // Footer
 import PanoramaIcon from "@mui/icons-material/Panorama"; // Banner
 import AssignmentIcon from "@mui/icons-material/Assignment"; // Tenders
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive"; //Circulars
 
 const Sidebar = ({ data }) => {
   const [showhide, setShowHide] = useState("show");
@@ -221,7 +222,7 @@ const Sidebar = ({ data }) => {
         {/* Dropdown: Circular */}
         <li className="nav-item">
           <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("circular")}>
-            <AssignmentIcon /> Circulars
+            <NotificationsActiveIcon /> Circulars
           </button>
           {openDropdown === "circular" && (
             <ul className="nav-dropdown">
