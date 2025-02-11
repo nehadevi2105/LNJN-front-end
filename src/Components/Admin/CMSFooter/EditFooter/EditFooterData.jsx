@@ -129,9 +129,10 @@ function EAlert(props) {
         ...formData,
         [name]: event.target.files[0],
       });
-    } else if (formData.contenttype === 1) {
+    } 
+    // else if (formData.contenttype === 1) {
 
-    }
+    // }
     else {
       setFormData({
         ...formData,
@@ -211,8 +212,8 @@ function EAlert(props) {
   return (
     <div className="container">
 
-      <div class="card">
-        <div class="card-body">
+      <div className="card">
+        <div className="card-body">
           <div className="row">
             <div className="col">
 

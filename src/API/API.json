@@ -59,5 +59,8 @@
   "footerdata": "/api/lowerfooter",
   "footerapprovallist": "/api/lowerfooter/approvallist",
   "footerpublisherlist": "/api/lowerfooter/publisherlist",
-  "getfooterbyid": "/api/lowerfooter/"
+  "getfooterbyid": "/api/lowerfooter/",
+  "circular": "/api/circular",
+  "getCircular": "/api/Circular",
+  "Circularbyid": "/api/Circular/"
 }
