@@ -217,6 +217,19 @@ const Sidebar = ({ data }) => {
             </ul>
           )}
         </li>
+
+        {/* Dropdown: Circular */}
+        <li className="nav-item">
+          <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("circular")}>
+            <AssignmentIcon /> Circulars
+          </button>
+          {openDropdown === "circular" && (
+            <ul className="nav-dropdown">
+              <li><Link to="/Circular/CircularForm" className="nav-link">Circular Form</Link></li>
+              <li><Link to="/Circular/CircularTable" className="nav-link">Circular Table</Link></li>
+            </ul>
+          )}
+        </li>
         </ul>
 
         <div className="sidebar-footer border-top d-none d-md-flex">
