@@ -77,7 +77,10 @@ import ApproveFooterTable from "../Components/Admin/CMSFooter/FooterTable/Approv
 import CircularForm from "../Components/Admin/Circular/CircularForm";
 import CircularTable from "../Components/Admin/Circular/CircularTable";
 import EditCircular from "../Components/Admin/Circular/EditCircular";
-
+import ApproveCircularTable from "../Components/Admin/Circular/Approvecircularlist";
+import PublishCircularTable from "../Components/Admin/Circular/Publishcircularlist";
+import ApproveCircular from "../Components/Admin/Circular/Approvecircular";
+import PublisheCircular from "../Components/Admin/Circular/Publishcirculardata";
 function Router() {
   return (
     <Routes>
@@ -222,6 +225,10 @@ function Router() {
       <Route path="/Circular/CircularForm" element={<CircularForm />} />
       <Route path="/Circular/CircularTable" element={<CircularTable />} />
       <Route path="/Circular/EditCircular/:id" element={<EditCircular />} />
+      <Route path="/approvecirculardata" element={<ApproveCircularTable />} />      
+      <Route path="/publishcirculardata" element={<PublishCircularTable />} />      
+      <Route path="/approvecircular/:id" element={<ApproveCircular />} />
+      <Route path="/publishcircular/:id" element={<PublisheCircular />} />
     </Routes>
   );
 }

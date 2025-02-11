@@ -5,15 +5,6 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
-// import {
-//   getLinks,
-//   getTender,
-//   getReport,
-//   getwhatsnew,
-//   getMenuoptins, BASE_URL
-// } from "../../../../Api/ApiFunctions.jsx";
-
-//import Sidebar from '../../sidebar/Sidebar';
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -27,7 +18,7 @@ import apis from "../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
 //import "./TenderTable.scss";
 
-const CircularTable = () => {
+const PublishCircularTable = () => {
   const [apiData, setApiData] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -46,22 +37,11 @@ const CircularTable = () => {
       headerName: "Edit",
       sortable: false,
       renderCell: (params) => (
-        <Link to={"/Circular/EditCircular/" + params.row.id}>
+        <Link to={"/publishcircular/" + params.row.id}>
           <EditIcon style={{ cursor: "pointer" }} />
         </Link>
       ),
-    },
-    {
-      field: "delete",
-      headerName: "Delete",
-      sortable: false,
-      renderCell: (params) => (
-        <DeleteIcon
-          style={{ cursor: "pointer" }}
-          onClick={() => handleDeleteClick(params.row)}
-        />
-      ),
-    },
+    }
   ];
 
   const handleDeleteClick = (item) => {
@@ -72,7 +52,7 @@ const CircularTable = () => {
   const handleConfirmSubmit = async () => {
     try {
       // await apiClient.delete(api.getwhatsnewbyid  + selectedItem.u_id);   Tenderbyid
-      await APIClient.post("/api/Circular/delete/" + selectedItem.id);
+      await APIClient.delete("/api/Circular/delete/" + selectedItem.id);
       setApiData((prevData) =>
         prevData.filter((item) => item.id !== selectedItem.id)
       );
@@ -93,7 +73,7 @@ const CircularTable = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await APIClient.get(apis.getCircular);
+        const response = await APIClient.get(apis.getpublishCircular);
         //const response = await getTender();
         const dataWithIds = response.data.map((row, index) => ({
           id: index,
@@ -113,12 +93,12 @@ const CircularTable = () => {
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1 className="maintitle">Circular Table</h1>
+            <h1 className="maintitle">Publish Circular List</h1>
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Circular</li>
-                <li className="breadcrumb-item active">Circular Table </li>
+                <li className="breadcrumb-item active">Publish Circular List </li>
               </ol>
             </nav>
           </div>
@@ -140,22 +120,7 @@ const CircularTable = () => {
               </p>
             </Link>
           </div>
-          <div className="header-box-rgt">
-            <Link to="/approvecirculardata">
-              <p>
-               
-                Get Approval List
-              </p>
-            </Link>
-          </div> 
-           <div className="header-box-rgt">
-            <Link to="/publishcirculardata">
-              <p>
-               
-                Get Publisher List
-              </p>
-            </Link>
-          </div>
+         
         </div>
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
@@ -202,4 +167,4 @@ const CircularTable = () => {
     </div>
   );
 };
-export default CircularTable;
+export default PublishCircularTable;

@@ -198,7 +198,7 @@ const CircularForm = () => {
         formDataToSend.append("end_date", formData.end_date);
         formDataToSend.append("languagetype", formData.languagetype);
 
-        const response = await APIClient.post(apis.circular, formDataToSend, {
+        const response = await APIClient.post(apis.createcircular, formDataToSend, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -242,7 +242,7 @@ const CircularForm = () => {
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h2>Create Tender</h2>
+            <h2>Create Circular</h2>
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
