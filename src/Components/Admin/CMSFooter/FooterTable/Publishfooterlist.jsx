@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-//import axios from 'axios';
+
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
+
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -15,10 +16,7 @@ import MuiAlert from "@mui/material/Alert";
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
 
-import AddIcon from "@mui/icons-material/Add";
-import "./TenderTable.scss";
-
-const TenderApprovallist = () => {
+const PublisherFooterTable = () => {
   const [apiData, setApiData] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -27,17 +25,16 @@ const TenderApprovallist = () => {
   const [modalMessage, setModalMessage] = useState("");
 
   const columns = [
-    { field: "id", headerName: "S.No", width: 50 },
-    { field: "tender_tittle", headerName: "Title", width: 200 },
-    { field: "startdate", headerName: "Start Date", width: 120 },
-    { field: "end_date", headerName: "End date", width: 120 },
-    { field: "file ", headerName: "File", width: 200 },
+    { field: "rowIndex", headerName: "S.No", width: 50 },
+    { field: "tittle_name", headerName: "Title", width: 200 },
+    { field: "address", headerName: "Address", width: 200 },
+    { field: "description", headerName: "Description" , width: 250},
     {
-      field: "View Details",
+      field: "edit",
       headerName: "Edit",
       sortable: false,
       renderCell: (params) => (
-        <Link to={"/ApproveTenderdata/" + params.row.id}>
+        <Link to={"/PublishindexFooter/" + params.row.id}>
           <EditIcon style={{ cursor: "pointer" }} />
         </Link>
       ),
@@ -62,8 +59,7 @@ const TenderApprovallist = () => {
 
   const handleConfirmSubmit = async () => {
     try {
-      // await apiClient.delete(api.getwhatsnewbyid  + selectedItem.u_id);   Tenderbyid
-      await APIClient.delete("/api/Tenders/delete/" + selectedItem.id);
+      await APIClient.post("/api/lowerfooter/delete/" + selectedItem.id);
       setApiData((prevData) =>
         prevData.filter((item) => item.id !== selectedItem.id)
       );
@@ -84,8 +80,7 @@ const TenderApprovallist = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await APIClient.get(apis.tenderapprovallist);
-        //const response = await getTender();
+        const response = await APIClient.get(apis.footerpublisherlist);
         const dataWithIds = response.data.map((row, index) => ({
           id: index,
           ...row,
@@ -104,27 +99,22 @@ const TenderApprovallist = () => {
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1 className="maintitle">Approval  Tender List</h1>
+            <h1>Publish Footer List</h1>
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
-                <li className="breadcrumb-item">Service</li>
-                <li className="breadcrumb-item active">Approval  Tender List</li>
+                <li className="breadcrumb-item">Footer</li>
+                <li className="breadcrumb-item active">
+                  Publish Footer List
+                </li>
               </ol>
             </nav>
           </div>
-          
-        </div>
-        <div className="header-box">
-          <div className="header-box-lft">
-            {/* <h1 className="maintitle">Approval  Tender List</h1> */}
-          </div>
-          <div className="header-box-rgt">
-            <Link to="/CreateTender/Createtender">
-              <p>
-                <AddIcon />
-                New Tender
-              </p>
+          <div className="pagetitle-rgt">
+            <Link to="/dashboard">
+              <button type="button" className="btn btn-info">
+                Back
+              </button>
             </Link>
           </div>
         </div>
@@ -173,4 +163,5 @@ const TenderApprovallist = () => {
     </div>
   );
 };
-export default TenderApprovallist;
+
+export default PublisherFooterTable;

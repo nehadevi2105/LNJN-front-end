@@ -4,7 +4,6 @@ import "react-toastify/dist/ReactToastify.css";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import { Link, useParams } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
-
 import DialogActions from "@mui/material/DialogActions";
 import Alert from "@mui/material/Alert";
 import {
@@ -20,7 +19,7 @@ function EAlert(props) {
   return <Alert elevation={6} variant="filled" {...props} />;
 }
 
-const EditFooterServices = () => {
+const ApproveFooterServices = () => {
   const { id } = useParams();
   const [html, sethtml] = useState("");
   const [file, setselectedfile] = useState(null);
@@ -125,8 +124,8 @@ const EditFooterServices = () => {
       formDataToSend.append("contenttype", formData.contenttype);
       formDataToSend.append("languagetype", formData.languagetype);
 
-      formDataToSend.append('usertype', '1');
-      //formDataToSend.append('action', 'publish');
+      formDataToSend.append('usertype', '4');
+      formDataToSend.append('action', 'approve');
       const response = await APIClient.post("/api/lowerfooter/updatefooter/"+id, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -264,4 +263,4 @@ const EditFooterServices = () => {
     </>
   );
 };
-export default EditFooterServices;
+export default ApproveFooterServices;

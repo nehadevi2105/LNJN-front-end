@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
 import { Link, useParams } from "react-router-dom";
-import EditFooterServices from "./EditFooterServices";
-import EditFooterData from "./EditFooterData";
-import EditFooterDec from "./EditFooterDec";
-import EditFooterAddress from "./EditFooterAddress";
+import  PublishFooterServices  from "./Publishfooterservice";
+import PublishFooterData from "./Publishfooterdata";
+import PublishFooterDec from "./PublishfooterDec";
+import PublishFooterAddress from "./Publishfooteraddress";
 
-const IndexEditFooter = () => {
+const PublishindexFooter = () => {
   const [data, setData] = useState([]);
   const { id } = useParams();
   useEffect(() => {
@@ -33,7 +33,7 @@ const IndexEditFooter = () => {
                   <li className="breadcrumb-item">Home</li>
                   <li className="breadcrumb-item">Footer</li>
                   <li className="breadcrumb-item active">
-                    Publish  Footer 
+                    Create Footer Address
                   </li>
                 </ol>
               </nav>
@@ -45,10 +45,10 @@ const IndexEditFooter = () => {
                 </button>
               </Link>
             </div>
-            {data.footertype === 1 && <EditFooterDec />}
-            {data.footertype === 2 && <EditFooterServices />}
-            {data.footertype === 3 && <EditFooterAddress />}
-            {data.footertype === 4 && <EditFooterData />}
+            {data.footertype === 1 && <PublishFooterDec />}
+            {data.footertype === 2 && <PublishFooterServices />}
+            {data.footertype === 3 && <PublishFooterAddress />}
+            {data.footertype === 4 && <PublishFooterData />}
           </main>
         </div>
       </div>
@@ -56,4 +56,4 @@ const IndexEditFooter = () => {
   );
 };
 
-export default IndexEditFooter;
+export default PublishindexFooter;

@@ -203,10 +203,11 @@ const EditBookRoom = () => {
               </Form.Group>
 
               <div className="d-flex justify-content-between">
+                
+                <Button variant="primary" type="submit">Submit</Button>
                 <Link to="/BookRoom/Bookroomlist">
                   <Button variant="outline-secondary">Back</Button>
                 </Link>
-                <Button variant="primary" type="submit">Submit</Button>
               </div>
             </Form>
           </Card.Body>

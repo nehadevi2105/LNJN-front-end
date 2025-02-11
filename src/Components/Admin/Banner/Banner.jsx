@@ -42,9 +42,9 @@ const Banner = ({ id, onDelete }) => {
       });
 
       const videoPath = response.data.videopath;
-
+alert("Data uploaded successfully!");
       // Show a success toast notification
-      toast.success("Video uploaded successfully!", {
+      toast.success("Data uploaded successfully!", {
         position: toast.POSITION.TOP_CENTER,
       });
 

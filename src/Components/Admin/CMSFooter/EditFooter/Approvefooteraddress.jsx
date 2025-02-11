@@ -7,7 +7,7 @@ import apis from "../../../../API/API.json";
 
 import HomeIcon from '@mui/icons-material/Home';
 
- const EditFooterAddress = () => {
+ const ApproveFooterAddress = () => {
   const {id}= useParams()
   const [html, setHtml] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
@@ -75,9 +75,8 @@ import HomeIcon from '@mui/icons-material/Home';
         formDataToSend.append('footertype', formData.footertype);
         formDataToSend.append('contenttype', formData.contenttype);
         formDataToSend.append('languagetype', formData.languagetype);
-
-        formDataToSend.append('usertype', '1');
-        formDataToSend.append('action', 'publish');
+        formDataToSend.append('usertype', '4');
+        formDataToSend.append('action', 'approve');
         const response = await APIClient.post("/api/lowerfooter/updatefooter/"+id, formDataToSend, {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -117,7 +116,7 @@ import HomeIcon from '@mui/icons-material/Home';
       <div className="row">
       <div className="card">
               <div className="card-body">
-      <h1 className="text-center">Approve office address </h1>
+      <h1 className="text-center">Approve Footer Address</h1>
       </div>
       <div className="row justify-content-center">
         <div >
@@ -190,4 +189,4 @@ import HomeIcon from '@mui/icons-material/Home';
   );
 };
 
-export default EditFooterAddress;
+export default ApproveFooterAddress;

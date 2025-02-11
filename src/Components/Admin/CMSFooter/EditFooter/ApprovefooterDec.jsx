@@ -22,7 +22,7 @@ function EAlert(props) {
   return <Alert elevation={6} variant="filled" {...props} />;
 }
 
-const EditFooterDec = () => {
+const ApproveFooterDec = () => {
   const { id } = useParams();
   const [html, sethtml] = useState("");
   const [file, setselectedfile] = useState(null);
@@ -127,16 +127,15 @@ const EditFooterDec = () => {
       formDataToSend.append("contenttype", formData.contenttype);
       formDataToSend.append("languagetype", formData.languagetype);
 
-      formDataToSend.append('usertype', '1');
-    //  formDataToSend.append('action', 'publish');
-      const response = await APIClient.post("/api/lowerfooter/updatefooter/"+id, formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-       
-  
-      });
-
+      formDataToSend.append('usertype', '4');
+        formDataToSend.append('action', 'approve');
+        const response = await APIClient.post("/api/lowerfooter/updatefooter/"+id, formDataToSend, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+         
+    
+        });
       // console.log('Data saved:', response.data);
       toast.success("Data saved successfully!");
       setModalMessage("Data saved successfully!");
@@ -260,4 +259,4 @@ const EditFooterDec = () => {
   );
 };
 
-export default EditFooterDec;
+export default ApproveFooterDec;

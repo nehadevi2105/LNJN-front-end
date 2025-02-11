@@ -26,8 +26,8 @@ const FooterTable = () => {
   const columns = [
     { field: "rowIndex", headerName: "S.No", width: 50 },
     { field: "tittle_name", headerName: "Title", width: 200 },
-    { field: "contenttype", headerName: "Content Type" },
-    { field: "description", headerName: "Description" },
+    { field: "address", headerName: "Address", width: 200 },
+    { field: "description", headerName: "Description" , width: 250},
     {
       field: "edit",
       headerName: "Edit",
@@ -104,19 +104,22 @@ const FooterTable = () => {
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Footer</li>
                 <li className="breadcrumb-item active">
-                  Create Footer Address
+                   Footer Table
                 </li>
               </ol>
             </nav>
           </div>
-          <div className="pagetitle-rgt">
-            <Link to="/dashboard">
-              <button type="button" className="btn btn-info">
-                Back
-              </button>
-            </Link>
-          </div>
+          
+         
         </div>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mb: 2 }}>
+                <Button variant="contained" color="primary" component={Link} to="/Approvalfooterlist">
+                   Footer Approval List
+                </Button>
+                <Button variant="contained" color="secondary" component={Link} to="/Publisherfooterlist">
+                  Footer  Publisher List
+                </Button>
+            </Box>
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={apiData}

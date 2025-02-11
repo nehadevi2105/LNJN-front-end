@@ -86,20 +86,6 @@ const CreateRoom = () => {
                   <Card.Body>
                     <h2 className="fw-bold mb-4 text-center text-uppercase">Create Room</h2>
                     <Form onSubmit={handleSubmit}>
-                      {/* Room Name */}
-                      <Form.Group className="mb-3" controlId="name">
-                        <Form.Label>Room Name</Form.Label>
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter Room Name"
-                          value={name}
-                          onChange={(e) => setRoomName(e.target.value)}
-                          isInvalid={!!formErrors.name}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {formErrors.name}
-                        </Form.Control.Feedback>
-                      </Form.Group>
 
                       {/* Hostel Dropdown */}
                       <Form.Group className="mb-3" controlId="hostalid">
@@ -121,8 +107,26 @@ const CreateRoom = () => {
                         </Form.Control.Feedback>
                       </Form.Group>
 
+                      {/* Room Name */}
+                      <Form.Group className="mb-3" controlId="name">
+                        <Form.Label>Room Name</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter Room Name"
+                          value={name}
+                          onChange={(e) => setRoomName(e.target.value)}
+                          isInvalid={!!formErrors.name}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {formErrors.name}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+
                       {/* Submit Button */}
                       <div className="d-flex justify-content-between">
+                      <Button variant="primary" type="submit">
+                          Submit
+                        </Button>
                       <Link to="/Rooms/AllRooms">
                           <Button
                             variant="outline-secondary"
@@ -132,9 +136,7 @@ const CreateRoom = () => {
                             Back
                           </Button>
                         </Link>
-                        <Button variant="primary" type="submit">
-                          Submit
-                        </Button>
+                        
                       </div>
 
                       {/* Loading Spinner */}
