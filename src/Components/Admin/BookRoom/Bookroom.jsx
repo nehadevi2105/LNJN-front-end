@@ -192,11 +192,7 @@ const Bookroom = () => {
 
                       {/* Submit Button */}
                       <div className="d-flex" style={{ justifyContent: "space-between" }}>
-                      <Link to="/BookRoom/Bookroomlist">
-                          <Button variant="outline-secondary" style={{ width: 100 }}>
-                            Back
-                          </Button>
-                        </Link>
+                      
                         <Button
                           variant="primary"
                           type="submit"
@@ -205,7 +201,11 @@ const Bookroom = () => {
                         >
                           {loading ? "Submitting..." : "Submit"}
                         </Button>
-                        
+                        <Link to="/BookRoom/Bookroomlist">
+                          <Button variant="outline-secondary" style={{ width: 100 }}>
+                            Back
+                          </Button>
+                        </Link>
                       </div>
                     </Form>
                   </Card.Body>

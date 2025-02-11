@@ -230,7 +230,14 @@ const EditCandidate = () => {
       if (response.status === 200) {
         toast.success("Candidate updated successfully!");
         setSuccessDialogOpen(true);
-        // Optionally reset form or redirect
+        // Optionally, reset the form
+        setCandidateInfo({
+          name: "",
+          mobileno: "",
+          email: "",
+          aadharno: ""
+        });
+        setCandidateCourses([]);
       } else {
         toast.error("Failed to update candidate");
       }

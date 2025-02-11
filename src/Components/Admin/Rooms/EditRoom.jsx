@@ -98,6 +98,8 @@ export const EditRoom = () => {
         setTimeout(() => {
           setLoading(false);
           setSuccessDialogOpen(true);
+          // Reset form values after success
+          setFormData({ name: "", hostalid: "" }); // Reset form after success
         }, 1000);
       } else {
         toast.error("Failed to update room");
@@ -117,20 +119,6 @@ export const EditRoom = () => {
           <Card.Body>
             <h2 className="text-center text-uppercase mb-4">Edit Room</h2>
             <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" controlId="name">
-                <Form.Label>Room Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Room Name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  isInvalid={!!formErrors.name}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {formErrors.name}
-                </Form.Control.Feedback>
-              </Form.Group>
 
               <Form.Group className="mb-3" controlId="hostalid">
                 <Form.Label>Hostel</Form.Label>
@@ -153,13 +141,29 @@ export const EditRoom = () => {
                 </Form.Control.Feedback>
               </Form.Group>
 
+              <Form.Group className="mb-3" controlId="name">
+                <Form.Label>Room Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Room Name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  isInvalid={!!formErrors.name}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {formErrors.name}
+                </Form.Control.Feedback>
+              </Form.Group>
+
               <div className="d-flex justify-content-between">
-                <Link to="/Rooms/AllRooms">
-                  <Button variant="outline-secondary">Back</Button>
-                </Link>
+                
                 <Button variant="primary" type="submit">
                   Submit
                 </Button>
+                <Link to="/Rooms/AllRooms">
+                  <Button variant="outline-secondary">Back</Button>
+                </Link>
               </div>
             </Form>
           </Card.Body>
