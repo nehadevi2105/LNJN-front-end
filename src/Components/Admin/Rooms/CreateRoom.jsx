@@ -124,6 +124,9 @@ const CreateRoom = () => {
 
                       {/* Submit Button */}
                       <div className="d-flex justify-content-between">
+                      <Button variant="primary" type="submit">
+                          Submit
+                        </Button>
                       <Link to="/Rooms/AllRooms">
                           <Button
                             variant="outline-secondary"
@@ -133,9 +136,7 @@ const CreateRoom = () => {
                             Back
                           </Button>
                         </Link>
-                        <Button variant="primary" type="submit">
-                          Submit
-                        </Button>
+                        
                       </div>
 
                       {/* Loading Spinner */}
