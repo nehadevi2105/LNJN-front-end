@@ -22,7 +22,7 @@ function EAlert(props) {
   return <Alert elevation={6} variant="filled" {...props} />;
 }
 
-const ApproveFooterDec = () => {
+const PublishFooterDec = () => {
   const { id } = useParams();
   const [html, sethtml] = useState("");
   const [file, setselectedfile] = useState(null);
@@ -128,7 +128,7 @@ const ApproveFooterDec = () => {
       formDataToSend.append("languagetype", formData.languagetype);
 
       formDataToSend.append('usertype', '4');
-        formDataToSend.append('action', 'approve');
+        formDataToSend.append('action', 'publish');
         const response = await APIClient.post("/api/lowerfooter/updatefooter/"+id, formDataToSend, {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -157,7 +157,7 @@ const ApproveFooterDec = () => {
             <div className="container">
               <div className="row">
                 <div className="col">
-                  <h1 className="text-center">Approve Footer Description</h1>
+                  <h1 className="text-center">Footer Description</h1>
                 </div>
               </div>
               <div className="row justify-content-center">
@@ -259,4 +259,4 @@ const ApproveFooterDec = () => {
   );
 };
 
-export default ApproveFooterDec;
+export default PublishFooterDec;

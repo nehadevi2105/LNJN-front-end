@@ -4,7 +4,6 @@ import "react-toastify/dist/ReactToastify.css";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import { Link, useParams } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
-
 import DialogActions from "@mui/material/DialogActions";
 import Alert from "@mui/material/Alert";
 import {
@@ -20,7 +19,7 @@ function EAlert(props) {
   return <Alert elevation={6} variant="filled" {...props} />;
 }
 
-const EditFooterServices = () => {
+const PublishFooterServices = () => {
   const { id } = useParams();
   const [html, sethtml] = useState("");
   const [file, setselectedfile] = useState(null);
@@ -125,8 +124,8 @@ const EditFooterServices = () => {
       formDataToSend.append("contenttype", formData.contenttype);
       formDataToSend.append("languagetype", formData.languagetype);
 
-      formDataToSend.append('usertype', '1');
-      //formDataToSend.append('action', 'publish');
+      formDataToSend.append('usertype', '4');
+      formDataToSend.append('action', 'publish');
       const response = await APIClient.post("/api/lowerfooter/updatefooter/"+id, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -158,7 +157,7 @@ const EditFooterServices = () => {
               <div className="container">
                 <div className="row">
                   <div className="col">
-                    <h1 className="text-center">Approve Footer Service</h1>
+                    <h1 className="text-center">Footer Service</h1>
                   </div>
                 </div>
                 <div className="row justify-content-center">
@@ -264,4 +263,4 @@ const EditFooterServices = () => {
     </>
   );
 };
-export default EditFooterServices;
+export default PublishFooterServices;

@@ -120,7 +120,7 @@ const TenderApprovallist = () => {
             {/* <h1 className="maintitle">Approval  Tender List</h1> */}
           </div>
           <div className="header-box-rgt">
-            <Link to="/services/createtender">
+            <Link to="/CreateTender/Createtender">
               <p>
                 <AddIcon />
                 New Tender

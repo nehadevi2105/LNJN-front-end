@@ -127,15 +127,15 @@ const EditFooterDec = () => {
       formDataToSend.append("contenttype", formData.contenttype);
       formDataToSend.append("languagetype", formData.languagetype);
 
-      const response = await APIClient.post(
-        "/api/lowerfooter/put/" + id,
-        formDataToSend,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      formDataToSend.append('usertype', '1');
+    //  formDataToSend.append('action', 'publish');
+      const response = await APIClient.post("/api/lowerfooter/updatefooter/"+id, formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+       
+  
+      });
 
       // console.log('Data saved:', response.data);
       toast.success("Data saved successfully!");
@@ -158,7 +158,7 @@ const EditFooterDec = () => {
             <div className="container">
               <div className="row">
                 <div className="col">
-                  <h1 className="text-center">Footer Description</h1>
+                  <h1 className="text-center">Approve Footer Description</h1>
                 </div>
               </div>
               <div className="row justify-content-center">

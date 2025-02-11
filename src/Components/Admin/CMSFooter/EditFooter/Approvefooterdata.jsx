@@ -215,7 +215,7 @@ function EAlert(props) {
           <div className="row">
             <div className="col">
 
-              <h1 className="text-center">Footer</h1>
+              <h1 className="text-center">Approve Footer Data</h1>
             </div>
           </div>
           <div className="row justify-content-center">

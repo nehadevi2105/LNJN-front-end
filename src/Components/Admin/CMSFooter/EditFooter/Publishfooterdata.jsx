@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
-// import MyEditor, { HtmlEditor } from '../htmlEditor/htmlEditor';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ViewListIcon from '@mui/icons-material/ViewList';
@@ -26,7 +25,7 @@ function EAlert(props) {
   return <Alert elevation={6} variant="filled" {...props} />;
 }
 
- const EditFooterData = () => {
+ const PublishFooterData = () => {
   const { id } = useParams()
   const [cotent, setContent] = useState('');
   const [menudata, setMenudata] = useState('')
@@ -169,9 +168,8 @@ function EAlert(props) {
       else if (formData.contenttype === 1) {
         formDataToSend.append('html', cotent);
       }
-
-      formDataToSend.append('usertype', '1');
-      //formDataToSend.append('action', 'publish');
+      formDataToSend.append('usertype', '4');
+      formDataToSend.append('action', 'publish');
       const response = await APIClient.post("/api/lowerfooter/updatefooter/"+id, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -179,6 +177,7 @@ function EAlert(props) {
        
   
       });
+      
       // console.log('Data saved:', response.data);
       toast.success('Data saved successfully!');
       setModalMessage('Data saved successfully!');
@@ -216,7 +215,7 @@ function EAlert(props) {
           <div className="row">
             <div className="col">
 
-              <h1 className="text-center">Approve footer data</h1>
+              <h1 className="text-center">Footer</h1>
             </div>
           </div>
           <div className="row justify-content-center">
@@ -376,4 +375,4 @@ function EAlert(props) {
   );
 };
 
-export default EditFooterData;
+export default PublishFooterData;

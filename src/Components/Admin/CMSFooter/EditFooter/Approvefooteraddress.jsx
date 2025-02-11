@@ -116,7 +116,7 @@ import HomeIcon from '@mui/icons-material/Home';
       <div className="row">
       <div className="card">
               <div className="card-body">
-      <h1 className="text-center">Office address</h1>
+      <h1 className="text-center">Approve Footer Address</h1>
       </div>
       <div className="row justify-content-center">
         <div >
