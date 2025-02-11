@@ -88,6 +88,12 @@ const EditCourse = () => {
       if (response.status === 200) {
         toast.success("Course updated successfully");
         setSuccessDialogOpen(true);
+        // Reset form fields
+        setCourseName("");
+        setCourseDescription("");
+        setDepartmentId("");
+        setFile(null);
+        setExistingImgSrc(null);
       } else {
         toast.error("Failed to update course");
       }
@@ -111,11 +117,7 @@ const EditCourse = () => {
                   <Col md={10} lg={12} xs={12}>
                     <Card>
                       <Card.Body>
-                        <h2 className="fw-bold mb-4 text-center text-uppercase">Edit Course</h2>
-                        <Link to="/Course/AllCourse">
-                          <button type="button" className="btn btn-info">Back</button>
-                        </Link>
-                        
+                        <h2 className="fw-bold mb-4 text-center text-uppercase">Edit Course</h2>                        
                         {/* Show Spinner while loading */}
                         {loading ? (
                           <Spinner animation="border" />
@@ -187,6 +189,9 @@ const EditCourse = () => {
                             )}
 
                             <div className="d-flex justify-content-between">
+                            <Link to="/Course/AllCourse">
+                              <button type="button" className="btn btn-outline-secondary">Back</button>
+                            </Link>
                               <Button variant="primary" type="submit">Submit</Button>
                             </div>
                           </Form>
