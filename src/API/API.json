@@ -56,5 +56,8 @@
   "Tenderbyid": "/api/Tenders/",
   "newfooter": "/api/lowerfooter",
   "footerdata": "/api/lowerfooter",
-  "getfooterbyid": "/api/lowerfooter/"
+  "getfooterbyid": "/api/lowerfooter/",
+  "circular" : "/api/circular",
+  "getCircular" : "/api/Circular",
+  "Circularbyid": "/api/Circular/"
 }
