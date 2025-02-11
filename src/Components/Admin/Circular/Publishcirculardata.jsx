@@ -18,7 +18,7 @@ import {
   DialogActions,
 } from "@mui/material";
 
-const EditCircular = () => {
+const PublisheCircular = () => {
   const { id } = useParams();
   const [html, sethtml] = useState("");
   const [file, setFile] = useState(null);
@@ -200,8 +200,8 @@ const EditCircular = () => {
         formDataToSend.append("startdate", formData.startdate);
         formDataToSend.append("end_date", formData.end_date);
         formDataToSend.append("languagetype", formData.languagetype);
-        formDataToSend.append("usertype", "1");
-        formDataToSend.append("action", "approve");
+        formDataToSend.append("usertype", "4");
+        formDataToSend.append("action", "publish");
         const response = await APIClient.post(
           "/api/Circular/updatecirculardata/" + id,
           formDataToSend,
@@ -447,7 +447,7 @@ const EditCircular = () => {
                         className="btn btn-primary"
                         onClick={handleSubmit}
                       >
-                        Update
+                        Publish
                       </button>
 
                       {/* <CustomModal isOpen={isModalOpen} message={modalMessage} onClose={closeModal} /> */}
@@ -501,4 +501,4 @@ const EditCircular = () => {
   );
 };
 
-export default EditCircular;
+export default PublisheCircular;

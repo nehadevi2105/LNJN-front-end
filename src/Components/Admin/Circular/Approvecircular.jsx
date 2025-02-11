@@ -18,7 +18,7 @@ import {
   DialogActions,
 } from "@mui/material";
 
-const EditCircular = () => {
+const ApproveCircular = () => {
   const { id } = useParams();
   const [html, sethtml] = useState("");
   const [file, setFile] = useState(null);
@@ -200,7 +200,7 @@ const EditCircular = () => {
         formDataToSend.append("startdate", formData.startdate);
         formDataToSend.append("end_date", formData.end_date);
         formDataToSend.append("languagetype", formData.languagetype);
-        formDataToSend.append("usertype", "1");
+        formDataToSend.append("usertype", "4");
         formDataToSend.append("action", "approve");
         const response = await APIClient.post(
           "/api/Circular/updatecirculardata/" + id,
@@ -239,11 +239,11 @@ const EditCircular = () => {
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h3>Edit Circular</h3>
+            <h3>Approve Circular</h3>
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
-                <li className="breadcrumb-item">Edit Circular</li>
+                <li className="breadcrumb-item">Approve Circular</li>
               </ol>
             </nav>
           </div>
@@ -447,7 +447,7 @@ const EditCircular = () => {
                         className="btn btn-primary"
                         onClick={handleSubmit}
                       >
-                        Update
+                        Approve
                       </button>
 
                       {/* <CustomModal isOpen={isModalOpen} message={modalMessage} onClose={closeModal} /> */}
@@ -501,4 +501,4 @@ const EditCircular = () => {
   );
 };
 
-export default EditCircular;
+export default ApproveCircular;
