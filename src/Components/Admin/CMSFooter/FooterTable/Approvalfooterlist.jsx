@@ -15,7 +15,8 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
-const FooterTable = () => {
+
+const ApproveFooterTable = () => {
   const [apiData, setApiData] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -33,22 +34,22 @@ const FooterTable = () => {
       headerName: "Edit",
       sortable: false,
       renderCell: (params) => (
-        <Link to={"/CMSFooter/EditFooter/IndexEditFooter/" + params.row.id}>
+        <Link to={"/approvefooterdata/" + params.row.id}>
           <EditIcon style={{ cursor: "pointer" }} />
         </Link>
       ),
     },
-    {
-      field: "delete",
-      headerName: "Delete",
-      sortable: false,
-      renderCell: (params) => (
-        <DeleteIcon
-          style={{ cursor: "pointer" }}
-          onClick={() => handleDeleteClick(params.row)}
-        />
-      ),
-    },
+    // {
+    //   field: "delete",
+    //   headerName: "Delete",
+    //   sortable: false,
+    //   renderCell: (params) => (
+    //     <DeleteIcon
+    //       style={{ cursor: "pointer" }}
+    //       onClick={() => handleDeleteClick(params.row)}
+    //     />
+    //   ),
+    // },
   ];
 
   const handleDeleteClick = (item) => {
@@ -79,7 +80,7 @@ const FooterTable = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await APIClient.get(apis.footerdata);
+        const response = await APIClient.get(apis.footerapprovallist);
         const dataWithIds = response.data.map((row, index) => ({
           id: index,
           ...row,
@@ -104,22 +105,19 @@ const FooterTable = () => {
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Footer</li>
                 <li className="breadcrumb-item active">
-                   Footer Table
+                  Create Footer Address
                 </li>
               </ol>
             </nav>
           </div>
-          
-         
+          <div className="pagetitle-rgt">
+            <Link to="/dashboard">
+              <button type="button" className="btn btn-info">
+                Back
+              </button>
+            </Link>
+          </div>
         </div>
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mb: 2 }}>
-                <Button variant="contained" color="primary" component={Link} to="/Approvalfooterlist">
-                   Footer Approval List
-                </Button>
-                <Button variant="contained" color="secondary" component={Link} to="/Publisherfooterlist">
-                  Footer  Publisher List
-                </Button>
-            </Box>
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={apiData}
@@ -166,4 +164,4 @@ const FooterTable = () => {
   );
 };
 
-export default FooterTable;
+export default ApproveFooterTable;

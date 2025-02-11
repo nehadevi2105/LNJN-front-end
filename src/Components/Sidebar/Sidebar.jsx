@@ -17,13 +17,12 @@ import AssignmentIcon from "@mui/icons-material/Assignment"; // Tenders
 const Sidebar = ({ data }) => {
   const [showhide, setShowHide] = useState("show");
   const [openDropdown, setOpenDropdown] = useState(null); // To track which dropdown is open
+  const [showSidebar, setShowSidebar] = useState(window.innerWidth >= 991);
 
   useEffect(() => {
     const handleResize = () => {
-      const isMobile = window.innerWidth < 991;
-      setShowHide(isMobile ? (showhide === "show" ? "" : data) : data);
+      setShowSidebar(window.innerWidth >= 991);
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
 
@@ -33,7 +32,7 @@ const Sidebar = ({ data }) => {
   }, [data, showhide]);
 
   const toggleSidebar = () => {
-    setShowHide(showhide === "show" ? "" : "show");
+    setShowSidebar(!showSidebar);
   };
 
   const toggleDropdown = (key) => {

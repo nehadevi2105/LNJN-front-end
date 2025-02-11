@@ -55,6 +55,9 @@
   "updateSlider": "/api/Slider/updateslider/",
   "Tenderbyid": "/api/Tenders/",
   "newfooter": "/api/lowerfooter",
+  "createfooter": "/api/lowerfooter/createfooter",
   "footerdata": "/api/lowerfooter",
+  "footerapprovallist": "/api/lowerfooter/approvallist",
+  "footerpublisherlist": "/api/lowerfooter/publisherlist",
   "getfooterbyid": "/api/lowerfooter/"
 }
