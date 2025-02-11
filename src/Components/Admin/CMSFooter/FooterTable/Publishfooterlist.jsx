@@ -99,13 +99,13 @@ const PublisherFooterTable = () => {
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1>Create Footer</h1>
+            <h1>Publish Footer List</h1>
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Footer</li>
                 <li className="breadcrumb-item active">
-                  Approve Footer Address
+                  Publish Footer List
                 </li>
               </ol>
             </nav>

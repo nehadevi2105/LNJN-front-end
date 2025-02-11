@@ -157,7 +157,7 @@ const ApproveFooterServices = () => {
               <div className="container">
                 <div className="row">
                   <div className="col">
-                    <h1 className="text-center">Footer Service</h1>
+                    <h1 className="text-center">Approve Footer Service</h1>
                   </div>
                 </div>
                 <div className="row justify-content-center">

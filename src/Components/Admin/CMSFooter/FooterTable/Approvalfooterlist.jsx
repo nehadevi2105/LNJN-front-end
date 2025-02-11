@@ -99,13 +99,13 @@ const ApproveFooterTable = () => {
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1>Create Footer</h1>
+            <h1> Footer Approval List</h1>
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Footer</li>
                 <li className="breadcrumb-item active">
-                  Create Footer Address
+                   Footer Approval List
                 </li>
               </ol>
             </nav>
