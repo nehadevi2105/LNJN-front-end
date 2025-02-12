@@ -13,26 +13,50 @@ import NewReleasesIcon from "@mui/icons-material/NewReleases"; // What's New
 import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify"; // Footer
 import PanoramaIcon from "@mui/icons-material/Panorama"; // Banner
 import AssignmentIcon from "@mui/icons-material/Assignment"; // Tenders
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive"; //Circulars
 
 const Sidebar = ({ data }) => {
   const [showhide, setShowHide] = useState("show");
   const [openDropdown, setOpenDropdown] = useState(null); // To track which dropdown is open
   const [showSidebar, setShowSidebar] = useState(window.innerWidth >= 991);
 
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setShowSidebar(window.innerWidth >= 991);
+  //   };
+  //   handleResize();
+  //   window.addEventListener("resize", handleResize);
+
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, [data, showhide]);
+
+  // const toggleSidebar = () => {
+  //   setShowSidebar(!showSidebar);
+  // };
+
+  const [sidebarActive, setSidebarActive] = useState(false);
+
+  // const[showhide,setshowhide]=useState(prevState => prevState === " " ? "show" : " ");
+
+  //const [showhide, setShowHide] = useState("show"); // Initialize state to 'show' by default
+
   useEffect(() => {
     const handleResize = () => {
-      setShowSidebar(window.innerWidth >= 991);
+      const isMobile = window.innerWidth < 991;
+      setShowHide(isMobile ? (showhide === "show" ? "" : data) : data); // Set state based on window width and data prop
     };
-    handleResize();
-    window.addEventListener("resize", handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [data, showhide]);
+    handleResize(); // Call once to set initial state
+
+    // handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [data]); // Add 'data' to dependency array, not 'showhide'
 
   const toggleSidebar = () => {
-    setShowSidebar(!showSidebar);
+    setShowHide(showhide === "show" ? "" : showhide); // Toggle between 'show' and empty string
   };
 
   const toggleDropdown = (key) => {
@@ -66,7 +90,7 @@ const Sidebar = ({ data }) => {
             </button>
             {openDropdown === "menu" && (
               <ul className="nav-dropdown">
-                <li><Link to="/Menu/CreateMenu" className="nav-link">Create Menu</Link></li>
+                <li><Link to="/CMS/CreateMenu" className="nav-link">Create Menu</Link></li>
                 <li><Link to="/SubMenu/CreateSubMenu" className="nav-link">Create SubMenu</Link></li>
                 <li><Link to="/MenuSubMenu/MenuSubMenu" className="nav-link">Menu Table</Link></li>
               </ul>
@@ -221,7 +245,7 @@ const Sidebar = ({ data }) => {
         {/* Dropdown: Circular */}
         <li className="nav-item">
           <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("circular")}>
-            <AssignmentIcon /> Circulars
+            <NotificationsActiveIcon /> Circulars
           </button>
           {openDropdown === "circular" && (
             <ul className="nav-dropdown">
@@ -233,7 +257,7 @@ const Sidebar = ({ data }) => {
         </ul>
 
         <div className="sidebar-footer border-top d-none d-md-flex">
-          <button className="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
+          <button className="sidebar-toggler" onClick={toggleSidebar} type="button" data-coreui-toggle="unfoldable"></button>
         </div>
       </div>
     </>

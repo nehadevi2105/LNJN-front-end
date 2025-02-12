@@ -61,6 +61,9 @@
   "footerpublisherlist": "/api/lowerfooter/publisherlist",
   "getfooterbyid": "/api/lowerfooter/",
   "circular": "/api/circular",
+  "createcircular": "/api/circular/Createcircular",
   "getCircular": "/api/Circular",
+  "getapproveCircular": "/api/Circular/approvallist",
+  "getpublishCircular": "/api/Circular/publisherlist",
   "Circularbyid": "/api/Circular/"
 }
