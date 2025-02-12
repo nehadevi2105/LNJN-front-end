@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import  { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
 // import MyEditor, { HtmlEditor } from '../htmlEditor/htmlEditor';
@@ -29,12 +29,14 @@ function EAlert(props) {
  const EditFooterData = () => {
   const { id } = useParams()
   const [cotent, setContent] = useState('');
-  const [menudata, setMenudata] = useState('')
+  const [menudata, setMenudata] = useState('');
+  const [html, setHtml] = useState("");
   const [file, setselectefile] = useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false); // Confirmation dialog state
   // const [snackbarOpen, setSnackbarOpen] = useState(false); // Snackbar state
   const [modalMessage, setModalMessage] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [editorContent, setEditorContent] = useState("");
 
   const navigate = useNavigate();
 
@@ -48,6 +50,7 @@ function EAlert(props) {
     footertype: 3,
     languagetype: '',
   });
+    const editor = useRef(null);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -75,11 +78,13 @@ function EAlert(props) {
     // console.log("Editor content changed:", html);
     setContent(html);
   }, []);
-
-  // const handleEditorChange = (content) => {
-  //   sethtml(content);
-  // };
-
+  const handleEditorChange = (content) => {
+    setHtml(content);
+    setFormData((prevState) => ({
+      ...prevState,
+      html: content, // Ensure formData is also updated
+    }));
+  };
   const validateForm = () => {
     const errors = {};
 
@@ -168,7 +173,7 @@ function EAlert(props) {
         formDataToSend.append('file', file);
       }
       else if (formData.contenttype === 1) {
-        formDataToSend.append('html', cotent);
+        formDataToSend.append("html", formData.html);
       }
 
       formDataToSend.append('usertype', '1');
@@ -198,7 +203,9 @@ function EAlert(props) {
         const response = await APIClient.get(apis.getfooterbyid + id);
         const menuresponse = await APIClient.get(apis.getmenuname)
         setFormData(response.data);
-        setMenudata(menuresponse.data)
+        setMenudata(menuresponse.data);
+        setHtml(response.data.html); // Set the html state
+        setEditorContent(response.data.html); // Set the editor content
 
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -298,7 +305,7 @@ function EAlert(props) {
                   >
                     <option value='' style={{ color: "black" }}>Select a Menu Name</option>
                     {menudata.map((data) => (
-                      <option key={data.id} value={"/menu/" + data.menu_url}>
+                      <option key={data.id} value={"/menu/" + data.menuurl}>
                         {"Menu Name" + ":-" + data.menuname}
                       </option>
                     ))}
@@ -327,11 +334,12 @@ function EAlert(props) {
                   <label className="form-label text-dark">HTML Editor</label>
                   <div>
                    
-                    <JoditEditor
-                      value={formData.html}
+                  <JoditEditor
+                      ref={editor}
+                      value={formData.html} // Ensure the editor is initialized with correct content
                       config={config}
                       tabIndex={1}
-                      onChange={onChange}
+                      onChange={handleEditorChange}
                     />
                   </div>
                   {errors.editorContent && <div className="text-danger">{errors.editorContent}</div>}

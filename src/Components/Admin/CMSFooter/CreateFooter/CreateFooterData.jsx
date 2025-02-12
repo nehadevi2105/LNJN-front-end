@@ -359,7 +359,7 @@ const CreateFooterData = () => {
                             {dropdownOptions.map((data) => (
                               <option
                                 key={data.id}
-                                value={"/menu/" + data.menu_url}
+                                value={"/menu/" + data.menuurl}
                               >
                                 {"Menu Name" + ":-" + data.menuname}
                               </option>

@@ -1,108 +1,119 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import  {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import ViewListIcon from '@mui/icons-material/ViewList';
-import { Link, useParams } from 'react-router-dom';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import HomeIcon from '@mui/icons-material/Home';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+//import ViewListIcon from "@mui/icons-material/ViewList";
+import {useParams } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
+//import HomeIcon from "@mui/icons-material/Home";
 
-import DialogActions from '@mui/material/DialogActions';
+import DialogActions from "@mui/material/DialogActions";
 
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 import {
-
   Button,
   Snackbar,
   DialogTitle, // Add this import
   DialogContent,
   Dialog,
-} from '@mui/material';
-import JoditEditor from 'jodit-react';
+} from "@mui/material";
+import JoditEditor from "jodit-react";
 
 function EAlert(props) {
   return <Alert elevation={6} variant="filled" {...props} />;
 }
 
- const PublishFooterData = () => {
-  const { id } = useParams()
-  const [cotent, setContent] = useState('');
-  const [menudata, setMenudata] = useState('')
+const PublishFooterData = () => {
+  const { id } = useParams();
+  const [content, setContent] = useState("");
+  const [menudata, setMenudata] = useState("");
+  const [editorContent, setEditorContent] = useState("");
+  const [html, setHtml] = useState("");
   const [file, setselectefile] = useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false); // Confirmation dialog state
   // const [snackbarOpen, setSnackbarOpen] = useState(false); // Snackbar state
-  const [modalMessage, setModalMessage] = useState('');
+  const [modalMessage, setModalMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [dropdownOptions, setDropdownOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    tittle_name: '',
-    contenttype: '',
-    external_link: '',
-    internale_link: '',
-    file: '',
-    html: '',
+    tittle_name: "",
+    contenttype: "",
+    external_link: "",
+    internale_link: "",
+    file: "",
+    html: "",
     footertype: 3,
-    languagetype: '',
+    languagetype: "",
   });
+  const editor = useRef(null);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
     setFormData({
-      tittle_name: '',
-      contenttype: '',
-      external_link: '',
-      internale_link: '',
-      file: '',
-      html: '',
+      tittle_name: "",
+      contenttype: "",
+      external_link: "",
+      internale_link: "",
+      file: "",
+      html: "",
       footertype: 3,
-      languagetype: '',
+      languagetype: "",
     });
   }, []);
   const config = useMemo(
     () => ({
-      readonly: false
+      readonly: false,
     }),
     []
   );
-  ;
-
-
   const onChange = useCallback((html) => {
     // console.log("Editor content changed:", html);
     setContent(html);
   }, []);
 
-  // const handleEditorChange = (content) => {
-  //   sethtml(content);
-  // };
+  const handleEditorChange = (content) => {
+    setHtml(content);
+    setFormData((prevState) => ({
+      ...prevState,
+      html: content, // Ensure formData is also updated
+    }));
+  };
 
   const validateForm = () => {
     const errors = {};
 
     if (!formData.tittle_name) {
-      errors.tittle_name = 'Name is required';
+      errors.tittle_name = "Name is required";
     }
 
     if (!formData.contenttype) {
-      errors.contenttype = 'Select a content type';
+      errors.contenttype = "Select a content type";
     }
     if (!formData.languagetype) {
-      errors.languagetype = 'Select a Language';
+      errors.languagetype = "Select a Language";
     }
 
-    if (formData.contenttype === '4' && !formData.external_link) {
-      errors.external_link = 'External Link is required';
+    if (formData.contenttype === "4" && !formData.external_link) {
+      errors.external_link = "External Link is required";
     }
 
-    if (formData.contenttype === '3' && !formData.internale_link) {
-      errors.internale_link = 'Internal Link is required';
+    if (formData.contenttype === "3" && !formData.internale_link) {
+      errors.internale_link = "Internal Link is required";
     }
 
-    if (formData.contenttype === '2' && !file) {
-      errors.file = 'File is required';
+    if (formData.contenttype === "2" && !file) {
+      errors.file = "File is required";
     }
 
     // if (formData.contenttype === '1' && !html) {
@@ -122,15 +133,14 @@ function EAlert(props) {
   const handleInputChange = (event) => {
     const { name, value, type } = event.target;
 
-
-    if (type === 'file') {
+    if (type === "file") {
       setFormData({
         ...formData,
         [name]: event.target.files[0],
       });
-    } else if (formData.contenttype === 1) {
-
     }
+    // else if (formData.contenttype === 1) {
+    // }
     else {
       setFormData({
         ...formData,
@@ -153,54 +163,68 @@ function EAlert(props) {
 
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append('tittle_name', formData.tittle_name);
-      formDataToSend.append('contenttype', formData.contenttype);
-      formDataToSend.append('footertype', formData.footertype);
-      formDataToSend.append('languagetype', formData.languagetype);
+      formDataToSend.append("tittle_name", formData.tittle_name);
+      formDataToSend.append("contenttype", formData.contenttype);
+      formDataToSend.append("footertype", formData.footertype);
+      formDataToSend.append("languagetype", formData.languagetype);
 
       if (formData.contenttype === 4) {
-        formDataToSend.append('external_link', formData.external_link);
+        formDataToSend.append("external_link", formData.external_link);
       } else if (formData.contenttype === 3) {
-        formDataToSend.append('internale_link', formData.internale_link);
+        formDataToSend.append("internale_link", formData.internale_link);
       } else if (formData.contenttype === 2) {
-        formDataToSend.append('file', file);
+        formDataToSend.append("file", file);
+      } else if (formData.contenttype === 1) {
+        formDataToSend.append("html", formData.html);
       }
-      else if (formData.contenttype === 1) {
-        formDataToSend.append('html', cotent);
-      }
-      formDataToSend.append('usertype', '4');
-      formDataToSend.append('action', 'publish');
-      const response = await APIClient.post("/api/lowerfooter/updatefooter/"+id, formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-       
-  
-      });
-      
+      formDataToSend.append("usertype", "4");
+      formDataToSend.append("action", "publish");
+      const response = await APIClient.post(
+        "/api/lowerfooter/updatefooter/" + id,
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       // console.log('Data saved:', response.data);
-      toast.success('Data saved successfully!');
-      setModalMessage('Data saved successfully!');
+      toast.success("Data saved successfully!");
+      setModalMessage("Data saved successfully!");
       setSnackbarOpen(true);
       // Show the success Snackbar
       // Clear the form fields
-
     } catch (error) {
-      console.error('Error saving data:', error);
+      console.error("Error saving data:", error);
     }
   };
   useEffect(() => {
+    async function fetchData1() {
+      try {
+        setLoading(true);
+        const response = await APIClient.get(apis.getmenuname);
+        setDropdownOptions(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setLoading(false);
+      }
+    }
+    fetchData1();
+  }, []);
+  useEffect(() => {
     async function fetchData() {
       try {
-
         const response = await APIClient.get(apis.getfooterbyid + id);
-        const menuresponse = await APIClient.get(apis.getmenuname)
         setFormData(response.data);
-        setMenudata(menuresponse.data)
+        setHtml(response.data.html); // Set the html state
+        setEditorContent(response.data.html); // Set the editor content
+        // const menuresponse = await APIClient.get(apis.getmenuname);
 
+        //setMenudata(menuresponse.data);
       } catch (error) {
-        console.error('Error fetching user data:', error);
-
+        console.error("Error fetching user data:", error);
       }
     }
     fetchData();
@@ -209,18 +233,15 @@ function EAlert(props) {
 
   return (
     <div className="container">
-
-      <div class="card">
-        <div class="card-body">
+      <div className="card">
+        <div className="card-body">
           <div className="row">
             <div className="col">
-
               <h1 className="text-center">Footer</h1>
             </div>
           </div>
           <div className="row justify-content-center">
-            <div >
-
+            <div>
               <div className="mb-3">
                 <label className="form-label text-dark">Language Type</label>
                 <select
@@ -233,7 +254,9 @@ function EAlert(props) {
                   <option value={1}>English</option>
                   <option value={2}>Hindi</option>
                 </select>
-                {errors.languagetype && <div className="text-danger">{errors.languagetype}</div>}
+                {errors.languagetype && (
+                  <div className="text-danger">{errors.languagetype}</div>
+                )}
               </div>
               {/* Input for Name */}
               <div className="mb-3">
@@ -246,12 +269,16 @@ function EAlert(props) {
                   value={formData.tittle_name}
                   onChange={handleInputChange}
                 />
-                {errors.tittle_name && <div className="text-danger">{errors.tittle_name}</div>}
+                {errors.tittle_name && (
+                  <div className="text-danger">{errors.tittle_name}</div>
+                )}
               </div>
 
               {/* Input for Select a content type */}
               <div className="mb-3">
-                <label className="form-label text-dark">Select a content type</label>
+                <label className="form-label text-dark">
+                  Select a content type
+                </label>
                 <select
                   className="form-select"
                   name="contenttype"
@@ -264,13 +291,17 @@ function EAlert(props) {
                   <option value={2}>File</option>
                   <option value={1}>HTML</option>
                 </select>
-                {errors.contenttype && <div className="text-danger">{errors.contenttype}</div>}
+                {errors.contenttype && (
+                  <div className="text-danger">{errors.contenttype}</div>
+                )}
               </div>
 
               {/* Input for External Link */}
               {parseInt(formData.contenttype) === 4 && (
                 <div className="mb-3">
-                  <label className="form-label text-dark">Enter External Link</label>
+                  <label className="form-label text-dark">
+                    Enter External Link
+                  </label>
                   <input
                     className="form-control"
                     type="text"
@@ -279,29 +310,37 @@ function EAlert(props) {
                     value={formData.external_link}
                     onChange={handleInputChange}
                   />
-                  {errors.external_link && <div className="text-danger">{errors.external_link}</div>}
+                  {errors.external_link && (
+                    <div className="text-danger">{errors.external_link}</div>
+                  )}
                 </div>
               )}
 
               {/* Input for Internal Link */}
               {parseInt(formData.contenttype) === 3 && (
                 <div className="mb-3">
-                  <label className="form-label text-dark">Enter Internal Link</label>
+                  <label className="form-label text-dark">
+                    Enter Internal Link
+                  </label>
                   <select
-                    className='form-control'
-                    name='internal_link'
+                    className="form-control"
+                    name="internal_link"
                     value={formData.internal_link}
                     onChange={handleInputChange}
-                  // isInvalid={!!formErrors.internal_link}
+                    // isInvalid={!!formErrors.internal_link}
                   >
-                    <option value='' style={{ color: "black" }}>Select a Menu Name</option>
+                    <option value="" style={{ color: "black" }}>
+                      Select a Menu Name
+                    </option>
                     {menudata.map((data) => (
-                      <option key={data.id} value={"/menu/" + data.menu_url}>
+                      <option key={data.id} value={"/menu/" + data.menuurl}>
                         {"Menu Name" + ":-" + data.menuname}
                       </option>
                     ))}
                   </select>
-                  {errors.internale_link && <div className="text-danger">{errors.internale_link}</div>}
+                  {errors.internale_link && (
+                    <div className="text-danger">{errors.internale_link}</div>
+                  )}
                 </div>
               )}
 
@@ -315,7 +354,9 @@ function EAlert(props) {
                     name="file"
                     onChange={handleImageChange}
                   />
-                  {errors.file && <div className="text-danger">{errors.file}</div>}
+                  {errors.file && (
+                    <div className="text-danger">{errors.file}</div>
+                  )}
                 </div>
               )}
 
@@ -324,26 +365,33 @@ function EAlert(props) {
                 <div className="mb-3">
                   <label className="form-label text-dark">HTML Editor</label>
                   <div>
-                   
                     <JoditEditor
-                      value={formData.html}
+                      ref={editor}
+                      value={formData.html} // Ensure the editor is initialized with correct content
                       config={config}
                       tabIndex={1}
-                      onChange={onChange}
+                      onChange={handleEditorChange}
                     />
                   </div>
-                  {errors.editorContent && <div className="text-danger">{errors.editorContent}</div>}
+                  {errors.editorContent && (
+                    <div className="text-danger">{errors.editorContent}</div>
+                  )}
                 </div>
               )}
 
-
               {/* Submit Button */}
               <div className="btnsubmit">
-                <button className="btn btn-primary" onClick={handleOpenConfirmation}>
+                <button
+                  className="btn btn-primary"
+                  onClick={handleOpenConfirmation}
+                >
                   Submit
                 </button>
 
-                <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
+                <Dialog
+                  open={confirmDialogOpen}
+                  onClose={handleCloseConfirmation}
+                >
                   <DialogTitle>Confirm Submit</DialogTitle>
                   <DialogContent>
                     Are you sure you want to submit this data?
@@ -362,7 +410,10 @@ function EAlert(props) {
                   autoHideDuration={3000} // Adjust as needed
                   onClose={() => setSnackbarOpen(false)}
                 >
-                  <Alert severity="success" onClose={() => setSnackbarOpen(false)}>
+                  <Alert
+                    severity="success"
+                    onClose={() => setSnackbarOpen(false)}
+                  >
                     {modalMessage}
                   </Alert>
                 </Snackbar>
