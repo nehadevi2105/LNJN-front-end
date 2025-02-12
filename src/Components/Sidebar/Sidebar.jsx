@@ -84,6 +84,19 @@ const Sidebar = ({ data }) => {
             </Link>
           </li>
 
+          {/* Dropdown: User Management */}
+          <li className="nav-item">
+            <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("user")}>
+              <AccountCircleIcon /> USER
+            </button>
+            {openDropdown === "user" && (
+              <ul className="nav-dropdown">
+                <li><Link to="" className="nav-link">Create User</Link></li>
+                <li><Link to="" className="nav-link">User Table</Link></li>
+              </ul>
+            )}
+          </li>
+
           {/* Dropdown: Menu Management */}
           <li className="nav-item">
             <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("menu")}>
@@ -94,19 +107,6 @@ const Sidebar = ({ data }) => {
                 <li><Link to="/CMS/CreateMenu" className="nav-link">Create Menu</Link></li>
                 <li><Link to="/SubMenu/CreateSubMenu" className="nav-link">Create SubMenu</Link></li>
                 <li><Link to="/MenuSubMenu/MenuSubMenu" className="nav-link">Menu Table</Link></li>
-              </ul>
-            )}
-          </li>
-
-          {/* Dropdown: User Management */}
-          <li className="nav-item">
-            <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("user")}>
-              <AccountCircleIcon /> USER
-            </button>
-            {openDropdown === "user" && (
-              <ul className="nav-dropdown">
-                <li><Link to="" className="nav-link">Create User</Link></li>
-                <li><Link to="" className="nav-link">User Table</Link></li>
               </ul>
             )}
           </li>
