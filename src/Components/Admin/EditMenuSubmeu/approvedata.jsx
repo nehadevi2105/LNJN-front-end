@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useParams } from "react-router-dom";
@@ -57,7 +63,7 @@ const Approvedata = () => {
     external_link: "",
     languagetype: "",
   });
-
+  const editor = useRef(null);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -78,6 +84,10 @@ const Approvedata = () => {
 
   const handleEditorChange = (content) => {
     setHtml(content);
+    setFormData((prevState) => ({
+      ...prevState,
+      html: content, // Ensure formData is also updated
+    }));
   };
 
   const validateForm = () => {
@@ -160,8 +170,8 @@ const Approvedata = () => {
       formDataToSend.append("menuurl", formData.menuurl);
       formDataToSend.append("submenu_id", formData.submenu_id);
       formDataToSend.append("languagetype", formData.languagetype);
-      formDataToSend.append("usertype", '4');
-      formDataToSend.append("action", 'approve');
+      formDataToSend.append("usertype", "4");
+      formDataToSend.append("action", "approve");
       if (formData.contenttype === "4") {
         formDataToSend.append("external_link", formData.external_link);
       } else if (formData.contenttype === "3") {
@@ -169,9 +179,9 @@ const Approvedata = () => {
       } else if (formData.contenttype === "2") {
         formDataToSend.append("file", file);
       } else if (formData.contenttype === "1") {
-        formDataToSend.append("html", content);
+        formDataToSend.append("html", formData.html);
       }
-      
+
       const response = await APIClient.post(
         "api/TopMenu/updatemenu/" + id,
         formDataToSend,
@@ -224,6 +234,8 @@ const Approvedata = () => {
       try {
         const response = await APIClient.get(apis.getmenudatabyid + id);
         setFormData(response.data);
+        setHtml(response.data.html); // Set the html state
+        setEditorContent(response.data.html); // Set the editor content
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -327,8 +339,8 @@ const Approvedata = () => {
                     Select a role
                   </option>
                   {dropdownOptions.map((data) => (
-                    <option key={data.u_id} value={"/menu/" + data.u_menu_url}>
-                      {"Menu Name" + ":-" + data.u_menu_name}
+                    <option key={data.id} value={"/menu/" + data.menuurl}>
+                      {"Menu Name" + ":-" + data.menuname}
                     </option>
                   ))}
                 </select>
@@ -372,11 +384,13 @@ const Approvedata = () => {
     /> */}
                 {/* <HtmlEditor/> */}
                 <JoditEditor
-                  value={formData.html}
+                  ref={editor}
+                  value={formData.html} // Ensure the editor is initialized with correct content
                   config={config}
                   tabIndex={1}
-                  onChange={onChange}
+                  onChange={handleEditorChange}
                 />
+                
                 {errors.editorContent && (
                   <div className="text-danger">{errors.editorContent}</div>
                 )}

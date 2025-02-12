@@ -34,6 +34,7 @@ const Publishsubmenudata = () => {
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [formErrors, setFormErrors] = useState({});
   const [loading, setLoading] = useState(false);
+    const [editorContent, setEditorContent] = useState("");
   const [filePath, setFilePath] = useState("");
   const [formData, setFormData] = useState({
     menu_id: "",
@@ -78,6 +79,10 @@ const Publishsubmenudata = () => {
 
   const handleEditorChange = (content) => {
     setHtml(content);
+    setFormData((prevState) => ({
+      ...prevState,
+      html: content, // Ensure formData is also updated
+    }));
   };
   const validateForm = () => {
     const newErrors = {};
@@ -204,7 +209,7 @@ const Publishsubmenudata = () => {
       } else if (formData.contenttype === "2") {
         formDataToSend.append("file", file);
       } else if (formData.contenttype === "1") {
-        formDataToSend.append("html", content);
+        formDataToSend.append("html", formData.html);
       }
       
       const response = await APIClient.post(
@@ -261,6 +266,8 @@ const Publishsubmenudata = () => {
       try {
         const response = await APIClient.get(apis.getmenudatabyid + id);
         setFormData(response.data);
+        setHtml(response.data.html); // Set the html state
+        setEditorContent(response.data.html); // Set the editor content
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -393,7 +400,7 @@ const Publishsubmenudata = () => {
                     Select a role
                   </option>
                   {dropdownOptions.map((data) => (
-                    <option key={data.id} value={"/menu/" + data.menu_url}>
+                    <option key={data.id} value={"/menu/" + data.menuurl}>
                       {"Menu Name" + ":-" + data.menuname}
                     </option>
                   ))}
@@ -431,11 +438,12 @@ const Publishsubmenudata = () => {
                   onChange={(e) => handleEditorChange(e.target.value)}
                 ></textarea> */}
                   <JoditEditor
-                    value={formData.html}
-                    config={config}
-                    tabIndex={1}
-                    onChange={onChange}
-                  />
+                  ref={editor}
+                  value={formData.html} // Ensure the editor is initialized with correct content
+                  config={config}
+                  tabIndex={1}
+                  onChange={handleEditorChange}
+                />
                 </div>
                 {errors.editorContent && (
                   <div className="text-danger">{errors.editorContent}</div>

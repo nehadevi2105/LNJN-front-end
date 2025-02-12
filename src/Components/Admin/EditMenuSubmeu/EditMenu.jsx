@@ -23,7 +23,7 @@ const EditMenu = () => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  //const [editorContent, setEditorContent] = useState("");
+  const [editorContent, setEditorContent] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [dropdownOptions, setDropdownOptions] = useState([]);
@@ -43,6 +43,13 @@ const EditMenu = () => {
   // const handleEditorChange = (content) => {
   //   setEditorContent(content);
   // };
+  const handleEditorChange = (content) => {
+    setHtml(content);
+    setFormData((prevState) => ({
+      ...prevState,
+      html: content, // Ensure formData is also updated
+    }));
+  };
 
   const [formData, setFormData] = useState({
     menu_id: "",
@@ -76,9 +83,9 @@ const EditMenu = () => {
     });
   }, []);
 
-  const handleEditorChange = (content) => {
-    sethtml(content);
-  };
+  // const handleEditorChange = (content) => {
+  //   sethtml(content);
+  // };
 
   const validateForm = () => {
     const newErrors = {};
@@ -169,7 +176,7 @@ const EditMenu = () => {
       } else if (formData.contenttype === "2") {
         formDataToSend.append("file", file);
       } else if (formData.contenttype === "1") {
-        formDataToSend.append("html", html);
+        formDataToSend.append("html", formData.html);
       }
 
       const response = await APIClient.post(
@@ -225,6 +232,7 @@ const EditMenu = () => {
         const response = await APIClient.get(apis.getmenudatabyid + id);
         setFormData(response.data);
         sethtml(response.data.html);
+        setEditorContent(response.data.html);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -237,7 +245,7 @@ const EditMenu = () => {
       <div className="row justify-content-center">
         <div className="container-fluid bg-white">
           <div className="box-sec">
-            <h1 className="text-center heading-main">Edit Data</h1>
+            <h1 className="text-center heading-main">Edit Menu</h1>
 
             <div className="mb-3">
               <label className="form-label text-dark">Select a Language</label>

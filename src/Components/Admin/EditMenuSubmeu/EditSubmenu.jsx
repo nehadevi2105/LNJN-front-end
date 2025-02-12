@@ -74,12 +74,20 @@ const EditSubmenu = () => {
   );
 
   const onChange = useCallback((html) => {
-    setContent(html);
+    setHtml(html);
   }, []);
 
   const handleEditorChange = (content) => {
     setHtml(content);
+    setFormData((prevState) => ({
+      ...prevState,
+      html: content, // Ensure formData is also updated
+    }));
   };
+
+  // const handleEditorChange = (content) => {
+  //   setHtml(content);
+  // };
   const validateForm = () => {
     const newErrors = {};
 
@@ -204,9 +212,9 @@ const EditSubmenu = () => {
       } else if (formData.contenttype === "2") {
         formDataToSend.append("file", file);
       } else if (formData.contenttype === "1") {
-        formDataToSend.append("html", content);
+        formDataToSend.append("html", formData.html);
       }
-      formDataToSend.append("usertype", '1');
+      formDataToSend.append("usertype", "1");
 
       const response = await APIClient.post(
         apis.editSubMenu + id,
@@ -433,10 +441,11 @@ const EditSubmenu = () => {
                   onChange={(e) => handleEditorChange(e.target.value)}
                 ></textarea> */}
                   <JoditEditor
-                    value={formData.html}
+                    ref={editor}
+                    value={formData.html} // Ensure the editor is initialized with correct content
                     config={config}
                     tabIndex={1}
-                    onChange={onChange}
+                    onChange={handleEditorChange}
                   />
                 </div>
                 {errors.editorContent && (
