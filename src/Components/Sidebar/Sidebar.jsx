@@ -14,6 +14,7 @@ import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify"; // 
 import PanoramaIcon from "@mui/icons-material/Panorama"; // Banner
 import AssignmentIcon from "@mui/icons-material/Assignment"; // Tenders
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive"; //Circulars
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"; // User
 
 const Sidebar = ({ data }) => {
   const [showhide, setShowHide] = useState("show");
@@ -93,6 +94,19 @@ const Sidebar = ({ data }) => {
                 <li><Link to="/CMS/CreateMenu" className="nav-link">Create Menu</Link></li>
                 <li><Link to="/SubMenu/CreateSubMenu" className="nav-link">Create SubMenu</Link></li>
                 <li><Link to="/MenuSubMenu/MenuSubMenu" className="nav-link">Menu Table</Link></li>
+              </ul>
+            )}
+          </li>
+
+          {/* Dropdown: User Management */}
+          <li className="nav-item">
+            <button className="nav-link dropdown-toggle" onClick={() => toggleDropdown("user")}>
+              <AccountCircleIcon /> USER
+            </button>
+            {openDropdown === "user" && (
+              <ul className="nav-dropdown">
+                <li><Link to="" className="nav-link">Create User</Link></li>
+                <li><Link to="" className="nav-link">User Table</Link></li>
               </ul>
             )}
           </li>

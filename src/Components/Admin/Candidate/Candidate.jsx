@@ -227,7 +227,8 @@ const Candidate = () => {
       }
     } catch (error) {
       console.error("Error submitting candidate data:", error);
-      toast.error("Something went wrong");
+      toast.error("Email already exists. Please use a different email.");
+      setApiError("Email already exists. Please use a different email."); // Set API error state
     } finally {
       setLoading(false);
     }

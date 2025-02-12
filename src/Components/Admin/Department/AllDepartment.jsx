@@ -118,12 +118,24 @@ const AllDepartments = () => {
     <main id="main" className="main">
       <div className="header-box">
         <h2 className="maintitle">Department List</h2>
-        <Link to="/Department/DepartmentForm" className="header-box-rgt">
+        {/* <Link to="/Department/DepartmentForm" className="header-box-rgt">
           <p>
             <AddIcon /> New Department
           </p>
-        </Link>
+        </Link> */}
       </div>
+
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mb: 2 }}>
+      <Button variant="contained" color="primary" component={Link} to="/Department/DepartmentForm">
+                <AddIcon /> New Department
+                </Button>
+                <Button variant="contained" color="primary" component={Link} to="/Approvalfooterlist">
+                   Department Approval List
+                </Button>
+                <Button variant="contained" color="secondary" component={Link} to="/Publisherfooterlist">
+                  Department  Publisher List
+                </Button>
+            </Box>
 
       <Box sx={{ height: 400, width: "100%" }} style={{ backgroundColor: "#fff" }}>
         <DataGrid
