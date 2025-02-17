@@ -81,10 +81,15 @@ import ApproveCircularTable from "../Components/Admin/Circular/Approvecircularli
 import PublishCircularTable from "../Components/Admin/Circular/Publishcircularlist";
 import ApproveCircular from "../Components/Admin/Circular/Approvecircular";
 import PublisheCircular from "../Components/Admin/Circular/Publishcirculardata";
+import CreateUser from "../Components/Admin/User/CreateUser";
+import UserTable from "../Components/Admin/User/UserTable";
+import LoginForm from "../Components/Admin/Login/LoginForm";
+import EditUser from "../Components/Admin/User/EditUser";
+
 function Router() {
   return (
     <Routes>
-      <Route path="/" element={<Dashboard />} />
+      <Route path="/" element={<LoginForm />} />
       <Route path="/cms/Createmenu" element={<CreateMenu />} />
       <Route path="/Department/DepartmentForm" element={<CreateDepartment />} />
       <Route path="/MenuSubMenu/MenuSubMenu" element={<MenuSubMenu />} />
@@ -172,6 +177,7 @@ function Router() {
       <Route path="/bannerapprovallist" element={<ApprovalbannerList />} />
       <Route path="/bannerpublisherlist" element={<PublisherbannerList />} />
       <Route path="/publishbannerdata/:id" element={<Publishbanner />} />
+      {/* <Route path="/Login/LoginForm" element={<LoginForm />} /> */}
 
       {/* CMSFooter */}
       <Route
@@ -206,8 +212,14 @@ function Router() {
         path="/CMSFooter/EditFooter/EditFooterAddress/:id"
         element={<EditFooterAddress />}
       />
-      <Route path="/CMSFooter/EditFooter/IndexEditFooter/:id" element={<IndexEditFooter />} />
-      <Route path="/CMSFooter/FooterTable/FooterTable" element={<FooterTable />} />
+      <Route
+        path="/CMSFooter/EditFooter/IndexEditFooter/:id"
+        element={<IndexEditFooter />}
+      />
+      <Route
+        path="/CMSFooter/FooterTable/FooterTable"
+        element={<FooterTable />}
+      />
       <Route path="/approvefooterdata/:id" element={<ApproveindexFooter />} />
       <Route path="/PublishindexFooter/:id" element={<PublishindexFooter />} />
       <Route path="/Publisherfooterlist" element={<PublisherFooterTable />} />
@@ -229,6 +241,11 @@ function Router() {
       <Route path="/publishcirculardata" element={<PublishCircularTable />} />      
       <Route path="/approvecircular/:id" element={<ApproveCircular />} />
       <Route path="/publishcircular/:id" element={<PublisheCircular />} />
+
+      {/* User */}
+      <Route path="/User/CreateUser" element={<CreateUser />} />
+      <Route path="/User/UserTable" element={<UserTable />} />
+      <Route path="/User/EditUser/:id" element={<EditUser />} />
     </Routes>
   );
 }
