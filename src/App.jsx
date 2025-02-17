@@ -15,10 +15,10 @@ function App() {
   };
 
   //const [sessionExpired, setSessionExpired] = useState(false);
-  const storedUserString = localStorage.getItem("userty");
-  const token = localStorage.getItem("token");
-  console.log(token);
-  console.log(storedUserString);
+  //const storedUserString = localStorage.getItem("usertype");
+  //const token = localStorage.getItem("token");
+  //console.log(token);
+  //console.log(storedUserString);
 
   // Check if the current route is "/login"
   const isLoginPage = location.pathname === "/";

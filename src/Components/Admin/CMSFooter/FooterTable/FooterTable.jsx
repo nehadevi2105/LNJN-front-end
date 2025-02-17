@@ -47,12 +47,16 @@ const FooterTable = () => {
       field: "delete",
       headerName: "Delete",
       sortable: false,
-      renderCell: (params) => (
-        <DeleteIcon
-          style={{ cursor: "not-allowed", color: "gray" }}
-          onClick={() => handleDeleteClick(params.row)}
-        />
-      ),
+      renderCell: (params) =>
+        usertype === 1 || usertype === 4 ? (
+          //usertype === 1 || usertype === 4 ? (
+          <DeleteIcon
+            style={{ cursor: "pointer" }}
+            onClick={() => handleDeleteClick(params.row)}
+          />
+        ) : (
+          <DeleteIcon style={{ cursor: "not-allowed", color: "gray" }} />
+        ),
     },
   ];
 
