@@ -23,21 +23,26 @@ const ApproveFooterTable = () => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const columns = [
     { field: "rowIndex", headerName: "S.No", width: 50 },
     { field: "tittle_name", headerName: "Title", width: 200 },
     { field: "address", headerName: "Address", width: 200 },
-    { field: "description", headerName: "Description" , width: 250},
+    { field: "description", headerName: "Description", width: 250 },
     {
       field: "edit",
       headerName: "Edit",
       sortable: false,
-      renderCell: (params) => (
-        <Link to={"/approvefooterdata/" + params.row.id}>
-          <EditIcon style={{ cursor: "pointer" }} />
-        </Link>
-      ),
+      renderCell: (params) =>
+        usertype === 2 || usertype === 4 ? (
+          <Link to={"/approvefooterdata/" + params.row.id}>
+            <EditIcon style={{ cursor: "pointer" }} />
+          </Link>
+        ) : (
+          <EditIcon style={{ cursor: "not-allowed", color: "gray" }} />
+        ),
     },
     // {
     //   field: "delete",
@@ -104,9 +109,7 @@ const ApproveFooterTable = () => {
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Footer</li>
-                <li className="breadcrumb-item active">
-                   Footer Approval List
-                </li>
+                <li className="breadcrumb-item active">Footer Approval List</li>
               </ol>
             </nav>
           </div>

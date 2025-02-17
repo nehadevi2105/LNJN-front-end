@@ -77,6 +77,10 @@ const Editpublisherapproval = () => {
 
   const handleEditorChange = (content) => {
     setHtml(content);
+    setFormData((prevState) => ({
+      ...prevState,
+      html: content, // Ensure formData is also updated
+    }));
   };
 
   const validateForm = () => {
@@ -159,8 +163,8 @@ const Editpublisherapproval = () => {
       formDataToSend.append("menuurl", formData.menuurl);
       formDataToSend.append("submenu_id", formData.submenu_id);
       formDataToSend.append("languagetype", formData.languagetype);
-      formDataToSend.append("usertype", '4');
-      formDataToSend.append("action", 'publish');
+      formDataToSend.append("usertype", "4");
+      formDataToSend.append("action", "publish");
       if (formData.contenttype === "4") {
         formDataToSend.append("external_link", formData.external_link);
       } else if (formData.contenttype === "3") {
@@ -168,7 +172,7 @@ const Editpublisherapproval = () => {
       } else if (formData.contenttype === "2") {
         formDataToSend.append("file", file);
       } else if (formData.contenttype === "1") {
-        formDataToSend.append("html", content);
+        formDataToSend.append("html", formData.html);
       }
 
       const response = await APIClient.post(
@@ -191,8 +195,14 @@ const Editpublisherapproval = () => {
       if (error.response && error.response.status === 401) {
         toast.error("Unauthorized access. Please log in.");
       } else {
-        if (error.response && error.response.data && error.response.data.errors) {
-          const errorMessages = Object.values(error.response.data.errors).flat().join(' ');
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errors
+        ) {
+          const errorMessages = Object.values(error.response.data.errors)
+            .flat()
+            .join(" ");
           toast.error(`Validation Error: ${errorMessages}`);
         } else {
           toast.error("Something Went Wrong!");
@@ -221,6 +231,8 @@ const Editpublisherapproval = () => {
       try {
         const response = await APIClient.get(apis.getcustomdatabyid + id);
         setFormData(response.data);
+        setHtml(response.data.html); // Set the html state
+        setEditorContent(response.data.html); // Set the editor content
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -372,7 +384,7 @@ const Editpublisherapproval = () => {
                   value={formData.html}
                   config={config}
                   tabIndex={1}
-                  onChange={onChange}
+                  onChange={handleEditorChange}
                 />
                 {errors.editorContent && (
                   <div className="text-danger">{errors.editorContent}</div>

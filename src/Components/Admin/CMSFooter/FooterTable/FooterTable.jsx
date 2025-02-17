@@ -22,21 +22,26 @@ const FooterTable = () => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const columns = [
     { field: "rowIndex", headerName: "S.No", width: 50 },
     { field: "tittle_name", headerName: "Title", width: 200 },
     { field: "address", headerName: "Address", width: 200 },
-    { field: "description", headerName: "Description" , width: 250},
+    { field: "description", headerName: "Description", width: 250 },
     {
       field: "edit",
       headerName: "Edit",
       sortable: false,
-      renderCell: (params) => (
-        <Link to={"/CMSFooter/EditFooter/IndexEditFooter/" + params.row.id}>
-          <EditIcon style={{ cursor: "pointer" }} />
-        </Link>
-      ),
+      renderCell: (params) =>
+        usertype === 1 || usertype === 4 ? (
+          <Link to={"/CMSFooter/EditFooter/IndexEditFooter/" + params.row.id}>
+            <EditIcon style={{ cursor: "pointer" }} />
+          </Link>
+        ) : (
+          <EditIcon style={{ cursor: "not-allowed", color: "gray" }} />
+        ),
     },
     {
       field: "delete",
@@ -44,7 +49,7 @@ const FooterTable = () => {
       sortable: false,
       renderCell: (params) => (
         <DeleteIcon
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "not-allowed", color: "gray" }}
           onClick={() => handleDeleteClick(params.row)}
         />
       ),
@@ -103,23 +108,31 @@ const FooterTable = () => {
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Footer</li>
-                <li className="breadcrumb-item active">
-                   Footer Table
-                </li>
+                <li className="breadcrumb-item active">Footer Table</li>
               </ol>
             </nav>
           </div>
-          
-         
         </div>
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mb: 2 }}>
-                <Button variant="contained" color="primary" component={Link} to="/Approvalfooterlist">
-                   Footer Approval List
-                </Button>
-                <Button variant="contained" color="secondary" component={Link} to="/Publisherfooterlist">
-                  Footer  Publisher List
-                </Button>
-            </Box>
+        <Box
+          sx={{ display: "flex", justifyContent: "flex-end", gap: 2, mb: 2 }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            component={Link}
+            to="/Approvalfooterlist"
+          >
+            Footer Approval List
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            component={Link}
+            to="/Publisherfooterlist"
+          >
+            Footer Publisher List
+          </Button>
+        </Box>
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={apiData}

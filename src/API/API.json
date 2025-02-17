@@ -65,5 +65,9 @@
   "getCircular": "/api/Circular",
   "getapproveCircular": "/api/Circular/approvallist",
   "getpublishCircular": "/api/Circular/publisherlist",
-  "Circularbyid": "/api/Circular/"
+  "Circularbyid": "/api/Circular/",
+  "newuser": "/api/user",
+  "insertlogin" : "/api/Login",
+  "getUserById": "/api/user/"
+
 }

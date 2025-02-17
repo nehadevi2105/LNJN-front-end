@@ -28,8 +28,8 @@ const CustomTable = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
-  const storedUserString = localStorage.getItem("user");
-  const user = JSON.parse(storedUserString);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const columns = [
     { field: "id", headerName: "S.No", width: 50 },
@@ -42,13 +42,13 @@ const CustomTable = () => {
       headerName: "Edit",
       sortable: false,
       renderCell: (params) =>
-        2 === 2 || null ? (
+        usertype === 1 || usertype === 4 ? (
           <Link to={"/custom/Editcustomdata/" + params.row.id}>
             <EditIcon style={{ cursor: "pointer" }} />
           </Link>
         ) : (
           <Link to={"/custom/Editcustomdata/" + params.row.id}>
-            <EditIcon style={{ cursor: "pointer" }} />
+            <EditIcon style={{ cursor: "not-allowed", color: "gray" }} />
           </Link>
         ),
     },
@@ -57,17 +57,14 @@ const CustomTable = () => {
       headerName: "Delete",
       sortable: false,
       renderCell: (params) =>
-        2 === 2 || null ? (
+        usertype === 1 || usertype === 4 ? (
           //user.r_usertype !== 2 || null ? (
           <DeleteIcon
             style={{ cursor: "pointer" }}
             onClick={() => handleDeleteClick(params.row)}
           />
         ) : (
-          <DeleteIcon
-            style={{ cursor: "no-drop", color: "#808080" }}
-            disabled
-          />
+          <DeleteIcon style={{ cursor: "not-allowed", color: "gray" }} />
         ),
     },
   ];

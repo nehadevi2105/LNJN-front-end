@@ -99,8 +99,8 @@ const Sidebar = ({ data }) => {
             </button>
             {openDropdown === "user" && (
               <ul className="nav-dropdown">
-                <li><Link to="" className="nav-link">Create User</Link></li>
-                <li><Link to="" className="nav-link">User Table</Link></li>
+                <li><Link to="/User/CreateUser" className="nav-link">Create User</Link></li>
+                <li><Link to="/User/UserTable" className="nav-link">User Table</Link></li>
               </ul>
             )}
           </li>

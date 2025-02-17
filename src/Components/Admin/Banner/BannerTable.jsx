@@ -22,6 +22,8 @@ const BannerTable = () => {
     const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
+    const storedUserString = localStorage.getItem("usertype");
+    const usertype = JSON.parse(storedUserString);
 
     const columns = [
         { field: 'id', headerName: 'S.No', width: 50 },
@@ -34,28 +36,21 @@ const BannerTable = () => {
             ),
         },
         { field: 'content', headerName: 'Content Data',width: 200 },
-        // {
-        //     field: 'edit',
-        //     headerName: 'Edit',
-        //     sortable: false,
-        //     width: 80,
-        //     renderCell: (params) => (
-        //         <Link to={'/approvebanner/' + params.row.u_id}>
-        //             <EditIcon style={{ cursor: 'pointer', color: 'blue' }} />
-        //         </Link>
-        //     ),
-        // },
+        
         {
             field: 'delete',
             headerName: 'Delete',
             sortable: false,
-            width: 80,
-            renderCell: (params) => (
-                <DeleteIcon
-                    style={{ cursor: 'pointer', color: 'red' }}
+            renderCell: (params) =>
+                usertype === 1 || usertype === 4 ? (
+                  //usertype === 1 || usertype === 4 ? (
+                  <DeleteIcon
+                    style={{ cursor: "pointer" }}
                     onClick={() => handleDeleteClick(params.row)}
-                />
-            ),
+                  />
+                ) : (
+                  <DeleteIcon style={{ cursor: "not-allowed", color: "gray" }} />
+                ),
         },
     ];
 

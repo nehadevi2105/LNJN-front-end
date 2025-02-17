@@ -19,7 +19,7 @@ const Approvebanner = () => {
         usertype:"",
         action:"" // Stores the existing image path
     });
-
+    
     useEffect(() => {
         async function fetchData() {
             try {

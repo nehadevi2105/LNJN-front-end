@@ -23,33 +23,27 @@ const PublisherFooterTable = () => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const columns = [
     { field: "rowIndex", headerName: "S.No", width: 50 },
     { field: "tittle_name", headerName: "Title", width: 200 },
     { field: "address", headerName: "Address", width: 200 },
-    { field: "description", headerName: "Description" , width: 250},
+    { field: "description", headerName: "Description", width: 250 },
     {
       field: "edit",
       headerName: "Edit",
       sortable: false,
-      renderCell: (params) => (
-        <Link to={"/PublishindexFooter/" + params.row.id}>
-          <EditIcon style={{ cursor: "pointer" }} />
-        </Link>
-      ),
+      renderCell: (params) =>
+        usertype === 3 || usertype === 4 ? (
+          <Link to={"/PublishindexFooter/" + params.row.id}>
+            <EditIcon style={{ cursor: "pointer" }} />
+          </Link>
+        ) : (
+          <EditIcon style={{ cursor: "not-allowed", color: "gray" }} />
+        ),
     },
-    // {
-    //   field: "delete",
-    //   headerName: "Delete",
-    //   sortable: false,
-    //   renderCell: (params) => (
-    //     <DeleteIcon
-    //       style={{ cursor: "pointer" }}
-    //       onClick={() => handleDeleteClick(params.row)}
-    //     />
-    //   ),
-    // },
   ];
 
   const handleDeleteClick = (item) => {
@@ -104,9 +98,7 @@ const PublisherFooterTable = () => {
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Footer</li>
-                <li className="breadcrumb-item active">
-                  Publish Footer List
-                </li>
+                <li className="breadcrumb-item active">Publish Footer List</li>
               </ol>
             </nav>
           </div>

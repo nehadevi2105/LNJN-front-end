@@ -73,6 +73,10 @@ const Custom = () => {
 
   const handleEditorChange = (content) => {
     setHtml(content);
+    setFormData((prevState) => ({
+      ...prevState,
+      html: content, // Ensure formData is also updated
+    }));
   };
 
   const validateForm = () => {
@@ -160,7 +164,7 @@ const Custom = () => {
       } else if (formData.contenttype === "2") {
         formDataToSend.append("file", file);
       } else if (formData.contenttype === "1") {
-        formDataToSend.append("html", content);
+        formDataToSend.append("html", formData.html);
       }
 
       const response = await APIClient.post(apis.customdata, formDataToSend, {
@@ -383,7 +387,7 @@ const Custom = () => {
                             value={content}
                             config={config}
                             tabIndex={1}
-                            onChange={onChange}
+                            onChange={handleEditorChange}
                           />
                           {errors.editorContent && (
                             <div className="text-danger">
