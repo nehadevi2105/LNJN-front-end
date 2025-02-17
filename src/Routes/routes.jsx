@@ -237,8 +237,8 @@ function Router() {
       <Route path="/Circular/CircularForm" element={<CircularForm />} />
       <Route path="/Circular/CircularTable" element={<CircularTable />} />
       <Route path="/Circular/EditCircular/:id" element={<EditCircular />} />
-      <Route path="/approvecirculardata" element={<ApproveCircularTable />} />      
-      <Route path="/publishcirculardata" element={<PublishCircularTable />} />      
+      <Route path="/approvecirculardata" element={<ApproveCircularTable />} />
+      <Route path="/publishcirculardata" element={<PublishCircularTable />} />
       <Route path="/approvecircular/:id" element={<ApproveCircular />} />
       <Route path="/publishcircular/:id" element={<PublisheCircular />} />
 

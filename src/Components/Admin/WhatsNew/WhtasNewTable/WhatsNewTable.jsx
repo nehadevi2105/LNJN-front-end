@@ -27,6 +27,8 @@ const WhatsNewTable = () => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const columns = [
     { field: "rowIndex", headerName: "S.No", width: 50 },
@@ -38,11 +40,14 @@ const WhatsNewTable = () => {
       field: "edit",
       headerName: "Edit",
       sortable: false,
-      renderCell: (params) => (
-        <Link to={"/WhatsNew/EditWhatsNew/" + params.row.id}>
-          <EditIcon style={{ cursor: "pointer" }} />
-        </Link>
-      ),
+      renderCell: (params) =>
+        usertype === 1 || usertype === 4 ? (
+          <Link to={"/WhatsNew/EditWhatsNew/" + params.row.id}>
+            <EditIcon style={{ cursor: "pointer" }} />
+          </Link>
+        ) : (
+          <EditIcon style={{ cursor: "not-allowed", color: "gray" }} />
+        ),
     },
     {
       field: "delete",
@@ -50,7 +55,7 @@ const WhatsNewTable = () => {
       sortable: false,
       renderCell: (params) => (
         <DeleteIcon
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "not-allowed", color: "gray" }}
           onClick={() => handleDeleteClick(params.row)}
         />
       ),
@@ -114,20 +119,14 @@ const WhatsNewTable = () => {
           </nav>
         </div>
         <div className="header-box">
-         
           <div className="header-box-rgt">
             <Link to="/WhatsNewapprovallist">
-              <p>
-                Get Approval list
-              </p>
+              <p>Get Approval list</p>
             </Link>
-            
           </div>
           <div className="header-box-rgt">
             <Link to="/WhatsNewpublisherlist">
-              <p>
-                Get Publisher list
-              </p>
+              <p>Get Publisher list</p>
             </Link>
           </div>
         </div>

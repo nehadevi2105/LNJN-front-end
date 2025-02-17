@@ -30,8 +30,8 @@ function Publisherlist() {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  const storedUserString = localStorage.getItem("user");
-  const user = JSON.parse(storedUserString);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const columns = [
     { field: "id", headerName: "S.No", width: 100 },
@@ -44,21 +44,16 @@ function Publisherlist() {
       headerName: "View Data",
       sortable: false,
       renderCell: (params) =>
-        1 === 1 || null ? ( // Check the user role here
+        //1 === 1 || null ? ( // Check the user role here
+        usertype === 3 || usertype === 4 ? (
           <Link to={"/publishdataindex/" + params.row.id}>
             <EditIcon style={{ cursor: "pointer" }} />
           </Link>
         ) : (
-          // <DesignServicesIcon
-          //     style={{ cursor: 'no-drop', color: 'red' }}
-          //     disabled
-          // />
-          <Link to={"/publishdataindex/" + params.row.id}>
-            <EditIcon style={{ cursor: "pointer" }} />
-          </Link>
+          <EditIcon style={{ cursor: "not-allowed", color: "gray" }} />
+          
         ),
-    }
-   
+    },
   ];
 
   const handleDeleteClick = (item) => {

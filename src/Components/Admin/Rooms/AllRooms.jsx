@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
 import { Box, Snackbar } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
@@ -57,7 +62,8 @@ const AllRooms = () => {
 
   const handleConfirmDelete = async () => {
     try {
-      const response = await APIClient.post(`${apis.deleteRoom}/${selectedRoom.id}`,
+      const response = await APIClient.post(
+        `${apis.deleteRoom}/${selectedRoom.id}`,
         null,
         { headers: { "Content-Type": "application/json" } }
       );
@@ -87,10 +93,20 @@ const AllRooms = () => {
       sortable: false,
       renderCell: (params) => (
         <div>
-          <Button variant="outline-primary" size="sm" as={Link} to={`/Room/EditRoom/${params.row.id}`}>
+          <Button
+            variant="outline-primary"
+            size="sm"
+            as={Link}
+            to={`/Room/EditRoom/${params.row.id}`}
+          >
             Edit
           </Button>
-          <Button variant="outline-danger" size="sm" style={{ marginLeft: 8 }} onClick={() => handleDeleteClick(params.row)}>
+          <Button
+            variant="outline-danger"
+            size="sm"
+            style={{ marginLeft: 8 }}
+            onClick={() => handleDeleteClick(params.row)}
+          >
             Delete
           </Button>
         </div>
@@ -100,16 +116,30 @@ const AllRooms = () => {
 
   return (
     <main id="main" className="main">
-      <div className="header-box" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px" }}>
+      <div
+        className="header-box"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "16px",
+        }}
+      >
         <h2 className="maintitle">Room List</h2>
-        <Link to="/Rooms/CreateRoom" style={{ textDecoration: "none", color: "inherit" }}>
+        <Link
+          to="/Rooms/CreateRoom"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
           <Button variant="primary">
             <AddIcon /> New Room
           </Button>
         </Link>
       </div>
 
-      <Box sx={{ height: 600, width: "100%" }} style={{ backgroundColor: "#fff", padding: "16px" }}>
+      <Box
+        sx={{ height: 600, width: "100%" }}
+        style={{ backgroundColor: "#fff", padding: "16px" }}
+      >
         <DataGrid
           rows={rooms}
           columns={columns}
@@ -122,9 +152,14 @@ const AllRooms = () => {
         />
       </Box>
 
-      <Dialog open={confirmDialogOpen} onClose={() => setConfirmDialogOpen(false)}>
+      <Dialog
+        open={confirmDialogOpen}
+        onClose={() => setConfirmDialogOpen(false)}
+      >
         <DialogTitle>Confirm Delete</DialogTitle>
-        <DialogContent>Are you sure you want to delete this room?</DialogContent>
+        <DialogContent>
+          Are you sure you want to delete this room?
+        </DialogContent>
         <DialogActions>
           <Button onClick={() => setConfirmDialogOpen(false)} color="primary">
             Cancel
@@ -135,7 +170,11 @@ const AllRooms = () => {
         </DialogActions>
       </Dialog>
 
-      <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+      >
         <ToastContainer />
       </Snackbar>
     </main>

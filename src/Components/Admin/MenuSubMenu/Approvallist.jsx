@@ -30,8 +30,8 @@ function Approvallist() {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  const storedUserString = localStorage.getItem("user");
-  const user = JSON.parse(storedUserString);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const columns = [
     { field: "id", headerName: "S.No", width: 100 },
@@ -44,7 +44,8 @@ function Approvallist() {
       headerName: "View Data",
       sortable: false,
       renderCell: (params) =>
-        1 === 1 || null ? ( // Check the user role here
+        //1 === 1 || null ? ( // Check the user role here
+        usertype === 2 || usertype === 4 ? (
           <Link to={"/approvaleditdata/" + params.row.id}>
             <EditIcon style={{ cursor: "pointer" }} />
           </Link>
@@ -54,11 +55,10 @@ function Approvallist() {
           //     disabled
           // />
           <Link to={"/approvaleditdata/" + params.row.id}>
-            <EditIcon style={{ cursor: "pointer" }} />
+            <EditIcon style={{ cursor: "not-allowed", color: "gray" }} />
           </Link>
         ),
-    }
-   
+    },
   ];
 
   const handleDeleteClick = (item) => {
@@ -130,9 +130,7 @@ function Approvallist() {
             </Link>
           </div>
         </div>
-        <div className="header-box">
-         
-        </div>
+        <div className="header-box"></div>
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={apiData}

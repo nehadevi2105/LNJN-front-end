@@ -131,9 +131,7 @@ const TenderTable = () => {
           </div>
         </div>
         <div className="header-box">
-          <div className="header-box-lft">
-            
-          </div>
+          <div className="header-box-lft"></div>
           <div className="header-box-rgt">
             <Link to="/CreateTender/Createtender">
               <p>
@@ -144,18 +142,12 @@ const TenderTable = () => {
           </div>
           <div className="header-box-rgt">
             <Link to="/Tenderapprovallist">
-              <p>
-               
-                Get Approval List
-              </p>
+              <p>Get Approval List</p>
             </Link>
           </div>
           <div className="header-box-rgt">
             <Link to="/Tenderpublisherlist">
-              <p>
-               
-                Get Publisher List
-              </p>
+              <p>Get Publisher List</p>
             </Link>
           </div>
         </div>

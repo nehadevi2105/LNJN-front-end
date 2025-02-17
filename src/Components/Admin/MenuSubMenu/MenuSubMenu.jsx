@@ -17,21 +17,21 @@ import MuiAlert from "@mui/material/Alert";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 //import Footer from '../../footer/Footer';
-import AddIcon from "@mui/icons-material/Add";
-import DesignServicesIcon from "@mui/icons-material/DesignServices";
+//import AddIcon from "@mui/icons-material/Add";
+//import DesignServicesIcon from "@mui/icons-material/DesignServices";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import './WhatsNewTable.scss'
 
 function MenuSubMenu() {
   const [apiData, setApiData] = useState([]);
-  const [isDeleting, setIsDeleting] = useState(false);
+  //const [isDeleting, setIsDeleting] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  const storedUserString = localStorage.getItem("user");
-  const user = JSON.parse(storedUserString);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const columns = [
     { field: "id", headerName: "S.No", width: 50 },
@@ -44,30 +44,29 @@ function MenuSubMenu() {
       headerName: "Edit",
       sortable: false,
       renderCell: (params) =>
-        1 === 1 || null ? ( // Check the user role here
-          <Link to={"/EditMenuSubmeu/IndexEdit/" + params.row.id}>
+        //1 == 1 || null ? (
+        usertype === 1 || usertype === 4 ? ( // Creator & Super Admin can edit
+          <Link to={`/EditMenuSubmeu/IndexEdit/${params.row.id}`}>
             <EditIcon style={{ cursor: "pointer" }} />
           </Link>
         ) : (
-          // <DesignServicesIcon
-          //     style={{ cursor: 'no-drop', color: 'red' }}
-          //     disabled
-          // />
-          <Link to={"/EditMenuSubmeu/IndexEdit/" + params.row.id}>
-            <EditIcon style={{ cursor: "pointer" }} />
-          </Link>
+          <EditIcon style={{ cursor: "not-allowed", color: "gray" }} />
         ),
     },
     {
       field: "delete",
       headerName: "Delete",
       sortable: false,
-      renderCell: (params) => (
-        <DeleteIcon
-          style={{ cursor: "pointer" }}
-          onClick={() => handleDeleteClick(params.row)}
-        />
-      ),
+      renderCell: (params) =>
+        usertype === 1 || usertype === 4 ? (
+          //usertype === 1 || usertype === 4 ? (
+          <DeleteIcon
+            style={{ cursor: "pointer" }}
+            onClick={() => handleDeleteClick(params.row)}
+          />
+        ) : (
+          <DeleteIcon style={{ cursor: "not-allowed", color: "gray" }} />
+        ),
     },
   ];
 
@@ -125,7 +124,9 @@ function MenuSubMenu() {
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Service</li>
-                <li className="breadcrumb-item active">All Menu Submenu List </li>
+                <li className="breadcrumb-item active">
+                  All Menu Submenu List{" "}
+                </li>
               </ol>
             </nav>
           </div>
