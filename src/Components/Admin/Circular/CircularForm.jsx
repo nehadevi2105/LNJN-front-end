@@ -136,7 +136,7 @@ const CircularForm = () => {
   const handleInputChange = (event) => {
     const { name, value, type } = event.target;
 
-    if (type === "2") {
+    if (type === "file") {
       setFormData({
         ...formData,
         [name]: event.target.files[0],
@@ -185,9 +185,9 @@ const CircularForm = () => {
         formDataToSend.append("contenttype", formData.contenttype);
 
         if (formData.contenttype === "4") {
-          formDataToSend.append("external_file", formData.external_link);
+          formDataToSend.append("external_file", formData.external_file);
         } else if (formData.contenttype === "3") {
-          formDataToSend.append("internale_file", formData.internal_link);
+          formDataToSend.append("internale_file", formData.internal_file);
         } else if (formData.contenttype === "2") {
           formDataToSend.append("file", file);
         } else if (formData.contenttype === "1") {
@@ -198,11 +198,15 @@ const CircularForm = () => {
         formDataToSend.append("end_date", formData.end_date);
         formDataToSend.append("languagetype", formData.languagetype);
 
-        const response = await APIClient.post(apis.createcircular, formDataToSend, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        const response = await APIClient.post(
+          apis.createcircular,
+          formDataToSend,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
         // console.log('Data saved:', response.data);
         setFormData({
           tittle: "",
@@ -363,8 +367,8 @@ const CircularForm = () => {
                 /> */}
                           <select
                             className="form-control"
-                            name="internal_link"
-                            value={formData.internal_link}
+                            name="internale_file"
+                            value={formData.internal_file}
                             onChange={handleInputChange}
                           >
                             <option value="" style={{ color: "black" }}>
@@ -373,7 +377,7 @@ const CircularForm = () => {
                             {dropdownOptions.map((data) => (
                               <option
                                 key={data.id}
-                                value={"/menu/" + data.menu_url}
+                                value={"/menu/" + data.menuurl}
                               >
                                 {"Menu Name" + ":-" + data.menuname}
                               </option>

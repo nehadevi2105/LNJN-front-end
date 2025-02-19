@@ -25,6 +25,8 @@ const TenderApprovallist = () => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const columns = [
     { field: "id", headerName: "S.No", width: 50 },
@@ -36,10 +38,13 @@ const TenderApprovallist = () => {
       field: "View Details",
       headerName: "Edit",
       sortable: false,
-      renderCell: (params) => (
+      renderCell: (params) => 
+        usertype === 2 || usertype === 4 ? (
         <Link to={"/ApproveTenderdata/" + params.row.id}>
           <EditIcon style={{ cursor: "pointer" }} />
         </Link>
+      ): (
+        <EditIcon style={{ cursor: "not-allowed", color: "gray" }} />
       ),
     },
     // {

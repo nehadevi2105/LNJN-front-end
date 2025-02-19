@@ -34,6 +34,8 @@ const TenderTable = () => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const columns = [
     { field: "id", headerName: "S.No", width: 50 },
@@ -45,22 +47,28 @@ const TenderTable = () => {
       field: "edit",
       headerName: "Edit",
       sortable: false,
-      renderCell: (params) => (
-        <Link to={"/EditTender/EditTender/" + params.row.id}>
-          <EditIcon style={{ cursor: "pointer" }} />
-        </Link>
-      ),
+      renderCell: (params) =>
+        usertype === 1 || usertype === 4 ? (
+          <Link to={"/EditTender/EditTender/" + params.row.id}>
+            <EditIcon style={{ cursor: "pointer" }} />
+          </Link>
+        ) : (
+          <EditIcon style={{ cursor: "not-allowed", color: "gray" }} />
+        ),
     },
     {
       field: "delete",
       headerName: "Delete",
       sortable: false,
-      renderCell: (params) => (
-        <DeleteIcon
-          style={{ cursor: "pointer" }}
-          onClick={() => handleDeleteClick(params.row)}
-        />
-      ),
+      renderCell: (params) =>
+        usertype === 1 || usertype === 4 ? (
+          <DeleteIcon
+            style={{ cursor: "pointer" }}
+            onClick={() => handleDeleteClick(params.row)}
+          />
+        ) : (
+          <DeleteIcon style={{ cursor: "not-allowed", color: "gray" }} />
+        ),
     },
   ];
 

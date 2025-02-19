@@ -12,6 +12,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Link, useNavigate } from "react-router-dom";
 //import ReCAPTCHA from "react-google-recaptcha";
 import axios from "axios";
+import APIClient from "../../../API/APIClient";
+import apis from "../../../API/API.json";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -47,8 +49,9 @@ const LoginForm = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "https://localhost:7191/api/Login",
+      const response = await APIClient.post(
+        apis.getLogin,
+        //"https://localhost:7191/api/Login",
         user,
         {
           headers: { "Content-Type": "application/json" },

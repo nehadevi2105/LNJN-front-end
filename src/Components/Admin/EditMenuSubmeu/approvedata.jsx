@@ -365,7 +365,6 @@ const Approvedata = () => {
                 )}
               </div>
             )}
-            
 
             {/* HTML Editor Input */}
             {formData.contenttype === "1" && (
@@ -391,7 +390,7 @@ const Approvedata = () => {
                   tabIndex={1}
                   onChange={handleEditorChange}
                 />
-                
+
                 {errors.editorContent && (
                   <div className="text-danger">{errors.editorContent}</div>
                 )}
