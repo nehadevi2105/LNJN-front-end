@@ -5482,6 +5482,7 @@ textarea.form-control-lg {
     --cui-breadcrumb-item-padding-x: 0.5rem;
     --cui-breadcrumb-item-active-color: var(--cui-secondary-color);
     display: flex;
+    margin-left: 2rem;
     flex-wrap: wrap;
     padding: var(--cui-breadcrumb-padding-y) var(--cui-breadcrumb-padding-x);
     margin-bottom: var(--cui-breadcrumb-margin-bottom);
@@ -10621,7 +10622,8 @@ textarea.form-control-lg {
 }
 
 .p-3 {
-    padding: 1rem!important
+    padding: 1rem!important;
+    margin-top: 1rem!important
 }
 
 .p-4 {
