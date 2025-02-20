@@ -15,14 +15,6 @@ import {
 } from "@mui/material";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
-//import { Col, Row } from "react-bootstrap";
-//import Footer from '../../footer/Footer';
-//import Header from '../../header/Header';
-//import Sidebar from '../../sidebar/Sidebar';
-
-// function EAlert(props) {
-//   return <Alert elevation={6} variant="filled" {...props} />;
-// }
 
 const CreateMenu = () => {
   const [html, setHtml] = useState("");
