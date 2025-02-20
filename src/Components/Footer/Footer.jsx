@@ -3,11 +3,16 @@
 const Footer = () => {
   return (
     <div id="root">
-      <div className="main-content">
-      <div className="footer px-4 bg-info text-white p-3">
-      National Forensic Sciences University Delhi Campus (LNJN NICFS)
-      Lok Nayak Jayaprakash Narayan National Institute of Criminology 
-      </div>
+  <div className="container-fluid">
+    <div className="footer bg-info text-white text-center p-3">
+      National Forensic Sciences University Delhi Campus (LNJN NICFS)  
+      Lok Nayak Jayaprakash Narayan National Institute of Criminology  
+    </div>
+  
+
+
+
+
      
       {/* <div className="footer px-4 bg-info text-white p-3">
         <div>National Forensic Sciences University Delhi Campus (LNJN NICFS)
