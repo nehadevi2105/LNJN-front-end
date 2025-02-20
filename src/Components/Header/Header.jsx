@@ -40,7 +40,8 @@ const Header = ({ onDataChange = () => {} }) => {
       position="sticky"
       sx={{
         width: "100%", // Full width
-        background: "rgb(51 153 255)",
+        background: "#d3d3d3",
+        color:"#172C73",
         transition: "0.3s",
         boxShadow: hasScrolled ? 3 : 0,
         left: 0,
