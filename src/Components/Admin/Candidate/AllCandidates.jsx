@@ -105,8 +105,10 @@ const AllCandidates = () => {
   ];
 
   return (
-    <main id="main" className="main">
-      <div className="header-box" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px" }}>
+    <div className="row justify-content-center">
+    <div>
+      <div className="card">
+        <div className="card-body">
         <h2 className="maintitle">Candidate List</h2>
         <Link to="/Candidate/CreateCandidate" style={{ textDecoration: "none", color: "inherit" }}>
           <Button variant="primary">
@@ -145,7 +147,9 @@ const AllCandidates = () => {
       <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
         <ToastContainer />
       </Snackbar>
-    </main>
+    </div>
+  </div>
+  </div>
   );
 };
 

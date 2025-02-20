@@ -98,8 +98,10 @@ const AllHostel = () => {
   ];
 
   return (
-    <main id="main" className="main">
-      <div className="header-box" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px" }}>
+    <div className="row justify-content-center">
+    <div>
+      <div className="card">
+        <div className="card-body">
         <h2 className="maintitle">Hostel List</h2>
         <Link to="/Hostel/CreateHostel" style={{ textDecoration: "none", color: "inherit" }}>
           <Button variant="primary">
@@ -138,7 +140,10 @@ const AllHostel = () => {
       <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
         <ToastContainer />
       </Snackbar>
-    </main>
+    </div>
+    </div>
+  </div>
+  
   );
 };
 

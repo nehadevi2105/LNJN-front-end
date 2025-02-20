@@ -117,11 +117,11 @@ const TenderTable = () => {
   }, []);
 
   return (
+    <div className="row justify-content-center">
     <div>
-      <main id="main" className="main">
-        <div className="pagetitle">
-          <div className="pagetitle-lft">
-            <h1 className="maintitle">All Tenders List</h1>
+      <div className="card">
+        <div className="card-body">
+           
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -129,16 +129,9 @@ const TenderTable = () => {
                 <li className="breadcrumb-item active">All Tender </li>
               </ol>
             </nav>
+            <h1 className="maintitle">All Tenders List</h1>
           </div>
-          <div className="pagetitle-rgt">
-            {/* <Link to="/dashboard">
-              <button type="button" className="btn btn-info my-1">
-                Back
-              </button>
-            </Link> */}
-          </div>
-        </div>
-        <div className="header-box">
+          <div className="header-box">
           <div className="header-box-lft"></div>
           <div className="header-box-rgt">
             <Link to="/CreateTender/Createtender">
@@ -159,6 +152,8 @@ const TenderTable = () => {
             </Link>
           </div>
         </div>
+        </div>
+      
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={apiData}
@@ -176,7 +171,7 @@ const TenderTable = () => {
             }}
           />
         </Box>
-      </main>
+      </div>
 
       <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm Delete</DialogTitle>
