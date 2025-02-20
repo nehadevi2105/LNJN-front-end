@@ -22,13 +22,14 @@ const CreateCourse = () => {
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
+        debugger
         const response = await APIClient.get(apis.getDepartments);
         setDepartments(response.data);
       } catch (error) {
         console.error("Error fetching departments:", error);
       }
     };
-    fetchDepartments();
+   // fetchDepartments();
   }, []);
 
   const validateForm = () => {
