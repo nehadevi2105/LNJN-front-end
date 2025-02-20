@@ -113,14 +113,15 @@ const UserTable = () => {
     <div>
       <div className="card">
         <div className="card-body">
-          <h1>All Users</h1>
-          <nav>
+        <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">Home</li>
               <li className="breadcrumb-item">User</li>
               <li className="breadcrumb-item active">All Users</li>
             </ol>
           </nav>
+          <h1>All Users</h1>
+         
           <Link to="/dashboard">
             <button type="button" className="btn btn-info">
               Back

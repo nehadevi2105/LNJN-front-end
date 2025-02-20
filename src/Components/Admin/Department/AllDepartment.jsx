@@ -19,35 +19,28 @@ const AllDepartments = () => {
   const [updatedName, setUpdatedName] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  // Fetch department data
   useEffect(() => {
-    let isMounted = true; // Prevents setting state if the component unmounts
   
     async function fetchDepartments() {
       try {
+        debugger;
+        console.log("Fetching departments..."); // Debugging log
         const response = await APIClient.get(apis.getDepartments);
-        if (!isMounted) return; // Avoid setting state if unmounted
-  
-        const newData = response.data.map((row, index) => ({
-          id: index, did: row.did, dname: row.dname
-        }));
-  
-        setDepartments((prev) => 
-          JSON.stringify(prev) === JSON.stringify(newData) ? prev : newData
-        );
-  
+          const dataWithIds = response.data.map((row, index) => ({
+            id: index, 
+            did: row.did, 
+            dname: row.dname
+          }));
+          setDepartments(dataWithIds);
       } catch (error) {
         console.error("Error fetching departments:", error);
-        toast.error("Failed to load departments");
+        if (isMounted) toast.error("Failed to load departments");
       }
     }
   
     fetchDepartments();
+  }, []); // Empty dependency array ensures it runs only once
   
-    return () => {
-      isMounted = false; // Cleanup function to prevent setting state on unmounted component
-    };
-  }, []);
   
 
   // Handle delete click
@@ -59,9 +52,8 @@ const AllDepartments = () => {
   // Confirm delete
   const handleConfirmDelete = async () => {
     try {
-      const response = await APIClient.post(`${apis.deleteDepartment}/${selectedDepartment.did}`, {
-        headers: { "Content-Type": "application/json" } // Explicitly set content type
-      });
+      console.log(`Deleting department with ID: ${selectedDepartment.did}`);
+      const response = await APIClient.delete(`${apis.deleteDepartment}/${selectedDepartment.did}`);
   
       if (response.status === 200) {
         setDepartments((prev) => prev.filter((dept) => dept.did !== selectedDepartment.did));
@@ -76,21 +68,23 @@ const AllDepartments = () => {
       setConfirmDialogOpen(false);
     }
   };
+  
 
   // Handle edit click
   const handleEditClick = (department) => {
     setSelectedDepartment(department);
     setUpdatedName(department.dname);
-    //handleConfirmEdit();
     setEditDialogOpen(true);
   };
 
   // Confirm edit
   const handleConfirmEdit = async () => {
     try {
+      console.log(`Updating department: ${selectedDepartment.did}`);
       const updatedDepartment = { ...selectedDepartment, dname: updatedName };
-      const response = await APIClient.post(`${apis.editDepartment}/${selectedDepartment.did}`, updatedDepartment);
-
+  
+      const response = await APIClient.put(`${apis.editDepartment}/${selectedDepartment.did}`, updatedDepartment);
+  
       if (response.status === 200) {
         setDepartments((prev) =>
           prev.map((dept) => (dept.did === selectedDepartment.did ? updatedDepartment : dept))
@@ -106,6 +100,7 @@ const AllDepartments = () => {
       setEditDialogOpen(false);
     }
   };
+  
 
   const columns = [
     { field: "did", headerName: "S.No", width: 50 },
@@ -115,7 +110,9 @@ const AllDepartments = () => {
       headerName: "Edit",
       sortable: false,
       renderCell: (params) => (
-        <Button color="primary"><Link to={"/Department/EditDepartment/"+params.row.did} >Edit</Link></Button>
+        <Button color="primary">
+          <Link to={`/Department/EditDepartment/${params.row.did}`}>Edit</Link>
+        </Button>
       ),
     },
     {
@@ -129,25 +126,22 @@ const AllDepartments = () => {
   ];
 
   return (
-    <div className="row justify-content-center">
-    <div>
-      <div className="card">
-        <div className="card-body">
+    <main id="main" className="main">
+      <div className="header-box">
         <h2 className="maintitle">Department List</h2>
-      
-     
+      </div>
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mb: 2 }}>
-      <Button variant="contained" color="primary" component={Link} to="/Department/DepartmentForm">
-                <AddIcon /> New Department
-                </Button>
-                <Button variant="contained" color="primary" component={Link} to="/Approvalfooterlist">
-                   Department Approval List
-                </Button>
-                <Button variant="contained" color="secondary" component={Link} to="/Publisherfooterlist">
-                  Department  Publisher List
-                </Button>
-            </Box>
+        <Button variant="contained" color="primary" component={Link} to="/Department/DepartmentForm">
+          <AddIcon /> New Department
+        </Button>
+        <Button variant="contained" color="primary" component={Link} to="/Approvalfooterlist">
+          Department Approval List
+        </Button>
+        <Button variant="contained" color="secondary" component={Link} to="/Publisherfooterlist">
+          Department Publisher List
+        </Button>
+      </Box>
 
       <Box sx={{ height: 400, width: "100%" }} style={{ backgroundColor: "#fff" }}>
         <DataGrid
@@ -175,7 +169,13 @@ const AllDepartments = () => {
       <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)}>
         <DialogTitle>Edit Department</DialogTitle>
         <DialogContent>
-         
+          <TextField
+            fullWidth
+            label="Department Name"
+            variant="outlined"
+            value={updatedName}
+            onChange={(e) => setUpdatedName(e.target.value)}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setEditDialogOpen(false)} color="primary">Cancel</Button>
@@ -186,10 +186,7 @@ const AllDepartments = () => {
       <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
         <ToastContainer />
       </Snackbar>
-    </div>
-  </div>
-</div>
-</div>
+    </main>
   );
 };
 
