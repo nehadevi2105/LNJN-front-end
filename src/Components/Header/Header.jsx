@@ -1,94 +1,100 @@
-import  { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem, Box } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useLocation, useNavigate } from "react-router-dom";
-import dayjs from "dayjs";
-import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
-//import "./Header.scss";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useNavigate } from "react-router-dom";
+
 const Header = ({ onDataChange = () => {} }) => {
-  const toggleSidebar = () => {
-    // Check if screen size is less than 991px
-    if (window.innerWidth < 991) {
-      // If screen size is less than 991px, always show the sidebar
-      onDataChange((prevState) => (prevState === "show" ? " " : "show"));
-    } else {
-      // If screen size is 991px or more, toggle the sidebar visibility
-      onDataChange((prevState) => (prevState === "hide" ? " " : "hide"));
-    }
-  };
-
   const [hasScrolled, setHasScrolled] = useState(false);
-  const headerRef = useRef(null);
-
-  const location = useLocation();
-  const pathnames = location.pathname.split("/").filter((x) => x);
-
-  const navigate= useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const isScrolled = scrollTop > 0;
-      setHasScrolled(isScrolled);
-    };
-
+    const handleScroll = () => setHasScrolled(window.scrollY > 0);
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const [selectedDate, setSelectedDate] = useState(dayjs("2024-04-01"));
-
-  const handleChangeDate = (newdate) => {
-    if (newdate) {
-      setSelectedDate(newdate);
+  const toggleSidebar = () => {
+    if (window.innerWidth < 991) {
+      onDataChange((prev) => (prev === "show" ? "" : "show"));
     } else {
-      setSelectedDate(dayjs("2024-04-01"));
+      onDataChange((prev) => (prev === "hide" ? "" : "hide"));
     }
   };
 
-  const handleLogout=()=>{
+  const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/");
-  }
+  };
 
-  const handlePasswordChange=()=>{
+  const handlePasswordChange = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    navigate("/changepassword")
-  }
+    navigate("/changepassword");
+  };
 
   return (
-    <div>
-      <header
-        ref={headerRef}
-        className={`header header-sticky header-bg p-0 ${
-          hasScrolled ? "shadow-sm" : ""
-        }`}
+    <AppBar
+      position="sticky"
+      sx={{
+        width: "100%", // Full width
+        background: "rgb(51 153 255)",
+        transition: "0.3s",
+        boxShadow: hasScrolled ? 3 : 0,
+        left: 0,
+        minHeight: { xs: "30px", sm: "40px" }, // Responsive height
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          minHeight: { xs: "30px", sm: "40px" }, // Responsive Toolbar height
+          padding: { xs: "0 8px", sm: "0 16px" }, // Adjust padding for small screens
+        }}
       >
-        <div className="container-fluid border-bottom px-4">
-          <div className="toggle-main">
-            <div className="toggle-lft">
-              <button className="header-toggler" onClick={toggleSidebar}>
-                <MenuIcon />
-              </button>
-            </div>
-            <div className="toggle-rgt">
-              <div className="banner-wel">
-                <h6>Welcome to LNJN</h6>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* <Breadcrumb
-          selectedDate={selectedDate}
-          onChangeDate={handleChangeDate}
-        /> */}
-      </header>
-    </div>
+        {/* Sidebar Toggle Button */}
+        <IconButton 
+          edge="start" 
+          color="inherit" 
+          onClick={toggleSidebar}
+          sx={{ padding: { xs: "4px", sm: "8px" } }} // Reduce padding on small screens
+        >
+          <MenuIcon fontSize="small" />
+        </IconButton>
+
+        {/* Title */}
+        <Typography
+          variant="h6"
+          sx={{
+            flexGrow: 1,
+            textAlign: "center",
+            fontSize: { xs: "12px", sm: "16px" }, // Adjust font size
+          }}
+        >
+          Welcome to LNJN
+        </Typography>
+
+        {/* User Profile Menu */}
+        <Box>
+          <IconButton 
+            color="inherit" 
+            onClick={(e) => setAnchorEl(e.currentTarget)}
+            sx={{ padding: { xs: "4px", sm: "8px" } }} // Reduce padding on small screens
+          >
+            <AccountCircleIcon fontSize="small" />
+          </IconButton>
+          <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
+            <MenuItem onClick={handlePasswordChange}>Change Password</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          </Menu>
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 };
 

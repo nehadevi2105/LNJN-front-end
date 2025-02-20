@@ -14,12 +14,12 @@ import contact from "../../assets/img/contact.png";
 
 // Dashboard Items Array
 const dashboardItems = [
-  { img: userimg, title: "User", className: "c1", link: "/user" },
-  { img: CMS, title: "CMS", className: "c2", link: "/cms" },
-  { img: Footer, title: "Footer", className: "c3", link: "/footer" },
-  { img: WhatsNew, title: "Whats New", className: "c4", link: "/whatsnew" },
-  { img: Banner, title: "Banner", className: "c5", link: "/banner" },
-  { img: relatedlink, title: "Related Links", className: "c6", link: "/links" },
+  { img: userimg, title: "User", className: "c1", link: "/User/UserTable" },
+  { img: CMS, title: "CMS", className: "c2", link: "/MenuSubMenu/MenuSubMenu" },
+  { img: Footer, title: "Footer", className: "c3", link: "/CMSFooter/FooterTable/FooterTable" },
+  { img: WhatsNew, title: "Whats New", className: "c4", link: "/WhatsNew/WhatsNewTable" },
+  { img: Banner, title: "Banner", className: "c5", link: "/bannerdata" },
+  { img: relatedlink, title: "Tender ", className: "c6", link: "/TenderTable/TenderTable" },
   { img: Profile, title: "Profile", className: "c7", link: "/profile" },
   { img: contact, title: "Contact Us", className: "c8", link: "/contact" },
 ];
