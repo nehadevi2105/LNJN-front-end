@@ -100,19 +100,12 @@ const CreateDepartment = () => {
 
   return (
     <>
-      <main id="main" className="main">
-        <div className="pagetitle">
-          <div className="pagetitle-lft">
-            {/* <h1>Create Department</h1> */}
-          </div>
-        </div>
-        <div className="home">
-          <div className="homeContainer">
-            <div className="bgimg">
-              <Row className="vh-100 d-flex justify-content-center align-items-left">
-                <Col md={10} lg={12} xs={12}>
-                  <Card>
-                    <Card.Body>
+      <div className="row justify-content-center">
+    <div>
+      <div className="card">
+        <div className="card-body">
+              
+            
                       <h2 className="fw-bold mb-4 text-center text-uppercase">Create Department</h2>
                       <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="DepartmentName">
@@ -134,14 +127,12 @@ const CreateDepartment = () => {
                           </Button>
                         </div>
                       </Form>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Row>
+               
+            
             </div>
           </div>
         </div>
-      </main>
+      </div>
       <ToastContainer />
 
       {/* Confirmation Dialog */}

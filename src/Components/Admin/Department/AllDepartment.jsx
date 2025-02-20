@@ -21,20 +21,34 @@ const AllDepartments = () => {
 
   // Fetch department data
   useEffect(() => {
+    let isMounted = true; // Prevents setting state if the component unmounts
+  
     async function fetchDepartments() {
       try {
         const response = await APIClient.get(apis.getDepartments);
-        const dataWithIds = response.data.map((row, index) => ({
+        if (!isMounted) return; // Avoid setting state if unmounted
+  
+        const newData = response.data.map((row, index) => ({
           id: index, did: row.did, dname: row.dname
         }));
-        setDepartments(dataWithIds);
+  
+        setDepartments((prev) => 
+          JSON.stringify(prev) === JSON.stringify(newData) ? prev : newData
+        );
+  
       } catch (error) {
         console.error("Error fetching departments:", error);
         toast.error("Failed to load departments");
       }
     }
+  
     fetchDepartments();
+  
+    return () => {
+      isMounted = false; // Cleanup function to prevent setting state on unmounted component
+    };
   }, []);
+  
 
   // Handle delete click
   const handleDeleteClick = (department) => {
@@ -115,15 +129,13 @@ const AllDepartments = () => {
   ];
 
   return (
-    <main id="main" className="main">
-      <div className="header-box">
+    <div className="row justify-content-center">
+    <div>
+      <div className="card">
+        <div className="card-body">
         <h2 className="maintitle">Department List</h2>
-        {/* <Link to="/Department/DepartmentForm" className="header-box-rgt">
-          <p>
-            <AddIcon /> New Department
-          </p>
-        </Link> */}
-      </div>
+      
+     
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mb: 2 }}>
       <Button variant="contained" color="primary" component={Link} to="/Department/DepartmentForm">
@@ -174,7 +186,10 @@ const AllDepartments = () => {
       <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
         <ToastContainer />
       </Snackbar>
-    </main>
+    </div>
+  </div>
+</div>
+</div>
   );
 };
 

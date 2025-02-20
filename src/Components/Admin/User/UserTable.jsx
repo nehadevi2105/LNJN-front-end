@@ -109,9 +109,10 @@ const UserTable = () => {
   }, []);
 
   return (
+    <div className="row justify-content-center">
     <div>
-      <main id="main" className="main">
-        <div className="pagetitle">
+      <div className="card">
+        <div className="card-body">
           <h1>All Users</h1>
           <nav>
             <ol className="breadcrumb">
@@ -138,7 +139,7 @@ const UserTable = () => {
             componentsProps={{ toolbar: { showQuickFilter: true } }}
           />
         </Box>
-      </main>
+      </div>
 
       {/* Confirm Delete Dialog */}
       <Dialog
@@ -170,6 +171,7 @@ const UserTable = () => {
         </MuiAlert>
       </Snackbar>
     </div>
+  </div>
   );
 };
 

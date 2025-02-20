@@ -104,10 +104,10 @@ function Publisherlist() {
   }, []);
 
   return (
+    <div className="row justify-content-center">
     <div>
-      <main id="main" className="main">
-        <div className="pagetitle">
-          <div className="pagetitle-lft">
+      <div className="card">
+        <div className="card-body">
             <h1 className="maintitle">All Publisher List</h1>
             <nav>
               <ol className="breadcrumb">
@@ -152,7 +152,7 @@ function Publisherlist() {
             }}
           />
         </Box>
-      </main>
+      </div>
 
       <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm Delete</DialogTitle>

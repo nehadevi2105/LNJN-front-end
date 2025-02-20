@@ -88,7 +88,10 @@ const CreateUser = () => {
   };
 
   return (
-    <main id="main" className="main">
+    <div className="row justify-content-center">
+    <div>
+      <div className="card">
+        <div className="card-body">
       <h2>Create User</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="name">
@@ -162,7 +165,10 @@ const CreateUser = () => {
       </Form>
 
       <ToastContainer />
-    </main>
+    </div>
+    </div>
+    </div>
+    </div>
   );
 };
 

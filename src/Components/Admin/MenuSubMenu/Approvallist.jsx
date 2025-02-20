@@ -109,10 +109,10 @@ function Approvallist() {
   }, []);
 
   return (
+    <div className="row justify-content-center">
     <div>
-      <main id="main" className="main">
-        <div className="pagetitle">
-          <div className="pagetitle-lft">
+      <div className="card">
+        <div className="card-body">
             <h1 className="maintitle">All Approval List</h1>
             <nav>
               <ol className="breadcrumb">
@@ -148,7 +148,7 @@ function Approvallist() {
             }}
           />
         </Box>
-      </main>
+      </div>
 
       <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm Delete</DialogTitle>
