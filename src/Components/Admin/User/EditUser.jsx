@@ -117,6 +117,11 @@ const EditUser = () => {
   }, [id]);
 
   return (
+    <div className="row justify-content-center">
+    <div className="formdata">
+    <div className="card custom-card">
+    <div className="card-body">
+      
     <main id="main" className="main">
       <h2>Edit User</h2>
       <Form onSubmit={handleSubmit}>
@@ -229,6 +234,10 @@ const EditUser = () => {
 
       <ToastContainer />
     </main>
+    </div>
+    </div>
+    </div>
+    </div>
   );
 };
 

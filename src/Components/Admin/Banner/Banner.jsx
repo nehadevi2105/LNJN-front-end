@@ -91,7 +91,7 @@ alert("Data uploaded successfully!");
   };
 
   return (
-    <div>
+    <div className="formdata">
       <form>
       <Paper elevation={15} sx={{ 
     padding: 8, 

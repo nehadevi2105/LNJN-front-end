@@ -220,7 +220,7 @@ const CreateMenu = () => {
   return (
    
         <div className="row justify-content-center">
-          <div>
+          <div className="formdata">
             <div className="card">
               <div className="card-body">
                 <div className="mb-3 mt-md-4">

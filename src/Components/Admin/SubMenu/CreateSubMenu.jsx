@@ -229,8 +229,8 @@ const CreateSubMenu = () => {
   // console.log(formData)
 
   return (
-    <div>
-      <div>
+    <div >
+    <div >
         <main id="main" className="main">
           <div className="pagetitle">
             <div className="pagetitle-lft">
@@ -252,6 +252,7 @@ const CreateSubMenu = () => {
             </div>
           </div>
           <div className="row justify-content-center">
+          <div className="formdata">
             <div className="card">
               <div className="card-body">
                 <div className="mb-3 mt-md-4">
@@ -495,10 +496,12 @@ const CreateSubMenu = () => {
                 </div>
               </div>
             </div>
+            </div>
           </div>
         </main>
       </div>
     </div>
+   
   );
 };
 

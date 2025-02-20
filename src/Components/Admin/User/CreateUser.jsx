@@ -89,11 +89,12 @@ const CreateUser = () => {
 
   return (
     <div className="row justify-content-center">
-    <div>
-      <div className="card">
-        <div className="card-body">
-      <h2>Create User</h2>
-      <Form onSubmit={handleSubmit}>
+  <div className="formdata"> {/* Bootstrap column for full width */}
+    <div className="card custom-card">
+      <div className="card-body">
+        <h2>Create User</h2>
+        <Form onSubmit={handleSubmit} className="custom-form-width">
+
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Name</Form.Label>
           <Form.Control
