@@ -218,8 +218,7 @@ const CreateMenu = () => {
   }, []);
 
   return (
-    <div>
-      <div>
+   
         <div className="row justify-content-center">
           <div>
             <div className="card">
@@ -435,8 +434,7 @@ const CreateMenu = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+     
   );
 };
 export default CreateMenu;

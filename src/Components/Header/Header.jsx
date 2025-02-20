@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-
+//import "./Header.scss";
 const Header = ({ onDataChange = () => {} }) => {
   const toggleSidebar = () => {
     // Check if screen size is less than 991px
