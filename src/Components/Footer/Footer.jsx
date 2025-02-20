@@ -6,8 +6,8 @@ const Footer = () => {
       component="footer"
       sx={{
         width: "100%",
-        backgroundColor: "rgb(51 153 255)", // Matches header color
-        color: "white",
+        backgroundColor: "#d3d3d3",
+        color: "#172C73",
         textAlign: "center",
         height:"40px",
         padding: { xs: "8px", sm: "12px", md: "16px" }, // Adjust padding for different screen sizes
