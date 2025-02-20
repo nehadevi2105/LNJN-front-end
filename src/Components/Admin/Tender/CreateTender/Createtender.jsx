@@ -238,11 +238,11 @@ const CreateTender = () => {
   // console.log(formData);
 
   return (
+    <div className="row justify-content-center">
     <div>
-      <main id="main" className="main">
-        <div className="pagetitle">
-          <div className="pagetitle-lft">
-            <h2>Create Tender</h2>
+      <div className="card">
+        <div className="card-body">
+            
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -250,25 +250,10 @@ const CreateTender = () => {
                 <li className="breadcrumb-item active">Create Tender</li>
               </ol>
             </nav>
+            <h2>Create Tender</h2>
+           
           </div>
-          <div className="pagetitle-rgt">
-            {/* <Link to="/dashboard">
-              <button type="button" className="btn btn-info">
-                Back
-              </button>
-            </Link> */}
-          </div>
-        </div>
-        <div className="container">
-          <div className="row">
-            <div className="col">
-              <div className="col text-end"></div>
-            </div>
-          </div>
-          <div className="row justify-content-center">
-            <div className="">
-              <div className="card">
-                <div className="card-body">
+      
                   <div className="mb-3 mt-md-4">
                     <div className="box-sec">
                       <h1 className="text-center heading-main"></h1>
@@ -514,10 +499,7 @@ const CreateTender = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </main>
-    </div>
+        
   );
 };
 

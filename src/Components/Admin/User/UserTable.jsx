@@ -128,7 +128,7 @@ const UserTable = () => {
             </button>
           </Link>
         </div>
-
+        </div>
         <Box sx={{ height: 400, width: "100%", backgroundColor: "#fff" }}>
           <DataGrid
             rows={apiData}
@@ -140,7 +140,7 @@ const UserTable = () => {
             componentsProps={{ toolbar: { showQuickFilter: true } }}
           />
         </Box>
-      </div>
+     
 
       {/* Confirm Delete Dialog */}
       <Dialog

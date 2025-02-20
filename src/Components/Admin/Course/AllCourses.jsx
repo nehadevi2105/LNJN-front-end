@@ -140,8 +140,10 @@ const AllCourses = () => {
   ];
 
   return (
-    <main id="main" className="main">
-      <div className="header-box">
+    <div className="row justify-content-center">
+    <div>
+      <div className="card">
+        <div className="card-body">
         <h2 className="maintitle">Course List</h2>
         <Link to="/Course/CreateCourse" className="header-box-rgt">
           <p>
@@ -211,7 +213,9 @@ const AllCourses = () => {
       <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
         <ToastContainer />
       </Snackbar>
-    </main>
+    </div>
+  </div>
+  </div>
   );
 };
 
