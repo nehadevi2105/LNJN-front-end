@@ -91,9 +91,9 @@ alert("Data uploaded successfully!");
   };
 
   return (
-    <div className="formdata">
+  
     <div className="row justify-content-center">
-    <div>
+      <div className="formdata">
       <div className="card">
         <div className="card-body">
       
