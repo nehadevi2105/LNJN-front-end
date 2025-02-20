@@ -8,6 +8,13 @@
 //     //padding: 1rem 0; /* You can adjust padding */
 //   }
   
+.footer {
+  width: 100%; /* Ensure it takes the full width */
+  max-width: 100vw; /* Prevent any overflow */
+  text-align: center;
+  padding: 15px; /* Adjust padding for better spacing */
+  font-size: 1.2rem; /* Increase font size for better readability */
+}
 
 /* Ensure the page takes full height */
 html, body {
@@ -32,4 +39,5 @@ html, body {
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* Full height of the viewport */
+    min-height: 100vh; 
   }
