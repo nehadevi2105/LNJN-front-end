@@ -111,8 +111,7 @@ const UserTable = () => {
   return (
     <div className="row justify-content-center">
     <div>
-      <div className="card">
-        <div className="card-body">
+      
         <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">Home</li>
@@ -127,8 +126,8 @@ const UserTable = () => {
               Back
             </button>
           </Link>
-        </div>
-        </div>
+          <div className="card">
+          <div className="card-body">
         <Box sx={{ height: 400, width: "100%", backgroundColor: "#fff" }}>
           <DataGrid
             rows={apiData}
@@ -140,7 +139,8 @@ const UserTable = () => {
             componentsProps={{ toolbar: { showQuickFilter: true } }}
           />
         </Box>
-     
+     </div>
+      </div>
 
       {/* Confirm Delete Dialog */}
       <Dialog

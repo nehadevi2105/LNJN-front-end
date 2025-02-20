@@ -235,10 +235,11 @@ const Candidate = () => {
   };
 
   return (
-    <>
-      <Container className="my-4">
-        <Card>
-          <Card.Body>
+    
+        <div className="row justify-content-center">
+          <div className="formdata">
+            <div className="card">
+              <div className="card-body">
             <h2 className="text-center text-uppercase mb-4">Candidate Registration</h2>
             <Form onSubmit={handleSubmit}>
               {/* Candidate Personal Info */}
@@ -434,9 +435,7 @@ const Candidate = () => {
                 </Button>
               </div>
             </Form>
-          </Card.Body>
-        </Card>
-      </Container>
+    
 
       {/* Confirmation Dialog */}
       <Dialog open={confirmDialogOpen} onClose={() => setConfirmDialogOpen(false)}>
@@ -466,7 +465,10 @@ const Candidate = () => {
       </Dialog>
 
       <ToastContainer />
-    </>
+    </div>
+    </div>
+    </div>
+    </div>
   );
 };
 
