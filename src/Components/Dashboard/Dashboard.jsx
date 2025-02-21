@@ -20,8 +20,8 @@ const dashboardItems = [
   { img: WhatsNew, title: "Whats New", className: "c4", link: "/WhatsNew/WhatsNewTable" },
   { img: Banner, title: "Banner", className: "c5", link: "/bannerdata" },
   { img: relatedlink, title: "Tender ", className: "c6", link: "/TenderTable/TenderTable" },
-  { img: Profile, title: "Profile", className: "c7", link: "/profile" },
-  { img: contact, title: "Contact Us", className: "c8", link: "/contact" },
+  { img: Profile, title: "Candidate", className: "c7", link: "/Candidate/AllCandidates" },
+  { img: contact, title: "Book Room", className: "c8", link: "/BookRoom/Bookroomlist" },
 ];
 
 // Reusable Card Component
