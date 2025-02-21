@@ -133,10 +133,11 @@ alert ("Data saved successfully!");
 
   return (
     <div>
+         <div>
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1>Create Footer Description</h1>
+            
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -146,15 +147,20 @@ alert ("Data saved successfully!");
                 </li>
               </ol>
             </nav>
+            </div>
+            <h1>Create Footer Description</h1>
           </div>
-          <div className="pagetitle-rgt">
+
+          <div className="row justify-content-center">
+            <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
+          
             <Link to="/dashboard">
               <button type="button" className="btn btn-info">
                 Back
               </button>
             </Link>
-          </div>
-        </div>
+            </div>
+      
         <div className="container">
           <div className="row">
             <div className="col">
@@ -280,7 +286,9 @@ alert ("Data saved successfully!");
             </div>
           </div>
         </div>
+        </div>
       </main>
+    </div>
     </div>
   );
 };
