@@ -149,10 +149,10 @@ import 'react-toastify/dist/ReactToastify.css';
             </Link>
           </div>
         </div>
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="card">
-              <div className="card-body">
+        <div className="row justify-content-center">
+  <div className="formdata"> {/* Bootstrap column for full width */}
+    <div className="card custom-card">
+      <div className="card-body">
                 <div className="mb-3 mt-md-4">
                   <div className="col-md-12">
                     <div className="box-sec">

@@ -238,12 +238,10 @@ const CreateFooterData = () => {
             </Link>
           </div>
         </div>
-        <div className="container">
-          <div className="row"></div>
-          <div className="row justify-content-center">
-            <div className="col-md-12">
-              <div className="card">
-                <div className="card-body">
+        <div className="row justify-content-center">
+  <div className="formdata"> {/* Bootstrap column for full width */}
+    <div className="card custom-card">
+      <div className="card-body">
                   <div className="mb-3 mt-md-4">
                     <div className="box-sec">
                       <h1 className="text-center heading-main">Footer</h1>
@@ -469,7 +467,6 @@ const CreateFooterData = () => {
               </div>
             </div>
           </div>
-        </div>
       </main>
     </div>
   );

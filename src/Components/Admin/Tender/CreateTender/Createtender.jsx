@@ -254,7 +254,10 @@ const CreateTender = () => {
            
           </div>
       
-                  <div className="mb-3 mt-md-4">
+          <div className="row justify-content-center">
+  <div className="formdata"> {/* Bootstrap column for full width */}
+    <div className="card custom-card">
+      <div className="card-body">
                     <div className="box-sec">
                       <h1 className="text-center heading-main"></h1>
                       <div className="mb-3">
@@ -499,6 +502,9 @@ const CreateTender = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
         
   );
 };

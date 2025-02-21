@@ -100,9 +100,9 @@ const CreateDepartment = () => {
 
   return (
     <>
-      <div className="row justify-content-center">
-    <div>
-      <div className="card">
+        <div className="row justify-content-center">
+        <div className="formdata"> {/* Bootstrap column for full width */}
+        <div className="card custom-card">
         <div className="card-body">
               
             

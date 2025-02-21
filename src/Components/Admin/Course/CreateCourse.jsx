@@ -29,7 +29,7 @@ const CreateCourse = () => {
         console.error("Error fetching departments:", error);
       }
     };
-   // fetchDepartments();
+    fetchDepartments();
   }, []);
 
   const validateForm = () => {
@@ -91,15 +91,12 @@ const CreateCourse = () => {
   };
 
   return (
-    <>
-      <main id="main" className="main">
-        <div className="pagetitle"></div>
-        <div className="home">
-          <div className="homeContainer">
-            <Row className="vh-100 d-flex justify-content-center align-items-left">
-              <Col md={10} lg={12} xs={12}>
-                <Card>
-                  <Card.Body>
+
+      <div className="row justify-content-center">
+    <div className="formdata">
+      <div className="card">
+        <div className="card-body">
+           
                     <h2 className="fw-bold mb-4 text-center text-uppercase">Create Course</h2>
                     <Form onSubmit={handleSubmit}>
                       {/* Course Name */}
@@ -180,13 +177,8 @@ const CreateCourse = () => {
                         </Spinner>
                       </Dialog>
                     </Form>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-          </div>
-        </div>
-      </main>
+                 
+    
 
       <ToastContainer />
 
@@ -214,7 +206,10 @@ const CreateCourse = () => {
           </Button>
         </DialogActions>
       </Dialog>
-    </>
+    </div>
+    </div>
+    </div>
+    </div>
   );
 };
 

@@ -163,9 +163,9 @@ alert ("Data saved successfully!");
           </div>
           {/* <div className="main-body"> */}
           <div className="row justify-content-center">
-            <div className="col-md-12">
-              <div className="card">
-                <div className="card-body">
+  <div className="formdata"> {/* Bootstrap column for full width */}
+    <div className="card custom-card">
+      <div className="card-body">
                   <div className="mb-3 mt-md-4">
                     <div className="box-sec">
                       <div className="mb-3">
