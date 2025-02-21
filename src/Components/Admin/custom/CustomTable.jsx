@@ -115,30 +115,22 @@ const CustomTable = () => {
   }, []);
 
   return (
-    <div>
-      <main id="main" className="main">
+    <div className="row justify-content-center">
+    <div className="formdata">
         <div className="pagetitle">
-          <h2 className="maintitle">Custom Table</h2>
+         
           <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">Home</li>
-              <li className="breadcrumb-item">Service</li>
-              <li className="breadcrumb-item active">All Menu </li>
+              <li className="breadcrumb-item">Custom</li>
+              <li className="breadcrumb-item active">Custom Table </li>
             </ol>
           </nav>
+          <h2 className="maintitle">Custom Table</h2>
         </div>
-        <div className="header-box">
-          <div className="header-box-lft">
-            <h1 className="maintitle"></h1>
-          </div>
-          {/* <div className="header-box-rgt">
-                    <Link to='/services/addwhatsnew'>
-                    <p><AddIcon/>New Whats New</p>
-                    </Link>
-                </div> */}
-        </div>
+     
         <Box sx={{ height: 400, width: "100%", backgroundColor: "white" }}>
-          <div className="pagetitle-rgt">
+        <div className="d-flex justify-content-left" style={{ marginLeft: "1px" }}>
             <Link to="/custom/custom">
               <button
                 type="button"
@@ -181,8 +173,7 @@ const CustomTable = () => {
             disableDensitySelector
           />
         </Box>
-      </main>
-
+     
       <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
@@ -211,6 +202,7 @@ const CustomTable = () => {
           </Button>
         </DialogActions>
       </Dialog>
+    </div>
     </div>
   );
 };

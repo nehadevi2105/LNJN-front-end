@@ -63,11 +63,33 @@ const CreateHostel = () => {
   };
 
   return (
-    <div className="row justify-content-center">
-    <div className="formdata">
-      <div className="card">
-        <div className="card-body">
-                      <h2 className="fw-bold mb-4 text-center text-uppercase">Create Hostel</h2>
+    <div >
+    <div >
+      <main id="main" className="main">
+      <div className="pagetitle">
+            <div className="pagetitle-lft">
+              {/* <h1>Create Sub-Menu</h1> */}
+              <nav>
+                <ol className="breadcrumb">
+                  <li className="breadcrumb-item">Home</li>
+                  <li className="breadcrumb-item  ">Hostels</li>
+                  <li className="breadcrumb-item active ">Create Hostel</li>
+                </ol>
+              </nav>
+            </div>
+            <h1 className="text-center text-dark">Create Hostel</h1>
+          </div>
+
+ <div className="row justify-content-center">
+            <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
+              <Link to="/dashboard">
+                <button type="button" className="btn btn-info">Back</button>
+              </Link>
+            </div>
+            <div className="formdata"> {/* Bootstrap column for full width */}
+              <div className="card custom-card">
+                <div className="card-body">
+
                       <Form onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="HostelName">
                           <Form.Label style={{ color: "black" }}>Hostel Name</Form.Label>
@@ -92,7 +114,7 @@ const CreateHostel = () => {
                             type="button"
                             className="btn"
                             style={{ width: 100 }}>
-                            Back
+                            Hostel List
                           </Button>
                         </Link>
                         </div>
@@ -125,6 +147,9 @@ const CreateHostel = () => {
       </Dialog>
     </div>
     </div>
+    </div>
+    </div>
+    </main>
     </div>
     </div>
   );
