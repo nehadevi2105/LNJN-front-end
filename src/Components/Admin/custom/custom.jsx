@@ -195,15 +195,19 @@ const Custom = () => {
     }
   };
   useEffect(() => {
-    const fetchRoles = async () => {
+    //Function to fetch menuname from the dropdown
+    async function fetchData1() {
       try {
+        setLoading(true);
         const response = await APIClient.get(apis.getmenuname);
-        Setdata(response.data);
+        setDropdownOptions(response.data);
+        setLoading(false);
       } catch (error) {
-        console.error("Error fetching roles:", error);
+        console.error("Error fetching user data:", error);
+        setLoading(false);
       }
-    };
-    fetchRoles();
+    }
+    fetchData1();
   }, []);
   useEffect(() => {
     async function fetchData1() {
@@ -218,7 +222,6 @@ const Custom = () => {
           external_link: "",
           internal_link: "",
           languagetype: "",
-
           file: "",
           html: "",
         });
@@ -339,7 +342,6 @@ const Custom = () => {
                         </div>
                       )}
 
-                      {/* Input for Internal Link */}
                       {formData.contenttype === "3" && (
                         <div className="mb-3">
                           <select
@@ -350,10 +352,10 @@ const Custom = () => {
                           // isInvalid={!!formErrors.internal_link}
                           >
                             <option value="" style={{ color: "black" }}>
-                              Select a link
+                              Select a role
                             </option>
                             {dropdownOptions.map((data) => (
-                              <option key={data.id} value={"/menu/" + data.menuurl}>
+                              <option key={data.id} value={"/menu/" + data.menu_url}>
                                 {"Menu Name" + ":-" + data.menuname}
                               </option>
                             ))}
@@ -363,6 +365,7 @@ const Custom = () => {
                           )}
                         </div>
                       )}
+
 
                       {/* Input for File */}
                       {formData.contenttype === "2" && (

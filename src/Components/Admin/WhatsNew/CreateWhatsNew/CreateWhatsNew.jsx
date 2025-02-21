@@ -366,9 +366,9 @@ const CreateWhatsNew = () => {
                           {menudata.map((data) => (
                             <option
                               key={data.u_id}
-                              value={"/menu/" + data.u_menu_url}
+                              value={"/menu/" + data.menuurl}
                             >
-                              {"Menu Name" + ":-" + data.u_menu_name}
+                              {"Menu Name" + ":-" + data.menuname}
                             </option>
                           ))}
                         </select>

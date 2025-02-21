@@ -36,7 +36,8 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
   });
   const [errors, setErrors] = useState({});
   const [editingItemId, setEditingItemId] = useState(null);
-
+  const [menudata, setmenudata] = useState("");
+ const [existingFile, setExistingFile] = useState(null);
   const optionsData = [
     { id: 4, label: 'External Link' },
     { id: 3, label: 'Internal Link' },
@@ -77,6 +78,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
         end_date: '',
         html: '',
         languagetype: '',
+        filepdfpath:''
       });
     }
   }, [id]);
@@ -103,9 +105,9 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
       errors.internal_file = 'Internal Link is required';
     }
 
-    if (formData.contenttype === '2' && !file) {
-      errors.file = 'File is required';
-    }
+    // if (formData.contenttype === '2' && !file) {
+    //   errors.file = 'File is required';
+    // }
 
     if (formData.contenttype === '1' && !html) {
       errors.html = 'HTML content is required';  // Updated field name
@@ -129,7 +131,17 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
     setFile(imageFile);
   };
 
-
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await APIClient.get(apis.getmenuname);
+        setmenudata(response.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    }
+    fetchData();
+  }, [id]);
   const handleInputChange = (event) => {
     const { name, value, type } = event.target;
 
@@ -188,7 +200,11 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
         } else if (parseInt(formData.contenttype) === 3) {
           formDataToSend.append('internale_file', formData.internal_file);
         } else if (parseInt(formData.contenttype) === 2) {
-          formDataToSend.append('file', file); // Use file here
+          if (file) {
+            formDataToSend.append("file", file); // Attach new file
+          } else if (formData.filepdfpath) {
+            formDataToSend.append("filepath", formData.filepdfpath); // Attach existing file path
+          } // Use file here
         } else if (parseInt(formData.contenttype) === 1) {
           formDataToSend.append('html', html);
         }
@@ -334,23 +350,43 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
 
                     {parseInt(formData.contenttype) === 3 && (
                       <div className="mb-3">
-                        <label className="form-label text-dark">Enter Internal Link</label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          placeholder="Enter Internal Link"
-                          name="internal_file"
-                          value={formData.internal_file}
-                          onChange={handleInputChange}
-                        />
-                        {errors.internal_file && (
-                          <div className="text-danger">{errors.internal_file}</div>
-                        )}
-                      </div>
+                      <select
+                        className="form-control"
+                        name="internale_file"
+                        value={formData.internale_file}
+                        onChange={handleInputChange}
+                      // isInvalid={!!formErrors.internal_link}
+                      >
+                        <option value="" style={{ color: "black" }}>
+                          Select a Menu Name
+                        </option>
+                        {menudata.map((data) => (
+                          <option
+                            key={data.id}
+                            value={"/menu/" + data.menuurl}
+                          >
+                            {"Menu Name" + ":-" + data.menuname}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.internale_file && (
+                        <div className="text-danger">
+                          {errors.internale_file}
+                        </div>
+                      )}
+                    </div>
                     )}
 
                     {parseInt(formData.contenttype) === 2 && (
                       <div className="mb-3">
+                        <a
+                          href={`${APIClient.defaults.baseURL}${formData.filepdfpath}`} // Ensure filepath is properly appended
+                          className="form-control"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {existingFile || "View Document"}
+                        </a>
                         <label className="form-label text-dark">Choose File</label>
                         <input
                           className="form-control"
