@@ -114,10 +114,11 @@ const CircularTable = () => {
 
   return (
     <div className="row justify-content-center">
-    <div>
-      <div className="card">
-        <div className="card-body">
-            <h1 className="maintitle">Circular Table</h1>
+    <div className="formdata">
+      
+     
+       
+            
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -125,17 +126,11 @@ const CircularTable = () => {
                 <li className="breadcrumb-item active">Circular Table </li>
               </ol>
             </nav>
-          </div>
-          <div className="pagetitle-rgt">
-            {/* <Link to="/dashboard">
-              <button type="button" className="btn btn-info my-1">
-                Back
-              </button>
-            </Link> */}
-          </div>
-        </div>
+            <h1 className="maintitle">Circular Table</h1>
+         
+       
         <div className="header-box">
-          <div className="header-box-lft"></div>
+          
           <div className="header-box-rgt">
             <Link to="/Circular/CircularForm">
               <p>
@@ -161,6 +156,9 @@ const CircularTable = () => {
             </Link>
           </div>
         </div>
+
+
+        <div className="card-body">
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={apiData}
@@ -203,6 +201,7 @@ const CircularTable = () => {
           {modalMessage}
         </MuiAlert>
       </Snackbar>
+    </div>
     </div>
   );
 };
