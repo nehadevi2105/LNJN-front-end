@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const CreateUser = () => {
   const [loading, setLoading] = useState(false);
@@ -88,11 +89,32 @@ const CreateUser = () => {
   };
 
   return (
+    <div >
+    <div >
+      <main id="main" className="main">
+        <div className="pagetitle">
+          <div className="pagetitle-lft">
+            {/* <h1>Create Sub-Menu</h1> */}
+            <nav>
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">Dashboard</li>
+                <li className="breadcrumb-item  ">CMS</li>
+                <li className="breadcrumb-item active ">Create User</li>
+              </ol>
+            </nav>
+          </div>
+          <h1 className="text-center text-dark">Create User</h1>
+        </div>
     <div className="row justify-content-center">
+    <div className="d-flex justify-content-left ms-5">
+              <Link to="/dashboard">
+                <button type="button" className="btn btn-info">Back</button>
+              </Link>
+            </div>
   <div className="formdata"> {/* Bootstrap column for full width */}
     <div className="card custom-card">
       <div className="card-body">
-        <h2>Create User</h2>
+        
         <Form onSubmit={handleSubmit} className="custom-form-width">
 
         <Form.Group className="mb-3" controlId="name">
@@ -170,6 +192,11 @@ const CreateUser = () => {
     </div>
     </div>
     </div>
+   
+    </main>
+    </div>
+    </div>
+         
   );
 };
 

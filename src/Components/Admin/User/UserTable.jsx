@@ -120,12 +120,13 @@ const UserTable = () => {
             </ol>
           </nav>
           <h1>All Users</h1>
-         
+          <div className="d-flex justify-content-left ms-5">
           <Link to="/dashboard">
             <button type="button" className="btn btn-info">
               Back
             </button>
           </Link>
+          </div>
           <div className="card">
           <div className="card-body">
         <Box sx={{ height: 400, width: "100%", backgroundColor: "#fff" }}>
