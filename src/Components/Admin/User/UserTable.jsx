@@ -120,7 +120,7 @@ const UserTable = () => {
             </ol>
           </nav>
           <h1>All Users</h1>
-          <div className="d-flex justify-content-left ms-5">
+          <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
           <Link to="/dashboard">
             <button type="button" className="btn btn-info">
               Back

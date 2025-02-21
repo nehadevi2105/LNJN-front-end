@@ -110,10 +110,8 @@ function Approvallist() {
 
   return (
     <div className="row justify-content-center">
-    <div>
-      <div className="card">
-        <div className="card-body">
-            <h1 className="maintitle">All Approval List</h1>
+       <div className="formdata">
+     
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -121,15 +119,15 @@ function Approvallist() {
                 <li className="breadcrumb-item active">All Approval List</li>
               </ol>
             </nav>
-          </div>
-          <div className="pagetitle-rgt">
+            <h1 className="maintitle">All Approval List</h1>
+          <div className="d-flex justify-content-left" style={{ marginLeft: "1px" }}>
             <Link to="/dashboard">
               <button type="button" className="btn btn-info">
                 Back
               </button>
             </Link>
           </div>
-        </div>
+        
         <div className="header-box"></div>
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
@@ -148,7 +146,7 @@ function Approvallist() {
             }}
           />
         </Box>
-      </div>
+      
 
       <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -174,6 +172,7 @@ function Approvallist() {
         </MuiAlert>
       </Snackbar>
       <ToastContainer />
+    </div>
     </div>
   );
 }

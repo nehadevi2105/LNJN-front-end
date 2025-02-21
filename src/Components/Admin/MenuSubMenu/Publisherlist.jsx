@@ -105,10 +105,9 @@ function Publisherlist() {
 
   return (
     <div className="row justify-content-center">
-    <div>
-      <div className="card">
-        <div className="card-body">
-            <h1 className="maintitle">All Publisher List</h1>
+    <div className="formdata">
+     
+       
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -116,25 +115,17 @@ function Publisherlist() {
                 <li className="breadcrumb-item active">All Publisher List </li>
               </ol>
             </nav>
-          </div>
-          <div className="pagetitle-rgt">
+            <h1 className="maintitle">All Publisher List</h1>
+        
+          <div className="d-flex justify-content-left" style={{ marginLeft: "1px" }}>
             <Link to="/dashboard">
               <button type="button" className="btn btn-info">
                 Back
               </button>
             </Link>
           </div>
-        </div>
-        <div className="header-box">
-          {/* <div className="header-box-lft">
-            <h1 className="maintitle">Table</h1>
-          </div> */}
-          {/* <div className="header-box-rgt">
-                    <Link to='/services/addwhatsnew'>
-                    <p><AddIcon/>New Whats New</p>
-                    </Link>
-                </div> */}
-        </div>
+      
+       
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={apiData}
@@ -152,7 +143,6 @@ function Publisherlist() {
             }}
           />
         </Box>
-      </div>
 
       <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -179,6 +169,8 @@ function Publisherlist() {
       </Snackbar>
       <ToastContainer />
     </div>
+    </div>
+
   );
 }
 

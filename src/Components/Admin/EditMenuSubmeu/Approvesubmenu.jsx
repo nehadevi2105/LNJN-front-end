@@ -285,9 +285,25 @@ const Approvesubmenudata = () => {
   return (
     <div>
       <div className="row justify-content-center">
-        <div className="container-fluid bg-white">
+    <div className="formdata">
+    <nav>
+            <ol className="breadcrumb">
+              <li className="breadcrumb-item">Home</li>
+              <li className="breadcrumb-item">User</li>
+              <li className="breadcrumb-item active">Approve SubMenu Data</li>
+            </ol>
+          </nav>
+          <h1 className="text-center">Approve SubMenu Data</h1>
+          <div className="d-flex justify-content-left" style={{ marginLeft: "1px" }}>
+          <Link to="/dashboard">
+            <button type="button" className="btn btn-info">
+              Back
+            </button>
+          </Link>
+          </div>
+          <div className="card-body">
           <div className="box-sec">
-            <h1 className="text-center">Approve SubMenu Data</h1>
+           
             <Form.Group className="mb-3" controlId="Usertype">
               <div className="mb-3">
                 <label className="form-label text-dark">
@@ -533,6 +549,7 @@ const Approvesubmenudata = () => {
               </Snackbar>
               <ToastContainer />
             </div>
+          </div>
           </div>
         </div>
       </div>
