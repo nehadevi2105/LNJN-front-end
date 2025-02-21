@@ -70,7 +70,6 @@ const Publishdata = () => {
     setFormData({
       menu_id: "",
       submenu_id: 0,
-
       menuname: "",
       menuurl: "",
       contenttype: "",
@@ -123,13 +122,13 @@ const Publishdata = () => {
     // if (formData.ContentType === '3' && !formData.internal_link) {
     //   newErrors.internal_link = 'Internal Link is required';
     // }
-    if (formData.contenttype === "2") {
-      if (!file) {
-        newErrors.file = "File is required";
-      } else if (file.type !== "application/pdf") {
-        newErrors.file = "Only PDF files are allowed";
-      }
-    }
+    // if (formData.contenttype === "2") {
+    //   if (!file) {
+    //     newErrors.file = "File is required";
+    //   } else if (file.type !== "application/pdf") {
+    //     newErrors.file = "Only PDF files are allowed";
+    //   }
+    // }
 
     // if (formData.ContentType === '1' && !html) {
     //   newErrors.html = 'HTML content is required';
@@ -188,7 +187,11 @@ const Publishdata = () => {
       } else if (formData.contenttype === "3") {
         formDataToSend.append("internal_link", formData.internal_link);
       } else if (formData.contenttype === "2") {
-        if (!useExistingFile) formDataToSend.append("file", file);
+        if (file) {
+          formDataToSend.append("file", file); // Attach new file
+        } else if (formData.filepdfpath) {
+          formDataToSend.append("filepdfpath", formData.filepdfpath); // Attach existing file path
+        }
       } else if (formData.contenttype === "1") {
         formDataToSend.append("html", formData.html);
       }
