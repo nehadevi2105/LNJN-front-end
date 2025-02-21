@@ -33,7 +33,8 @@ const Approvesubmenudata = () => {
   const [content, setContent] = useState("");
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [formErrors, setFormErrors] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);  
+    const [existingFile, setExistingFile] = useState(null);
   const [filePath, setFilePath] = useState("");
   const [formData, setFormData] = useState({
     menu_id: "",
@@ -46,6 +47,7 @@ const Approvesubmenudata = () => {
     internal_link: "",
     external_link: "",
     languagetype: "",
+    filepdfpath:""
   });
   const [editorContent, setEditorContent] = useState("");
 
@@ -63,6 +65,7 @@ const Approvesubmenudata = () => {
       file: "",
       html: "",
       languagetype: "",
+      filepdfpath:""
     });
   }, []);
 
@@ -109,13 +112,13 @@ const Approvesubmenudata = () => {
       newErrors.internal_link = "Internal Link is required";
     }
 
-    if (formData.contenttype === "2") {
-      if (!file) {
-        newErrors.file = "File is required";
-      } else if (file.type !== "application/pdf") {
-        newErrors.file = "Only PDF files are allowed";
-      }
-    }
+    // if (formData.contenttype === "2") {
+    //   if (!file) {
+    //     newErrors.file = "File is required";
+    //   } else if (file.type !== "application/pdf") {
+    //     newErrors.file = "Only PDF files are allowed";
+    //   }
+    // }
     // if (formData.contenttype === '1' && !html) {
     //   newErrors.html = 'HTML content is required';
     // }
@@ -207,7 +210,11 @@ const Approvesubmenudata = () => {
       } else if (formData.contenttype === "3") {
         formDataToSend.append("internal_link", formData.internal_link);
       } else if (formData.contenttype === "2") {
-        formDataToSend.append("file", file);
+        if (file) {
+          formDataToSend.append("file", file); // Attach new file
+        } else if (formData.filepdfpath) {
+          formDataToSend.append("filepdfpath", formData.filepdfpath); // Attach existing file path
+        }
       } else if (formData.contenttype === "1") {
         formDataToSend.append("html", formData.html);
       }
@@ -414,6 +421,14 @@ const Approvesubmenudata = () => {
             {/* Input for File */}
             {formData.contenttype === "2" && (
               <div className="mb-3">
+                <a
+                  href={`${APIClient.defaults.baseURL}${formData.filepdfpath}`} // Ensure filepath is properly appended
+                  className="form-control"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {existingFile || "View Document"}
+                </a>
                 <label className="form-label text-dark">Choose File</label>
                 <input
                   className="form-control"

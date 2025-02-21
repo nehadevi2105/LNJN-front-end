@@ -195,6 +195,17 @@ const Custom = () => {
     }
   };
   useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const response = await APIClient.get(apis.getmenuname);
+        Setdata(response.data);
+      } catch (error) {
+        console.error("Error fetching roles:", error);
+      }
+    };
+    fetchRoles();
+  }, []);
+  useEffect(() => {
     async function fetchData1() {
       try {
         setLoading(true);
@@ -336,24 +347,19 @@ const Custom = () => {
                             name="internal_link"
                             value={formData.internal_link}
                             onChange={handleInputChange}
-                            // isInvalid={!!formErrors.internal_link}
+                          // isInvalid={!!formErrors.internal_link}
                           >
                             <option value="" style={{ color: "black" }}>
-                              Select Menu
+                              Select a link
                             </option>
                             {dropdownOptions.map((data) => (
-                              <option
-                                key={data.id}
-                                value={"/menu/" + data.menu_url}
-                              >
+                              <option key={data.id} value={"/menu/" + data.menuurl}>
                                 {"Menu Name" + ":-" + data.menuname}
                               </option>
                             ))}
                           </select>
                           {errors.internal_link && (
-                            <div className="text-danger">
-                              {errors.internal_link}
-                            </div>
+                            <div className="text-danger">{errors.internal_link}</div>
                           )}
                         </div>
                       )}
