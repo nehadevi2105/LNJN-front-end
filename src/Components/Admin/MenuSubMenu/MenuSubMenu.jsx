@@ -157,14 +157,7 @@ function MenuSubMenu() {
           </div>
         </div>
         <div className="header-box">
-          {/* <div className="header-box-lft">
-            <h1 className="maintitle">Table</h1>
-          </div> */}
-          {/* <div className="header-box-rgt">
-                    <Link to='/services/addwhatsnew'>
-                    <p><AddIcon/>New Whats New</p>
-                    </Link>
-                </div> */}
+         
         </div>
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid

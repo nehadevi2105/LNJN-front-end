@@ -110,7 +110,7 @@ const UserTable = () => {
 
   return (
     <div className="row justify-content-center">
-    <div>
+    <div className="formdata">
       
         <nav>
             <ol className="breadcrumb">
@@ -127,7 +127,8 @@ const UserTable = () => {
             </button>
           </Link>
           </div>
-          <div className="card">
+
+         
           <div className="card-body">
         <Box sx={{ height: 400, width: "100%", backgroundColor: "#fff" }}>
           <DataGrid
@@ -141,7 +142,7 @@ const UserTable = () => {
           />
         </Box>
      </div>
-      </div>
+    
 
       {/* Confirm Delete Dialog */}
       <Dialog

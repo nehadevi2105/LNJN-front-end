@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { Row } from "react-bootstrap/esm";
+import { Link } from "react-router-dom";
 
 const EditUser = () => {
   const { id } = useParams();
@@ -117,13 +118,33 @@ const EditUser = () => {
   }, [id]);
 
   return (
-    <div className="row justify-content-center">
-    <div className="formdata">
-    <div className="card custom-card">
-    <div className="card-body">
+    <div >
+    <div >
+ 
       
     <main id="main" className="main">
-      <h2>Edit User</h2>
+    <div className="pagetitle">
+          <div className="pagetitle-lft">
+            {/* <h1>Create Sub-Menu</h1> */}
+            <nav>
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">Dashboard</li>
+                <li className="breadcrumb-item  ">CMS</li>
+                <li className="breadcrumb-item active ">Edit User</li>
+              </ol>
+            </nav>
+          </div>
+          <h1 className="text-center text-dark">Edit User</h1>
+        </div>
+        <div className="row justify-content-center">
+    <div className="d-flex justify-content-left ms-5">
+              <Link to="/dashboard">
+                <button type="button" className="btn btn-info">Back</button>
+              </Link>
+            </div>
+  <div className="formdata"> {/* Bootstrap column for full width */}
+    <div className="card custom-card">
+              <div className="card-body">
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Name</Form.Label>
@@ -231,13 +252,17 @@ const EditUser = () => {
           </Dialog>
         </div>
       </Form>
+    </div>
+    </div>
+    </div>
+    </div>
+   
 
       <ToastContainer />
     </main>
     </div>
     </div>
-    </div>
-    </div>
+   
   );
 };
 
