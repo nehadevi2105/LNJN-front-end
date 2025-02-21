@@ -23,33 +23,18 @@ const Approvaledit = () => {
   }, [id]);
 
   return (
-    <div>
-      <main id="main" className="main">
-        <div className="pagetitle">
-          {/* <h1>Edit Menu</h1> */}
-          {/* <nav>
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item">Dashboard</li>
-              <li className="breadcrumb-item  ">CMS</li>
-              <li className="breadcrumb-item active ">Edit Menu</li>
-            </ol>
-          </nav> */}
-        </div>
-        <div className="pagetitle-rgt">
-          {/* <Link to="/cms/allmenu">
-            <button type="button" className="btn btn-info">
-              Back
-            </button>
-          </Link> */}
-        </div>
-
+    <div className="row justify-content-center">
+    <div className="formdata">
+  
+    <div className="card-body">
         <div>
           <div>
             {data.submenu_id === 0 && <Approvedata />}
             {data.submenu_id !== 0 && <Approvesubmenudata />}
           </div>
         </div>
-      </main>
+      </div>
+      </div>
     </div>
   );
 };

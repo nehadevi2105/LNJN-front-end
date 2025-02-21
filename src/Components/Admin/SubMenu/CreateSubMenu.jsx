@@ -231,7 +231,7 @@ const CreateSubMenu = () => {
             <h1 className="text-center text-dark">Sub Menu</h1>
           </div>
           <div className="row justify-content-center">
-            <div className="d-flex justify-content-left ms-5">
+            <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
               <Link to="/dashboard">
                 <button type="button" className="btn btn-info">Back</button>
               </Link>
