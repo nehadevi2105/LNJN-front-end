@@ -3,13 +3,21 @@ import {
   Box, Dialog, DialogTitle, DialogContent, DialogActions, Button, 
   Snackbar, TextField 
 } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbarContainer, GridToolbarExport, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
+
+//  Move CustomToolbar function ABOVE UserTable
+const CustomToolbar = () => (
+  <GridToolbarContainer>
+    <GridToolbarQuickFilter sx={{ marginRight: "auto" }} /> {/*  Search bar */}
+    <GridToolbarExport /> {/*  Export button */}
+  </GridToolbarContainer>
+);
 import { Button as Buttons } from "react-bootstrap";
 
 const AllCourses = () => {
@@ -194,7 +202,7 @@ const AllCourses = () => {
           componentsProps={{ toolbar: { showQuickFilter: true } }}
         />
       </Box>
-
+</div>
       {/* Delete Confirmation Dialog */}
       <Dialog open={confirmDialogOpen} onClose={() => setConfirmDialogOpen(false)}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -245,7 +253,6 @@ const AllCourses = () => {
         <ToastContainer />
       </Snackbar>
     </div>
-  </div>
   </div>
   </div>
   );

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbarContainer, GridToolbarExport, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -13,6 +13,15 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
+
+
+//  Move CustomToolbar function ABOVE UserTable
+const CustomToolbar = () => (
+  <GridToolbarContainer>
+    <GridToolbarQuickFilter sx={{ marginRight: "auto" }} /> {/*  Search bar */}
+    <GridToolbarExport /> {/*  Export button */}
+  </GridToolbarContainer>
+);
 
 const UserTable = () => {
   const [apiData, setApiData] = useState([]);
@@ -137,7 +146,7 @@ const UserTable = () => {
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
-            components={{ Toolbar: GridToolbar }}
+            slots={{ toolbar: CustomToolbar }}
             componentsProps={{ toolbar: { showQuickFilter: true } }}
           />
         </Box>

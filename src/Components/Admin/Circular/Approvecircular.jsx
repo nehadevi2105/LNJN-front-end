@@ -28,6 +28,7 @@ const ApproveCircular = () => {
   const [prevContentType, setPrevContentType] = useState("");
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [existingFile, setExistingFile] = useState(null);
 
   const [formData, setFormData] = useState({
     tittle: "", // Corrected typo in the field name
@@ -39,6 +40,7 @@ const ApproveCircular = () => {
     end_date: "", // Corrected field name
     html: "",
     languagetype: "",
+    filepdfpath:""
   });
   const [errors, setErrors] = useState({});
   const [editingItemId, setEditingItemId] = useState(null);
@@ -82,6 +84,7 @@ const ApproveCircular = () => {
         end_date: "",
         html: "",
         languagetype: "",
+        filepdfpath:""
       });
     }
   }, [id]);
@@ -108,9 +111,9 @@ const ApproveCircular = () => {
       errors.internal_file = "Internal Link is required";
     }
 
-    if (formData.contenttype === "2" && !file) {
-      errors.file = "File is required";
-    }
+    // if (formData.contenttype === "2" && !file) {
+    //   errors.file = "File is required";
+    // }
 
     if (formData.contenttype === "1" && !html) {
       errors.html = "HTML content is required"; // Updated field name
@@ -192,7 +195,11 @@ const ApproveCircular = () => {
         } else if (parseInt(formData.contenttype) === 3) {
           formDataToSend.append("internale_file", formData.internal_file);
         } else if (parseInt(formData.contenttype) === 2) {
-          formDataToSend.append("file", file); // Use file here
+          if (file) {
+            formDataToSend.append("file", file); // Attach new file
+          } else if (formData.filepdfpath) {
+            formDataToSend.append("filepdfpath", formData.filepdfpath); // Attach existing file path
+          } // Use file here
         } else if (parseInt(formData.contenttype) === 1) {
           formDataToSend.append("html", html);
         }
@@ -368,6 +375,14 @@ const ApproveCircular = () => {
 
                     {parseInt(formData.contenttype) === 2 && (
                       <div className="mb-3">
+                        <a
+                  href={`${APIClient.defaults.baseURL}${formData.filepdfpath}`} // Ensure filepath is properly appended
+                  className="form-control"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {existingFile || "View Document"}
+                </a>
                         <label className="form-label text-dark">
                           Choose File
                         </label>
