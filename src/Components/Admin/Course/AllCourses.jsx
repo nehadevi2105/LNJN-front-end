@@ -3,13 +3,21 @@ import {
   Box, Dialog, DialogTitle, DialogContent, DialogActions, Button, 
   Snackbar, TextField 
 } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbarContainer, GridToolbarExport, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
+
+//  Move CustomToolbar function ABOVE UserTable
+const CustomToolbar = () => (
+  <GridToolbarContainer>
+    <GridToolbarQuickFilter sx={{ marginRight: "auto" }} /> {/*  Search bar */}
+    <GridToolbarExport /> {/*  Export button */}
+  </GridToolbarContainer>
+);
 
 const AllCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -141,17 +149,25 @@ const AllCourses = () => {
 
   return (
     <div className="row justify-content-center">
-    <div>
-      <div className="card">
-        <div className="card-body">
-        <h2 className="maintitle">Course List</h2>
-        <Link to="/Course/CreateCourse" className="header-box-rgt">
+    <div className="formdata">
+    <nav>
+            <ol className="breadcrumb">
+              <li className="breadcrumb-item">Home</li>
+              <li className="breadcrumb-item">Course</li>
+              <li className="breadcrumb-item active">Course List</li>
+            </ol>
+          </nav>
+          <h2 className="maintitle">Course List</h2>
+
+          <div className="d-flex justify-content-left" style={{ marginLeft: "10px" }}>
+       
+        <Link to="/Course/CreateCourse" className="btn btn-info">
           <p>
             <AddIcon /> New Course
           </p>
         </Link>
-      </div>
-
+     </div>
+     <div className="card-body">
       <Box sx={{ height: 500, width: "100%" }} style={{ backgroundColor: "#fff" }}>
         <DataGrid
           rows={courses}
@@ -159,11 +175,11 @@ const AllCourses = () => {
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
-          components={{ Toolbar: GridToolbar }}
+          slots={{ toolbar: CustomToolbar }}
           componentsProps={{ toolbar: { showQuickFilter: true } }}
         />
       </Box>
-
+</div>
       {/* Delete Confirmation Dialog */}
       <Dialog open={confirmDialogOpen} onClose={() => setConfirmDialogOpen(false)}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -213,7 +229,7 @@ const AllCourses = () => {
       <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
         <ToastContainer />
       </Snackbar>
-    </div>
+
   </div>
   </div>
   );
