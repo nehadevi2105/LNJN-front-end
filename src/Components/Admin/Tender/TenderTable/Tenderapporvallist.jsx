@@ -105,11 +105,11 @@ const TenderApprovallist = () => {
   }, []);
 
   return (
-    <div>
-      <main id="main" className="main">
+    <div className="row justify-content-center">
+    <div className="formdata">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1 className="maintitle">Approval  Tender List</h1>
+           
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -117,6 +117,7 @@ const TenderApprovallist = () => {
                 <li className="breadcrumb-item active">Approval  Tender List</li>
               </ol>
             </nav>
+            <h1 className="maintitle">Approval  Tender List</h1>
           </div>
           
         </div>
@@ -150,7 +151,7 @@ const TenderApprovallist = () => {
             }}
           />
         </Box>
-      </main>
+  
 
       <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -175,6 +176,7 @@ const TenderApprovallist = () => {
           {modalMessage}
         </MuiAlert>
       </Snackbar>
+    </div>
     </div>
   );
 };

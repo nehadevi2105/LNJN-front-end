@@ -249,37 +249,40 @@ const EditTender = () => {
   // console.log(formData)
   return (
     <div>
+      <div>
       <main id="main" className="main">
+
+
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h3>Edit Tender</h3>
+           
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Edit Tender</li>
               </ol>
             </nav>
+            </div>
+            <h3>Edit Tender</h3>
           </div>
-          <div className="pagetitle-rgt d-flex justify-content-end">
+
+
+        <div className="row justify-content-center">
+            <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
             <Link to="/services/alltender">
               <button type="button" className="btn btn-info">
                 Back
               </button>
             </Link>
           </div>
-        </div>
-        <div className="list">
-          <div className="listContainer">
-            <div className="container">
-              <div className="row">
-                <div className="col">
-                  <div className="col text-end"></div>
-                </div>
-              </div>
-              <div className="row justify-content-center">
-                <div className="container-fluid bg-white">
+     
+          <div className="formdata"> {/* Bootstrap column for full width */}
+              <div className="card custom-card">
+                <div className="card-body">
+
+            
                   <div className="box-sec">
-                    <h1 className="text-center heading-main">Tender</h1>
+                   
                     <div className="mb-3">
                       <label className="form-label text-dark">
                         Language Type
@@ -522,12 +525,13 @@ const EditTender = () => {
                       </Dialog>
                     </div>
                   </div>
-                </div>
-              </div>
+               
             </div>
           </div>
         </div>
+        </div>
       </main>
+    </div>
     </div>
   );
 };

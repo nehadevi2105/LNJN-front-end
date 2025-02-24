@@ -118,7 +118,8 @@ const TenderTable = () => {
 
   return (
     <div className="row justify-content-center">
-    <div>
+    <div className="formdata">
+      
       <div className="card">
         <div className="card-body">
            
@@ -171,7 +172,7 @@ const TenderTable = () => {
             }}
           />
         </Box>
-      </div>
+    
 
       <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -196,6 +197,7 @@ const TenderTable = () => {
           {modalMessage}
         </MuiAlert>
       </Snackbar>
+    </div>
     </div>
   );
 };
