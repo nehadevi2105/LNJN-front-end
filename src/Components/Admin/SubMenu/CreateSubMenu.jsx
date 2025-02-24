@@ -211,26 +211,11 @@ const CreateSubMenu = () => {
     };
     fetchRoles();
   }, []);
-  // useEffect(() => {
-  //    const fetchData1= async()=> {
-  //     try {
-  //       setLoading(true);
-  //       const response = await apiClient.get(apis.getmenuname);
-  //       setDropdownOptions(response.data);
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.error('Error fetching user data:', error);
-  //       setLoading(false);
-  //     }
-  //   }
-  //   fetchData1();
-  // }, []);
 
-  // console.log(formData)
 
   return (
-    <div>
-      <div>
+    <div >
+      <div >
         <main id="main" className="main">
           <div className="pagetitle">
             <div className="pagetitle-lft">
@@ -243,20 +228,22 @@ const CreateSubMenu = () => {
                 </ol>
               </nav>
             </div>
-            <div className="pagetitle-rgt">
-              <Link to="/dashboard">
-                <button type="button" className="btn btn-info">
-                  Back
-                </button>
-              </Link>
-            </div>
+            <h1 className="text-center text-dark">Sub Menu</h1>
           </div>
           <div className="row justify-content-center">
-            <div className="card">
-              <div className="card-body">
-                <div className="mb-3 mt-md-4">
+            <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
+              <Link to="/dashboard">
+                <button type="button" className="btn btn-info">Back</button>
+              </Link>
+            </div>
+
+            <div className="formdata">
+              <div className="card">
+
+                <div className="card-body">
+
                   <div className="box-sec">
-                    <h1 className="text-center text-dark">Sub Menu</h1>
+
                     {/* <Form.Group className="mb-3" controlId="Usertype"> */}
                     <div className="mb-3">
                       <label className="form-label text-dark">
@@ -369,7 +356,7 @@ const CreateSubMenu = () => {
                           name="internal_link"
                           value={formData.internal_link}
                           onChange={handleInputChange}
-                          //isInvalid={!!formErrors.internal_link}
+                        //isInvalid={!!formErrors.internal_link}
                         >
                           <option value="" style={{ color: "black" }}>
                             Select a role
@@ -492,6 +479,7 @@ const CreateSubMenu = () => {
                       <ToastContainer />
                     </div>
                   </div>
+
                 </div>
               </div>
             </div>
@@ -499,6 +487,7 @@ const CreateSubMenu = () => {
         </main>
       </div>
     </div>
+
   );
 };
 

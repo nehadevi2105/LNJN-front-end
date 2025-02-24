@@ -22,12 +22,12 @@ const ApproveindexFooter = () => {
     fetchData();
   }, [id]);
   return (
-    <div>
+ 
       <div>
         <div>
           <main id="main" className="main">
             <div className="pagetitle">
-              {/* <h1>Create Footer</h1> */}
+              
               <nav>
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">Home</li>
@@ -37,6 +37,7 @@ const ApproveindexFooter = () => {
                   </li>
                 </ol>
               </nav>
+              
             </div>
             <div className="pagetitle-rgt d-flex justify-content-end mb-5">
               <Link to="/footer/footertable">
@@ -52,7 +53,7 @@ const ApproveindexFooter = () => {
           </main>
         </div>
       </div>
-    </div>
+  
   );
 };
 

@@ -28,7 +28,7 @@ const EditTender = () => {
   const [prevContentType, setPrevContentType] = useState("");
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
-
+ const [existingFile, setExistingFile] = useState(null);
   const [formData, setFormData] = useState({
     tender_tittle: "", // Corrected typo in the field name
     contenttype: "",
@@ -39,8 +39,10 @@ const EditTender = () => {
     end_date: "", // Corrected field name
     html: "",
     languagetype: "",
+    filepdfpath:""
   });
   const [errors, setErrors] = useState({});
+  const [menudata, setmenudata] = useState("");
   const [editingItemId, setEditingItemId] = useState(null);
 
   const optionsData = [
@@ -82,6 +84,7 @@ const EditTender = () => {
         end_date: "",
         html: "",
         languagetype: "",
+        filepdfpath:""
       });
     }
   }, [id]);
@@ -108,9 +111,9 @@ const EditTender = () => {
       errors.internal_file = "Internal Link is required";
     }
 
-    if (formData.contenttype === "2" && !file) {
-      errors.file = "File is required";
-    }
+    // if (formData.contenttype === "2" && !file) {
+    //   errors.file = "File is required";
+    // }
 
     if (formData.contenttype === "1" && !html) {
       errors.html = "HTML content is required"; // Updated field name
@@ -178,7 +181,17 @@ const EditTender = () => {
     // Handle cancel action in the confirmation dialog
     setConfirmDialogOpen(false);
   };
-
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await APIClient.get(apis.getmenuname);
+        setmenudata(response.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    }
+    fetchData();
+  }, [id]);
   const handleDeleteConfirm = async () => {
     setConfirmDialogOpen(false);
     if (validateForm()) {
@@ -192,7 +205,11 @@ const EditTender = () => {
         } else if (parseInt(formData.contenttype) === 3) {
           formDataToSend.append("internale_file", formData.internal_file);
         } else if (parseInt(formData.contenttype) === 2) {
-          formDataToSend.append("file", file); // Use file here
+          if (file) {
+            formDataToSend.append("file", file); // Attach new file
+          } else if (formData.filepdfpath) {
+            formDataToSend.append("filepath", formData.filepdfpath); // Attach existing file path
+          } // Use file here
         } else if (parseInt(formData.contenttype) === 1) {
           formDataToSend.append("html", html);
         }
@@ -232,37 +249,40 @@ const EditTender = () => {
   // console.log(formData)
   return (
     <div>
+      <div>
       <main id="main" className="main">
+
+
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h3>Edit Tender</h3>
+           
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Edit Tender</li>
               </ol>
             </nav>
+            </div>
+            <h3>Edit Tender</h3>
           </div>
-          <div className="pagetitle-rgt d-flex justify-content-end">
+
+
+        <div className="row justify-content-center">
+            <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
             <Link to="/services/alltender">
               <button type="button" className="btn btn-info">
                 Back
               </button>
             </Link>
           </div>
-        </div>
-        <div className="list">
-          <div className="listContainer">
-            <div className="container">
-              <div className="row">
-                <div className="col">
-                  <div className="col text-end"></div>
-                </div>
-              </div>
-              <div className="row justify-content-center">
-                <div className="container-fluid bg-white">
+     
+          <div className="formdata"> {/* Bootstrap column for full width */}
+              <div className="card custom-card">
+                <div className="card-body">
+
+            
                   <div className="box-sec">
-                    <h1 className="text-center heading-main">Tender</h1>
+                   
                     <div className="mb-3">
                       <label className="form-label text-dark">
                         Language Type
@@ -345,27 +365,43 @@ const EditTender = () => {
 
                     {parseInt(formData.contenttype) === 3 && (
                       <div className="mb-3">
-                        <label className="form-label text-dark">
-                          Enter Internal Link
-                        </label>
-                        <input
-                          className="form-control"
-                          type="text"
-                          placeholder="Enter Internal Link"
-                          name="internal_file"
-                          value={formData.internal_file}
-                          onChange={handleInputChange}
-                        />
-                        {errors.internal_file && (
-                          <div className="text-danger">
-                            {errors.internal_file}
-                          </div>
-                        )}
-                      </div>
+                      <select
+                        className="form-control"
+                        name="internale_file"
+                        value={formData.internale_file}
+                        onChange={handleInputChange}
+                      // isInvalid={!!formErrors.internal_link}
+                      >
+                        <option value="" style={{ color: "black" }}>
+                          Select a Menu Name
+                        </option>
+                        {menudata.map((data) => (
+                          <option
+                            key={data.id}
+                            value={"/menu/" + data.menuurl}
+                          >
+                            {"Menu Name" + ":-" + data.menuname}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.internale_file && (
+                        <div className="text-danger">
+                          {errors.internale_file}
+                        </div>
+                      )}
+                    </div>
                     )}
 
                     {parseInt(formData.contenttype) === 2 && (
                       <div className="mb-3">
+                        <a
+                          href={`${APIClient.defaults.baseURL}${formData.filepdfpath}`} // Ensure filepath is properly appended
+                          className="form-control"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {existingFile || "View Document"}
+                        </a>
                         <label className="form-label text-dark">
                           Choose File
                         </label>
@@ -489,12 +525,13 @@ const EditTender = () => {
                       </Dialog>
                     </div>
                   </div>
-                </div>
-              </div>
+               
             </div>
           </div>
         </div>
+        </div>
       </main>
+    </div>
     </div>
   );
 };

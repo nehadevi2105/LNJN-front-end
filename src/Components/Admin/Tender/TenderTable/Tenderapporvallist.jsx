@@ -25,6 +25,8 @@ const TenderApprovallist = () => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const columns = [
     { field: "id", headerName: "S.No", width: 50 },
@@ -36,10 +38,13 @@ const TenderApprovallist = () => {
       field: "View Details",
       headerName: "Edit",
       sortable: false,
-      renderCell: (params) => (
+      renderCell: (params) => 
+        usertype === 2 || usertype === 4 ? (
         <Link to={"/ApproveTenderdata/" + params.row.id}>
           <EditIcon style={{ cursor: "pointer" }} />
         </Link>
+      ): (
+        <EditIcon style={{ cursor: "not-allowed", color: "gray" }} />
       ),
     },
     // {
@@ -100,11 +105,11 @@ const TenderApprovallist = () => {
   }, []);
 
   return (
-    <div>
-      <main id="main" className="main">
+    <div className="row justify-content-center">
+    <div className="formdata">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1 className="maintitle">Approval  Tender List</h1>
+           
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -112,6 +117,7 @@ const TenderApprovallist = () => {
                 <li className="breadcrumb-item active">Approval  Tender List</li>
               </ol>
             </nav>
+            <h1 className="maintitle">Approval  Tender List</h1>
           </div>
           
         </div>
@@ -145,7 +151,7 @@ const TenderApprovallist = () => {
             }}
           />
         </Box>
-      </main>
+  
 
       <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -170,6 +176,7 @@ const TenderApprovallist = () => {
           {modalMessage}
         </MuiAlert>
       </Snackbar>
+    </div>
     </div>
   );
 };

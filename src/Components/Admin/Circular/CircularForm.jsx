@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 //import ViewListIcon from "@mui/icons-material/ViewList";
 //import { Link } from "react-router-dom";
 import JoditEditor from "jodit-react";
+import { Link } from "react-router-dom";
 //import HomeIcon from "@mui/icons-material/Home";
 
 import { Button } from "react-bootstrap";
@@ -136,7 +137,7 @@ const CircularForm = () => {
   const handleInputChange = (event) => {
     const { name, value, type } = event.target;
 
-    if (type === "2") {
+    if (type === "file") {
       setFormData({
         ...formData,
         [name]: event.target.files[0],
@@ -185,9 +186,9 @@ const CircularForm = () => {
         formDataToSend.append("contenttype", formData.contenttype);
 
         if (formData.contenttype === "4") {
-          formDataToSend.append("external_file", formData.external_link);
+          formDataToSend.append("external_file", formData.external_file);
         } else if (formData.contenttype === "3") {
-          formDataToSend.append("internale_file", formData.internal_link);
+          formDataToSend.append("internale_file", formData.internal_file);
         } else if (formData.contenttype === "2") {
           formDataToSend.append("file", file);
         } else if (formData.contenttype === "1") {
@@ -198,11 +199,15 @@ const CircularForm = () => {
         formDataToSend.append("end_date", formData.end_date);
         formDataToSend.append("languagetype", formData.languagetype);
 
-        const response = await APIClient.post(apis.createcircular, formDataToSend, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        const response = await APIClient.post(
+          apis.createcircular,
+          formDataToSend,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
         // console.log('Data saved:', response.data);
         setFormData({
           tittle: "",
@@ -238,11 +243,13 @@ const CircularForm = () => {
   // console.log(formData);
 
   return (
-    <div>
+    <div >
+    <div >
       <main id="main" className="main">
-        <div className="pagetitle">
-          <div className="pagetitle-lft">
-            <h2>Create Circular</h2>
+      <div>
+        <div className="card">
+          <div className="card-body">
+
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -250,272 +257,262 @@ const CircularForm = () => {
                 <li className="breadcrumb-item active">Create Circular</li>
               </ol>
             </nav>
+            <h2>Create Circular</h2>
+
+
           </div>
-          <div className="pagetitle-rgt">
-            {/* <Link to="/dashboard">
-              <button type="button" className="btn btn-info">
-                Back
-              </button>
-            </Link> */}
-          </div>
-        </div>
-        <div className="container">
-          <div className="row">
-            <div className="col">
-              <div className="col text-end"></div>
-            </div>
-          </div>
+
           <div className="row justify-content-center">
-            <div className="">
-              <div className="card">
+          <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
+              <Link to="/dashboard">
+                <button type="button" className="btn btn-info">Back</button>
+              </Link>
+            </div>
+            <div className="formdata"> {/* Bootstrap column for full width */}
+              <div className="card custom-card">
                 <div className="card-body">
-                  <div className="mb-3 mt-md-4">
-                    <div className="box-sec">
-                      <h1 className="text-center heading-main"></h1>
+                  <div className="box-sec">
+                    <h1 className="text-center heading-main"></h1>
+                    <div className="mb-3">
+                      <label className="form-label text-dark">
+                        Language Type
+                      </label>
+                      <select
+                        className="form-select"
+                        name="languagetype"
+                        value={formData.languagetype}
+                        onChange={handleInputChange}
+                      >
+                        <option value="0">Select a Language</option>
+                        <option value="1">English</option>
+                        <option value="2">Hindi</option>
+                      </select>
+                      {errors.languagetype && (
+                        <div className="text-danger">
+                          {errors.languagetype}
+                        </div>
+                      )}
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label text-dark">Name</label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        placeholder="Name"
+                        name="tittle"
+                        value={formData.tittle}
+                        onChange={handleInputChange}
+                      />
+                      {errors.tittle && (
+                        <div className="text-danger">{errors.tittle}</div>
+                      )}
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label text-dark">
+                        Select a content type
+                      </label>
+                      <select
+                        className="form-select"
+                        name="contenttype"
+                        value={formData.contenttype}
+                        onChange={handleInputChange}
+                      >
+                        <option value="">Select a content type</option>
+                        <option value="4">External</option>
+                        <option value="3">Internal</option>
+                        <option value="2">File</option>
+                        <option value="1">HTML</option>
+                      </select>
+                      {errors.contenttype && (
+                        <div className="text-danger">
+                          {errors.contenttype}
+                        </div>
+                      )}
+                    </div>
+                    {formData.contenttype === "4" && (
                       <div className="mb-3">
                         <label className="form-label text-dark">
-                          Language Type
+                          Enter External Link
                         </label>
-                        <select
-                          className="form-select"
-                          name="languagetype"
-                          value={formData.languagetype}
-                          onChange={handleInputChange}
-                        >
-                          <option value="0">Select a Language</option>
-                          <option value="1">English</option>
-                          <option value="2">Hindi</option>
-                        </select>
-                        {errors.languagetype && (
-                          <div className="text-danger">
-                            {errors.languagetype}
-                          </div>
-                        )}
-                      </div>
-                      <div className="mb-3">
-                        <label className="form-label text-dark">Name</label>
                         <input
                           className="form-control"
                           type="text"
-                          placeholder="Name"
-                          name="tittle"
-                          value={formData.tittle}
+                          placeholder="Enter External Link"
+                          name="external_file"
+                          value={formData.external_file}
                           onChange={handleInputChange}
                         />
-                        {errors.tittle && (
-                          <div className="text-danger">{errors.tittle}</div>
-                        )}
-                      </div>
-                      <div className="mb-3">
-                        <label className="form-label text-dark">
-                          Select a content type
-                        </label>
-                        <select
-                          className="form-select"
-                          name="contenttype"
-                          value={formData.contenttype}
-                          onChange={handleInputChange}
-                        >
-                          <option value="">Select a content type</option>
-                          <option value="4">External</option>
-                          <option value="3">Internal</option>
-                          <option value="2">File</option>
-                          <option value="1">HTML</option>
-                        </select>
-                        {errors.contenttype && (
+                        {errors.external_file && (
                           <div className="text-danger">
-                            {errors.contenttype}
+                            {errors.external_file}
                           </div>
                         )}
                       </div>
-                      {formData.contenttype === "4" && (
-                        <div className="mb-3">
-                          <label className="form-label text-dark">
-                            Enter External Link
-                          </label>
-                          <input
-                            className="form-control"
-                            type="text"
-                            placeholder="Enter External Link"
-                            name="external_file"
-                            value={formData.external_file}
-                            onChange={handleInputChange}
-                          />
-                          {errors.external_file && (
-                            <div className="text-danger">
-                              {errors.external_file}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                      {formData.contenttype === "3" && (
-                        <div className="mb-3">
-                          <label className="form-label text-dark">
-                            Enter Internal Link
-                          </label>
-                          {/* <input
-                  className="form-control"
-                  type="text"
-                  placeholder="Enter Internal Link"
-                  name="internale_file"
-                  value={formData.internale_file}
-                  onChange={handleInputChange}
-                /> */}
-                          <select
-                            className="form-control"
-                            name="internal_link"
-                            value={formData.internal_link}
-                            onChange={handleInputChange}
-                          >
-                            <option value="" style={{ color: "black" }}>
-                              Select a MenuName
+                    )}
+                    {formData.contenttype === "3" && (
+                      <div className="mb-3">
+                        <label className="form-label text-dark">
+                          Enter Internal Link
+                        </label>
+
+                        <select
+                          className="form-control"
+                          name="internale_file"
+                          value={formData.internal_file}
+                          onChange={handleInputChange}
+                        >
+                          <option value="" style={{ color: "black" }}>
+                            Select a MenuName
+                          </option>
+                          {dropdownOptions.map((data) => (
+                            <option
+                              key={data.id}
+                              value={"/menu/" + data.menuurl}
+                            >
+                              {"Menu Name" + ":-" + data.menuname}
                             </option>
-                            {dropdownOptions.map((data) => (
-                              <option
-                                key={data.id}
-                                value={"/menu/" + data.menu_url}
-                              >
-                                {"Menu Name" + ":-" + data.menuname}
-                              </option>
-                            ))}
-                          </select>
-                          {errors.internale_file && (
-                            <div className="text-danger">
-                              {errors.internale_file}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                      {formData.contenttype === "2" && (
-                        <div className="mb-3">
-                          <label className="form-label text-dark">
-                            Choose File
-                          </label>
-                          <input
-                            className="form-control"
-                            type="file"
-                            name="file"
-                            onChange={handleImageChange}
-                          />
-                          {errors.file && (
-                            <div className="text-danger">{errors.file}</div>
-                          )}
-                        </div>
-                      )}
-                      {formData.contenttype === "1" && (
-                        <div className="mb-3">
-                          <label className="form-label text-dark">
-                            HTML Editor
-                          </label>
-                          <div>
-                            <JoditEditor
-                              value={content}
-                              config={config}
-                              tabIndex={1}
-                              onChange={onChange}
-                            />
+                          ))}
+                        </select>
+                        {errors.internale_file && (
+                          <div className="text-danger">
+                            {errors.internale_file}
                           </div>
-                          {errors.editorContent && (
-                            <div className="text-danger">
-                              {errors.editorContent}
-                            </div>
-                          )}
+                        )}
+                      </div>
+                    )}
+                    {formData.contenttype === "2" && (
+                      <div className="mb-3">
+                        <label className="form-label text-dark">
+                          Choose File
+                        </label>
+                        <input
+                          className="form-control"
+                          type="file"
+                          name="file"
+                          onChange={handleImageChange}
+                        />
+                        {errors.file && (
+                          <div className="text-danger">{errors.file}</div>
+                        )}
+                      </div>
+                    )}
+                    {formData.contenttype === "1" && (
+                      <div className="mb-3">
+                        <label className="form-label text-dark">
+                          HTML Editor
+                        </label>
+                        <div>
+                          <JoditEditor
+                            value={content}
+                            config={config}
+                            tabIndex={1}
+                            onChange={onChange}
+                          />
                         </div>
+                        {errors.editorContent && (
+                          <div className="text-danger">
+                            {errors.editorContent}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    <div className="mb-3">
+                      <label className="form-label text-dark">
+                        Starting Date
+                      </label>
+                      <input
+                        className="form-control"
+                        type="date"
+                        name="startdate"
+                        value={formData.startdate}
+                        onChange={handleInputChange}
+                      />
+                      {errors.startdate && (
+                        <div className="text-danger">{errors.startdate}</div>
                       )}
-                      <div className="mb-3">
-                        <label className="form-label text-dark">
-                          Starting Date
-                        </label>
-                        <input
-                          className="form-control"
-                          type="date"
-                          name="startdate"
-                          value={formData.startdate}
-                          onChange={handleInputChange}
-                        />
-                        {errors.startdate && (
-                          <div className="text-danger">{errors.startdate}</div>
-                        )}
-                      </div>
-                      <div className="mb-3">
-                        <label className="form-label text-dark">
-                          Ending Date
-                        </label>
-                        <input
-                          className="form-control"
-                          type="date"
-                          name="end_date"
-                          value={formData.end_date}
-                          onChange={handleInputChange}
-                        />
-                        {errors.end_date && (
-                          <div className="text-danger">{errors.end_date}</div>
-                        )}
-                      </div>
-                      <div className="btnsubmit">
-                        <button
-                          className="btn btn-primary"
-                          onClick={handleSubmit}
-                        >
-                          Submit
-                        </button>
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label text-dark">
+                        Ending Date
+                      </label>
+                      <input
+                        className="form-control"
+                        type="date"
+                        name="end_date"
+                        value={formData.end_date}
+                        onChange={handleInputChange}
+                      />
+                      {errors.end_date && (
+                        <div className="text-danger">{errors.end_date}</div>
+                      )}
+                    </div>
+                    <div className="btnsubmit">
+                      <button
+                        className="btn btn-primary"
+                        onClick={handleSubmit}
+                      >
+                        Submit
+                      </button>
 
-                        {/* <CustomModal isOpen={isModalOpen} message={modalMessage} onClose={closeModal} />
+                      {/* <CustomModal isOpen={isModalOpen} message={modalMessage} onClose={closeModal} />
                          */}
-                        <ToastContainer />
-                        {/* Confirmation Dialog */}
-                        <Dialog
-                          open={confirmDialogOpen}
-                          onClose={handleDeleteCancel}
-                        >
-                          <DialogTitle>Confirm Create</DialogTitle>
-                          <DialogContent>
-                            Are you sure you want to create this user?
-                          </DialogContent>
-                          <DialogActions>
-                            <Button
-                              onClick={handleDeleteCancel}
-                              color="primary"
-                            >
-                              Cancel
-                            </Button>
-                            <Button
-                              onClick={handleDeleteConfirm}
-                              color="primary"
-                            >
-                              Confirm
-                            </Button>
-                          </DialogActions>
-                        </Dialog>
+                      <ToastContainer />
+                      {/* Confirmation Dialog */}
+                      <Dialog
+                        open={confirmDialogOpen}
+                        onClose={handleDeleteCancel}
+                      >
+                        <DialogTitle>Confirm Create</DialogTitle>
+                        <DialogContent>
+                          Are you sure you want to create this user?
+                        </DialogContent>
+                        <DialogActions>
+                          <Button
+                            onClick={handleDeleteCancel}
+                            color="primary"
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            onClick={handleDeleteConfirm}
+                            color="primary"
+                          >
+                            Confirm
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
 
-                        {/* Success Dialog */}
-                        <Dialog
-                          open={successDialogOpen}
-                          onClose={() => setSuccessDialogOpen(false)}
-                        >
-                          <DialogTitle>Success</DialogTitle>
-                          <DialogContent>
-                            User created successfully!
-                          </DialogContent>
-                          <DialogActions>
-                            <Button
-                              onClick={() => setSuccessDialogOpen(false)}
-                              color="primary"
-                            >
-                              OK
-                            </Button>
-                          </DialogActions>
-                        </Dialog>
-                      </div>
+                      {/* Success Dialog */}
+                      <Dialog
+                        open={successDialogOpen}
+                        onClose={() => setSuccessDialogOpen(false)}
+                      >
+                        <DialogTitle>Success</DialogTitle>
+                        <DialogContent>
+                          User created successfully!
+                        </DialogContent>
+                        <DialogActions>
+                          <Button
+                            onClick={() => setSuccessDialogOpen(false)}
+                            color="primary"
+                          >
+                            OK
+                          </Button>
+                        </DialogActions>
+                      </Dialog>
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
         </div>
-      </main>
+      </div>
+    </main>
     </div>
+    </div>
+
   );
 };
 

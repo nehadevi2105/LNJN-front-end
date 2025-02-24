@@ -29,6 +29,10 @@ const EditMenu = () => {
   const [dropdownOptions, setDropdownOptions] = useState([]);
   //const [formErrors, setFormErrors] = useState({});
 
+  const [existingFile, setExistingFile] = useState(null);
+  const [useExistingFile, setUseExistingFile] = useState(true);
+  const [existingFilePath, setExistingFilePath] = useState("");
+
   const config = useMemo(
     () => ({
       readonly: false,
@@ -80,6 +84,7 @@ const EditMenu = () => {
       internal_link: "",
       external_link: "",
       languagetype: "",
+      filepdfpath: ""
     });
   }, []);
 
@@ -109,13 +114,13 @@ const EditMenu = () => {
     // if (formData.ContentType === '3' && !formData.internal_link) {
     //   newErrors.internal_link = 'Internal Link is required';
     // }
-    if (formData.contenttype === "2") {
-      if (!file) {
-        newErrors.file = "File is required";
-      } else if (file.type !== "application/pdf") {
-        newErrors.file = "Only PDF files are allowed";
-      }
-    }
+    // if (formData.contenttype === "2") {
+    //   if (!file) {
+    //     newErrors.file = "File is required";
+    //   } else if (file.type !== "application/pdf") {
+    //     newErrors.file = "Only PDF files are allowed";
+    //   }
+    // }
 
     if (formData.ContentType === "1" && !html) {
       newErrors.html = "HTML content is required";
@@ -174,8 +179,13 @@ const EditMenu = () => {
       } else if (formData.contenttype === "3") {
         formDataToSend.append("internal_link", formData.internal_link);
       } else if (formData.contenttype === "2") {
-        formDataToSend.append("file", file);
-      } else if (formData.contenttype === "1") {
+        if (file) {
+          formDataToSend.append("file", file); // Attach new file
+        } else if (formData.filepdfpath) {
+          formDataToSend.append("filepdfpath", formData.filepdfpath); // Attach existing file path
+        }
+      }
+      else if (formData.contenttype === "1") {
         formDataToSend.append("html", formData.html);
       }
 
@@ -330,13 +340,13 @@ const EditMenu = () => {
                   name="internal_link"
                   value={formData.internal_link}
                   onChange={handleInputChange}
-                  // isInvalid={!!formErrors.internal_link}
+                // isInvalid={!!formErrors.internal_link}
                 >
                   <option value="" style={{ color: "black" }}>
                     Select a role
                   </option>
                   {dropdownOptions.map((data) => (
-                    <option key={data.id} value={"/menu/" + data.menu_url}>
+                    <option key={data.id} value={"/menu/" + data.menuurl}>
                       {"Menu Name" + ":-" + data.menuname}
                     </option>
                   ))}
@@ -349,7 +359,16 @@ const EditMenu = () => {
 
             {/* Input for File */}
             {formData.contenttype === "2" && (
+
               <div className="mb-3">
+                <a
+                  href={`${APIClient.defaults.baseURL}${formData.filepdfpath}`} // Ensure filepath is properly appended
+                  className="form-control"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {existingFile || "View Document"}
+                </a>
                 <label className="form-label text-dark">Choose File</label>
                 <input
                   className="form-control"

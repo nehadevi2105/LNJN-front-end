@@ -109,24 +109,27 @@ const UserTable = () => {
   }, []);
 
   return (
-    <div>
-      <main id="main" className="main">
-        <div className="pagetitle">
-          <h1>All Users</h1>
-          <nav>
+    <div className="row justify-content-center">
+    <div className="formdata">
+      
+        <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">Home</li>
               <li className="breadcrumb-item">User</li>
               <li className="breadcrumb-item active">All Users</li>
             </ol>
           </nav>
+          <h1>All Users</h1>
+          <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
           <Link to="/dashboard">
             <button type="button" className="btn btn-info">
               Back
             </button>
           </Link>
-        </div>
+          </div>
 
+         
+          <div className="card-body">
         <Box sx={{ height: 400, width: "100%", backgroundColor: "#fff" }}>
           <DataGrid
             rows={apiData}
@@ -138,7 +141,8 @@ const UserTable = () => {
             componentsProps={{ toolbar: { showQuickFilter: true } }}
           />
         </Box>
-      </main>
+     </div>
+    
 
       {/* Confirm Delete Dialog */}
       <Dialog
@@ -170,6 +174,7 @@ const UserTable = () => {
         </MuiAlert>
       </Snackbar>
     </div>
+  </div>
   );
 };
 

@@ -104,7 +104,7 @@ const ApproveFooterTable = () => {
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1> Footer Approval List</h1>
+           
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -112,8 +112,9 @@ const ApproveFooterTable = () => {
                 <li className="breadcrumb-item active">Footer Approval List</li>
               </ol>
             </nav>
+            <h1> Footer Approval List</h1>
           </div>
-          <div className="pagetitle-rgt">
+          <div className="d-flex justify-content-left" style={{ marginLeft: "1px" }}>
             <Link to="/dashboard">
               <button type="button" className="btn btn-info">
                 Back

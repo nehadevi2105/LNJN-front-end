@@ -25,6 +25,8 @@ const ApproveCircularTable = () => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const columns = [
     { field: "id", headerName: "S.No", width: 50 },
@@ -36,10 +38,12 @@ const ApproveCircularTable = () => {
       field: "edit",
       headerName: "Edit",
       sortable: false,
-      renderCell: (params) => (
+      renderCell: (params) => usertype === 2 || usertype === 4 ? (
         <Link to={"/approvecircular/" + params.row.id}>
           <EditIcon style={{ cursor: "pointer" }} />
         </Link>
+      ): (
+        <EditIcon style={{ cursor: "not-allowed", color: "gray" }} />
       ),
     }
   ];
@@ -89,11 +93,10 @@ const ApproveCircularTable = () => {
   }, []);
 
   return (
-    <div>
-      <main id="main" className="main">
-        <div className="pagetitle">
+    <div className="row justify-content-center">
+    <div className="formdata">
           <div className="pagetitle-lft">
-            <h1 className="maintitle">Approve Circular List</h1>
+           
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -101,6 +104,7 @@ const ApproveCircularTable = () => {
                 <li className="breadcrumb-item active">Approve Circular List </li>
               </ol>
             </nav>
+            <h1 className="maintitle">Approve Circular List</h1>
           </div>
           <div className="pagetitle-rgt">
             {/* <Link to="/dashboard">
@@ -109,7 +113,7 @@ const ApproveCircularTable = () => {
               </button>
             </Link> */}
           </div>
-        </div>
+    
         <div className="header-box">
           <div className="header-box-lft"></div>
           <div className="header-box-rgt">
@@ -139,7 +143,7 @@ const ApproveCircularTable = () => {
             }}
           />
         </Box>
-      </main>
+    
 
       <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -164,6 +168,7 @@ const ApproveCircularTable = () => {
           {modalMessage}
         </MuiAlert>
       </Snackbar>
+    </div>
     </div>
   );
 };

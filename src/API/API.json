@@ -67,7 +67,7 @@
   "getpublishCircular": "/api/Circular/publisherlist",
   "Circularbyid": "/api/Circular/",
   "newuser": "/api/user",
-  "insertlogin" : "/api/Login",
-  "getUserById": "/api/user/"
-
+  "insertlogin": "/api/Login",
+  "getUserById": "/api/user/",
+  "getLogin": "/api/Login"
 }

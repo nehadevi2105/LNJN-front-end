@@ -115,11 +115,9 @@ function MenuSubMenu() {
   }, []);
 
   return (
-    <div>
-      <main id="main" className="main">
-        <div className="pagetitle">
-          <div className="pagetitle-lft">
-            <h1 className="maintitle">All Menu Submenu List</h1>
+    <div className="row justify-content-center">
+    <div className="formdata">
+     
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -129,8 +127,10 @@ function MenuSubMenu() {
                 </li>
               </ol>
             </nav>
-          </div>
-          <div className="pagetitle-rgt">
+            <h1>All Menu Submenu List</h1>
+
+
+          <div className="d-flex justify-content-left" style={{ marginLeft: "1px" }}>
             <Link to="/dashboard">
               <button type="button" className="btn btn-info">
                 Back
@@ -155,17 +155,10 @@ function MenuSubMenu() {
               </button>
             </Link>
           </div>
-        </div>
-        <div className="header-box">
-          {/* <div className="header-box-lft">
-            <h1 className="maintitle">Table</h1>
-          </div> */}
-          {/* <div className="header-box-rgt">
-                    <Link to='/services/addwhatsnew'>
-                    <p><AddIcon/>New Whats New</p>
-                    </Link>
-                </div> */}
-        </div>
+       
+        <div className="card-body">
+         
+      
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={apiData}
@@ -183,7 +176,7 @@ function MenuSubMenu() {
             }}
           />
         </Box>
-      </main>
+      </div>
 
       <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -209,6 +202,7 @@ function MenuSubMenu() {
         </MuiAlert>
       </Snackbar>
       <ToastContainer />
+    </div>
     </div>
   );
 }

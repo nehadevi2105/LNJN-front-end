@@ -1,7 +1,7 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: -1rem;
   text-align: center;
 }
 
@@ -39,4 +39,23 @@
 
 .read-the-docs {
   color: #888;
+}
+.custom-card {
+  max-width: 1986px; /* Set the width as needed */
+  width: 100%;
+  margin: auto;
+}
+
+.custom-form-width {
+  width: 100%;
+  max-width: 1800px; /* Adjust as per your need */
+}
+
+.card-body {
+  padding: 40px; /* Increase padding for better spacing */
+}
+.formdata {
+  width: 1986px !important;
+  max-width: 90% !important;
+  margin: 10px auto !important;
 }

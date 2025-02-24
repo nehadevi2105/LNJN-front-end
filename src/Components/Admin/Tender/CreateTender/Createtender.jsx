@@ -238,11 +238,13 @@ const CreateTender = () => {
   // console.log(formData);
 
   return (
-    <div>
-      <main id="main" className="main">
-        <div className="pagetitle">
-          <div className="pagetitle-lft">
-            <h2>Create Tender</h2>
+    <div >
+      <div >
+        <main id="main" className="main">
+
+         <div className="pagetitle">
+            <div className="pagetitle-lft">
+            
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -250,26 +252,22 @@ const CreateTender = () => {
                 <li className="breadcrumb-item active">Create Tender</li>
               </ol>
             </nav>
-          </div>
-          <div className="pagetitle-rgt">
-            {/* <Link to="/dashboard">
-              <button type="button" className="btn btn-info">
-                Back
-              </button>
-            </Link> */}
-          </div>
-        </div>
-        <div className="container">
-          <div className="row">
-            <div className="col">
-              <div className="col text-end"></div>
             </div>
+            <h2>Create Tender</h2>
+           
           </div>
-          <div className="row justify-content-center">
-            <div className="">
-              <div className="card">
+
+            <div className="row justify-content-center">
+                      <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
+                        <Link to="/dashboard">
+                          <button type="button" className="btn btn-info">Back</button>
+                        </Link>
+                      </div>
+      
+                      <div className="formdata"> {/* Bootstrap column for full width */}
+              <div className="card custom-card">
                 <div className="card-body">
-                  <div className="mb-3 mt-md-4">
+ 
                     <div className="box-sec">
                       <h1 className="text-center heading-main"></h1>
                       <div className="mb-3">
@@ -510,14 +508,15 @@ const CreateTender = () => {
                         </Dialog>
                       </div>
                     </div>
-                  </div>
+                
                 </div>
               </div>
             </div>
-          </div>
+            </div>
+          </main>
         </div>
-      </main>
-    </div>
+      </div>
+        
   );
 };
 

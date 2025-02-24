@@ -25,6 +25,7 @@ const FooterTable = () => {
   const storedUserString = localStorage.getItem("usertype");
   const usertype = JSON.parse(storedUserString);
 
+  
   const columns = [
     { field: "rowIndex", headerName: "S.No", width: 50 },
     { field: "tittle_name", headerName: "Title", width: 200 },

@@ -27,7 +27,8 @@ const Editpublisherapproval = () => {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [dropdownOptions, setDropdownOptions] = useState([]);
-  const [formErrors, setFormErrors] = useState({});
+  const [formErrors, setFormErrors] = useState({});  
+    const [existingFile, setExistingFile] = useState(null);
 
   const config = useMemo(
     () => ({
@@ -56,6 +57,7 @@ const Editpublisherapproval = () => {
     internal_link: "",
     external_link: "",
     languagetype: "",
+    filepdfpath:""
   });
 
   const [errors, setErrors] = useState({});
@@ -72,6 +74,7 @@ const Editpublisherapproval = () => {
       internal_link: "",
       external_link: "",
       languagetype: "",
+       filepdfpath:""
     });
   }, []);
 
@@ -105,13 +108,13 @@ const Editpublisherapproval = () => {
     // if (formData.ContentType === '3' && !formData.internal_link) {
     //   newErrors.internal_link = 'Internal Link is required';
     // }
-    if (formData.contenttype === "2") {
-      if (!file) {
-        newErrors.file = "File is required";
-      } else if (file.type !== "application/pdf") {
-        newErrors.file = "Only PDF files are allowed";
-      }
-    }
+    // if (formData.contenttype === "2") {
+    //   if (!file) {
+    //     newErrors.file = "File is required";
+    //   } else if (file.type !== "application/pdf") {
+    //     newErrors.file = "Only PDF files are allowed";
+    //   }
+    // }
 
     // if (formData.ContentType === '1' && !html) {
     //   newErrors.html = 'HTML content is required';
@@ -170,7 +173,11 @@ const Editpublisherapproval = () => {
       } else if (formData.contenttype === "3") {
         formDataToSend.append("internal_link", formData.internal_link);
       } else if (formData.contenttype === "2") {
-        formDataToSend.append("file", file);
+        if (file) {
+          formDataToSend.append("file", file); // Attach new file
+        } else if (formData.filepdfpath) {
+          formDataToSend.append("filepdfpath", formData.filepdfpath); // Attach existing file path
+        }
       } else if (formData.contenttype === "1") {
         formDataToSend.append("html", formData.html);
       }
@@ -245,7 +252,7 @@ const Editpublisherapproval = () => {
       <div className="row justify-content-center">
         <div className="container-fluid bg-white">
           <div className="box-sec">
-            <h1 className="text-center heading-main">Approve Custom Data</h1>
+            <h1 className="text-center heading-main">Publish Custom Data</h1>
 
             <div className="mb-3">
               <label className="form-label text-dark">Select a Language</label>
@@ -325,6 +332,7 @@ const Editpublisherapproval = () => {
             {/* Input for Internal Link */}
             {formData.contenttype === "3" && (
               <div className="mb-3">
+             
                 <select
                   className="form-control"
                   name="internal_link"
@@ -350,6 +358,14 @@ const Editpublisherapproval = () => {
             {/* Input for File */}
             {formData.contenttype === "2" && (
               <div className="mb-3">
+                   <a
+                  href={`${APIClient.defaults.baseURL}${formData.filepdfpath}`} // Ensure filepath is properly appended
+                  className="form-control"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {existingFile || "View Document"}
+                </a>
                 <label className="form-label text-dark">Choose File</label>
                 <input
                   className="form-control"

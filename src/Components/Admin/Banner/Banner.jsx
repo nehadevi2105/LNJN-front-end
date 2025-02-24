@@ -91,7 +91,12 @@ alert("Data uploaded successfully!");
   };
 
   return (
-    <div>
+  
+    <div className="row justify-content-center">
+      <div className="formdata">
+      <div className="card">
+        <div className="card-body">
+      
       <form>
       <Paper elevation={15} sx={{ 
     padding: 8, 
@@ -173,6 +178,9 @@ alert("Data uploaded successfully!");
         </Paper>
       </form>
      </div>
+    </div>
+  </div>
+  </div>
   );
 };
 

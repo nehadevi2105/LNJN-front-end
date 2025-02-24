@@ -33,9 +33,11 @@ const Publishdata = () => {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [dropdownOptions, setDropdownOptions] = useState([]);
-  const [formErrors, setFormErrors] = useState({});
+  //const [formErrors, setFormErrors] = useState({});
+  const [existingFile, setExistingFile] = useState(null);
+  const [useExistingFile, setUseExistingFile] = useState(true);
+  const [existingFilePath, setExistingFilePath] = useState("");
 
-  
   const config = useMemo(
     () => ({
       readonly: false,
@@ -59,6 +61,7 @@ const Publishdata = () => {
     internal_link: "",
     external_link: "",
     languagetype: "",
+    filepdfpath: "",
   });
   const editor = useRef(null);
   const [errors, setErrors] = useState({});
@@ -67,7 +70,6 @@ const Publishdata = () => {
     setFormData({
       menu_id: "",
       submenu_id: 0,
-
       menuname: "",
       menuurl: "",
       contenttype: "",
@@ -76,6 +78,7 @@ const Publishdata = () => {
       internal_link: "",
       external_link: "",
       languagetype: "",
+      filepdfpath: "",
     });
   }, []);
 
@@ -85,6 +88,16 @@ const Publishdata = () => {
       ...prevState,
       html: content, // Ensure formData is also updated
     }));
+  };
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+    setUseExistingFile(false);
+  };
+
+  const handleUseExistingFileChange = (event) => {
+    setUseExistingFile(event.target.checked);
+    if (event.target.checked) setFile(null);
   };
 
   const validateForm = () => {
@@ -109,13 +122,13 @@ const Publishdata = () => {
     // if (formData.ContentType === '3' && !formData.internal_link) {
     //   newErrors.internal_link = 'Internal Link is required';
     // }
-    if (formData.contenttype === "2") {
-      if (!file) {
-        newErrors.file = "File is required";
-      } else if (file.type !== "application/pdf") {
-        newErrors.file = "Only PDF files are allowed";
-      }
-    }
+    // if (formData.contenttype === "2") {
+    //   if (!file) {
+    //     newErrors.file = "File is required";
+    //   } else if (file.type !== "application/pdf") {
+    //     newErrors.file = "Only PDF files are allowed";
+    //   }
+    // }
 
     // if (formData.ContentType === '1' && !html) {
     //   newErrors.html = 'HTML content is required';
@@ -174,7 +187,11 @@ const Publishdata = () => {
       } else if (formData.contenttype === "3") {
         formDataToSend.append("internal_link", formData.internal_link);
       } else if (formData.contenttype === "2") {
-        formDataToSend.append("file", file);
+        if (file) {
+          formDataToSend.append("file", file); // Attach new file
+        } else if (formData.filepdfpath) {
+          formDataToSend.append("filepdfpath", formData.filepdfpath); // Attach existing file path
+        }
       } else if (formData.contenttype === "1") {
         formDataToSend.append("html", formData.html);
       }
@@ -201,6 +218,7 @@ const Publishdata = () => {
         file: "",
         html: "",
         languagetype: "",
+        filepdfpath: "",
       });
       setSnackbarOpen(true);
     } catch (error) {
@@ -230,9 +248,16 @@ const Publishdata = () => {
     async function fetchData2() {
       try {
         const response = await APIClient.get(apis.getmenudatabyid + id);
-        setFormData(response.data);
+        console.log("Response from backend: ", response.data);
+        setFormData({
+          ...response.data,
+          filepdfpath: response.data.filepdfpath || "",
+        });
         setHtml(response.data.html); // Set the html state
         setEditorContent(response.data.html); // Set the editor content
+        setExistingFile(response.data.file);
+        setExistingFilePath(response.data.existingFilePath);
+        console.log("Filepath: ", response.data.filepdfpath);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -349,18 +374,32 @@ const Publishdata = () => {
 
             {/* Input for File */}
             {formData.contenttype === "2" && (
-              <div className="mb-3">
-                <label className="form-label text-dark">Choose File</label>
-                <input
-                  className="form-control"
-                  type="file"
-                  name="file"
-                  onChange={handleImageChange}
-                />
-                {errors.file && (
-                  <div className="text-danger">{errors.file}</div>
-                )}
-              </div>
+              <>
+                <div className="mb-3">
+                  <label className="form-label text-dark">
+                    Existing Document
+                  </label>
+                  <a
+                    href={`${APIClient.defaults.baseURL}${formData.filepdfpath}`} // Ensure filepath is properly appended
+                    className="form-control"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {existingFile || "View Document"}
+                  </a>
+                </div>
+                <div className="mb-3">
+                  <label className="form-label text-dark">
+                    Choose New File (Optional)
+                  </label>
+                  <input
+                    className="form-control"
+                    type="file"
+                    name="file"
+                    onChange={handleFileChange}
+                  />
+                </div>
+              </>
             )}
 
             {/* HTML Editor Input */}

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { ToastContainer, toast } from "react-toastify";
-//import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import JoditEditor from "jodit-react";
 import DialogActions from "@mui/material/DialogActions";
 import Alert from "@mui/material/Alert";
@@ -15,14 +15,6 @@ import {
 } from "@mui/material";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
-//import { Col, Row } from "react-bootstrap";
-//import Footer from '../../footer/Footer';
-//import Header from '../../header/Header';
-//import Sidebar from '../../sidebar/Sidebar';
-
-// function EAlert(props) {
-//   return <Alert elevation={6} variant="filled" {...props} />;
-// }
 
 const CreateMenu = () => {
   const [html, setHtml] = useState("");
@@ -226,15 +218,35 @@ const CreateMenu = () => {
   }, []);
 
   return (
-    <div>
-      <div>
-        <div className="row justify-content-center">
-          <div>
-            <div className="card">
+   
+    <div >
+    <div >
+      <main id="main" className="main">
+        <div className="pagetitle">
+          <div className="pagetitle-lft">
+            {/* <h1>Create Sub-Menu</h1> */}
+            <nav>
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">Dashboard</li>
+                <li className="breadcrumb-item  ">CMS</li>
+                <li className="breadcrumb-item active ">Create Menu</li>
+              </ol>
+            </nav>
+          </div>
+          <h1 className="text-center text-dark">Create Menu</h1>
+        </div>
+    <div className="row justify-content-center">
+    <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
+              <Link to="/dashboard">
+                <button type="button" className="btn btn-info">Back</button>
+              </Link>
+            </div>
+  <div className="formdata"> {/* Bootstrap column for full width */}
+    <div className="card custom-card">
               <div className="card-body">
                 <div className="mb-3 mt-md-4">
                   <div className="box-sec">
-                    <h1 className="text-center text-dark heading-main">Menu</h1>
+                    
                     <div className="mb-3">
                       <label className="form-label text-dark">
                         Select a Language
@@ -443,8 +455,13 @@ const CreateMenu = () => {
             </div>
           </div>
         </div>
-      </div>
+       
+      </main>
     </div>
+    </div>    
+                    
+   
+     
   );
 };
 export default CreateMenu;

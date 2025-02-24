@@ -34,6 +34,8 @@ const CircularTable = () => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const columns = [
     { field: "id", headerName: "S.No", width: 50 },
@@ -45,10 +47,12 @@ const CircularTable = () => {
       field: "edit",
       headerName: "Edit",
       sortable: false,
-      renderCell: (params) => (
+      renderCell: (params) => usertype === 1 || usertype === 4 ? (
         <Link to={"/Circular/EditCircular/" + params.row.id}>
           <EditIcon style={{ cursor: "pointer" }} />
         </Link>
+      ): (
+        <EditIcon style={{ cursor: "not-allowed", color: "gray" }} />
       ),
     },
     {
@@ -109,11 +113,12 @@ const CircularTable = () => {
   }, []);
 
   return (
-    <div>
-      <main id="main" className="main">
-        <div className="pagetitle">
-          <div className="pagetitle-lft">
-            <h1 className="maintitle">Circular Table</h1>
+    <div className="row justify-content-center">
+    <div className="formdata">
+      
+     
+       
+            
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -121,17 +126,11 @@ const CircularTable = () => {
                 <li className="breadcrumb-item active">Circular Table </li>
               </ol>
             </nav>
-          </div>
-          <div className="pagetitle-rgt">
-            {/* <Link to="/dashboard">
-              <button type="button" className="btn btn-info my-1">
-                Back
-              </button>
-            </Link> */}
-          </div>
-        </div>
+            <h1 className="maintitle">Circular Table</h1>
+         
+       
         <div className="header-box">
-          <div className="header-box-lft"></div>
+          
           <div className="header-box-rgt">
             <Link to="/Circular/CircularForm">
               <p>
@@ -157,6 +156,9 @@ const CircularTable = () => {
             </Link>
           </div>
         </div>
+
+
+        <div className="card-body">
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={apiData}
@@ -174,7 +176,7 @@ const CircularTable = () => {
             }}
           />
         </Box>
-      </main>
+      </div>
 
       <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -199,6 +201,7 @@ const CircularTable = () => {
           {modalMessage}
         </MuiAlert>
       </Snackbar>
+    </div>
     </div>
   );
 };

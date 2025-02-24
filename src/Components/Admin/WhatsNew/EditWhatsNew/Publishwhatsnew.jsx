@@ -1,8 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { Link, useParams } from "react-router-dom";
 import JoditEditor from "jodit-react";
 //import HomeIcon from "@mui/icons-material/Home";
@@ -28,6 +26,7 @@ const PublisWhatsNew = () => {
   const [prevContentType, setPrevContentType] = useState("");
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [existingFile, setExistingFile] = useState(null);
 
   const [formData, setFormData] = useState({
     news_title: "",
@@ -39,6 +38,7 @@ const PublisWhatsNew = () => {
     end_date: "",
     html: "",
     languagetype: "",
+    filepdfpath: ""
   });
   const [errors, setErrors] = useState({});
   const [editingItemId, setEditingItemId] = useState(null);
@@ -82,6 +82,7 @@ const PublisWhatsNew = () => {
         end_date: "",
         html: "",
         languagetype: "",
+        filepdfpath: ""
       });
     }
   }, [id]);
@@ -123,9 +124,9 @@ const PublisWhatsNew = () => {
       errors.internale_file = "Internal Link is required";
     }
 
-    if (formData.contenttype === "2" && !file) {
-      errors.file = "File is required";
-    }
+    // if (formData.contenttype === "2" && !file) {
+    //   errors.file = "File is required";
+    // }
 
     if (formData.contenttype === "1" && !html) {
       errors.html = "HTML content is required"; // Updated field name
@@ -207,7 +208,11 @@ const PublisWhatsNew = () => {
         } else if (formData.contenttype === 3) {
           formDataToSend.append("internale_file", formData.internale_file);
         } else if (formData.contenttype === 2) {
-          formDataToSend.append("file", file); // Use file here
+          if (file) {
+            formDataToSend.append("file", file); // Attach new file
+          } else if (formData.filepdfpath) {
+            formDataToSend.append("filepath", formData.filepdfpath); // Attach existing file path
+          }  // Use file here
         } else if (formData.contenttype === 1) {
           formDataToSend.append("html", html);
         }
@@ -228,16 +233,17 @@ const PublisWhatsNew = () => {
         // console.log('Data updated:', response.data);
         toast.success("Data published sucessfully!");
         setFormData({
-            news_title: "",
-            contenttype: "",
-            external_file: "",
-            internale_file: "",
-            file: "",
-            startdate: "",
-            end_date: "",
-            html: "",
-            languagetype: "",
-          });
+          news_title: "",
+          contenttype: "",
+          external_file: "",
+          internale_file: "",
+          file: "",
+          startdate: "",
+          end_date: "",
+          html: "",
+          languagetype: "",
+          filepdfpath: ""
+        });
       } catch (error) {
         if (error.response && error.response.status === 401) {
           toast.error("Unauthorized access. Please log in.");
@@ -268,8 +274,8 @@ const PublisWhatsNew = () => {
               Back
             </button>
           </Link> */}
-            <h1 className="text-center heading-main">Publish  What's New Data</h1>
-                  
+          <h1 className="text-center heading-main">Publish  What's New Data</h1>
+
         </div>
         <div className="list">
           <div className="listContainer">
@@ -324,7 +330,7 @@ const PublisWhatsNew = () => {
                         name="contenttype"
                         value={formData.contenttype}
                         onChange={handleInputChange}
-                        // onClick={handleChangeOptions}
+                      // onClick={handleChangeOptions}
                       >
                         <option value="">Select a content type</option>
 
@@ -368,7 +374,7 @@ const PublisWhatsNew = () => {
                           name="internale_file"
                           value={formData.internale_file}
                           onChange={handleInputChange}
-                          // isInvalid={!!formErrors.internal_link}
+                        // isInvalid={!!formErrors.internal_link}
                         >
                           <option value="" style={{ color: "black" }}>
                             Select a Menu Name
@@ -376,7 +382,7 @@ const PublisWhatsNew = () => {
                           {menudata.map((data) => (
                             <option
                               key={data.id}
-                              value={"/menu/" + data.menu_url}
+                              value={"/menu/" + data.menuurl}
                             >
                               {"Menu Name" + ":-" + data.menuname}
                             </option>
@@ -392,6 +398,14 @@ const PublisWhatsNew = () => {
 
                     {parseInt(formData.contenttype) === 2 && (
                       <div className="mb-3">
+                        <a
+                          href={`${APIClient.defaults.baseURL}${formData.filepdfpath}`} // Ensure filepath is properly appended
+                          className="form-control"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {existingFile || "View Document"}
+                        </a>
                         <label className="form-label text-dark">
                           Choose File
                         </label>

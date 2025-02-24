@@ -90,6 +90,7 @@ function Router() {
   return (
     <Routes>
       <Route path="/" element={<LoginForm />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/cms/Createmenu" element={<CreateMenu />} />
       <Route path="/Department/DepartmentForm" element={<CreateDepartment />} />
       <Route path="/MenuSubMenu/MenuSubMenu" element={<MenuSubMenu />} />
