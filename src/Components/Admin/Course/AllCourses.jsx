@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
+import { Button as Buttons } from "react-bootstrap";
 
 const AllCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -110,7 +111,7 @@ const AllCourses = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "name", headerName: "Course Name", width: 200 },
-    { field: "coursedetails", headerName: "Course Description", width: 300 },
+    { field: "coursedetails", headerName: "Course Description", width: 225 },
     // { field: "deptid", headerName: "Department", width: 200 },
     { field: "dname", headerName: "Department Name", width: 200 },
     {
@@ -141,16 +142,37 @@ const AllCourses = () => {
 
   return (
     <div className="row justify-content-center">
+    <nav>
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">Home</li>
+                <li className="breadcrumb-item">Course</li>
+                <li className="breadcrumb-item active">
+                  All Course List{" "}
+                </li>
+              </ol>
+            </nav>
     <div>
-      <div className="card">
-        <div className="card-body">
-        <h2 className="maintitle">Course List</h2>
-        <Link to="/Course/CreateCourse" className="header-box-rgt">
+      <div className="formdata">
+      <h1 className="maintitle mt-0 pt-0">Course List</h1>
+        <div className="">
+        
+        {/* <Link to="/Course/CreateCourse" className="header-box-rgt">
           <p>
             <AddIcon /> New Course
           </p>
         </Link>
-      </div>
+      </div> */}
+      <Box sx={{ display: 'flex', justifyContent: 'flex-left', gap: 5, my: 3 }}>
+      <Button variant="contained" color="primary" component={Link} to="/Rooms/CreateRoom">
+          <AddIcon /> Book New Room
+        </Button>
+        <Button variant="contained" color="primary" component={Link} to="">
+          Booked Room Approval List
+        </Button>
+        <Button variant="contained" color="secondary" component={Link} to="">
+          Booked Room Publisher List
+        </Button>
+      </Box>
 
       <Box sx={{ height: 500, width: "100%" }} style={{ backgroundColor: "#fff" }}>
         <DataGrid
@@ -159,6 +181,15 @@ const AllCourses = () => {
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
+          slots={{
+                toolbar: GridToolbar, // Correct way to use the toolbar
+              }}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                  quickFilterProps: { debounceMs: 500 },
+                },
+              }}
           components={{ Toolbar: GridToolbar }}
           componentsProps={{ toolbar: { showQuickFilter: true } }}
         />
@@ -214,6 +245,7 @@ const AllCourses = () => {
         <ToastContainer />
       </Snackbar>
     </div>
+  </div>
   </div>
   </div>
   );

@@ -27,7 +27,7 @@ const AllDepartments = () => {
         console.log("Fetching departments..."); // Debugging log
         const response = await APIClient.get(apis.getDepartments);
           const dataWithIds = response.data.map((row, index) => ({
-            id: index, 
+            id: index + 1, 
             did: row.did, 
             dname: row.dname
           }));
@@ -103,11 +103,12 @@ const AllDepartments = () => {
   
 
   const columns = [
-    { field: "did", headerName: "S.No", width: 50 },
-    { field: "dname", headerName: "Department Name", width: 200 },
+    { field: "id", headerName: "S.No", width: 150 },
+    { field: "dname", headerName: "Department Name", width: 350 },
     {
       field: "edit",
       headerName: "Edit",
+      width: 200,
       sortable: false,
       renderCell: (params) => (
         <Button color="primary">
@@ -118,6 +119,7 @@ const AllDepartments = () => {
     {
       field: "delete",
       headerName: "Delete",
+      width: 100,
       sortable: false,
       renderCell: (params) => (
         <Button color="error" onClick={() => handleDeleteClick(params.row)}>Delete</Button>
@@ -127,31 +129,49 @@ const AllDepartments = () => {
 
   return (
     <div className="row justify-content-center">
+    <nav>
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">Home</li>
+                <li className="breadcrumb-item">Department</li>
+                <li className="breadcrumb-item active">
+                  All Department List{" "}
+                </li>
+              </ol>
+            </nav>
     <div>
       <div className="card">
-        <div className="card-body">
-        <h2 className="maintitle">Department List</h2>
+        
+        <h1 className="maintitle mt-0 pt-0">Department List</h1>
   
-
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mb: 2 }}>
+        <div className="card-body">
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 5, mb: 2 }}>
         <Button variant="contained" color="primary" component={Link} to="/Department/DepartmentForm">
           <AddIcon /> New Department
         </Button>
-        <Button variant="contained" color="primary" component={Link} to="/Approvalfooterlist">
+        <Button variant="contained" color="primary" component={Link} to="">
           Department Approval List
         </Button>
-        <Button variant="contained" color="secondary" component={Link} to="/Publisherfooterlist">
+        <Button variant="contained" color="secondary" component={Link} to="">
           Department Publisher List
         </Button>
       </Box>
 
-      <Box sx={{ height: 400, width: "100%" }} style={{ backgroundColor: "#fff" }}>
+      <Box sx={{ height: 500, width: "100%" }} style={{ backgroundColor: "#fff" }}>
         <DataGrid
           rows={departments}
           columns={columns}
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
+          slots={{
+                toolbar: GridToolbar, // Correct way to use the toolbar
+              }}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                  quickFilterProps: { debounceMs: 500 },
+                },
+              }}
           components={{ Toolbar: GridToolbar }}
           componentsProps={{ toolbar: { showQuickFilter: true } }}
         />

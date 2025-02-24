@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Breadcrumbs } from "@mui/material";
 import { Box, Snackbar } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
-import { Button } from "react-bootstrap";
+import { Button as Buttons } from "react-bootstrap";
 
 const Bookroomlist = () => {
   const [bookroom, setBookroom] = useState([]);
@@ -30,7 +30,8 @@ const Bookroomlist = () => {
         setHostels(hostelsRes.data);
         setRooms(roomsRes.data);
 
-        const bookroomData = bookroomRes.data.map((bookroom) => ({
+        const bookroomData = bookroomRes.data.map((bookroom, index) => ({
+          rid : index+1,
           id: bookroom.id,
           roomName: roomsRes.data.find((room) => room.id === bookroom.roomid)?.name || "Unknown Room",
           hostelName: hostelsRes.data.find((hostel) => hostel.hid === bookroom.hostalid)?.hname || "Unknown Hostel",
@@ -77,10 +78,10 @@ const Bookroomlist = () => {
 
   // DataGrid columns
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
-    { field: "roomName", headerName: "Room Name", width: 200 },
-    { field: "hostelName", headerName: "Hostel Name", width: 200 },
-    { field: "amount", headerName: "Amount", width: 150 },
+    { field: "rid", headerName: "ID", width: 150 },
+    { field: "roomName", headerName: "Room Name", width: 225 },
+    { field: "hostelName", headerName: "Hostel Name", width: 225 },
+    { field: "amount", headerName: "Amount", width: 210 },
     {
       field: "action",
       headerName: "Action",
@@ -88,12 +89,12 @@ const Bookroomlist = () => {
       sortable: false,
       renderCell: (params) => (
         <div>
-          <Button variant="outline-primary" size="sm" as={Link} to={`/BookRoom/EditBookRoom/${params.row.id}`}>
+          <Buttons variant="outline-primary" size="sm" as={Link} to={`/BookRoom/EditBookRoom/${params.row.id}`}>
             Edit
-          </Button>
-          <Button variant="outline-danger" size="sm" style={{ marginLeft: 8 }} onClick={() => handleDeleteClick(params.row)}>
+          </Buttons>
+          <Buttons variant="outline-danger" size="sm" style={{ marginLeft: 8 }} onClick={() => handleDeleteClick(params.row)}>
             Delete
-          </Button>
+          </Buttons>
         </div>
       )
     }
@@ -101,14 +102,38 @@ const Bookroomlist = () => {
 
   return (
     <main id="main" className="main">
-      <div className="header-box" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px" }}>
+    <div className="row justify-content-center">
+    <nav>
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">Home</li>
+                <li className="breadcrumb-item">Book Room</li>
+                <li className="breadcrumb-item active">
+                  All Book Room List{" "}
+                </li>
+              </ol>
+            </nav>
+      <div className="card">
+      {/* <div className="header-box" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px" }}>
         <h2 className="maintitle">Book Room List</h2>
         <Link to="/BookRoom/Bookroom" style={{ textDecoration: "none", color: "inherit" }}>
           <Button variant="primary">
             <AddIcon /> Book Room
           </Button>
         </Link>
-      </div>
+      </div> */}
+      <h1 className="maintitle mt-0 pt-0">Book Room List</h1>
+      <div className="card-body">
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 5, mb: 2 }}>
+      <Button variant="contained" color="primary" component={Link} to="/BookRoom/Bookroom">
+          <AddIcon /> Book New Room
+        </Button>
+        <Button variant="contained" color="primary" component={Link} to="">
+          Booked Room Approval List
+        </Button>
+        <Button variant="contained" color="secondary" component={Link} to="">
+          Booked Room Publisher List
+        </Button>
+      </Box>
 
       <Box sx={{ height: 600, width: "100%" }} style={{ backgroundColor: "#fff", padding: "16px" }}>
         <DataGrid
@@ -117,6 +142,15 @@ const Bookroomlist = () => {
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
+          slots={{
+                toolbar: GridToolbar, // Correct way to use the toolbar
+              }}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                  quickFilterProps: { debounceMs: 500 },
+                },
+              }}
           components={{ Toolbar: GridToolbar }}
           componentsProps={{ toolbar: { showQuickFilter: true } }}
           pageSize={10}
@@ -136,6 +170,9 @@ const Bookroomlist = () => {
       <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
         <ToastContainer />
       </Snackbar>
+      </div>
+      </div>
+      </div>
     </main>
   );
 };
