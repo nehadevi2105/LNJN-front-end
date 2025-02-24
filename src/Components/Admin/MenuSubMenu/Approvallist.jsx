@@ -136,12 +136,14 @@ function Approvallist() {
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
-            components={{
-              Toolbar: GridToolbar,
+            
+            slots={{
+              toolbar: GridToolbar, // Correct way to use the toolbar
             }}
-            componentsProps={{
+            slotProps={{
               toolbar: {
                 showQuickFilter: true,
+                quickFilterProps: { debounceMs: 500 },
               },
             }}
           />
