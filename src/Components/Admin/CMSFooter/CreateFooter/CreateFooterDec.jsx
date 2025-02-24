@@ -175,11 +175,6 @@ alert ("Data saved successfully!");
                   <div className="mb-3 mt-md-4">
                     <div className="box-sec">
                       <div className="mb-3">
-                        <h1 className="text-center heading-main">
-                          Footer Description
-                        </h1>
-                      </div>
-                      <div className="mb-3">
                         <label className="form-label text-dark">
                           Language Type
                         </label>
