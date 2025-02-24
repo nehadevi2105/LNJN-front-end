@@ -243,31 +243,32 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
 
   // console.log(formData)
   return (
-
-    <div>
-      
-      <main id="main" className="main">
+    <div className="dashboard-container ">
+        <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1>Publish Tender Data</h1>
+           
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Publish Tender Data</li>
               </ol>
             </nav>
+            <h1>Publish Tender Data</h1>
           </div>
-          <div className="pagetitle-rgt d-flex justify-content-end mb-5">
+          <div className="row justify-content-center">
+          <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
             <Link to="/services/alltender">
               <button type="button" className="btn btn-info">
                 Back
               </button>
             </Link>
           </div>
-        </div>
-        <div className="list">
+       
 
-          <div className="listContainer">
+          <div className="formdata"> {/* Bootstrap column for full width */}
+              <div className="card custom-card">
+                <div className="card-body">
 
             <div className="container">
               <div className="row">
@@ -494,7 +495,11 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
                 </div>
               </div>
             </div>
+
           </div>
+        </div>
+        </div>
+        </div>
         </div>
       </main>
     </div>
