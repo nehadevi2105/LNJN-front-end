@@ -26,10 +26,10 @@ function EAlert(props) {
 
 const ApproveFooterData = () => {
   const { id } = useParams();
-  const [cotent, setContent] = useState("");
+  const [content, setContent] = useState("");
   const [menudata, setMenudata] = useState("");
   const [html, setHtml] = useState("");
-  const [file, setselectefile] = useState(null);
+  const [file, setFile] = useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false); // Confirmation dialog state
   // const [snackbarOpen, setSnackbarOpen] = useState(false); // Snackbar state
   const [modalMessage, setModalMessage] = useState("");
@@ -38,6 +38,17 @@ const ApproveFooterData = () => {
   const navigate = useNavigate();
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [existingFile, setExistingFile] = useState(null);
+
+  const config = useMemo(
+    () => ({
+      readonly: false,
+    }),
+    []
+  );
+  const onChange = useCallback((html) => {
+    setContent(html);
+  }, []);
 
   const [formData, setFormData] = useState({
     tittle_name: "",
@@ -48,6 +59,7 @@ const ApproveFooterData = () => {
     html: "",
     footertype: 3,
     languagetype: "",
+    filepdfpath: "",
   });
 
   const editor = useRef(null);
@@ -63,17 +75,8 @@ const ApproveFooterData = () => {
       html: "",
       footertype: 3,
       languagetype: "",
+      filepdfpath: "",
     });
-  }, []);
-  const config = useMemo(
-    () => ({
-      readonly: false,
-    }),
-    []
-  );
-  const onChange = useCallback((html) => {
-    // console.log("Editor content changed:", html);
-    setContent(html);
   }, []);
 
   const handleEditorChange = (content) => {
@@ -105,13 +108,13 @@ const ApproveFooterData = () => {
       errors.external_link = "External Link is required";
     }
 
-    if (formData.contenttype === "3" && !formData.internale_link) {
-      errors.internale_link = "Internal Link is required";
-    }
+    // if (formData.contenttype === "3" && !formData.internale_link) {
+    //   errors.internale_link = "Internal Link is required";
+    // }
 
-    if (formData.contenttype === "2" && !file) {
-      errors.file = "File is required";
-    }
+    // if (formData.contenttype === "2" && !file) {
+    //   errors.file = "File is required";
+    // }
 
     // if (formData.contenttype === '1' && !html) {
     //   errors.editorContent = 'HTML content is required';
@@ -124,7 +127,7 @@ const ApproveFooterData = () => {
 
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
-    setselectefile(imageFile);
+    setFile(imageFile);
   };
 
   const handleInputChange = (event) => {
@@ -135,11 +138,7 @@ const ApproveFooterData = () => {
         ...formData,
         [name]: event.target.files[0],
       });
-    }
-
-    // else if (formData.contenttype === 1) {
-    // }
-    else {
+    } else {
       setFormData({
         ...formData,
         [name]: value,
@@ -157,7 +156,7 @@ const ApproveFooterData = () => {
 
   const handleConfirmSubmit = async () => {
     handleCloseConfirmation();
-    validateForm();
+    //validateForm();
 
     try {
       const formDataToSend = new FormData();
@@ -171,12 +170,17 @@ const ApproveFooterData = () => {
       } else if (formData.contenttype === 3) {
         formDataToSend.append("internale_link", formData.internale_link);
       } else if (formData.contenttype === 2) {
-        formDataToSend.append("file", file);
+        if (file) {
+          formDataToSend.append("file", file); // Attach new file
+        } else if (formData.filepdfpath) {
+          formDataToSend.append("filepdfpath", formData.filepdfpath); // Attach existing file path
+        }
       } else if (formData.contenttype === 1) {
         formDataToSend.append("html", formData.html);
       }
       formDataToSend.append("usertype", "4");
       formDataToSend.append("action", "approve");
+
       const response = await APIClient.post(
         "/api/lowerfooter/updatefooter/" + id,
         formDataToSend,
@@ -191,12 +195,11 @@ const ApproveFooterData = () => {
       toast.success("Data saved successfully!");
       setModalMessage("Data saved successfully!");
       setSnackbarOpen(true);
-      // Show the success Snackbar
-      // Clear the form fields
     } catch (error) {
       console.error("Error saving data:", error);
     }
   };
+
   useEffect(() => {
     async function fetchData1() {
       try {
@@ -343,8 +346,16 @@ const ApproveFooterData = () => {
               )}
 
               {/* Input for File */}
-              {parseInt(formData.contenttype) === 2 && (
+              {formData.contenttype === 2 && (
                 <div className="mb-3">
+                  <a
+                    href={`${APIClient.defaults.baseURL}${formData.filepdfpath}`} // Ensure filepath is properly appended
+                    className="form-control"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {existingFile || "View Document"}
+                  </a>
                   <label className="form-label text-dark">Choose File</label>
                   <input
                     className="form-control"

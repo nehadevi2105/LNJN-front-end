@@ -1,17 +1,11 @@
-import  {
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-  useRef,
-} from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 //import ViewListIcon from "@mui/icons-material/ViewList";
-import {useParams } from "react-router-dom";
-import {  useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 //import HomeIcon from "@mui/icons-material/Home";
 
 import DialogActions from "@mui/material/DialogActions";
@@ -36,13 +30,14 @@ const PublishFooterData = () => {
   const [menudata, setMenudata] = useState("");
   const [editorContent, setEditorContent] = useState("");
   const [html, setHtml] = useState("");
-  const [file, setselectefile] = useState(null);
+  const [file, setFile] = useState(null);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false); // Confirmation dialog state
   // const [snackbarOpen, setSnackbarOpen] = useState(false); // Snackbar state
   const [modalMessage, setModalMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [existingFile, setExistingFile] = useState(null);
 
   const navigate = useNavigate();
 
@@ -55,6 +50,7 @@ const PublishFooterData = () => {
     html: "",
     footertype: 3,
     languagetype: "",
+    filepdfpath: "",
   });
   const editor = useRef(null);
   const [errors, setErrors] = useState({});
@@ -69,6 +65,7 @@ const PublishFooterData = () => {
       html: "",
       footertype: 3,
       languagetype: "",
+      filepdfpath: "",
     });
   }, []);
   const config = useMemo(
@@ -108,13 +105,13 @@ const PublishFooterData = () => {
       errors.external_link = "External Link is required";
     }
 
-    if (formData.contenttype === "3" && !formData.internale_link) {
-      errors.internale_link = "Internal Link is required";
-    }
+    // if (formData.contenttype === "3" && !formData.internale_link) {
+    //   errors.internale_link = "Internal Link is required";
+    // }
 
-    if (formData.contenttype === "2" && !file) {
-      errors.file = "File is required";
-    }
+    // if (formData.contenttype === "2" && !file) {
+    //   errors.file = "File is required";
+    // }
 
     // if (formData.contenttype === '1' && !html) {
     //   errors.editorContent = 'HTML content is required';
@@ -127,7 +124,7 @@ const PublishFooterData = () => {
 
   const handleImageChange = (event) => {
     const imageFile = event.target.files[0];
-    setselectefile(imageFile);
+    setFile(imageFile);
   };
 
   const handleInputChange = (event) => {
@@ -138,10 +135,7 @@ const PublishFooterData = () => {
         ...formData,
         [name]: event.target.files[0],
       });
-    }
-    // else if (formData.contenttype === 1) {
-    // }
-    else {
+    } else {
       setFormData({
         ...formData,
         [name]: value,
@@ -173,7 +167,11 @@ const PublishFooterData = () => {
       } else if (formData.contenttype === 3) {
         formDataToSend.append("internale_link", formData.internale_link);
       } else if (formData.contenttype === 2) {
-        formDataToSend.append("file", file);
+        if (file) {
+          formDataToSend.append("file", file); // Attach new file
+        } else if (formData.filepdfpath) {
+          formDataToSend.append("filepdfpath", formData.filepdfpath); // Attach existing file path
+        }
       } else if (formData.contenttype === 1) {
         formDataToSend.append("html", formData.html);
       }
@@ -347,6 +345,14 @@ const PublishFooterData = () => {
               {/* Input for File */}
               {parseInt(formData.contenttype) === 2 && (
                 <div className="mb-3">
+                  <a
+                    href={`${APIClient.defaults.baseURL}${formData.filepdfpath}`} // Ensure filepath is properly appended
+                    className="form-control"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {existingFile || "View Document"}
+                  </a>
                   <label className="form-label text-dark">Choose File</label>
                   <input
                     className="form-control"
