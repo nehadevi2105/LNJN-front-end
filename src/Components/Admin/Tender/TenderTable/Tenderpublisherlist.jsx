@@ -104,11 +104,11 @@ const TenderPublisherlist = () => {
   }, []);
 
   return (
-    <div>
-      <main id="main" className="main">
+    <div className="row justify-content-center">
+    <div className="formdata">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1 className="maintitle">Publisher  Tender List</h1>
+           
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -116,6 +116,7 @@ const TenderPublisherlist = () => {
                 <li className="breadcrumb-item active">Publisher  Tender List</li>
               </ol>
             </nav>
+            <h1 className="maintitle">Publisher  Tender List</h1>
           </div>
           
         </div>
@@ -149,7 +150,7 @@ const TenderPublisherlist = () => {
             }}
           />
         </Box>
-      </main>
+   
 
       <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -174,6 +175,7 @@ const TenderPublisherlist = () => {
           {modalMessage}
         </MuiAlert>
       </Snackbar>
+    </div>
     </div>
   );
 };

@@ -141,7 +141,8 @@ import 'react-toastify/dist/ReactToastify.css';
               </ol>
             </nav>
           </div>
-          <div className="pagetitle-rgt">
+          <h1>Create Footer Address</h1> 
+          <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
           <Link to='/dashboard'>
               <button type="button" className="btn btn-info">
                 Back
@@ -156,11 +157,7 @@ import 'react-toastify/dist/ReactToastify.css';
                 <div className="mb-3 mt-md-4">
                   <div className="col-md-12">
                     <div className="box-sec">
-                      <div className="mb-3">
-                        <h1 className="text-center heading-main">
-                          Office Address
-                        </h1>
-                      </div>
+                      
                       <div className="mb-3">
                         <label className="form-label text-dark">
                           Language Type

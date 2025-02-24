@@ -89,12 +89,9 @@ const CreateUser = () => {
   };
 
   return (
-    <div >
-      <div >
+    <div className="dashboard-container ">
         <main id="main" className="main">
           <div className="pagetitle">
-            <div className="pagetitle-lft">
-            
               <nav>
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">Dashboard</li>
@@ -102,7 +99,6 @@ const CreateUser = () => {
                   <li className="breadcrumb-item active ">Create User</li>
                 </ol>
               </nav>
-            </div>
             <h1 className="text-center text-dark">Create User</h1>
           </div>
 
@@ -197,7 +193,7 @@ const CreateUser = () => {
 
         </main>
       </div>
-    </div>
+    
 
   );
 };

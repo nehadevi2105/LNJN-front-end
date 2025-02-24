@@ -34,7 +34,7 @@ function MenuSubMenu() {
   const usertype = JSON.parse(storedUserString);
 
   const columns = [
-    { field: "id", headerName: "S.No", width: 50 },
+    { field: "id1", headerName: "S.No", width: 50 },
     { field: "menuname", headerName: "Title", width: 200 },
     { field: "internal_link", headerName: "Internal Link", width: 120 },
     { field: "external_link", headerName: "External Link", width: 120 },
@@ -102,7 +102,7 @@ function MenuSubMenu() {
       try {
         const response = await APIClient.get(apis.topMenu);
         const dataWithIds = response.data.map((row, index) => ({
-          id: index + 1,
+          id1: index + 1,
           ...row,
         }));
         setApiData(dataWithIds);
@@ -116,93 +116,95 @@ function MenuSubMenu() {
 
   return (
     <div className="row justify-content-center">
-    <div className="formdata">
-     
-            <nav>
-              <ol className="breadcrumb">
-                <li className="breadcrumb-item">Home</li>
-                <li className="breadcrumb-item">Service</li>
-                <li className="breadcrumb-item active">
-                  All Menu Submenu List{" "}
-                </li>
-              </ol>
-            </nav>
-            <h1>All Menu Submenu List</h1>
+      <div className="formdata">
+
+        <nav>
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">Home</li>
+            <li className="breadcrumb-item">Service</li>
+            <li className="breadcrumb-item active">
+              All Menu Submenu List{" "}
+            </li>
+          </ol>
+        </nav>
+        <h1>All Menu Submenu List</h1>
 
 
-          <div className="d-flex justify-content-left" style={{ marginLeft: "1px" }}>
-            <Link to="/dashboard">
-              <button type="button" className="btn btn-info">
-                Back
-              </button>
-            </Link>
-            <Link to="/approvallist">
-              <button
-                type="button"
-                className="btn btn-primary"
-                style={{ marginLeft: "10px" }}
-              >
-                Get Approval List
-              </button>
-            </Link>
-            <Link to="/publisherlist">
-              <button
-                type="button"
-                className="btn btn-primary"
-                style={{ marginLeft: "10px" }}
-              >
-                Get Publisher List
-              </button>
-            </Link>
-          </div>
-       
+        <div className="d-flex justify-content-left" style={{ marginLeft: "1px" }}>
+          <Link to="/dashboard">
+            <button type="button" className="btn btn-info">
+              Back
+            </button>
+          </Link>
+          <Link to="/approvallist">
+            <button
+              type="button"
+              className="btn btn-primary"
+              style={{ marginLeft: "10px" }}
+            >
+              Get Approval List
+            </button>
+          </Link>
+          <Link to="/publisherlist">
+            <button
+              type="button"
+              className="btn btn-primary"
+              style={{ marginLeft: "10px" }}
+            >
+              Get Publisher List
+            </button>
+          </Link>
+        </div>
+
         <div className="card-body">
-         
-      
-        <Box sx={{ height: 400, width: "100%" }}>
-          <DataGrid
-            rows={apiData}
-            columns={columns}
-            disableColumnFilter
-            disableColumnSelector
-            disableDensitySelector
-            components={{
-              Toolbar: GridToolbar,
-            }}
-            componentsProps={{
-              toolbar: {
-                showQuickFilter: true,
-              },
-            }}
-          />
-        </Box>
-      </div>
 
-      <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
-        <DialogTitle>Confirm Delete</DialogTitle>
-        <DialogContent>
-          Are you sure you want to delete this data?
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseConfirmation} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleConfirmSubmit} color="primary">
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={() => setSnackbarOpen(false)}
-      >
-        <MuiAlert severity="success" onClose={() => setSnackbarOpen(false)}>
-          {modalMessage}
-        </MuiAlert>
-      </Snackbar>
-      <ToastContainer />
-    </div>
+
+          <Box sx={{ height: 400, width: "100%" }}>
+            <DataGrid
+              rows={apiData}
+              columns={columns}
+              disableColumnFilter
+              disableColumnSelector
+              disableDensitySelector
+              slots={{
+                toolbar: GridToolbar, // Correct way to use the toolbar
+              }}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                  quickFilterProps: { debounceMs: 500 },
+                },
+              }}
+            />
+          </Box>
+
+        </div>
+
+        <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
+          <DialogTitle>Confirm Delete</DialogTitle>
+          <DialogContent>
+            Are you sure you want to delete this data?
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseConfirmation} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleConfirmSubmit} color="primary">
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={3000}
+          onClose={() => setSnackbarOpen(false)}
+        >
+          <MuiAlert severity="success" onClose={() => setSnackbarOpen(false)}>
+            {modalMessage}
+          </MuiAlert>
+        </Snackbar>
+        <ToastContainer />
+      </div>
     </div>
   );
 }

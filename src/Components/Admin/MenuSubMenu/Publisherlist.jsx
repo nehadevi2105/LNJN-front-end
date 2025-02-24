@@ -34,7 +34,7 @@ function Publisherlist() {
   const usertype = JSON.parse(storedUserString);
 
   const columns = [
-    { field: "id", headerName: "S.No", width: 100 },
+    { field: "id1", headerName: "S.No", width: 100 },
     { field: "menuname", headerName: "Title", width: 250 },
     { field: "internal_link", headerName: "Internal Link", width: 120 },
     { field: "external_link", headerName: "External Link", width: 120 },
@@ -91,7 +91,7 @@ function Publisherlist() {
       try {
         const response = await APIClient.get(apis.publisherlist);
         const dataWithIds = response.data.map((row, index) => ({
-          id: index + 1,
+          id1: index + 1,
           ...row,
         }));
         setApiData(dataWithIds);
@@ -133,12 +133,13 @@ function Publisherlist() {
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
-            components={{
-              Toolbar: GridToolbar,
+            slots={{
+              toolbar: GridToolbar, // Correct way to use the toolbar
             }}
-            componentsProps={{
+            slotProps={{
               toolbar: {
                 showQuickFilter: true,
+                quickFilterProps: { debounceMs: 500 },
               },
             }}
           />
