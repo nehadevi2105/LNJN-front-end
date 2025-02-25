@@ -121,8 +121,8 @@ const Custompublisherlist = () => {
                 </div> */}
         </div>
         <Box sx={{ height: 400, width: "100%", backgroundColor: "white" }}>
-          <div className="pagetitle-rgt">
-            <Link to="/custom/custom">
+          <div className="d-flex justify-content-left" style={{ marginLeft: "1px" }}>
+          <Link to="/custom/custom">
               <button
                 type="button"
                 className="btn btn-info"

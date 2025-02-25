@@ -126,7 +126,7 @@ const Customapprovallist = () => {
                 </div> */}
         </div>
         <Box sx={{ height: 400, width: "100%", backgroundColor: "white" }}>
-          <div className="pagetitle-rgt">
+          <div className="d-flex justify-content-left" style={{ marginLeft: "1px" }}>
             <Link to="/custom/custom">
               <button
                 type="button"
