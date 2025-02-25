@@ -31,7 +31,7 @@ const WhatsNewTable = () => {
   const usertype = JSON.parse(storedUserString);
 
   const columns = [
-    { field: "rowIndex", headerName: "S.No", width: 50 },
+    { field: "id1", headerName: "S.No", width: 50 },
     { field: "news_title", headerName: "Title", width: 200 },
     { field: "startdate", headerName: "Start Date", width: 120 },
     { field: "end_date", headerName: "End date", width: 120 },
@@ -93,7 +93,7 @@ const WhatsNewTable = () => {
         const response = await APIClient.get(apis.whatsnew);
         //const response = await getwhatsnew();
         const dataWithIds = response.data.map((row, index) => ({
-          id: index,
+          id1: index+1,
           ...row,
         }));
         setApiData(dataWithIds);
@@ -106,17 +106,17 @@ const WhatsNewTable = () => {
   }, []);
 
   return (
-    <div>
+    <div className="formdata">
       <main id="main" className="main">
         <div className="pagetitle">
-          <h2 className="maintitle">All Whats New</h2>
           <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">Home</li>
               <li className="breadcrumb-item">Service</li>
-              <li className="breadcrumb-item active">All Whats New </li>
+              <li className="breadcrumb-item active">What's New Table </li>
             </ol>
           </nav>
+          <h2 className="maintitle">What's New Table</h2>
         </div>
         <div className="header-box">
           <div className="header-box-rgt">
@@ -137,6 +137,15 @@ const WhatsNewTable = () => {
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
+            slots={{
+              toolbar: GridToolbar, // Correct way to use the toolbar
+            }}
+            slotProps={{
+              toolbar: {
+                showQuickFilter: true,
+                quickFilterProps: { debounceMs: 500 },
+              },
+            }}
             components={{
               Toolbar: GridToolbar,
             }}
