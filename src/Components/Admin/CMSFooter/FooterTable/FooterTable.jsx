@@ -27,7 +27,7 @@ const FooterTable = () => {
 
   
   const columns = [
-    { field: "rowIndex", headerName: "S.No", width: 50 },
+    { field: "id1", headerName: "S.No", width: 50 },
     { field: "tittle_name", headerName: "Title", width: 200 },
     { field: "address", headerName: "Address", width: 200 },
     { field: "description", headerName: "Description", width: 250 },
@@ -91,7 +91,7 @@ const FooterTable = () => {
       try {
         const response = await APIClient.get(apis.footerdata);
         const dataWithIds = response.data.map((row, index) => ({
-          id: index,
+          id1: index+1,
           ...row,
         }));
         setApiData(dataWithIds);
@@ -158,6 +158,15 @@ const FooterTable = () => {
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
+            slots={{
+                            toolbar: GridToolbar, // Correct way to use the toolbar
+                          }}
+                          slotProps={{
+                            toolbar: {
+                              showQuickFilter: true,
+                              quickFilterProps: { debounceMs: 500 },
+                            },
+                          }}
             components={{
               Toolbar: GridToolbar,
             }}
