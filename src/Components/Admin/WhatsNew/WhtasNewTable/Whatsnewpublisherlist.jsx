@@ -32,7 +32,7 @@ const WhatsNewpublisherTable = () => {
 
 
   const columns = [
-    { field: "rowIndex", headerName: "S.No", width: 50 },
+    { field: "id1", headerName: "S.No", width: 50 },
     { field: "news_title", headerName: "Title", width: 200 },
     { field: "startdate", headerName: "Start Date", width: 120 },
     { field: "end_date", headerName: "End date", width: 120 },
@@ -84,7 +84,7 @@ const WhatsNewpublisherTable = () => {
         const response = await APIClient.get(apis.whatspublisherlist);
         //const response = await getwhatsnew();
         const dataWithIds = response.data.map((row, index) => ({
-          id: index,
+          id1: index+1,
           ...row,
         }));
         setApiData(dataWithIds);
@@ -97,17 +97,17 @@ const WhatsNewpublisherTable = () => {
   }, []);
 
   return (
-    <div>
+    <div className="formdata">
       <main id="main" className="main">
         <div className="pagetitle">
-          <h2 className="maintitle">Whats New Publisher list</h2>
-          <nav>
+        <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">Home</li>
               <li className="breadcrumb-item">Service</li>
               <li className="breadcrumb-item active"> Whats New Publisher list </li>
             </ol>
           </nav>
+          <h2 className="maintitle">Whats New Publisher list</h2>
         </div>
       
         <Box sx={{ height: 400, width: "100%" }}>
@@ -117,6 +117,15 @@ const WhatsNewpublisherTable = () => {
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
+            slots={{
+              toolbar: GridToolbar, // Correct way to use the toolbar
+            }}
+            slotProps={{
+              toolbar: {
+                showQuickFilter: true,
+                quickFilterProps: { debounceMs: 500 },
+              },
+            }}
             components={{
               Toolbar: GridToolbar,
             }}

@@ -26,7 +26,7 @@ const ApprovalbannerList = () => {
   const usertype = JSON.parse(storedUserString);
 
   const columns = [
-    { field: "id", headerName: "S.No", width: 50 },
+    { field: "id1", headerName: "S.No", width: 50 },
     {
       field: "imgpath",
       headerName: "Image",
@@ -82,7 +82,7 @@ const ApprovalbannerList = () => {
       try {
         const response = await APIClient.get(apis.bannerapprovallist);
         const dataWithIds = response.data.map((row, index) => ({
-          id: index + 1,
+          id1: index + 1,
           ...row,
         }));
         setApiData(dataWithIds);
@@ -114,8 +114,23 @@ const ApprovalbannerList = () => {
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
-          components={{ Toolbar: GridToolbar }}
-          componentsProps={{ toolbar: { showQuickFilter: true } }}
+          slots={{
+            toolbar: GridToolbar, // Correct way to use the toolbar
+          }}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
+              quickFilterProps: { debounceMs: 500 },
+            },
+          }}
+          components={{
+            Toolbar: GridToolbar,
+          }}
+          componentsProps={{
+            toolbar: {
+              showQuickFilter: true,
+            },
+          }}
         />
       </Box>
       <Dialog

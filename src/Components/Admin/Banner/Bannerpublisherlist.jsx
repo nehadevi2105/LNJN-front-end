@@ -26,7 +26,7 @@ const PublisherbannerList = () => {
   const usertype = JSON.parse(storedUserString);
 
   const columns = [
-    { field: "id", headerName: "S.No", width: 50 },
+    { field: "id1", headerName: "S.No", width: 50 },
     {
       field: "imgpath",
       headerName: "Image",
@@ -82,7 +82,7 @@ const PublisherbannerList = () => {
       try {
         const response = await APIClient.get(apis.getbannerpublisherlist);
         const dataWithIds = response.data.map((row, index) => ({
-          id: index + 1,
+          id1: index + 1,
           ...row,
         }));
         setApiData(dataWithIds);
@@ -95,56 +95,74 @@ const PublisherbannerList = () => {
 
   return (
     <>
-    <div className="row justify-content-center">
-        <div className="formdata">           
-                <nav>
-                  <ol className="breadcrumb">
-                    <li className="breadcrumb-item">Home</li>
-                    <li className="breadcrumb-item">Banner</li>
-                    <li className="breadcrumb-item active">Banner Table </li>
-                  </ol>
-                </nav>
-                <h1 className="maintitle">Banner Table</h1>
-             
-      <Box sx={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={apiData}
-          columns={columns}
-          disableColumnFilter
-          disableColumnSelector
-          disableDensitySelector
-          components={{ Toolbar: GridToolbar }}
-          componentsProps={{ toolbar: { showQuickFilter: true } }}
-        />
-      </Box>
-      <Dialog
-        open={confirmDialogOpen}
-        onClose={() => setConfirmDialogOpen(false)}
-      >
-        <DialogTitle>Confirm Delete</DialogTitle>
-        <DialogContent>
-          Are you sure you want to delete this data?
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setConfirmDialogOpen(false)} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleConfirmSubmit} color="primary">
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={() => setSnackbarOpen(false)}
-      >
-        <MuiAlert severity="success" onClose={() => setSnackbarOpen(false)}>
-          {modalMessage}
-        </MuiAlert>
-      </Snackbar>
-      <ToastContainer />
-      </div>
+      <div className="row justify-content-center">
+        <div className="formdata">
+          <nav>
+            <ol className="breadcrumb">
+              <li className="breadcrumb-item">Home</li>
+              <li className="breadcrumb-item">Banner</li>
+              <li className="breadcrumb-item active">Banner Table </li>
+            </ol>
+          </nav>
+          <h1 className="maintitle">Banner Table</h1>
+
+          <Box sx={{ height: 400, width: "100%" }}>
+            <DataGrid
+              rows={apiData}
+              columns={columns}
+              disableColumnFilter
+              disableColumnSelector
+              disableDensitySelector
+              slots={{
+                toolbar: GridToolbar, // Correct way to use the toolbar
+              }}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                  quickFilterProps: { debounceMs: 500 },
+                },
+              }}
+              components={{
+                Toolbar: GridToolbar,
+              }}
+              componentsProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                },
+              }}
+            />
+          </Box>
+          <Dialog
+            open={confirmDialogOpen}
+            onClose={() => setConfirmDialogOpen(false)}
+          >
+            <DialogTitle>Confirm Delete</DialogTitle>
+            <DialogContent>
+              Are you sure you want to delete this data?
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => setConfirmDialogOpen(false)}
+                color="primary"
+              >
+                Cancel
+              </Button>
+              <Button onClick={handleConfirmSubmit} color="primary">
+                Confirm
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Snackbar
+            open={snackbarOpen}
+            autoHideDuration={3000}
+            onClose={() => setSnackbarOpen(false)}
+          >
+            <MuiAlert severity="success" onClose={() => setSnackbarOpen(false)}>
+              {modalMessage}
+            </MuiAlert>
+          </Snackbar>
+          <ToastContainer />
+        </div>
       </div>
     </>
   );
