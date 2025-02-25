@@ -283,7 +283,7 @@ const Publishsubmenudata = () => {
   }, [id]);
 
   return (
-    <div>
+    <div className="formdata">
       <div className="row justify-content-center">
         <div className="container-fluid bg-white">
           <div className="box-sec">

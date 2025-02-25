@@ -32,11 +32,11 @@ const Customapprovallist = () => {
   const usertype = JSON.parse(storedUserString);
 
   const columns = [
-    { field: "id", headerName: "S.No", width: 50 },
-    { field: "menuname", headerName: "Title", width: 200 },
+    { field: "id1", headerName: "S.No", width: 100 },
+    { field: "menuname", headerName: "Title", width: 300 },
     // { field: "u_internal_link", headerName: "Internal Link",width: 120 },
     // { field: "u_external_link", headerName: "External Link",width: 120 },
-    { field: "menuurl", headerName: "Menu Url", width: 200 },
+    { field: "menuurl", headerName: "Menu Url", width: 300 },
     {
       field: "edit",
       headerName: "Edit",
@@ -87,7 +87,7 @@ const Customapprovallist = () => {
       try {
         const response = await APIClient.get(apis.Getapprovalcustom);
         const dataWithIds = response.data.map((row, index) => ({
-          id: index + 1,
+          id1: index + 1,
           ...row,
           menu_url: `/menu/${row.menu_url}`,
         }));
@@ -140,7 +140,7 @@ const Customapprovallist = () => {
                 Add New
               </button>
             </Link>
-            <Link to="/custom/custom">
+            <Link to="/dashboard">
               <button
                 type="button"
                 className="btn btn-info"
@@ -156,6 +156,15 @@ const Customapprovallist = () => {
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
+            slots={{
+                            toolbar: GridToolbar, // Correct way to use the toolbar
+                          }}
+                          slotProps={{
+                            toolbar: {
+                              showQuickFilter: true,
+                              quickFilterProps: { debounceMs: 500 },
+                            },
+                          }}
           />
         </Box>
       </main>
