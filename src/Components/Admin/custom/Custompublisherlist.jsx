@@ -96,10 +96,11 @@ const Custompublisherlist = () => {
   }, []);
 
   return (
-    <div>
+    <div className="row justify-content-center">
+    <div className="formdata"> 
       <main id="main" className="main">
         <div className="pagetitle">
-          <h2 className="maintitle">Custom Table</h2>
+          
           <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">Home</li>
@@ -107,6 +108,7 @@ const Custompublisherlist = () => {
               <li className="breadcrumb-item active">All Menu </li>
             </ol>
           </nav>
+          <h2 className="maintitle">Custom Table</h2>
         </div>
         <div className="header-box">
           <div className="header-box-lft">
@@ -181,6 +183,7 @@ const Custompublisherlist = () => {
           </Button>
         </DialogActions>
       </Dialog>
+    </div>
     </div>
   );
 };
