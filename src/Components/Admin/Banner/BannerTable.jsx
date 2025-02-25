@@ -88,10 +88,17 @@ const BannerTable = () => {
 
     return (
        
-          <div className="row justify-content-center">
-    <div>
-      <div className="card">
-        <div className="card-body">
+        <div className="row justify-content-center">
+        <div className="formdata">           
+                <nav>
+                  <ol className="breadcrumb">
+                    <li className="breadcrumb-item">Home</li>
+                    <li className="breadcrumb-item">Banner</li>
+                    <li className="breadcrumb-item active">Banner Table </li>
+                  </ol>
+                </nav>
+                <h1 className="maintitle">Banner Table</h1>
+             
        
          <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mb: 2 }}>
                 <Button variant="contained" color="primary" component={Link} to="/bannerapprovallist">
@@ -126,8 +133,7 @@ const BannerTable = () => {
                 <MuiAlert severity="success" onClose={() => setSnackbarOpen(false)}>{modalMessage}</MuiAlert>
             </Snackbar>
             <ToastContainer />
-        </div>
-    </div>
+        
 </div>
     </div>
     );

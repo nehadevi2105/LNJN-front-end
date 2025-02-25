@@ -94,7 +94,18 @@ const Approvebanner = () => {
     };
 
     return (
-        <div>
+        <div className="row justify-content-center">
+        <div className="formdata">           
+                <nav>
+                  <ol className="breadcrumb">
+                    <li className="breadcrumb-item">Home</li>
+                    <li className="breadcrumb-item">Banner</li>
+                    <li className="breadcrumb-item active">Banner Table </li>
+                  </ol>
+                </nav>
+                {/* <h1 className="maintitle">Banner Table</h1>
+              */}
+       
             <form>
                 <Paper elevation={15} sx={{ padding: 8, maxWidth: "1200px", margin: "auto", position: "relative" }}>
                     <h1>{id ? "Approve Banner Data" : "Approve Banner Data"}</h1>
@@ -152,6 +163,7 @@ const Approvebanner = () => {
                     <ToastContainer />
                 </Paper>
             </form>
+        </div>
         </div>
     );
 };

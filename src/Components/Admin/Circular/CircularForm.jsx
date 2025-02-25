@@ -247,20 +247,21 @@ const CircularForm = () => {
     <div >
       <main id="main" className="main">
       <div>
-        <div className="card">
-          <div className="card-body">
-
-            <nav>
-              <ol className="breadcrumb">
-                <li className="breadcrumb-item">Home</li>
-                <li className="breadcrumb-item">Circular</li>
-                <li className="breadcrumb-item active">Create Circular</li>
-              </ol>
-            </nav>
-            <h2>Create Circular</h2>
-
-
+        <div className="pagetitle">
+            <div className="pagetitle-lft">
+            
+              <nav>
+                <ol className="breadcrumb">
+                  <li className="breadcrumb-item">Home</li>
+                  <li className="breadcrumb-item  ">Circular</li>
+                  <li className="breadcrumb-item active ">Create Circular</li>
+                </ol>
+              </nav>
+            </div>
+            <h1 className="text-center text-dark">Create Circular</h1>
           </div>
+       
+          
 
           <div className="row justify-content-center">
           <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
@@ -507,7 +508,7 @@ const CircularForm = () => {
               </div>
             </div>
           </div>
-        </div>
+        
       </div>
     </main>
     </div>

@@ -147,6 +147,7 @@ const EditBookRoom = () => {
 
   return (
     <>
+    <div className="formdata">
       <Container className="my-4">
       <div className="pagetitle-lft">
                     <nav>
@@ -239,6 +240,7 @@ const EditBookRoom = () => {
           <Button onClick={() => setSuccessDialogOpen(false)}>OK</Button>
         </DialogActions>
       </Dialog>
+      </div>
     </>
   );
 };

@@ -91,6 +91,7 @@ export const EditHostel = () => {
 
   return (
     <>
+    <div className="formdata">
       <Container className="my-4">
       <div className="pagetitle-lft">
                     <nav>
@@ -152,6 +153,7 @@ export const EditHostel = () => {
           <Button onClick={() => setSuccessDialogOpen(false)} color="primary">OK</Button>
         </DialogActions>
       </Dialog>
+      </div>
     </>
   );
 };

@@ -101,10 +101,11 @@ const Customapprovallist = () => {
   }, []);
 
   return (
-    <div>
+    <div className="row justify-content-center">
+    <div className="formdata"> 
       <main id="main" className="main">
         <div className="pagetitle">
-          <h2 className="maintitle">Custom Table</h2>
+        
           <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">Home</li>
@@ -112,6 +113,7 @@ const Customapprovallist = () => {
               <li className="breadcrumb-item active">All Menu </li>
             </ol>
           </nav>
+          <h2 className="maintitle">Custom Table</h2>
         </div>
         <div className="header-box">
           <div className="header-box-lft">
@@ -124,7 +126,7 @@ const Customapprovallist = () => {
                 </div> */}
         </div>
         <Box sx={{ height: 400, width: "100%", backgroundColor: "white" }}>
-          <div className="pagetitle-rgt">
+          <div className="d-flex justify-content-left" style={{ marginLeft: "1px" }}>
             <Link to="/custom/custom">
               <button
                 type="button"
@@ -186,6 +188,7 @@ const Customapprovallist = () => {
           </Button>
         </DialogActions>
       </Dialog>
+    </div>
     </div>
   );
 };
