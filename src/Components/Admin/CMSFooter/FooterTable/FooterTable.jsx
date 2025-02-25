@@ -104,7 +104,8 @@ const FooterTable = () => {
   }, []);
 
   return (
-    <div>
+    <div className="row justify-content-center">
+    <div className="formdata">
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
@@ -167,7 +168,7 @@ const FooterTable = () => {
             }}
           />
         </Box>
-      </main>
+     
 
       <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -192,7 +193,10 @@ const FooterTable = () => {
           {modalMessage}
         </MuiAlert>
       </Snackbar>
-    </div>
+      </main>
+      </div>
+      </div>
+   
   );
 };
 

@@ -150,16 +150,25 @@ const ApproveFooterDec = () => {
   // console.log(formData)
 
   return (
+
+<div>
+    <div className="row justify-content-center">
+           <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
+                 <Link to="/dashboard">
+                   <button type="button" className="btn btn-info">
+                     Back
+                   </button>
+                 </Link>
+                 <h1 className="flex-grow-1 text-center">Approve Footer Description </h1>
+               </div>
+             </div>
+             <div className="formdata">
     <div className="card">
       <div className="card-body">
         <div className="mb-3 mt-md-4">
           <div className="box-sec">
-            <div className="container">
-              <div className="row">
-                <div className="col">
-                  <h1 className="text-center">Approve Footer Description</h1>
-                </div>
-              </div>
+           
+           
               <div className="row justify-content-center">
                 <div className="col-md-6">
                   <div className="mb-3">
@@ -251,10 +260,12 @@ const ApproveFooterDec = () => {
                   </div>
                 </div>
               </div>
-            </div>
+        
           </div>
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 };

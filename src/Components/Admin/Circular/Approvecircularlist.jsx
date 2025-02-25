@@ -29,7 +29,7 @@ const ApproveCircularTable = () => {
   const usertype = JSON.parse(storedUserString);
 
   const columns = [
-    { field: "id", headerName: "S.No", width: 50 },
+    { field: "id1", headerName: "S.No", width: 50 },
     { field: "tittle", headerName: "Title", width: 200 },
     { field: "startdate", headerName: "Start Date", width: 120 },
     { field: "end_date", headerName: "End date", width: 120 },
@@ -38,14 +38,15 @@ const ApproveCircularTable = () => {
       field: "edit",
       headerName: "Edit",
       sortable: false,
-      renderCell: (params) => usertype === 2 || usertype === 4 ? (
-        <Link to={"/approvecircular/" + params.row.id}>
-          <EditIcon style={{ cursor: "pointer" }} />
-        </Link>
-      ): (
-        <EditIcon style={{ cursor: "not-allowed", color: "gray" }} />
-      ),
-    }
+      renderCell: (params) =>
+        usertype === 2 || usertype === 4 ? (
+          <Link to={"/approvecircular/" + params.row.id}>
+            <EditIcon style={{ cursor: "pointer" }} />
+          </Link>
+        ) : (
+          <EditIcon style={{ cursor: "not-allowed", color: "gray" }} />
+        ),
+    },
   ];
 
   const handleDeleteClick = (item) => {
@@ -80,7 +81,7 @@ const ApproveCircularTable = () => {
         const response = await APIClient.get(apis.getapproveCircular);
         //const response = await getTender();
         const dataWithIds = response.data.map((row, index) => ({
-          id: index,
+          id1: index + 1,
           ...row,
         }));
         setApiData(dataWithIds);
@@ -94,26 +95,25 @@ const ApproveCircularTable = () => {
 
   return (
     <div className="row justify-content-center">
-    <div className="formdata">
-          <div className="pagetitle-lft">
-           
-            <nav>
-              <ol className="breadcrumb">
-                <li className="breadcrumb-item">Home</li>
-                <li className="breadcrumb-item">Circular</li>
-                <li className="breadcrumb-item active">Approve Circular List </li>
-              </ol>
-            </nav>
-            <h1 className="maintitle">Approve Circular List</h1>
-          </div>
-          <div className="pagetitle-rgt">
-            {/* <Link to="/dashboard">
+      <div className="formdata">
+        <div className="pagetitle-lft">
+          <nav>
+            <ol className="breadcrumb">
+              <li className="breadcrumb-item">Home</li>
+              <li className="breadcrumb-item">Circular</li>
+              <li className="breadcrumb-item active">Approve Circular List </li>
+            </ol>
+          </nav>
+          <h1 className="maintitle">Approve Circular List</h1>
+        </div>
+        <div className="pagetitle-rgt">
+          {/* <Link to="/dashboard">
               <button type="button" className="btn btn-info my-1">
                 Back
               </button>
             </Link> */}
-          </div>
-    
+        </div>
+
         <div className="header-box">
           <div className="header-box-lft"></div>
           <div className="header-box-rgt">
@@ -124,7 +124,6 @@ const ApproveCircularTable = () => {
               </p>
             </Link>
           </div>
-         
         </div>
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
@@ -133,6 +132,15 @@ const ApproveCircularTable = () => {
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
+            slots={{
+              toolbar: GridToolbar, // Correct way to use the toolbar
+            }}
+            slotProps={{
+              toolbar: {
+                showQuickFilter: true,
+                quickFilterProps: { debounceMs: 500 },
+              },
+            }}
             components={{
               Toolbar: GridToolbar,
             }}
@@ -143,32 +151,31 @@ const ApproveCircularTable = () => {
             }}
           />
         </Box>
-    
 
-      <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
-        <DialogTitle>Confirm Delete</DialogTitle>
-        <DialogContent>
-          Are you sure you want to delete this data?
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseConfirmation} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleConfirmSubmit} color="primary">
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={() => setSnackbarOpen(false)}
-      >
-        <MuiAlert severity="success" onClose={() => setSnackbarOpen(false)}>
-          {modalMessage}
-        </MuiAlert>
-      </Snackbar>
-    </div>
+        <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
+          <DialogTitle>Confirm Delete</DialogTitle>
+          <DialogContent>
+            Are you sure you want to delete this data?
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseConfirmation} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleConfirmSubmit} color="primary">
+              Confirm
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={3000}
+          onClose={() => setSnackbarOpen(false)}
+        >
+          <MuiAlert severity="success" onClose={() => setSnackbarOpen(false)}>
+            {modalMessage}
+          </MuiAlert>
+        </Snackbar>
+      </div>
     </div>
   );
 };
