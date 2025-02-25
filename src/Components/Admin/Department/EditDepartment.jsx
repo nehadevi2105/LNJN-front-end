@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
 import { Row } from 'react-bootstrap/esm';
+import { WidthFull } from '@mui/icons-material';
 
 export const EditDepartment = () => {
   const { id } = useParams();
@@ -86,7 +87,18 @@ export const EditDepartment = () => {
               <Container>
                 <Row className="vh-100 d-flex justify-content-center align-items-left">
                   <Col md={10} lg={12} xs={12}> */}
-                  <Container className="my-4">
+                  <div className=" ">
+                  <main id="main" className="main">
+                  <Container fluid className="my-4">
+                  <div className="pagetitle-lft">
+                    <nav>
+                      <ol className="breadcrumb">
+                        <li className="breadcrumb-item">Home</li>
+                        <li className="breadcrumb-item">Department</li>
+                        <li className="breadcrumb-item active">Edit Department</li>
+                      </ol>
+                    </nav>
+                  </div>
                     <Card>
                       <Card.Body>
                         <h2 className="text-center text-uppercase mb-4">Edit Department</h2>
@@ -121,6 +133,8 @@ export const EditDepartment = () => {
                       </Card.Body>
                     </Card>
                   </Container>
+                  </main>
+                  </div>
                   {/* </Col>
                 </Row>
               </Container>

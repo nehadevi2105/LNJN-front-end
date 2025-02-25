@@ -122,6 +122,15 @@ const Bookroom = () => {
   return (
     <>
       <main id="main" className="main">
+      <div className="pagetitle-lft">
+                    <nav>
+                      <ol className="breadcrumb">
+                        <li className="breadcrumb-item">Home</li>
+                        <li className="breadcrumb-item">Book Room</li>
+                        <li className="breadcrumb-item active">New Book Room</li>
+                      </ol>
+                    </nav>
+                  </div>
         <div className="home">
           <div className="homeContainer">
             <Row className="vh-100 d-flex justify-content-center align-items-left">

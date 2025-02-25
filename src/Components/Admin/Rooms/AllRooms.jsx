@@ -14,6 +14,8 @@ import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
 import { Button as Buttons} from "react-bootstrap";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const AllRooms = () => {
   const [rooms, setRooms] = useState([]);
@@ -100,7 +102,7 @@ const AllRooms = () => {
             as={Link}
             to={`/Room/EditRoom/${params.row.id}`}
           >
-            Edit
+            <EditIcon style={{ cursor: "pointer" }} />
           </Buttons>
           <Buttons
             variant="outline-danger"
@@ -108,7 +110,7 @@ const AllRooms = () => {
             style={{ marginLeft: 8 }}
             onClick={() => handleDeleteClick(params.row)}
           >
-            Delete
+            <DeleteIcon style={{ cursor: "pointer" }} />
           </Buttons>
         </div>
       ),
@@ -127,7 +129,7 @@ const AllRooms = () => {
                 </li>
               </ol>
             </nav>
-      <div className="card">
+      <div className="formdata">
       {/* <div className="header-box"
         style={{
           display: "flex",
@@ -147,16 +149,16 @@ const AllRooms = () => {
         </Link>
       </div> */}
       <h1 className="maintitle mt-0 pt-0">Room List</h1>
-      <div className="card-body">
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 5, mb: 2 }}>
+      <div className="">
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 5, mb: 2 }}>
       <Button variant="contained" color="primary" component={Link} to="/Rooms/CreateRoom">
-          <AddIcon /> Book New Room
+          <AddIcon /> New Room
         </Button>
         <Button variant="contained" color="primary" component={Link} to="">
-          Booked Room Approval List
+           Room Approval List
         </Button>
         <Button variant="contained" color="secondary" component={Link} to="">
-          Booked Room Publisher List
+           Room Publisher List
         </Button>
       </Box>
 
@@ -170,6 +172,15 @@ const AllRooms = () => {
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
+          slots={{
+                          toolbar: GridToolbar, // Correct way to use the toolbar
+                        }}
+                        slotProps={{
+                          toolbar: {
+                            showQuickFilter: true,
+                            quickFilterProps: { debounceMs: 500 },
+                          },
+                        }}
           components={{ Toolbar: GridToolbar }}
           componentsProps={{ toolbar: { showQuickFilter: true } }}
           pageSize={10}

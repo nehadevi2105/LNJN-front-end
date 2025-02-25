@@ -252,6 +252,15 @@ const EditCandidate = () => {
   return (
     <>
       <Container className="my-4">
+      <div className="pagetitle-lft">
+                    <nav>
+                      <ol className="breadcrumb">
+                        <li className="breadcrumb-item">Home</li>
+                        <li className="breadcrumb-item">Candidate</li>
+                        <li className="breadcrumb-item active">Edit Candidate</li>
+                      </ol>
+                    </nav>
+                  </div>
         <Card>
           <Card.Body>
             <h2 className="text-center text-uppercase mb-4">Edit Candidate</h2>

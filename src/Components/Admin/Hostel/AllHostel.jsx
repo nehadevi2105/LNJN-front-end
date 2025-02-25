@@ -11,6 +11,8 @@ import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
 import { Button as Buttons } from "react-bootstrap";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const AllHostel = () => {
   const [hostels, setHostels] = useState([]);
@@ -83,7 +85,7 @@ const AllHostel = () => {
             as={Link}
             to={`/Hostel/EditHostel/${params.row.id}`}
           >
-            Edit
+            <EditIcon style={{ cursor: "pointer" }} />
           </Buttons>
           <Buttons
             variant="outline-danger"
@@ -91,7 +93,7 @@ const AllHostel = () => {
             style={{ marginLeft: 8 }}
             onClick={() => handleDeleteClick(params.row)}
           >
-            Delete
+            <DeleteIcon style={{ cursor: "pointer" }} />
           </Buttons>
         </div>
       )
@@ -111,9 +113,9 @@ const AllHostel = () => {
                 </li>
               </ol>
             </nav>
-      <div className="card">
+      <div className="formdata">
       <h1 className="maintitle mt-0 pt-0">Hostel List</h1>
-        <div className="card-body">
+        <div className="">
         {/* <Link to="/Hostel/CreateHostel" style={{ textDecoration: "none", color: "inherit" }}>
           <Button variant="primary">
             <AddIcon /> New Hostel

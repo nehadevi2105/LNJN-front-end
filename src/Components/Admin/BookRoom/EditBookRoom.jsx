@@ -148,6 +148,15 @@ const EditBookRoom = () => {
   return (
     <>
       <Container className="my-4">
+      <div className="pagetitle-lft">
+                    <nav>
+                      <ol className="breadcrumb">
+                        <li className="breadcrumb-item">Home</li>
+                        <li className="breadcrumb-item">Book Room</li>
+                        <li className="breadcrumb-item active">Edit Book Room</li>
+                      </ol>
+                    </nav>
+                  </div>
         <Card>
           <Card.Body>
             <h2 className="text-center text-uppercase mb-4">Edit Booked Room</h2>

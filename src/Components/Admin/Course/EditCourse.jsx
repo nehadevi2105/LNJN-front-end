@@ -115,6 +115,15 @@ const EditCourse = () => {
               <Container>
                 <Row className="vh-100 d-flex justify-content-center align-items-left">
                   <Col md={10} lg={12} xs={12}>
+                  <div className="pagetitle-lft">
+                    <nav>
+                      <ol className="breadcrumb">
+                        <li className="breadcrumb-item">Home</li>
+                        <li className="breadcrumb-item">Course</li>
+                        <li className="breadcrumb-item active">Edit Course</li>
+                      </ol>
+                    </nav>
+                  </div>
                     <Card>
                       <Card.Body>
                         <h2 className="fw-bold mb-4 text-center text-uppercase">Edit Course</h2>                        

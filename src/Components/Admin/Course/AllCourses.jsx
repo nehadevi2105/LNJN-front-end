@@ -3,21 +3,23 @@ import {
   Box, Dialog, DialogTitle, DialogContent, DialogActions, Button, 
   Snackbar, TextField 
 } from "@mui/material";
-import { DataGrid, GridToolbarContainer, GridToolbarExport, GridToolbarQuickFilter } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 //  Move CustomToolbar function ABOVE UserTable
-const CustomToolbar = () => (
-  <GridToolbarContainer>
-    <GridToolbarQuickFilter sx={{ marginRight: "auto" }} /> {/*  Search bar */}
-    <GridToolbarExport /> {/*  Export button */}
-  </GridToolbarContainer>
-);
+// const CustomToolbar = () => (
+//   <GridToolbarContainer>
+//     <GridToolbarQuickFilter sx={{ marginRight: "auto" }} /> {/*  Search bar */}
+//     <GridToolbarExport /> {/*  Export button */}
+//   </GridToolbarContainer>
+// );
 import { Button as Buttons } from "react-bootstrap";
 
 const AllCourses = () => {
@@ -39,6 +41,7 @@ const AllCourses = () => {
         // Map API response to include an "id" field for DataGrid
         const dataWithIds = response.data.map((row, index) => ({
           //id: index,         // For DataGrid internal use
+          srno: index + 1,    // For display purposes
           id: row.id,      // Course ID from the backend
           name: row.name,
           coursedetails: row.coursedetails,
@@ -117,7 +120,7 @@ const AllCourses = () => {
 
   // Define columns for DataGrid, including Edit and Delete operation columns
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
+    { field: "srno", headerName: "Sr. No.", width: 70 },
     { field: "name", headerName: "Course Name", width: 200 },
     { field: "coursedetails", headerName: "Course Description", width: 225 },
     // { field: "deptid", headerName: "Department", width: 200 },
@@ -130,7 +133,7 @@ const AllCourses = () => {
       renderCell: (params) => (
         <Button color="primary">
           <Link to={`/Course/EditCourse/${params.row.id}`} style={{ textDecoration: "none", color: "inherit" }}>
-            Edit
+          <EditIcon style={{ cursor: "pointer" }} />
           </Link>
         </Button>
       ),
@@ -142,7 +145,7 @@ const AllCourses = () => {
       width: 100,
       renderCell: (params) => (
         <Button color="error" onClick={() => handleDeleteClick(params.row)}>
-          Delete
+          <DeleteIcon style={{ cursor: "pointer" }} />
         </Button>
       ),
     },
@@ -159,7 +162,6 @@ const AllCourses = () => {
                 </li>
               </ol>
             </nav>
-    <div>
       <div className="formdata">
       <h1 className="maintitle mt-0 pt-0">Course List</h1>
         <div className="">
@@ -170,15 +172,15 @@ const AllCourses = () => {
           </p>
         </Link>
       </div> */}
-      <Box sx={{ display: 'flex', justifyContent: 'flex-left', gap: 5, my: 3 }}>
-      <Button variant="contained" color="primary" component={Link} to="/Rooms/CreateRoom">
-          <AddIcon /> Book New Room
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 5, my: 3 }}>
+      <Button variant="contained" color="primary" component={Link} to="/Course/CreateCourse">
+          <AddIcon /> New Course
         </Button>
         <Button variant="contained" color="primary" component={Link} to="">
-          Booked Room Approval List
+          Course Approval List
         </Button>
         <Button variant="contained" color="secondary" component={Link} to="">
-          Booked Room Publisher List
+          Course Publisher List
         </Button>
       </Box>
 
@@ -253,7 +255,6 @@ const AllCourses = () => {
         <ToastContainer />
       </Snackbar>
     </div>
-  </div>
   </div>
   );
 };

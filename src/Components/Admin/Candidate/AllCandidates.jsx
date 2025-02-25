@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { 
     Dialog, DialogTitle, DialogContent, DialogActions 
   } from "@mui/material";
-import { Box, Snackbar } from "@mui/material";
+import { Box, Snackbar, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,7 +10,9 @@ import "react-toastify/dist/ReactToastify.css";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
-import { Button } from "react-bootstrap";
+import { Button as Buttons} from "react-bootstrap";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const AllCandidates = () => {
   const [candidates, setCandidates] = useState([]);
@@ -23,7 +25,8 @@ const AllCandidates = () => {
       try {
         const response = await APIClient.get(apis.getCandidates);
         // Map the API response to add an "id" field for DataGrid
-        const dataWithIds = response.data.map((candidate) => ({
+        const dataWithIds = response.data.map((candidate, index) => ({
+          srno: index + 1,
           id: candidate.id, // Unique candidate ID
           name: candidate.name,
           mobileno: candidate.mobileno,
@@ -74,8 +77,8 @@ const AllCandidates = () => {
  
   // Define columns for the DataGrid. The action column provides Edit and Delete options.
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
-    { field: "name", headerName: "Candidate Name", width: 200 },
+    { field: "srno", headerName: "Sr. No.", width: 70 },
+    { field: "name", headerName: "Candidate Name", width: 160 },
     { field: "mobileno", headerName: "Mobile No", width: 150 },
     { field: "email", headerName: "Email", width: 200 },
     { field: "aadharno", headerName: "Aadhar No", width: 150 },
@@ -87,18 +90,18 @@ const AllCandidates = () => {
       renderCell: (params) => (
         <div>
           {/* Edit candidate link */}
-          <Button variant="outline-primary" size="sm" as={Link} to={`/Candidate/EditCandidate/${params.row.id}`}>
-            Edit
-          </Button>
+          <Buttons variant="outline-primary" size="sm" as={Link} to={`/Candidate/EditCandidate/${params.row.id}`}>
+          <EditIcon style={{ cursor: "pointer" }} />
+          </Buttons>
           {/* Delete candidate button */}
-          <Button
+          <Buttons
             variant="outline-danger"
             size="sm"
             style={{ marginLeft: 8 }}
             onClick={() => handleDeleteClick(params.row)}
           >
-            Delete
-          </Button>
+            <DeleteIcon style={{ cursor: "pointer" }} />
+          </Buttons>
         </div>
       )
     }
@@ -106,16 +109,36 @@ const AllCandidates = () => {
 
   return (
     <div className="row justify-content-center">
+    <nav>
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">Home</li>
+                <li className="breadcrumb-item">Candidate</li>
+                <li className="breadcrumb-item active">
+                  All Candidate List{" "}
+                </li>
+              </ol>
+            </nav>
     <div>
-      <div className="card">
-        <div className="card-body">
-        <h2 className="maintitle">Candidate List</h2>
-        <Link to="/Candidate/CreateCandidate" style={{ textDecoration: "none", color: "inherit" }}>
+      <div className="formdata">
+      <h2 className="maintitle mt-0 pt-0">Candidate List</h2>
+        <div className="">
+        {/* <Link to="/Candidate/CreateCandidate" style={{ textDecoration: "none", color: "inherit" }}>
           <Button variant="primary">
             <AddIcon /> New Candidate
           </Button>
         </Link>
-      </div>
+      </div> */}
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 5, mb: 2 }}>
+      <Button variant="contained" color="primary" component={Link} to="/Candidate/CreateCandidate">
+          <AddIcon /> New Candidate
+        </Button>
+        <Button variant="contained" color="primary" component={Link} to="">
+          Candidate Approval List
+        </Button>
+        <Button variant="contained" color="secondary" component={Link} to="">
+          Candidate Publisher List
+        </Button>
+      </Box>
 
       <Box sx={{ height: 600, width: "100%" }} style={{ backgroundColor: "#fff", padding: "16px" }}>
         <DataGrid
@@ -124,6 +147,15 @@ const AllCandidates = () => {
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
+          slots={{
+                          toolbar: GridToolbar, // Correct way to use the toolbar
+                        }}
+                        slotProps={{
+                          toolbar: {
+                            showQuickFilter: true,
+                            quickFilterProps: { debounceMs: 500 },
+                          },
+                        }}
           components={{ Toolbar: GridToolbar }}
           componentsProps={{ toolbar: { showQuickFilter: true } }}
           pageSize={10}
@@ -148,6 +180,7 @@ const AllCandidates = () => {
         <ToastContainer />
       </Snackbar>
     </div>
+  </div>
   </div>
   </div>
   );

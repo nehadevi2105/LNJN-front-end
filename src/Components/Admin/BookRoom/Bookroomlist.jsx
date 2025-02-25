@@ -9,6 +9,8 @@ import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
 import { Button as Buttons } from "react-bootstrap";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const Bookroomlist = () => {
   const [bookroom, setBookroom] = useState([]);
@@ -78,22 +80,22 @@ const Bookroomlist = () => {
 
   // DataGrid columns
   const columns = [
-    { field: "rid", headerName: "ID", width: 150 },
-    { field: "roomName", headerName: "Room Name", width: 225 },
-    { field: "hostelName", headerName: "Hostel Name", width: 225 },
-    { field: "amount", headerName: "Amount", width: 210 },
+    { field: "rid", headerName: "ID", width: 100 },
+    { field: "roomName", headerName: "Room Name", width: 205 },
+    { field: "hostelName", headerName: "Hostel Name", width: 205 },
+    { field: "amount", headerName: "Amount", width: 200 },
     {
       field: "action",
       headerName: "Action",
-      width: 200,
+      width: 150,
       sortable: false,
       renderCell: (params) => (
         <div>
           <Buttons variant="outline-primary" size="sm" as={Link} to={`/BookRoom/EditBookRoom/${params.row.id}`}>
-            Edit
+          <EditIcon style={{ cursor: "pointer" }} />
           </Buttons>
           <Buttons variant="outline-danger" size="sm" style={{ marginLeft: 8 }} onClick={() => handleDeleteClick(params.row)}>
-            Delete
+          <DeleteIcon style={{ cursor: "pointer" }} />
           </Buttons>
         </div>
       )
@@ -112,7 +114,7 @@ const Bookroomlist = () => {
                 </li>
               </ol>
             </nav>
-      <div className="card">
+      <div className="formdata">
       {/* <div className="header-box" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px" }}>
         <h2 className="maintitle">Book Room List</h2>
         <Link to="/BookRoom/Bookroom" style={{ textDecoration: "none", color: "inherit" }}>
@@ -122,8 +124,8 @@ const Bookroomlist = () => {
         </Link>
       </div> */}
       <h1 className="maintitle mt-0 pt-0">Book Room List</h1>
-      <div className="card-body">
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 5, mb: 2 }}>
+      <div className="">
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 5, mb: 2 }}>
       <Button variant="contained" color="primary" component={Link} to="/BookRoom/Bookroom">
           <AddIcon /> Book New Room
         </Button>

@@ -10,6 +10,8 @@ import "react-toastify/dist/ReactToastify.css";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const AllDepartments = () => {
   const [departments, setDepartments] = useState([]);
@@ -112,7 +114,9 @@ const AllDepartments = () => {
       sortable: false,
       renderCell: (params) => (
         <Button color="primary">
-          <Link to={`/Department/EditDepartment/${params.row.did}`}>Edit</Link>
+          <Link to={`/Department/EditDepartment/${params.row.did}`}>
+          <EditIcon style={{ cursor: "pointer" }} />
+          </Link>
         </Button>
       ),
     },
@@ -122,7 +126,9 @@ const AllDepartments = () => {
       width: 100,
       sortable: false,
       renderCell: (params) => (
-        <Button color="error" onClick={() => handleDeleteClick(params.row)}>Delete</Button>
+        <Button color="error" onClick={() => handleDeleteClick(params.row)}>
+          <DeleteIcon style={{ cursor: "pointer" }} />
+        </Button>
       ),
     },
   ];
@@ -139,12 +145,12 @@ const AllDepartments = () => {
               </ol>
             </nav>
     <div>
-      <div className="card">
+      <div className="formdata">
         
         <h1 className="maintitle mt-0 pt-0">Department List</h1>
   
-        <div className="card-body">
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 5, mb: 2 }}>
+        <div className="">
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 5, mb: 2 }}>
         <Button variant="contained" color="primary" component={Link} to="/Department/DepartmentForm">
           <AddIcon /> New Department
         </Button>
