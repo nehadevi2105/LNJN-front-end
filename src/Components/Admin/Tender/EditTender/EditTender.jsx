@@ -259,7 +259,8 @@ const EditTender = () => {
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
-                <li className="breadcrumb-item">Edit Tender</li>
+                <li className="breadcrumb-item">Tender</li>
+                <li className="breadcrumb-item active">Edit Tender</li>
               </ol>
             </nav>
             </div>
@@ -269,7 +270,7 @@ const EditTender = () => {
 
         <div className="row justify-content-center">
             <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
-            <Link to="/services/alltender">
+            <Link to="/TenderTable/TenderTable">
               <button type="button" className="btn btn-info">
                 Back
               </button>

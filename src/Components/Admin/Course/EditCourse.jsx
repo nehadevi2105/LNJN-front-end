@@ -107,7 +107,7 @@ const EditCourse = () => {
 
   return (
     <>
-      <div>
+      <div className="formdata">
         <main id="main" className="main">
           <div className="pagetitle"></div>
           <div className="home">
