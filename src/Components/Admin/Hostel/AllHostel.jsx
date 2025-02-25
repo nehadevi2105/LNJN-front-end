@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { 
     Dialog, DialogTitle, DialogContent, DialogActions 
 } from "@mui/material";
-import { Box, Snackbar } from "@mui/material";
+import { Box, Snackbar, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,7 +10,9 @@ import "react-toastify/dist/ReactToastify.css";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
-import { Button } from "react-bootstrap";
+import { Button as Buttons } from "react-bootstrap";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const AllHostel = () => {
   const [hostels, setHostels] = useState([]);
@@ -22,7 +24,8 @@ const AllHostel = () => {
     const fetchHostels = async () => {
       try {
         const response = await APIClient.get(apis.getHostels);
-        const dataWithIds = response.data.map((hostel) => ({
+        const dataWithIds = response.data.map((hostel, index) => ({
+          srno: index + 1,
           id: hostel.hid, // Unique hostel ID
           hname: hostel.hname,
         }));
@@ -67,48 +70,69 @@ const AllHostel = () => {
 
   // Define columns for the DataGrid
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "hname", headerName: "Hostel Name", width: 250 },
+    { field: "srno", headerName: "Sr. No.", width: 300 },
+    { field: "hname", headerName: "Hostel Name", width: 350 },
     {
       field: "action",
       headerName: "Action",
-      width: 200,
+      width: 300,
       sortable: false,
       renderCell: (params) => (
         <div>
-          <Button
+          <Buttons
             variant="outline-primary"
             size="sm"
             as={Link}
             to={`/Hostel/EditHostel/${params.row.id}`}
           >
-            Edit
-          </Button>
-          <Button
+            <EditIcon style={{ cursor: "pointer" }} />
+          </Buttons>
+          <Buttons
             variant="outline-danger"
             size="sm"
             style={{ marginLeft: 8 }}
             onClick={() => handleDeleteClick(params.row)}
           >
-            Delete
-          </Button>
+            <DeleteIcon style={{ cursor: "pointer" }} />
+          </Buttons>
         </div>
       )
     }
   ];
 
   return (
+    
     <div className="row justify-content-center">
     <div>
-      <div className="card">
-        <div className="card-body">
-        <h2 className="maintitle">Hostel List</h2>
-        <Link to="/Hostel/CreateHostel" style={{ textDecoration: "none", color: "inherit" }}>
+    <nav>
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">Home</li>
+                <li className="breadcrumb-item">Hostel</li>
+                <li className="breadcrumb-item active">
+                  All Hostel List{" "}
+                </li>
+              </ol>
+            </nav>
+      <div className="formdata">
+      <h1 className="maintitle mt-0 pt-0">Hostel List</h1>
+        <div className="">
+        {/* <Link to="/Hostel/CreateHostel" style={{ textDecoration: "none", color: "inherit" }}>
           <Button variant="primary">
             <AddIcon /> New Hostel
           </Button>
         </Link>
-      </div>
+      </div> */}
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 5, mb: 2 , px: "16px"}}>
+      <Button variant="contained" color="primary" component={Link} to="/Hostel/CreateHostel">
+          <AddIcon /> New Hostel
+        </Button>
+        <Button variant="contained" color="primary" component={Link} to="">
+          Hostel Approval List
+        </Button>
+        <Button variant="contained" color="secondary" component={Link} to="">
+          Hostel Publisher List
+        </Button>
+      </Box>
 
       <Box sx={{ height: 600, width: "100%" }} style={{ backgroundColor: "#fff", padding: "16px" }}>
         <DataGrid
@@ -117,6 +141,15 @@ const AllHostel = () => {
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
+          slots={{
+                toolbar: GridToolbar, // Correct way to use the toolbar
+              }}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                  quickFilterProps: { debounceMs: 500 },
+                },
+              }}
           components={{ Toolbar: GridToolbar }}
           componentsProps={{ toolbar: { showQuickFilter: true } }}
           pageSize={10}
@@ -143,7 +176,7 @@ const AllHostel = () => {
     </div>
     </div>
   </div>
-  
+  </div>
   );
 };
 

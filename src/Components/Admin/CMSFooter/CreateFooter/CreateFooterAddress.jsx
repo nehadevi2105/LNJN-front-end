@@ -142,6 +142,7 @@ import 'react-toastify/dist/ReactToastify.css';
             </nav>
           </div>
           <h1>Create Footer Address</h1> 
+          <div className="row justify-content-center">
           <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
           <Link to='/dashboard'>
               <button type="button" className="btn btn-info">
@@ -278,6 +279,7 @@ import 'react-toastify/dist/ReactToastify.css';
               </div>
             </div>
           </div>
+        </div>
         </div>
       </main>
      

@@ -114,7 +114,17 @@ export const EditRoom = () => {
 
   return (
     <>
+    <div className="formdata">
       <Container className="my-4">
+      <div className="pagetitle-lft">
+                    <nav>
+                      <ol className="breadcrumb">
+                        <li className="breadcrumb-item">Home</li>
+                        <li className="breadcrumb-item">Room</li>
+                        <li className="breadcrumb-item active">Edit Room</li>
+                      </ol>
+                    </nav>
+                  </div>
         <Card>
           <Card.Body>
             <h2 className="text-center text-uppercase mb-4">Edit Room</h2>
@@ -186,6 +196,7 @@ export const EditRoom = () => {
           <Button onClick={() => setSuccessDialogOpen(false)} color="primary">OK</Button>
         </DialogActions>
       </Dialog>
+      </div>
     </>
   );
 };

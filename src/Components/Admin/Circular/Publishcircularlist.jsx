@@ -93,11 +93,12 @@ const PublishCircularTable = () => {
   }, []);
 
   return (
-    <div>
+    <div className="row justify-content-center">
+    <div className="formdata">
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1 className="maintitle">Publish Circular List</h1>
+            
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -112,6 +113,7 @@ const PublishCircularTable = () => {
                 Back
               </button>
             </Link> */}
+            <h1 className="maintitle">Publish Circular List</h1>
           </div>
         </div>
         <div className="header-box">
@@ -168,6 +170,7 @@ const PublishCircularTable = () => {
           {modalMessage}
         </MuiAlert>
       </Snackbar>
+    </div>
     </div>
   );
 };

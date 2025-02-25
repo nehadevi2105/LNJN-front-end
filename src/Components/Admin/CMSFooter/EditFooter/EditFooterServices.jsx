@@ -127,12 +127,12 @@ const EditFooterServices = () => {
 
       formDataToSend.append('usertype', '1');
       //formDataToSend.append('action', 'publish');
-      const response = await APIClient.post("/api/lowerfooter/updatefooter/"+id, formDataToSend, {
+      const response = await APIClient.post("/api/lowerfooter/updatefooter/" + id, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-       
-  
+
+
       });
 
       toast.success("Data saved successfully!");
@@ -150,16 +150,29 @@ const EditFooterServices = () => {
   };
 
   return (
-    <>
-      <div className="card">
+    <div>
+    <div className="row justify-content-center">
+    <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
+          <Link to="/dashboard">
+            <button type="button" className="btn btn-info">
+              Back
+            </button>
+          </Link>
+          <h1 className="flex-grow-1 text-center">Approve Footer Service</h1>
+        </div>
+      </div>
+      <div className="formdata"> {/* Bootstrap column for full width */}
+      <div className="card custom-card">
+
         <div className="card-body">
           <div className="mb-3 mt-md-4">
+
             <div className="box-sec">
               <div className="container">
                 <div className="row">
-                  <div className="col">
-                    <h1 className="text-center">Approve Footer Service</h1>
-                  </div>
+
+
+
                 </div>
                 <div className="row justify-content-center">
                   <div className="col-md-6">
@@ -261,7 +274,8 @@ const EditFooterServices = () => {
           </div>
         </div>
       </div>
-    </>
+      </div>
+    </div>
   );
 };
 export default EditFooterServices;

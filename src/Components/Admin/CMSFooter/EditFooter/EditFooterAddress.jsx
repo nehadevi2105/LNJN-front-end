@@ -113,12 +113,21 @@ import HomeIcon from '@mui/icons-material/Home';
   };
 
   return (
-    <div className="container">
+<div>
+     <div className="row justify-content-center">
+        <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
+              <Link to="/dashboard">
+                <button type="button" className="btn btn-info">
+                  Back
+                </button>
+              </Link>
+              <h1 className="flex-grow-1 text-center">Approve office address </h1>
+            </div>
+          </div>
+    <div className="formdata">
       <div className="row">
       <div className="card">
-              <div className="card-body">
-      <h1 className="text-center">Approve office address </h1>
-      </div>
+             
       <div className="row justify-content-center">
         <div >
         <div className="mb-3">
@@ -184,6 +193,7 @@ import HomeIcon from '@mui/icons-material/Home';
           </div>
         </div>
       </div>
+    </div>
     </div>
     </div>
     </div>

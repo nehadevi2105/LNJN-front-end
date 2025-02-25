@@ -3,21 +3,24 @@ import {
   Box, Dialog, DialogTitle, DialogContent, DialogActions, Button, 
   Snackbar, TextField 
 } from "@mui/material";
-import { DataGrid, GridToolbarContainer, GridToolbarExport, GridToolbarQuickFilter } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 //  Move CustomToolbar function ABOVE UserTable
-const CustomToolbar = () => (
-  <GridToolbarContainer>
-    <GridToolbarQuickFilter sx={{ marginRight: "auto" }} /> {/*  Search bar */}
-    <GridToolbarExport /> {/*  Export button */}
-  </GridToolbarContainer>
-);
+// const CustomToolbar = () => (
+//   <GridToolbarContainer>
+//     <GridToolbarQuickFilter sx={{ marginRight: "auto" }} /> {/*  Search bar */}
+//     <GridToolbarExport /> {/*  Export button */}
+//   </GridToolbarContainer>
+// );
+import { Button as Buttons } from "react-bootstrap";
 
 const AllCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -38,6 +41,7 @@ const AllCourses = () => {
         // Map API response to include an "id" field for DataGrid
         const dataWithIds = response.data.map((row, index) => ({
           //id: index,         // For DataGrid internal use
+          srno: index + 1,    // For display purposes
           id: row.id,      // Course ID from the backend
           name: row.name,
           coursedetails: row.coursedetails,
@@ -116,9 +120,9 @@ const AllCourses = () => {
 
   // Define columns for DataGrid, including Edit and Delete operation columns
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
+    { field: "srno", headerName: "Sr. No.", width: 70 },
     { field: "name", headerName: "Course Name", width: 200 },
-    { field: "coursedetails", headerName: "Course Description", width: 300 },
+    { field: "coursedetails", headerName: "Course Description", width: 225 },
     // { field: "deptid", headerName: "Department", width: 200 },
     { field: "dname", headerName: "Department Name", width: 200 },
     {
@@ -129,7 +133,7 @@ const AllCourses = () => {
       renderCell: (params) => (
         <Button color="primary">
           <Link to={`/Course/EditCourse/${params.row.id}`} style={{ textDecoration: "none", color: "inherit" }}>
-            Edit
+          <EditIcon style={{ cursor: "pointer" }} />
           </Link>
         </Button>
       ),
@@ -141,7 +145,7 @@ const AllCourses = () => {
       width: 100,
       renderCell: (params) => (
         <Button color="error" onClick={() => handleDeleteClick(params.row)}>
-          Delete
+          <DeleteIcon style={{ cursor: "pointer" }} />
         </Button>
       ),
     },
@@ -149,25 +153,37 @@ const AllCourses = () => {
 
   return (
     <div className="row justify-content-center">
-    <div className="formdata">
     <nav>
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item">Home</li>
-              <li className="breadcrumb-item">Course</li>
-              <li className="breadcrumb-item active">Course List</li>
-            </ol>
-          </nav>
-          <h2 className="maintitle">Course List</h2>
-
-          <div className="d-flex justify-content-left" style={{ marginLeft: "10px" }}>
-       
-        <Link to="/Course/CreateCourse" className="btn btn-info">
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">Home</li>
+                <li className="breadcrumb-item">Course</li>
+                <li className="breadcrumb-item active">
+                  All Course List{" "}
+                </li>
+              </ol>
+            </nav>
+      <div className="formdata">
+      <h1 className="maintitle mt-0 pt-0">Course List</h1>
+        <div className="">
+        
+        {/* <Link to="/Course/CreateCourse" className="header-box-rgt">
           <p>
             <AddIcon /> New Course
           </p>
         </Link>
-     </div>
-     <div className="card-body">
+      </div> */}
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 5, my: 3 }}>
+      <Button variant="contained" color="primary" component={Link} to="/Course/CreateCourse">
+          <AddIcon /> New Course
+        </Button>
+        <Button variant="contained" color="primary" component={Link} to="">
+          Course Approval List
+        </Button>
+        <Button variant="contained" color="secondary" component={Link} to="">
+          Course Publisher List
+        </Button>
+      </Box>
+
       <Box sx={{ height: 500, width: "100%" }} style={{ backgroundColor: "#fff" }}>
         <DataGrid
           rows={courses}
@@ -175,7 +191,16 @@ const AllCourses = () => {
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
-          slots={{ toolbar: CustomToolbar }}
+          slots={{
+                toolbar: GridToolbar, // Correct way to use the toolbar
+              }}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                  quickFilterProps: { debounceMs: 500 },
+                },
+              }}
+          components={{ Toolbar: GridToolbar }}
           componentsProps={{ toolbar: { showQuickFilter: true } }}
         />
       </Box>
@@ -229,8 +254,7 @@ const AllCourses = () => {
       <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={() => setSnackbarOpen(false)}>
         <ToastContainer />
       </Snackbar>
-
-  </div>
+    </div>
   </div>
   );
 };

@@ -224,14 +224,22 @@ const EditFooterData = () => {
   }, [id]);
 
   return (
-    <div className="container">
+
+    <div>
+         <div className="row justify-content-center">
+            <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
+                  <Link to="/dashboard">
+                    <button type="button" className="btn btn-info">
+                      Back
+                    </button>
+                  </Link>
+                  <h1 className="flex-grow-1 text-center">Edit footer data</h1>
+                </div>
+              </div>
+    <div className="formdata">
       <div className="card">
         <div className="card-body">
-          <div className="row">
-            <div className="col">
-              <h1 className="text-center">Edit footer data</h1>
-            </div>
-          </div>
+         
           <div className="row justify-content-center">
             <div>
               <div className="mb-3">
@@ -422,6 +430,7 @@ const EditFooterData = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

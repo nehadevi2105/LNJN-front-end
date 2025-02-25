@@ -237,6 +237,15 @@ const Candidate = () => {
   return (
     
         <div className="row justify-content-center">
+         <div className="pagetitle-lft">
+                    <nav>
+                      <ol className="breadcrumb">
+                        <li className="breadcrumb-item">Home</li>
+                        <li className="breadcrumb-item">Candidate</li>
+                        <li className="breadcrumb-item active">Create Candidate</li>
+                      </ol>
+                    </nav>
+                  </div>
           <div className="formdata">
             <div className="card">
               <div className="card-body">

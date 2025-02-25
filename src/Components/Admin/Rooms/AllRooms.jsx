@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogActions,
 } from "@mui/material";
-import { Box, Snackbar } from "@mui/material";
+import { Box, Snackbar, Button } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -13,7 +13,9 @@ import "react-toastify/dist/ReactToastify.css";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
-import { Button } from "react-bootstrap";
+import { Button as Buttons} from "react-bootstrap";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const AllRooms = () => {
   const [rooms, setRooms] = useState([]);
@@ -40,7 +42,8 @@ const AllRooms = () => {
       try {
         const response = await APIClient.get(apis.getRooms);
         setRooms(
-          response.data.map((room) => ({
+          response.data.map((room,index) => ({
+            rid: index + 1,
             id: room.id,
             name: room.name,
             hostalName: hostels[room.hostalid] || "Unknown",
@@ -83,7 +86,7 @@ const AllRooms = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
+    { field: "rid", headerName: "Sr. No.", width: 100 },
     { field: "name", headerName: "Room Name", width: 250 },
     { field: "hostalName", headerName: "Hostel Name", width: 250 },
     {
@@ -93,22 +96,22 @@ const AllRooms = () => {
       sortable: false,
       renderCell: (params) => (
         <div>
-          <Button
+          <Buttons
             variant="outline-primary"
             size="sm"
             as={Link}
             to={`/Room/EditRoom/${params.row.id}`}
           >
-            Edit
-          </Button>
-          <Button
+            <EditIcon style={{ cursor: "pointer" }} />
+          </Buttons>
+          <Buttons
             variant="outline-danger"
             size="sm"
             style={{ marginLeft: 8 }}
             onClick={() => handleDeleteClick(params.row)}
           >
-            Delete
-          </Button>
+            <DeleteIcon style={{ cursor: "pointer" }} />
+          </Buttons>
         </div>
       ),
     },
@@ -116,16 +119,26 @@ const AllRooms = () => {
 
   return (
     <main id="main" className="main">
-      <div
-        className="header-box"
+    <div className="row justify-content-center">
+    <nav>
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">Home</li>
+                <li className="breadcrumb-item">Room</li>
+                <li className="breadcrumb-item active">
+                  All Room List{" "}
+                </li>
+              </ol>
+            </nav>
+      <div className="formdata">
+      {/* <div className="header-box"
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           padding: "16px",
         }}
-      >
-        <h2 className="maintitle">Room List</h2>
+      > 
+       <h1 className="maintitle">Room List</h1>
         <Link
           to="/Rooms/CreateRoom"
           style={{ textDecoration: "none", color: "inherit" }}
@@ -134,7 +147,20 @@ const AllRooms = () => {
             <AddIcon /> New Room
           </Button>
         </Link>
-      </div>
+      </div> */}
+      <h1 className="maintitle mt-0 pt-0">Room List</h1>
+      <div className="">
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 5, mb: 2 }}>
+      <Button variant="contained" color="primary" component={Link} to="/Rooms/CreateRoom">
+          <AddIcon /> New Room
+        </Button>
+        <Button variant="contained" color="primary" component={Link} to="">
+           Room Approval List
+        </Button>
+        <Button variant="contained" color="secondary" component={Link} to="">
+           Room Publisher List
+        </Button>
+      </Box>
 
       <Box
         sx={{ height: 600, width: "100%" }}
@@ -146,6 +172,15 @@ const AllRooms = () => {
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
+          slots={{
+                          toolbar: GridToolbar, // Correct way to use the toolbar
+                        }}
+                        slotProps={{
+                          toolbar: {
+                            showQuickFilter: true,
+                            quickFilterProps: { debounceMs: 500 },
+                          },
+                        }}
           components={{ Toolbar: GridToolbar }}
           componentsProps={{ toolbar: { showQuickFilter: true } }}
           pageSize={10}
@@ -177,6 +212,9 @@ const AllRooms = () => {
       >
         <ToastContainer />
       </Snackbar>
+      </div>
+      </div>
+      </div>
     </main>
   );
 };
