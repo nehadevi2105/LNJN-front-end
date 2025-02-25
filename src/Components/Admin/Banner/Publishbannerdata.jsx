@@ -95,7 +95,15 @@ const Publishbanner = () => {
   };
 
   return (
-    <div>
+    <div className="row justify-content-center">
+    <div className="formdata">           
+            <nav>
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">Home</li>
+                <li className="breadcrumb-item">Banner</li>
+                <li className="breadcrumb-item active">Banner Table </li>
+              </ol>
+            </nav>
       <form>
         <Paper
           elevation={15}
@@ -185,6 +193,7 @@ const Publishbanner = () => {
           <ToastContainer />
         </Paper>
       </form>
+    </div>
     </div>
   );
 };

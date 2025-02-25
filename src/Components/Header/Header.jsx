@@ -77,7 +77,7 @@ const Header = ({ onDataChange = () => {} }) => {
             fontSize: { xs: "12px", sm: "16px" }, // Adjust font size
           }}
         >
-         Lok Nayak Jayaprakash Narayan National Institute of Criminology and Forensic Science” (LNJN NICFS)
+         Lok Nayak Jayaprakash Narayan National Institute of Criminology and Forensic Science (LNJN NICFS)
         </Typography>
 
         {/* User Profile Menu */}

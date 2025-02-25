@@ -87,7 +87,7 @@ export const EditDepartment = () => {
               <Container>
                 <Row className="vh-100 d-flex justify-content-center align-items-left">
                   <Col md={10} lg={12} xs={12}> */}
-                  <div className=" ">
+                  <div className="formdata">
                   <main id="main" className="main">
                   <Container fluid className="my-4">
                   <div className="pagetitle-lft">

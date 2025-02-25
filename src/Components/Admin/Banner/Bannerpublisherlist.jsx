@@ -95,6 +95,17 @@ const PublisherbannerList = () => {
 
   return (
     <>
+    <div className="row justify-content-center">
+        <div className="formdata">           
+                <nav>
+                  <ol className="breadcrumb">
+                    <li className="breadcrumb-item">Home</li>
+                    <li className="breadcrumb-item">Banner</li>
+                    <li className="breadcrumb-item active">Banner Table </li>
+                  </ol>
+                </nav>
+                <h1 className="maintitle">Banner Table</h1>
+             
       <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={apiData}
@@ -133,6 +144,8 @@ const PublisherbannerList = () => {
         </MuiAlert>
       </Snackbar>
       <ToastContainer />
+      </div>
+      </div>
     </>
   );
 };
