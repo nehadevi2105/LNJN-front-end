@@ -38,13 +38,7 @@ const IndexEditFooter = () => {
                 </ol>
               </nav>
             </div>
-            <div className="pagetitle-rgt d-flex justify-content-end mb-5">
-              <Link to="/footer/footertable">
-                <button type="button" className="btn btn-info">
-                  Back
-                </button>
-              </Link>
-            </div>
+           
             {data.footertype === 1 && <EditFooterDec />}
             {data.footertype === 2 && <EditFooterServices />}
             {data.footertype === 3 && <EditFooterAddress />}

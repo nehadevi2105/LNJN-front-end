@@ -108,7 +108,7 @@ const FooterTable = () => {
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1>Create Footer</h1>
+           
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -116,8 +116,19 @@ const FooterTable = () => {
                 <li className="breadcrumb-item active">Footer Table</li>
               </ol>
             </nav>
+            <h1>All Footer</h1>
           </div>
         </div>
+
+        <div className="d-flex justify-content-left" style={{ marginLeft: "1px" }}>
+          <Link to="/dashboard">
+            <button type="button" className="btn btn-info">
+              Back
+            </button>
+          </Link>
+         
+
+
         <Box
           sx={{ display: "flex", justifyContent: "flex-end", gap: 2, mb: 2 }}
         >
@@ -138,6 +149,7 @@ const FooterTable = () => {
             Footer Publisher List
           </Button>
         </Box>
+        </div>
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={apiData}
