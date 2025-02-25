@@ -255,13 +255,13 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
-                <li className="breadcrumb-item">Approve Tender Data</li>
+                <li className="breadcrumb-item active">Approve Tender Data</li>
               </ol>
             </nav>
             <h1>Approve Tender Data</h1>
           </div>
           <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
-            <Link to="/services/alltender">
+            <Link to="/Tenderapprovallist">
               <button type="button" className="btn btn-info">
                 Back
               </button>

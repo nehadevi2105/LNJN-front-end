@@ -29,7 +29,7 @@ const TenderApprovallist = () => {
   const usertype = JSON.parse(storedUserString);
 
   const columns = [
-    { field: "id", headerName: "S.No", width: 50 },
+    { field: "id1", headerName: "S.No", width: 50 },
     { field: "tender_tittle", headerName: "Title", width: 200 },
     { field: "startdate", headerName: "Start Date", width: 120 },
     { field: "end_date", headerName: "End date", width: 120 },
@@ -92,7 +92,7 @@ const TenderApprovallist = () => {
         const response = await APIClient.get(apis.tenderapprovallist);
         //const response = await getTender();
         const dataWithIds = response.data.map((row, index) => ({
-          id: index,
+          id1: index+1,
           ...row,
         }));
         setApiData(dataWithIds);
@@ -141,6 +141,15 @@ const TenderApprovallist = () => {
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
+            slots={{
+                            toolbar: GridToolbar, // Correct way to use the toolbar
+                          }}
+                          slotProps={{
+                            toolbar: {
+                              showQuickFilter: true,
+                              quickFilterProps: { debounceMs: 500 },
+                            },
+                          }}
             components={{
               Toolbar: GridToolbar,
             }}

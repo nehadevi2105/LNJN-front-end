@@ -38,7 +38,7 @@ const TenderTable = () => {
   const usertype = JSON.parse(storedUserString);
 
   const columns = [
-    { field: "id", headerName: "S.No", width: 50 },
+    { field: "id1", headerName: "S.No", width: 50 },
     { field: "tender_tittle", headerName: "Title", width: 200 },
     { field: "startdate", headerName: "Start Date", width: 120 },
     { field: "end_date", headerName: "End date", width: 120 },
@@ -104,7 +104,7 @@ const TenderTable = () => {
         const response = await APIClient.get(apis.Gettender);
         //const response = await getTender();
         const dataWithIds = response.data.map((row, index) => ({
-          id: index,
+          id1: index +1,
           ...row,
         }));
         setApiData(dataWithIds);
@@ -120,7 +120,7 @@ const TenderTable = () => {
     <div className="row justify-content-center">
     <div className="formdata">
       
-      <div className="card">
+      <div className="">
         <div className="card-body">
            
             <nav>
@@ -130,9 +130,9 @@ const TenderTable = () => {
                 <li className="breadcrumb-item active">All Tender </li>
               </ol>
             </nav>
-            <h1 className="maintitle">All Tenders List</h1>
+            <h1 className="maintitle pt-0 mt-0">All Tenders List</h1>
           </div>
-          <div className="header-box">
+          <div className="header-box justify-content-center gap-4 pb-0 pt-1">
           <div className="header-box-lft"></div>
           <div className="header-box-rgt">
             <Link to="/CreateTender/Createtender">
@@ -162,6 +162,15 @@ const TenderTable = () => {
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
+            slots={{
+                            toolbar: GridToolbar, // Correct way to use the toolbar
+                          }}
+                          slotProps={{
+                            toolbar: {
+                              showQuickFilter: true,
+                              quickFilterProps: { debounceMs: 500 },
+                            },
+                          }}
             components={{
               Toolbar: GridToolbar,
             }}

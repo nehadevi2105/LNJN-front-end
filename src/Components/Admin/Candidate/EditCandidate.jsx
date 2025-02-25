@@ -251,6 +251,7 @@ const EditCandidate = () => {
 
   return (
     <>
+    <div className="formdata">
       <Container className="my-4">
       <div className="pagetitle-lft">
                     <nav>
@@ -501,6 +502,7 @@ const EditCandidate = () => {
       </Dialog>
 
       <ToastContainer />
+    </div>
     </>
   );
 };

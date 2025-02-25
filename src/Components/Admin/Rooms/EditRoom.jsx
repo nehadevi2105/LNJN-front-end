@@ -114,6 +114,7 @@ export const EditRoom = () => {
 
   return (
     <>
+    <div className="formdata">
       <Container className="my-4">
       <div className="pagetitle-lft">
                     <nav>
@@ -195,6 +196,7 @@ export const EditRoom = () => {
           <Button onClick={() => setSuccessDialogOpen(false)} color="primary">OK</Button>
         </DialogActions>
       </Dialog>
+      </div>
     </>
   );
 };
