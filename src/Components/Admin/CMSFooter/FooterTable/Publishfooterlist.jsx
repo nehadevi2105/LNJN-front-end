@@ -89,11 +89,12 @@ const PublisherFooterTable = () => {
   }, []);
 
   return (
-    <div>
+    <div className="row justify-content-center">
+    <div className="formdata">
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
-            <h1>Publish Footer List</h1>
+           
             <nav>
               <ol className="breadcrumb">
                 <li className="breadcrumb-item">Home</li>
@@ -102,7 +103,8 @@ const PublisherFooterTable = () => {
               </ol>
             </nav>
           </div>
-          <div className="pagetitle-rgt">
+          <h1>Publish Footer List</h1>
+          <div className="d-flex justify-content-left" style={{ marginLeft: "10px" }}>
             <Link to="/dashboard">
               <button type="button" className="btn btn-info">
                 Back
@@ -127,7 +129,7 @@ const PublisherFooterTable = () => {
             }}
           />
         </Box>
-      </main>
+      
 
       <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -152,6 +154,8 @@ const PublisherFooterTable = () => {
           {modalMessage}
         </MuiAlert>
       </Snackbar>
+      </main>
+      </div>
     </div>
   );
 };

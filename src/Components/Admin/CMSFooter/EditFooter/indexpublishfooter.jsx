@@ -38,13 +38,7 @@ const PublishindexFooter = () => {
                 </ol>
               </nav>
             </div>
-            <div className="pagetitle-rgt d-flex justify-content-end mb-5">
-              <Link to="/footer/footertable">
-                <button type="button" className="btn btn-info">
-                  Back
-                </button>
-              </Link>
-            </div>
+           
             {data.footertype === 1 && <PublishFooterDec />}
             {data.footertype === 2 && <PublishFooterServices />}
             {data.footertype === 3 && <PublishFooterAddress />}

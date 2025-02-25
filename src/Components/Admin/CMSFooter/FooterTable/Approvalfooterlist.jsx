@@ -100,7 +100,8 @@ const ApproveFooterTable = () => {
   }, []);
 
   return (
-    <div>
+    <div className="row justify-content-center">
+    <div className="formdata">
       <main id="main" className="main">
         <div className="pagetitle">
           <div className="pagetitle-lft">
@@ -139,7 +140,7 @@ const ApproveFooterTable = () => {
             }}
           />
         </Box>
-      </main>
+     
 
       <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -164,6 +165,8 @@ const ApproveFooterTable = () => {
           {modalMessage}
         </MuiAlert>
       </Snackbar>
+      </main>
+      </div>
     </div>
   );
 };

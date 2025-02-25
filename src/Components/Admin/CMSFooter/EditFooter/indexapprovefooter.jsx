@@ -39,13 +39,13 @@ const ApproveindexFooter = () => {
               </nav>
               
             </div>
-            <div className="pagetitle-rgt d-flex justify-content-end mb-5">
+            {/* <div className="pagetitle-rgt d-flex justify-content-end mb-5">
               <Link to="/footer/footertable">
                 <button type="button" className="btn btn-info">
                   Back
                 </button>
               </Link>
-            </div>
+            </div> */}
             {data.footertype === 1 && <ApproveFooterDec />}
             {data.footertype === 2 && <ApproveFooterServices />}
             {data.footertype === 3 && <ApproveFooterAddress />}
