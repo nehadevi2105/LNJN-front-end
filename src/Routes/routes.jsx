@@ -23,6 +23,7 @@ import EditCandidate from "../Components/Admin/Candidate/EditCandidate";
 import CreateHostel from "../Components/Admin/Hostel/CreateHostel";
 import AllHostel from "../Components/Admin/Hostel/AllHostel";
 import EditHostel from "../Components/Admin/Hostel/EditHostel";
+
 import CreateRoom from "../Components/Admin/Rooms/CreateRoom";
 import AllRooms from "../Components/Admin/Rooms/AllRooms";
 import EditRoom from "../Components/Admin/Rooms/EditRoom";
@@ -85,6 +86,10 @@ import CreateUser from "../Components/Admin/User/CreateUser";
 import UserTable from "../Components/Admin/User/UserTable";
 import LoginForm from "../Components/Admin/Login/LoginForm";
 import EditUser from "../Components/Admin/User/EditUser";
+import ApprovehosttalTable from "../Components/Admin/Hostel/Approvalhostallist";
+import ApproverEditHostel from "../Components/Admin/Hostel/ApproverEditHostel";
+import PublishHostalTable from "../Components/Admin/Hostel/Publishhostallist";
+import Publishedithostal from "../Components/Admin/Hostel/Publishedithostal";
 
 function Router() {
   return (
@@ -135,9 +140,20 @@ function Router() {
       <Route path="publishdataindex/:id" element={<Publishindex />} />
       <Route path="/Candidate/AllCandidates" element={<AllCandidates />} />
       <Route path="/Candidate/EditCandidate/:id" element={<EditCandidate />} />
+
+      {/* Hostal */}
       <Route path="/Hostel/CreateHostel" element={<CreateHostel />} />
       <Route path="/Hostel/AllHostel" element={<AllHostel />} />
       <Route path="/Hostel/EditHostel/:id" element={<EditHostel />} />
+      <Route path="/Approvalhostallist" element={<ApprovehosttalTable />} /> 
+      <Route path="/approveedithostal/:id" element={<ApproverEditHostel />} />
+      <Route path="/Publisherhostallist" element={<PublishHostalTable />} />
+      <Route path="/Publishedithostal/:id" element={<Publishedithostal />} />
+
+      {/* <Route path="/Publisherfooterlist" element={<PublisherFooterTable />} /> */}
+
+
+
       <Route path="/BookRoom/Bookroom" element={<Bookroom />} />
       <Route path="/BookRoom/Bookroomlist" element={<Bookroomlist />} />
       <Route path="/BookRoom/EditBookRoom/:id" element={<EditBookRoom />} />
@@ -147,7 +163,7 @@ function Router() {
       <Route path="/Candidate/EditCandidate/:id" element={<EditCandidate />} />
       <Route path="/Hostel/CreateHostel" element={<CreateHostel />} />
       <Route path="/Hostel/AllHostel" element={<AllHostel />} />
-      <Route path="/Hostel/EditHostel/:id" element={<EditHostel />} />
+      {/* <Route path="/Hostel/EditHostel/:id" element={<EditHostel />} /> */}
       <Route path="/WhatsNewapprovallist" element={<WhatsNewapprovalTable />} />
       <Route
         path="/WhatsNewpublisherlist"

@@ -21,6 +21,7 @@ const CreateRoom = () => {
   useEffect(() => {
     const fetchHostels = async () => {
       try {
+        debugger;
         const response = await APIClient.get(apis.getHostels);  // Make sure this API is correct
         setHostels(response.data);
       } catch (error) {

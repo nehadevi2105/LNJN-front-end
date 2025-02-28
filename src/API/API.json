@@ -21,7 +21,7 @@
   "editCandidate": "/api/Candidate/put/",
   "deleteCandidate": "/api/Candidate/delete",
   "createHostel": "/api/Hostal",
-  "getHostels": "/api/Hostal",
+  "getapproverHostelsedit": "api/Hostal/approvehostaledit",
   "deleteHostel": "/api/Hostal/delete",
   "editHostel": "/api/Hostal/put",
   "createRoom": "/api/Room/postroom_data",
@@ -69,5 +69,9 @@
   "newuser": "/api/user",
   "insertlogin": "/api/Login",
   "getUserById": "/api/user/",
-  "getLogin": "/api/Login"
+  "getLogin": "/api/Login",
+  "hostalapprovallist": "/api/Hostal/approvallist",
+  "hostalpublisherlist": "/api/Hostal/publisherlist",
+  "getallHostels": "/api/Hostal/allhostallist",
+  "getHostels": "/api/Hostal/hostalreallist"
 }

@@ -19,11 +19,16 @@ const AllHostel = () => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [selectedHostel, setSelectedHostel] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const storedUserString = localStorage.getItem("usertype");
+  debugger;
+  const usertype = JSON.parse(storedUserString);
+
+
 
   useEffect(() => {
     const fetchHostels = async () => {
       try {
-        const response = await APIClient.get(apis.getHostels);
+        const response = await APIClient.get(apis.getallHostels);
         const dataWithIds = response.data.map((hostel, index) => ({
           srno: index + 1,
           id: hostel.hid, // Unique hostel ID
@@ -80,13 +85,22 @@ const AllHostel = () => {
       renderCell: (params) => (
         <div>
           <Buttons
-            variant="outline-primary"
-            size="sm"
-            as={Link}
-            to={`/Hostel/EditHostel/${params.row.id}`}
-          >
-            <EditIcon style={{ cursor: "pointer" }} />
-          </Buttons>
+    variant="outline-primary"
+    size="sm"
+    as={Link}
+    to={`/Hostel/EditHostel/${params.row.id}`}
+    onClick={(e) => {
+      if (!(usertype === 1 || usertype === 4)) {
+        e.preventDefault(); // Stop navigation for unauthorized users
+      }
+    }}
+    style={{
+      opacity: usertype === 1 || usertype === 4 ? 1 : 0.5, // Make it visually disabled
+      pointerEvents: "auto", // Keep pointer events enabled for onClick to work
+    }}
+  >
+    <EditIcon style={{ cursor: usertype === 1 || usertype === 4 ? "pointer" : "not-allowed" }} />
+  </Buttons>
           <Buttons
             variant="outline-danger"
             size="sm"
@@ -126,10 +140,10 @@ const AllHostel = () => {
       <Button variant="contained" color="primary" component={Link} to="/Hostel/CreateHostel">
           <AddIcon /> New Hostel
         </Button>
-        <Button variant="contained" color="primary" component={Link} to="">
+        <Button variant="contained" color="primary" component={Link} to="/Approvalhostallist">
           Hostel Approval List
         </Button>
-        <Button variant="contained" color="secondary" component={Link} to="">
+        <Button variant="contained" color="secondary" component={Link} to="/Publisherhostallist">
           Hostel Publisher List
         </Button>
       </Box>
