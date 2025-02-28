@@ -295,7 +295,7 @@ const Approvesubmenudata = () => {
           </nav>
           <h1 className="text-center">Approve SubMenu Data</h1>
           <div className="d-flex justify-content-left" style={{ marginLeft: "1px" }}>
-          <Link to="/dashboard">
+          <Link to="/approvallist">
             <button type="button" className="btn btn-info">
               Back
             </button>

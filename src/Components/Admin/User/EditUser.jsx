@@ -138,7 +138,7 @@ const EditUser = () => {
         </div>
         <div className="row justify-content-center">
     <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
-              <Link to="/dashboard">
+              <Link to="/User/UserTable">
                 <button type="button" className="btn btn-info">Back</button>
               </Link>
             </div>

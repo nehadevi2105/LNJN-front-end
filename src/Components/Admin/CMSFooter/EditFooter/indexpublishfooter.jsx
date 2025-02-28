@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
 import { Link, useParams } from "react-router-dom";
-import  PublishFooterServices  from "./Publishfooterservice";
+import PublishFooterServices from "./Publishfooterservice";
 import PublishFooterData from "./Publishfooterdata";
 import PublishFooterDec from "./PublishfooterDec";
 import PublishFooterAddress from "./Publishfooteraddress";
@@ -33,12 +33,12 @@ const PublishindexFooter = () => {
                   <li className="breadcrumb-item">Home</li>
                   <li className="breadcrumb-item">Footer</li>
                   <li className="breadcrumb-item active">
-                    Create Footer Address
+                    Publish Footer Data
                   </li>
                 </ol>
               </nav>
             </div>
-           
+
             {data.footertype === 1 && <PublishFooterDec />}
             {data.footertype === 2 && <PublishFooterServices />}
             {data.footertype === 3 && <PublishFooterAddress />}

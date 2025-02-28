@@ -266,7 +266,21 @@ const Publishdata = () => {
   }, [id]);
 
   return (
-    <div>
+    <div className="formdata">
+    <div className="pagetitle-lft">
+            <nav>
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">Dashboard</li>
+                <li className="breadcrumb-item  ">CMS</li>
+                <li className="breadcrumb-item active ">Edit Publisher Sub-Menu</li>
+              </ol>
+            </nav>
+          </div>
+          <div className="d-flex justify-content-left" style={{ marginLeft: "0px" }}>
+              <Link to="/publisherlist">
+                <button type="button" className="btn btn-info">Back</button>
+              </Link>
+            </div>
       <div className="row justify-content-center">
         <div className="container-fluid bg-white">
           <div className="box-sec">

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import { DataGrid, GridToolbarContainer, GridToolbarExport, GridToolbarQuickFilter } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar, GridToolbarContainer, GridToolbarExport, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -18,8 +18,8 @@ import apis from "../../../API/API.json";
 //  Move CustomToolbar function ABOVE UserTable
 const CustomToolbar = () => (
   <GridToolbarContainer>
-    <GridToolbarQuickFilter sx={{ marginRight: "auto" }} /> {/*  Search bar */}
-    <GridToolbarExport /> {/*  Export button */}
+    <GridToolbarExport  sx={{ marginRight: "auto" }}/> {/*  Export button */}
+    <GridToolbarQuickFilter sx={{ marginLeft: "auto" }} /> {/*  Search bar */}
   </GridToolbarContainer>
 );
 
@@ -35,7 +35,7 @@ const UserTable = () => {
   const user = storedUserString ? JSON.parse(storedUserString) : null;
 
   const columns = [
-    { field: "user_id", headerName: "S.No", width: 50 },
+    { field: "id", headerName: "S.No", width: 50 },
     { field: "name", headerName: "Name", width: 200 },
     { field: "email", headerName: "Email", width: 200 },
     { field: "mobile_no", headerName: "Mobile No", width: 200 },
@@ -129,7 +129,7 @@ const UserTable = () => {
             </ol>
           </nav>
           <h1>All Users</h1>
-          <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
+          <div className="d-flex justify-content-left" >
           <Link to="/dashboard">
             <button type="button" className="btn btn-info">
               Back
@@ -146,7 +146,15 @@ const UserTable = () => {
             disableColumnFilter
             disableColumnSelector
             disableDensitySelector
-            slots={{ toolbar: CustomToolbar }}
+            slots={{
+                            toolbar: CustomToolbar, // Correct way to use the toolbar
+                          }}
+                          slotProps={{
+                            toolbar: {
+                              showQuickFilter: true,
+                              quickFilterProps: { debounceMs: 500 },
+                            },
+                          }}
             componentsProps={{ toolbar: { showQuickFilter: true } }}
           />
         </Box>

@@ -33,7 +33,7 @@ const IndexEditFooter = () => {
                   <li className="breadcrumb-item">Home</li>
                   <li className="breadcrumb-item">Footer</li>
                   <li className="breadcrumb-item active">
-                    Publish  Footer 
+                    Edit Footer 
                   </li>
                 </ol>
               </nav>

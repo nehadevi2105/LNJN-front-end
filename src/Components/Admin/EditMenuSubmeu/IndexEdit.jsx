@@ -28,6 +28,20 @@ const Index = () => {
   return (
     <div>
       <main id="main" className="main">
+      <div className="pagetitle-lft">
+            <nav>
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">Dashboard</li>
+                <li className="breadcrumb-item  ">CMS</li>
+                <li className="breadcrumb-item active ">Edit Menu</li>
+              </ol>
+            </nav>
+          </div>
+          <div className="d-flex justify-content-left" style={{ marginLeft: "50px" }}>
+              <Link to="/MenuSubMenu/MenuSubMenu">
+                <button type="button" className="btn btn-info">Back</button>
+              </Link>
+            </div>
       <div className="row justify-content-center">
       <div className="formdata"> {/* Bootstrap column for full width */}
     <div className="card custom-card">
