@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
 
-export const  EditHostel = () => {
+export const  Publishedithostal = () => {
   const { id } = useParams(); // Getting hostel ID from the URL params
   const [formErrors, setFormErrors] = useState({});
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
@@ -32,7 +32,7 @@ export const  EditHostel = () => {
           console.log("Fetched hostel data:", response.data); // Log the fetched data
           setFormData({ hname: response.data.hname, 
             usertype:usertype,
-            ...(usertype === 4 && { action: 'creator' })
+            ...(usertype === 4  && { action: 'publish' })
           }); // Populate the form with fetched data
         } else {
           toast.error('Hostel data is missing.');
@@ -106,13 +106,13 @@ export const  EditHostel = () => {
                       <ol className="breadcrumb">
                         <li className="breadcrumb-item">Home</li>
                         <li className="breadcrumb-item">Hostel</li>
-                        <li className="breadcrumb-item active">Edit Hostel</li>
+                        <li className="breadcrumb-item active">Publish Edit Hostel</li>
                       </ol>
                     </nav>
                   </div>
         <Card>
           <Card.Body>
-            <h2 className="text-center text-uppercase mb-4">Edit Hostel</h2>
+            <h2 className="text-center text-uppercase mb-4">Publish Edit Hostel</h2>
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3" controlId="hname">
                 <Form.Label>Hostel Name</Form.Label>
@@ -166,4 +166,4 @@ export const  EditHostel = () => {
   );
 };
 
-export default EditHostel;
+export default Publishedithostal;

@@ -12,7 +12,7 @@ import { Button as Buttons } from "react-bootstrap";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const Bookroomlist = () => {
+const PublisherBookroomlist = () => {
   const [bookroom, setBookroom] = useState([]);
   const [hostels, setHostels] = useState([]);
   const [rooms, setRooms] = useState([]);
@@ -26,7 +26,7 @@ const Bookroomlist = () => {
     const fetchData = async () => {
       try {
         const [bookroomRes, hostelsRes, roomsRes] = await Promise.all([
-          APIClient.get(apis.getbookroomlist),
+          APIClient.get(apis.publisherbookroomlist),
           APIClient.get(apis.getHostels),
           APIClient.get(apis.getRooms)
         ]);
@@ -98,38 +98,21 @@ const Bookroomlist = () => {
     variant="outline-primary"
     size="sm"
     as={Link}
-    to={`/BookRoom/EditBookRoom/${params.row.id}`}
+    to={`/ApprovalEditBookRoom/${params.row.id}`}
     onClick={(e) => {
-      if (!(usertype === 1 || usertype === 4)) {
+      if (!(usertype === 2 || usertype === 4)) {
         e.preventDefault(); // Prevent navigation for unauthorized users
       }
     }}
     style={{
-      opacity: usertype === 1 || usertype === 4 ? 1 : 0.5, // Visually disable for unauthorized users
+      opacity: usertype === 2 || usertype === 4 ? 1 : 0.5, // Visually disable for unauthorized users
       pointerEvents: "auto", // Ensure click event still fires
     }}
   >
-    <EditIcon style={{ cursor: usertype === 1 || usertype === 4 ? "pointer" : "not-allowed" }} />
+    <EditIcon style={{ cursor: usertype === 2 || usertype === 4 ? "pointer" : "not-allowed" }} />
   </Buttons>
 
-          <Buttons
-    variant="outline-danger"
-    size="sm"
-    style={{
-      marginLeft: 8,
-      opacity: usertype === 1 || usertype === 4 ? 1 : 0.5, // Make it visually disabled for unauthorized users
-      pointerEvents: "auto", // Ensure click event still fires
-    }}
-    onClick={(e) => {
-      if (usertype === 1 || usertype === 4) {
-        handleDeleteClick(params.row);
-      } else {
-        e.preventDefault(); // Prevent action for unauthorized users
-      }
-    }}
-  >
-    <DeleteIcon style={{ cursor: usertype === 1 || usertype === 4 ? "pointer" : "not-allowed" }} />
-  </Buttons>
+        
         </div>
       )
     }
@@ -143,7 +126,7 @@ const Bookroomlist = () => {
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Book Room</li>
                 <li className="breadcrumb-item active">
-                  All Book Room List{" "}
+                  Publish Book Room List{" "}
                 </li>
               </ol>
             </nav>
@@ -156,19 +139,9 @@ const Bookroomlist = () => {
           </Button>
         </Link>
       </div> */}
-      <h1 className="maintitle mt-0 pt-0">Book Room List</h1>
+      <h1 className="maintitle mt-0 pt-0">Publish Book Room </h1>
       <div className="">
-      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 5, mb: 2 }}>
-      <Button variant="contained" color="primary" component={Link} to="/BookRoom/Bookroom">
-          <AddIcon /> Book New Room
-        </Button>
-        <Button variant="contained" color="primary" component={Link} to="/AprovalBookroomlist">
-          Booked Room Approval List
-        </Button>
-        <Button variant="contained" color="secondary" component={Link} to="/PublisherBookroomlist">
-          Booked Room Publisher List
-        </Button>
-      </Box>
+     
 
       <Box sx={{ height: 600, width: "100%" }} style={{ backgroundColor: "#fff", padding: "16px" }}>
         <DataGrid
@@ -212,4 +185,4 @@ const Bookroomlist = () => {
   );
 };
 
-export default Bookroomlist;
+export default PublisherBookroomlist;

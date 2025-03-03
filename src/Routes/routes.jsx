@@ -3,7 +3,13 @@ import Dashboard from "../Components/Dashboard/Dashboard";
 import CreateMenu from "../Components/Admin/Menu/CreateMenu";
 import CreateDepartment from "../Components/Admin/Department/CreateDepartment";
 import AllDepartments from "../Components/Admin/Department/AllDepartment";
+import ApprovalList from "../Components/Admin/Department/DepartmentTable/ApprovalList";
+import PublisherList from "../Components/Admin/Department/DepartmentTable/PublisherList";
+
 import { EditDepartment } from "../Components/Admin/Department/EditDepartment";
+import ApproverEdit from "../Components/Admin/Department/DepartmentEdit/ApproverEdit";
+import PublishDeptEdit from "../Components/Admin/Department/DepartmentEdit/PublishDeptEdit";
+
 import CreateCourse from "../Components/Admin/Course/CreateCourse";
 import MenuSubMenu from "../Components/Admin/MenuSubMenu/MenuSubMenu";
 import EditMenu from "../Components/Admin/EditMenuSubmeu/EditMenu";
@@ -23,6 +29,7 @@ import EditCandidate from "../Components/Admin/Candidate/EditCandidate";
 import CreateHostel from "../Components/Admin/Hostel/CreateHostel";
 import AllHostel from "../Components/Admin/Hostel/AllHostel";
 import EditHostel from "../Components/Admin/Hostel/EditHostel";
+
 import CreateRoom from "../Components/Admin/Rooms/CreateRoom";
 import AllRooms from "../Components/Admin/Rooms/AllRooms";
 import EditRoom from "../Components/Admin/Rooms/EditRoom";
@@ -85,6 +92,17 @@ import CreateUser from "../Components/Admin/User/CreateUser";
 import UserTable from "../Components/Admin/User/UserTable";
 import LoginForm from "../Components/Admin/Login/LoginForm";
 import EditUser from "../Components/Admin/User/EditUser";
+import ApprovehosttalTable from "../Components/Admin/Hostel/Approvalhostallist";
+import ApproverEditHostel from "../Components/Admin/Hostel/ApproverEditHostel";
+import PublishHostalTable from "../Components/Admin/Hostel/Publishhostallist";
+import Publishedithostal from "../Components/Admin/Hostel/Publishedithostal";
+import Approvalroomlist from "../Components/Admin/Rooms/Approvalroomlist";
+import ApprovalEditRoom from "../Components/Admin/Rooms/ApprovalEditRoom";
+import Publisherroomlist from "../Components/Admin/Rooms/Publisherroomlist";
+import PublisherEditRoom from "../Components/Admin/Rooms/PublisherEditRoom";
+import AprovalBookroomlist from "../Components/Admin/BookRoom/AprovalBookroomlist";
+import ApprovalEditBookRoom from "../Components/Admin/BookRoom/ApprovalEditBookRoom";
+import PublisherBookroomlist from "../Components/Admin/BookRoom/PublisherBookroomlist";
 
 function Router() {
   return (
@@ -99,10 +117,14 @@ function Router() {
       <Route path="/SubMenu/CreateSubMenu" element={<CreateSubMenu />} />
       <Route path="/custom/custom" element={<Custom />} />
       <Route path="/Department/AllDepartment" element={<AllDepartments />} />
+      <Route path="/Department/ApprovalList" element={<ApprovalList />} />
+      <Route path="/Department/PublisherList" element={<PublisherList />} />
       <Route
         path="/Department/EditDepartment/:id"
         element={<EditDepartment />}
       />
+      <Route path="/Department/ApproverEdit/:id" element={<ApproverEdit />} />
+      <Route path="/Department/PublishDeptEdit/:id" element={<PublishDeptEdit />} />
       <Route path="/Course/CreateCourse" element={<CreateCourse />} />
       <Route path="/Candidate/CreateCandidate" element={<Candidate />} />
       <Route path="/custom/CustomTable" element={<CustomTable />} />
@@ -135,19 +157,33 @@ function Router() {
       <Route path="publishdataindex/:id" element={<Publishindex />} />
       <Route path="/Candidate/AllCandidates" element={<AllCandidates />} />
       <Route path="/Candidate/EditCandidate/:id" element={<EditCandidate />} />
+
+      {/* Hostal */}
       <Route path="/Hostel/CreateHostel" element={<CreateHostel />} />
       <Route path="/Hostel/AllHostel" element={<AllHostel />} />
       <Route path="/Hostel/EditHostel/:id" element={<EditHostel />} />
+      <Route path="/Approvalhostallist" element={<ApprovehosttalTable />} /> 
+      <Route path="/approveedithostal/:id" element={<ApproverEditHostel />} />
+      <Route path="/Publisherhostallist" element={<PublishHostalTable />} />
+      <Route path="/Publishedithostal/:id" element={<Publishedithostal />} />
+
+      {/* <Route path="/Publisherfooterlist" element={<PublisherFooterTable />} /> */}
+
+
+
       <Route path="/BookRoom/Bookroom" element={<Bookroom />} />
       <Route path="/BookRoom/Bookroomlist" element={<Bookroomlist />} />
       <Route path="/BookRoom/EditBookRoom/:id" element={<EditBookRoom />} />
+      <Route path="/AprovalBookroomlist" element={<AprovalBookroomlist />} />
+      <Route path="/ApprovalEditBookRoom/:id" element={<ApprovalEditBookRoom />} />
+      <Route path="/PublisherBookroomlist" element={<PublisherBookroomlist />} />
 
       <Route path="/bannerdata" element={<BannerTable />} />
       <Route path="/Candidate/AllCandidates" element={<AllCandidates />} />
       <Route path="/Candidate/EditCandidate/:id" element={<EditCandidate />} />
       <Route path="/Hostel/CreateHostel" element={<CreateHostel />} />
       <Route path="/Hostel/AllHostel" element={<AllHostel />} />
-      <Route path="/Hostel/EditHostel/:id" element={<EditHostel />} />
+      {/* <Route path="/Hostel/EditHostel/:id" element={<EditHostel />} /> */}
       <Route path="/WhatsNewapprovallist" element={<WhatsNewapprovalTable />} />
       <Route
         path="/WhatsNewpublisherlist"
@@ -172,9 +208,15 @@ function Router() {
       <Route path="/Tenderpublisherlist" element={<TenderPublisherlist />} />
       <Route path="/ApproveTenderdata/:id" element={<ApproveTender />} />
       <Route path="/PublishTenderdata/:id" element={<PublisherTender />} />
+      {/* Allroom */}
       <Route path="/Rooms/CreateRoom" element={<CreateRoom />} />
       <Route path="/Rooms/AllRooms" element={<AllRooms />} />
       <Route path="/Room/EditRoom/:id" element={<EditRoom />} />
+      <Route path="/Approvalroomlist" element={<Approvalroomlist />} />
+       <Route path="/ApprovalEditRoom/:id" element={<ApprovalEditRoom />} />
+       <Route path="/Publisherroomlist" element={<Publisherroomlist />} />
+       <Route path="/PublisherEditRoom/:id" element={<PublisherEditRoom />} />
+
       <Route path="/bannerapprovallist" element={<ApprovalbannerList />} />
       <Route path="/bannerpublisherlist" element={<PublisherbannerList />} />
       <Route path="/publishbannerdata/:id" element={<Publishbanner />} />
