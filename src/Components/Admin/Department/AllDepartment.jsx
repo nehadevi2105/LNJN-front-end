@@ -7,7 +7,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import APIClient from "../../../API/APIClient";
+import APIClient from "../../../API/APIClient"; //../../../API/APIClient
 import apis from "../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
@@ -20,6 +20,8 @@ const AllDepartments = () => {
   const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [updatedName, setUpdatedName] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   useEffect(() => {
   
@@ -110,25 +112,32 @@ const AllDepartments = () => {
     {
       field: "edit",
       headerName: "Edit",
-      width: 200,
+      width:200,
       sortable: false,
-      renderCell: (params) => (
-        <Button color="primary">
+      renderCell: (params) =>
+        //1 == 1 || null ? (
+        usertype === 1 || usertype === 4 ? ( // Creator & Super Admin can edit
           <Link to={`/Department/EditDepartment/${params.row.did}`}>
-          <EditIcon style={{ cursor: "pointer" }} />
+            <EditIcon style={{ cursor: "pointer" }} />
           </Link>
-        </Button>
-      ),
+        ) : (
+          <EditIcon style={{ cursor: "not-allowed", color: "gray" }} />
+        ),
     },
     {
       field: "delete",
       headerName: "Delete",
       width: 100,
       sortable: false,
-      renderCell: (params) => (
-        <Button color="error" onClick={() => handleDeleteClick(params.row)}>
-          <DeleteIcon style={{ cursor: "pointer" }} />
-        </Button>
+      renderCell: (params) =>
+        usertype === 1 || usertype === 4 ? (
+          //usertype === 1 || usertype === 4 ? (
+          <DeleteIcon
+            style={{ cursor: "pointer" , color: "red"}}
+            onClick={() => handleDeleteClick(params.row)}
+          />
+        ) : (
+          <DeleteIcon style={{ cursor: "not-allowed", color: "gray" }} />
       ),
     },
   ];
@@ -154,10 +163,10 @@ const AllDepartments = () => {
         <Button variant="contained" color="primary" component={Link} to="/Department/DepartmentForm">
           <AddIcon /> New Department
         </Button>
-        <Button variant="contained" color="primary" component={Link} to="">
+        <Button variant="contained" color="primary" component={Link} to="/Department/ApprovalList">
           Department Approval List
         </Button>
-        <Button variant="contained" color="secondary" component={Link} to="">
+        <Button variant="contained" color="secondary" component={Link} to="/Department/PublisherList">
           Department Publisher List
         </Button>
       </Box>
