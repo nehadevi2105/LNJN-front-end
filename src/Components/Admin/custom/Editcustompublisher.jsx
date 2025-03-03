@@ -29,6 +29,8 @@ const Editpublisherapproval = () => {
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [formErrors, setFormErrors] = useState({});  
     const [existingFile, setExistingFile] = useState(null);
+    const storedUserString = localStorage.getItem("usertype");
+    const usertype = JSON.parse(storedUserString);
 
   const config = useMemo(
     () => ({
@@ -166,7 +168,7 @@ const Editpublisherapproval = () => {
       formDataToSend.append("menuurl", formData.menuurl);
       formDataToSend.append("submenu_id", formData.submenu_id);
       formDataToSend.append("languagetype", formData.languagetype);
-      formDataToSend.append("usertype", "4");
+      formDataToSend.append("usertype", usertype);
       formDataToSend.append("action", "publish");
       if (formData.contenttype === "4") {
         formDataToSend.append("external_link", formData.external_link);

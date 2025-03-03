@@ -23,12 +23,15 @@ const Editcustomdata = () => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [editorContent, setEditorContent] = useState("");
+  //const [editorContent, setEditorContent] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [dropdownOptions, setDropdownOptions] = useState([]);
-  const [formErrors, setFormErrors] = useState({});
+  //const [formErrors, setFormErrors] = useState({});
   const [existingFile, setExistingFile] = useState(null);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
+
   const config = useMemo(
     () => ({
       readonly: false,
@@ -161,7 +164,8 @@ const Editcustomdata = () => {
       formDataToSend.append("menuurl", formData.menuurl);
       formDataToSend.append("submenu_id", formData.submenu_id);
       formDataToSend.append("languagetype", formData.languagetype);
-      formDataToSend.append("usertype", '1');
+      formDataToSend.append("usertype", usertype);
+      formDataToSend.append("action", "creatorupdate");
       if (formData.contenttype === "4") {
         formDataToSend.append("external_link", formData.external_link);
       } else if (formData.contenttype === "3") {

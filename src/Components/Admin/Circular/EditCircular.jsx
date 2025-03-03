@@ -44,6 +44,8 @@ const EditCircular = () => {
   });
   const [errors, setErrors] = useState({});
   const [editingItemId, setEditingItemId] = useState(null);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const optionsData = [
     { id: 4, label: "External Link" },
@@ -207,8 +209,8 @@ const EditCircular = () => {
         formDataToSend.append("startdate", formData.startdate);
         formDataToSend.append("end_date", formData.end_date);
         formDataToSend.append("languagetype", formData.languagetype);
-        formDataToSend.append("usertype", "1");
-        formDataToSend.append("action", "approve");
+        formDataToSend.append("usertype", usertype);
+        formDataToSend.append("action", "creatorupdate");
         const response = await APIClient.post(
           "/api/Circular/updatecirculardata/" + id,
           formDataToSend,

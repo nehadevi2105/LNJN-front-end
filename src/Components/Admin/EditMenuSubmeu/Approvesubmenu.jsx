@@ -50,6 +50,8 @@ const Approvesubmenudata = () => {
     filepdfpath:""
   });
   const [editorContent, setEditorContent] = useState("");
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const [errors, setErrors] = useState({});
   const editor = useRef(null);
@@ -203,7 +205,7 @@ const Approvesubmenudata = () => {
       formDataToSend.append("menuurl", formData.menuurl);
       formDataToSend.append("submenu_id", formData.submenu_id);
       formDataToSend.append("languagetype", formData.languagetype);
-      formDataToSend.append("usertype", "4");
+      formDataToSend.append("usertype", usertype);
       formDataToSend.append("action", "approve");
       if (formData.contenttype === "4") {
         formDataToSend.append("external_link", formData.external_link);

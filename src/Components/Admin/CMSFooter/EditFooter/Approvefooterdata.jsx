@@ -39,6 +39,8 @@ const ApproveFooterData = () => {
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [existingFile, setExistingFile] = useState(null);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const config = useMemo(
     () => ({
@@ -178,7 +180,7 @@ const ApproveFooterData = () => {
       } else if (formData.contenttype === 1) {
         formDataToSend.append("html", formData.html);
       }
-      formDataToSend.append("usertype", "4");
+      formDataToSend.append("usertype", usertype);
       formDataToSend.append("action", "approve");
 
       const response = await APIClient.post(

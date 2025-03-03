@@ -33,10 +33,12 @@ const Approvedata = () => {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [dropdownOptions, setDropdownOptions] = useState([]);
-  const [formErrors, setFormErrors] = useState({});  
-    const [existingFile, setExistingFile] = useState(null);
-    const [useExistingFile, setUseExistingFile] = useState(true);
-    const [existingFilePath, setExistingFilePath] = useState("");
+  //const [formErrors, setFormErrors] = useState({});
+  const [existingFile, setExistingFile] = useState(null);
+  //const [useExistingFile, setUseExistingFile] = useState(true);
+  //const [existingFilePath, setExistingFilePath] = useState("");
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const config = useMemo(
     () => ({
@@ -83,7 +85,7 @@ const Approvedata = () => {
       external_link: "",
       languagetype: "",
     });
-  }, []);
+  }, []);  
 
   const handleEditorChange = (content) => {
     setHtml(content);
@@ -173,7 +175,7 @@ const Approvedata = () => {
       formDataToSend.append("menuurl", formData.menuurl);
       formDataToSend.append("submenu_id", formData.submenu_id);
       formDataToSend.append("languagetype", formData.languagetype);
-      formDataToSend.append("usertype", "4");
+      formDataToSend.append("usertype", usertype);
       formDataToSend.append("action", "approve");
       if (formData.contenttype === "4") {
         formDataToSend.append("external_link", formData.external_link);
@@ -360,7 +362,7 @@ const Approvedata = () => {
             {/* Input for File */}
             {formData.contenttype === "2" && (
               <div className="mb-3">
-                 <a
+                <a
                   href={`${APIClient.defaults.baseURL}${formData.filepdfpath}`} // Ensure filepath is properly appended
                   className="form-control"
                   target="_blank"

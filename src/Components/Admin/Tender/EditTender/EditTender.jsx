@@ -24,11 +24,13 @@ const EditTender = () => {
   const [file, setFile] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  const [selectedRole, setSelectedRole] = useState("");
+ // const [selectedRole, setSelectedRole] = useState("");
   const [prevContentType, setPrevContentType] = useState("");
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
  const [existingFile, setExistingFile] = useState(null);
+ const storedUserString = localStorage.getItem("usertype");
+ const usertype = JSON.parse(storedUserString);
   const [formData, setFormData] = useState({
     tender_tittle: "", // Corrected typo in the field name
     contenttype: "",
@@ -44,6 +46,7 @@ const EditTender = () => {
   const [errors, setErrors] = useState({});
   const [menudata, setmenudata] = useState("");
   const [editingItemId, setEditingItemId] = useState(null);
+
 
   const optionsData = [
     { id: 4, label: "External Link" },
@@ -217,8 +220,8 @@ const EditTender = () => {
         formDataToSend.append('startdate', formData.startdate);
         formDataToSend.append('end_date', formData.end_date);
         formDataToSend.append('languagetype', formData.languagetype);
-        formDataToSend.append("usertype", '1');
-        formDataToSend.append("action", 'approve');
+        formDataToSend.append("usertype", usertype);
+        formDataToSend.append("action", "creatorupdate");
         const response = await APIClient.post("/api/Tenders/updatetenderdata/" + id, formDataToSend, {
           headers: {
             "Content-Type": "multipart/form-data",

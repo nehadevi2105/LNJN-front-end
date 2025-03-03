@@ -163,7 +163,7 @@ const CustomTable = () => {
               <button type="button" className="btn btn-primary" style={{ color: "white", backgroundColor: "blue",marginLeft: "10px" }}>
                publisher  list
               </button>
-            </Link>
+            </Link> 
           </div>
           <DataGrid
             rows={apiData}

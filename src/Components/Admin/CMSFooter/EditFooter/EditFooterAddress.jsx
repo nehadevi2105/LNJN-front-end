@@ -14,7 +14,8 @@ import HomeIcon from '@mui/icons-material/Home';
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
   const [formData, setFormData] = useState({
     tittle_name: '',
     address: '',
@@ -76,8 +77,8 @@ import HomeIcon from '@mui/icons-material/Home';
         formDataToSend.append('contenttype', formData.contenttype);
         formDataToSend.append('languagetype', formData.languagetype);
 
-        formDataToSend.append('usertype', '1');
-        formDataToSend.append('action', 'publish');
+        formDataToSend.append('usertype', usertype);
+        formDataToSend.append('action', "creatorupdate");
         const response = await APIClient.post("/api/lowerfooter/updatefooter/"+id, formDataToSend, {
           headers: {
             'Content-Type': 'multipart/form-data',

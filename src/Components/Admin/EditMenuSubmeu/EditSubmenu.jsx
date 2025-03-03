@@ -14,7 +14,7 @@ import {
   Dialog,
 } from "@mui/material";
 import { Col, Form, Row } from "react-bootstrap";
-import { ElectricBike } from "@mui/icons-material";
+//import { ElectricBike } from "@mui/icons-material";
 import JoditEditor from "jodit-react";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
@@ -31,9 +31,9 @@ const EditSubmenu = () => {
   const [submenus, setSubMenu] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [editorContent, setEditorContent] = useState("");
-  const [content, setContent] = useState("");
+  //const [content, setContent] = useState("");
   const [dropdownOptions, setDropdownOptions] = useState([]);
-  const [formErrors, setFormErrors] = useState({});
+  //const [formErrors, setFormErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [filePath, setFilePath] = useState("");  
   const [existingFile, setExistingFile] = useState(null);
@@ -50,6 +50,8 @@ const EditSubmenu = () => {
     languagetype: "",
     filepdfpath:""
   });
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const [errors, setErrors] = useState({});
   const editor = useRef(null);
@@ -221,7 +223,8 @@ const EditSubmenu = () => {
       } else if (formData.contenttype === "1") {
         formDataToSend.append("html", formData.html);
       }
-      formDataToSend.append("usertype", "1");
+      formDataToSend.append("usertype", usertype);
+      formDataToSend.append("action", "creatorupdate");
 
       const response = await APIClient.post(
         apis.editSubMenu + id,

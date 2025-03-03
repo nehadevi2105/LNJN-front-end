@@ -19,6 +19,8 @@ const Publishbanner = () => {
     usertype: "",
     action: "", // Stores the existing image path
   });
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
   
 
   useEffect(() => {
@@ -52,7 +54,7 @@ const Publishbanner = () => {
       }
 
       uploadData.append("content", formData.content);
-      uploadData.append("usertype", "4");
+      uploadData.append("usertype", usertype);
       uploadData.append("action", "publish");
       const response = await APIClient.post(
         `/api/Slider/updateslider/${id}`,

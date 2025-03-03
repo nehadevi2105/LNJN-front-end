@@ -37,7 +37,8 @@ const EditFooterData = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [editorContent, setEditorContent] = useState("");
   const [existingFile, setExistingFile] = useState(null);
-
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -173,8 +174,8 @@ const EditFooterData = () => {
         formDataToSend.append("html", formData.html);
       }
 
-      formDataToSend.append("usertype", "1");
-      //formDataToSend.append('action', 'publish');
+      formDataToSend.append("usertype", usertype);
+      formDataToSend.append('action', "creatorupdate");
       const response = await APIClient.post(
         "/api/lowerfooter/updatefooter/" + id,
         formDataToSend,
