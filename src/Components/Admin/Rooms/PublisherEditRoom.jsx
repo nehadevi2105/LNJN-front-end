@@ -7,26 +7,33 @@ import "react-toastify/dist/ReactToastify.css";
 import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 
-export const EditRoom = () => {
+export const PublisherEditRoom = () => {
   const { id } = useParams(); // Getting room ID from the URL params
   const [formErrors, setFormErrors] = useState({});
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
   const [formData, setFormData] = useState({
     name: "", // Room name
     hostalid: "", // Selected hostel ID
+    usertype: ''
   });
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [hostels, setHostels] = useState([]); // List of hostels
 
+
   useEffect(() => {
     const fetchRoom = async () => {
       try {
+        debugger;
         const response = await APIClient.get(`${apis.getRoomsbyid}/${id}`);
         if (response && response.data) {
           setFormData({
             name: response.data.name,
             hostalid: response.data.hostalid,
+            usertype:usertype,
+            ...(usertype === 4 && { action: 'publish' })
           });
         } else {
           toast.error("Room data is missing.");
@@ -121,13 +128,13 @@ export const EditRoom = () => {
                       <ol className="breadcrumb">
                         <li className="breadcrumb-item">Home</li>
                         <li className="breadcrumb-item">Room</li>
-                        <li className="breadcrumb-item active">Edit Room</li>
+                        <li className="breadcrumb-item active">Publisher Edit Room</li>
                       </ol>
                     </nav>
                   </div>
         <Card>
           <Card.Body>
-            <h2 className="text-center text-uppercase mb-4">Edit Room</h2>
+            <h2 className="text-center text-uppercase mb-4">Publisher Edit Room</h2>
             <Form onSubmit={handleSubmit}>
 
               <Form.Group className="mb-3" controlId="hostalid">
@@ -201,4 +208,4 @@ export const EditRoom = () => {
   );
 };
 
-export default EditRoom;
+export default PublisherEditRoom;

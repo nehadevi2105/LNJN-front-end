@@ -17,7 +17,7 @@ import { Button as Buttons} from "react-bootstrap";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const AllRooms = () => {
+const Approvalroomlist = () => {
   const [rooms, setRooms] = useState([]);
   const [hostels, setHostels] = useState({});
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
@@ -42,7 +42,7 @@ const AllRooms = () => {
 
     const fetchRooms = async () => {
       try {
-        const response = await APIClient.get(apis.getRooms);
+        const response = await APIClient.get(apis.roomapprovallist);
         setRooms(
           response.data.map((room,index) => ({
             rid: index + 1,
@@ -98,42 +98,33 @@ const AllRooms = () => {
       sortable: false,
       renderCell: (params) => (
         <div>
-        <Buttons
+          {/* <Buttons
+            variant="outline-primary"
+            size="sm"
+            as={Link}
+            to={`/ApprovalEditRoom/${params.row.id}`}
+          >
+            <EditIcon style={{ cursor: "pointer" }} />
+          </Buttons> */}
+
+<Buttons
     variant="outline-primary"
     size="sm"
     as={Link}
-    to={`/Room/EditRoom/${params.row.id}`}
+    to={`/ApprovalEditRoom/${params.row.id}`}
     onClick={(e) => {
-      if (!(usertype === 1 || usertype === 4)) {
+      if (!(usertype === 2 || usertype === 4)) {
         e.preventDefault(); // Prevent navigation for unauthorized users
       }
     }}
     style={{
-      opacity: usertype === 1 || usertype === 4 ? 1 : 0.5, // Visually disable for unauthorized users
+      opacity: usertype === 2 || usertype === 4 ? 1 : 0.5, // Visually disable for unauthorized users
       pointerEvents: "auto", // Ensure click event still fires
     }}
   >
-    <EditIcon style={{ cursor: usertype === 1 || usertype === 4 ? "pointer" : "not-allowed" }} />
+    <EditIcon style={{ cursor: usertype === 2 || usertype === 4 ? "pointer" : "not-allowed" }} />
   </Buttons>
-
-  <Buttons
-    variant="outline-danger"
-    size="sm"
-    style={{
-      marginLeft: 8,
-      opacity: usertype === 1 || usertype === 4 ? 1 : 0.5, // Make it visually disabled for unauthorized users
-      pointerEvents: "auto", // Ensure click event still fires
-    }}
-    onClick={(e) => {
-      if (usertype === 1 || usertype === 4) {
-        handleDeleteClick(params.row);
-      } else {
-        e.preventDefault(); // Prevent action for unauthorized users
-      }
-    }}
-  >
-    <DeleteIcon style={{ cursor: usertype === 1 || usertype === 4 ? "pointer" : "not-allowed" }} />
-  </Buttons>
+         
         </div>
       ),
     },
@@ -147,41 +138,16 @@ const AllRooms = () => {
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Room</li>
                 <li className="breadcrumb-item active">
-                  All Room List{" "}
+                Approval Room List{" "}
                 </li>
               </ol>
             </nav>
       <div className="formdata">
-      {/* <div className="header-box"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "16px",
-        }}
-      > 
-       <h1 className="maintitle">Room List</h1>
-        <Link
-          to="/Rooms/CreateRoom"
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <Button variant="primary">
-            <AddIcon /> New Room
-          </Button>
-        </Link>
-      </div> */}
-      <h1 className="maintitle mt-0 pt-0">Room List</h1>
+     
+      <h1 className="maintitle mt-0 pt-0">Approval Room List</h1>
       <div className="">
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 5, mb: 2 }}>
-      <Button variant="contained" color="primary" component={Link} to="/Rooms/CreateRoom">
-          <AddIcon /> New Room
-        </Button>
-        <Button variant="contained" color="primary" component={Link} to="/Approvalroomlist">
-           Room Approval List
-        </Button>
-        <Button variant="contained" color="secondary" component={Link} to="/Publisherroomlist">
-           Room Publisher List
-        </Button>
+     
       </Box>
 
       <Box
@@ -241,4 +207,4 @@ const AllRooms = () => {
   );
 };
 
-export default AllRooms;
+export default Approvalroomlist;

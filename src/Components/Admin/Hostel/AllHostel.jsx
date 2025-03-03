@@ -20,7 +20,6 @@ const AllHostel = () => {
   const [selectedHostel, setSelectedHostel] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const storedUserString = localStorage.getItem("usertype");
-  debugger;
   const usertype = JSON.parse(storedUserString);
 
 
@@ -101,14 +100,33 @@ const AllHostel = () => {
   >
     <EditIcon style={{ cursor: usertype === 1 || usertype === 4 ? "pointer" : "not-allowed" }} />
   </Buttons>
-          <Buttons
+          {/* <Buttons
             variant="outline-danger"
             size="sm"
             style={{ marginLeft: 8 }}
             onClick={() => handleDeleteClick(params.row)}
           >
             <DeleteIcon style={{ cursor: "pointer" }} />
-          </Buttons>
+          </Buttons> */}
+
+          <Buttons
+    variant="outline-danger"
+    size="sm"
+    style={{
+      marginLeft: 8,
+      opacity: usertype === 1 || usertype === 4 ? 1 : 0.5, // Make it visually disabled
+      pointerEvents: "auto", // Keep pointer events enabled for onClick
+    }}
+    onClick={(e) => {
+      if (usertype === 1 || usertype === 4) {
+        handleDeleteClick(params.row);
+      } else {
+        e.preventDefault(); // Prevent action for unauthorized users
+      }
+    }}
+  >
+    <DeleteIcon style={{ cursor: usertype === 1 || usertype === 4 ? "pointer" : "not-allowed" }} />
+  </Buttons>
         </div>
       )
     }
