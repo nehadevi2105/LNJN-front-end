@@ -39,7 +39,7 @@ const Bookroom = () => {
   useEffect(() => {
     const fetchroom = async () => {
       try {
-        const response = await APIClient.get(apis.getRooms);
+        const response = await APIClient.get(apis.getrealRoomslist);
         setRoomlist(response.data || []);
         if (Selection.hostalid) {
           const filteredrooms = response.data.filter(
@@ -131,7 +131,7 @@ const Bookroom = () => {
                       </ol>
                     </nav>
                   </div>
-        <div className="home">
+        <div className="formdata">
           <div className="homeContainer">
             <Row className="vh-100 d-flex justify-content-center align-items-left">
               <Col md={10} lg={12} xs={12}>
