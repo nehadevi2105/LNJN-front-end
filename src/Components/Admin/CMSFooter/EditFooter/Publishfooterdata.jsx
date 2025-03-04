@@ -39,7 +39,8 @@ const PublishFooterData = () => {
   const [dropdownOptions, setDropdownOptions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [existingFile, setExistingFile] = useState(null);
-
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -176,7 +177,7 @@ const PublishFooterData = () => {
       } else if (formData.contenttype === 1) {
         formDataToSend.append("html", formData.html);
       }
-      formDataToSend.append("usertype", "4");
+      formDataToSend.append("usertype", usertype);
       formDataToSend.append("action", "publish");
       const response = await APIClient.post(
         "/api/lowerfooter/updatefooter/" + id,

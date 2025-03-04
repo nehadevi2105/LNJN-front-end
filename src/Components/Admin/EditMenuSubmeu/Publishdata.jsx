@@ -37,6 +37,8 @@ const Publishdata = () => {
   const [existingFile, setExistingFile] = useState(null);
   const [useExistingFile, setUseExistingFile] = useState(true);
   const [existingFilePath, setExistingFilePath] = useState("");
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const config = useMemo(
     () => ({
@@ -180,7 +182,7 @@ const Publishdata = () => {
       formDataToSend.append("menuurl", formData.menuurl);
       formDataToSend.append("submenu_id", formData.submenu_id);
       formDataToSend.append("languagetype", formData.languagetype);
-      formDataToSend.append("usertype", "4");
+      formDataToSend.append("usertype", usertype);
       formDataToSend.append("action", "publish");
       if (formData.contenttype === "4") {
         formDataToSend.append("external_link", formData.external_link);

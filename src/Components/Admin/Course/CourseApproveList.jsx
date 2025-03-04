@@ -28,7 +28,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 // );
 import { Button as Buttons } from "react-bootstrap";
 
-const AllCourses = () => {
+const CourseApproveList = () => {
   const [courses, setCourses] = useState([]);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -41,9 +41,9 @@ const AllCourses = () => {
   useEffect(() => {
     async function fetchCourses() {
       try {
-        debugger;
+        //debugger;
         console.log(apis.getCourses);
-        const response = await APIClient.get(apis.getCourses);
+        const response = await APIClient.get(apis.getApproveCourses);
         // Map API response to include an "id" field for DataGrid
         const dataWithIds = response.data.map((row, index) => ({
           //id: index,         // For DataGrid internal use
@@ -146,7 +146,7 @@ const AllCourses = () => {
       renderCell: (params) => (
         <Button color="primary">
           <Link
-            to={`/Course/EditCourse/${params.row.id}`}
+            to={`/Course/EditCourseApprove/${params.row.id}`}
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <EditIcon style={{ cursor: "pointer" }} />
@@ -173,11 +173,11 @@ const AllCourses = () => {
         <ol className="breadcrumb">
           <li className="breadcrumb-item">Home</li>
           <li className="breadcrumb-item">Course</li>
-          <li className="breadcrumb-item active">All Course List </li>
+          <li className="breadcrumb-item active">Approval Course List </li>
         </ol>
       </nav>
       <div className="formdata">
-        <h1 className="maintitle mt-0 pt-0">Course List</h1>
+        <h1 className="maintitle mt-0 pt-0">Course Approval List</h1>
         <div className="">
           {/* <Link to="/Course/CreateCourse" className="header-box-rgt">
           <p>
@@ -200,18 +200,13 @@ const AllCourses = () => {
               variant="contained"
               color="primary"
               component={Link}
-              to="/Course/CourseApproveList"
+              to="/Course/AllCourse"
             >
-              Course Approval List
+              Back
             </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              component={Link}
-              to="/Course/CoursePublisherList"
-            >
-              Course Publisher List
-            </Button>
+            {/* <Button variant="contained" color="secondary" component={Link} to="">
+          Course Publisher List
+        </Button> */}
           </Box>
 
           <Box
@@ -301,4 +296,4 @@ const AllCourses = () => {
   );
 };
 
-export default AllCourses;
+export default CourseApproveList;

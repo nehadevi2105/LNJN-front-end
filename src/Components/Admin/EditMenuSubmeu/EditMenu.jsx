@@ -30,8 +30,10 @@ const EditMenu = () => {
   //const [formErrors, setFormErrors] = useState({});
 
   const [existingFile, setExistingFile] = useState(null);
-  const [useExistingFile, setUseExistingFile] = useState(true);
-  const [existingFilePath, setExistingFilePath] = useState("");
+  //const [useExistingFile, setUseExistingFile] = useState(true);
+  //const [existingFilePath, setExistingFilePath] = useState("");
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const config = useMemo(
     () => ({
@@ -42,7 +44,7 @@ const EditMenu = () => {
 
   const onChange = useCallback((html) => {
     setContent(html);
-  }, []);
+  }, []); 
 
   // const handleEditorChange = (content) => {
   //   setEditorContent(content);
@@ -172,8 +174,8 @@ const EditMenu = () => {
       formDataToSend.append("menuurl", formData.menuurl);
       formDataToSend.append("submenu_id", formData.submenu_id);
       formDataToSend.append("languagetype", formData.languagetype);
-      formDataToSend.append("usertype", "1");
-
+      formDataToSend.append("usertype", usertype);
+      formDataToSend.append("action", "creatorupdate");
       if (formData.contenttype === "4") {
         formDataToSend.append("external_link", formData.external_link);
       } else if (formData.contenttype === "3") {

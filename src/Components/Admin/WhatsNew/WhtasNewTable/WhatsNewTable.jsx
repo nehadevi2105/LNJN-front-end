@@ -53,12 +53,16 @@ const WhatsNewTable = () => {
       field: "delete",
       headerName: "Delete",
       sortable: false,
-      renderCell: (params) => (
-        <DeleteIcon
-          style={{ cursor: "not-allowed", color: "gray" }}
-          onClick={() => handleDeleteClick(params.row)}
-        />
-      ),
+      renderCell: (params) =>
+        usertype === 1 || usertype === 4 ? (
+          //user.r_usertype !== 2 || null ? (
+          <DeleteIcon
+            style={{ cursor: "pointer" }}
+            onClick={() => handleDeleteClick(params.row)}
+          />
+        ) : (
+          <DeleteIcon style={{ cursor: "not-allowed", color: "gray" }} />
+        ),
     },
   ];
 
@@ -69,7 +73,7 @@ const WhatsNewTable = () => {
 
   const handleConfirmSubmit = async () => {
     try {
-      await APIClient.delete("/api/Whatsnew/delete/" + selectedItem.id);
+      await APIClient.post("/api/Whatsnew/delete/" + selectedItem.id);
       setApiData((prevData) =>
         prevData.filter((item) => item.id !== selectedItem.id)
       );
@@ -93,7 +97,7 @@ const WhatsNewTable = () => {
         const response = await APIClient.get(apis.whatsnew);
         //const response = await getwhatsnew();
         const dataWithIds = response.data.map((row, index) => ({
-          id1: index+1,
+          id1: index + 1,
           ...row,
         }));
         setApiData(dataWithIds);

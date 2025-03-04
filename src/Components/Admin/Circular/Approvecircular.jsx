@@ -24,11 +24,13 @@ const ApproveCircular = () => {
   const [file, setFile] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-  const [selectedRole, setSelectedRole] = useState("");
+ // const [selectedRole, setSelectedRole] = useState("");
   const [prevContentType, setPrevContentType] = useState("");
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [existingFile, setExistingFile] = useState(null);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const [formData, setFormData] = useState({
     tittle: "", // Corrected typo in the field name
@@ -207,7 +209,7 @@ const ApproveCircular = () => {
         formDataToSend.append("startdate", formData.startdate);
         formDataToSend.append("end_date", formData.end_date);
         formDataToSend.append("languagetype", formData.languagetype);
-        formDataToSend.append("usertype", "4");
+        formDataToSend.append("usertype", usertype);
         formDataToSend.append("action", "approve");
         const response = await APIClient.post(
           "/api/Circular/updatecirculardata/" + id,

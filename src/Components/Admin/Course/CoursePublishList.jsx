@@ -28,22 +28,22 @@ import DeleteIcon from "@mui/icons-material/Delete";
 // );
 import { Button as Buttons } from "react-bootstrap";
 
-const AllCourses = () => {
+const CoursePublisherList = () => {
   const [courses, setCourses] = useState([]);
-  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  //const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [updatedName, setUpdatedName] = useState("");
   const [updatedDetails, setUpdatedDetails] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   // Fetch courses on mount
   useEffect(() => {
     async function fetchCourses() {
       try {
-        debugger;
-        console.log(apis.getCourses);
-        const response = await APIClient.get(apis.getCourses);
+        const response = await APIClient.get(apis.getCoursePublish);
         // Map API response to include an "id" field for DataGrid
         const dataWithIds = response.data.map((row, index) => ({
           //id: index,         // For DataGrid internal use
@@ -63,38 +63,39 @@ const AllCourses = () => {
   }, []);
 
   // Handle Delete
-  const handleDeleteClick = (course) => {
-    setSelectedCourse(course);
-    setConfirmDialogOpen(true);
-  };
+  // const handleDeleteClick = (course) => {
+  //   setSelectedCourse(course);
+  //   setConfirmDialogOpen(true);
+  // };
 
-  const handleConfirmDelete = async () => {
-    try {
-      const response = await APIClient.post(
-        `${apis.deleteCourse}/${selectedCourse.id}`,
-        null,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+  // const handleConfirmDelete = async () => {
+  //   try {
+  //     const response = await APIClient.post(
+  //       `${apis.deleteCourse}/${selectedCourse.id}`,
+  //       null,
+  //       {
+  //         headers: { "Content-Type": "application/json" },
+  //       }
+  //     );
 
-      if (response.status === 200) {
-        setCourses((prev) =>
-          prev.filter((course) => course.id !== selectedCourse.id)
-        );
-        toast.success("Course deleted successfully");
-      } else {
-        toast.error("Failed to delete course");
-      }
-    } catch (error) {
-      console.error("Error deleting course:", error);
-      toast.error(error.response?.data || "Failed to delete course");
-    } finally {
-      setConfirmDialogOpen(false);
-    }
-  };
+  //     if (response.status === 200) {
+  //       setCourses((prev) =>
+  //         prev.filter((course) => course.id !== selectedCourse.id)
+  //       );
+  //       toast.success("Course deleted successfully");
+  //     } else {
+  //       toast.error("Failed to delete course");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error deleting course:", error);
+  //     toast.error(error.response?.data || "Failed to delete course");
+  //   } finally {
+  //     setConfirmDialogOpen(false);
+  //   }
+  // };
 
   // Handle Edit
+
   const handleEditClick = (course) => {
     setSelectedCourse(course);
     setUpdatedName(course.name);
@@ -146,7 +147,7 @@ const AllCourses = () => {
       renderCell: (params) => (
         <Button color="primary">
           <Link
-            to={`/Course/EditCourse/${params.row.id}`}
+            to={`/Course/EditCoursePublish/${params.row.id}`}
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <EditIcon style={{ cursor: "pointer" }} />
@@ -154,17 +155,17 @@ const AllCourses = () => {
         </Button>
       ),
     },
-    {
-      field: "delete",
-      headerName: "Delete",
-      sortable: false,
-      width: 100,
-      renderCell: (params) => (
-        <Button color="error" onClick={() => handleDeleteClick(params.row)}>
-          <DeleteIcon style={{ cursor: "pointer" }} />
-        </Button>
-      ),
-    },
+    // {
+    //   field: "delete",
+    //   headerName: "Delete",
+    //   sortable: false,
+    //   width: 100,
+    //   renderCell: (params) => (
+    //     <Button color="error" onClick={() => handleDeleteClick(params.row)}>
+    //       <DeleteIcon style={{ cursor: "pointer" }} />
+    //     </Button>
+    //   ),
+    // },
   ];
 
   return (
@@ -173,11 +174,11 @@ const AllCourses = () => {
         <ol className="breadcrumb">
           <li className="breadcrumb-item">Home</li>
           <li className="breadcrumb-item">Course</li>
-          <li className="breadcrumb-item active">All Course List </li>
+          <li className="breadcrumb-item active">Publush Course List </li>
         </ol>
       </nav>
       <div className="formdata">
-        <h1 className="maintitle mt-0 pt-0">Course List</h1>
+        <h1 className="maintitle mt-0 pt-0">Course Publish List</h1>
         <div className="">
           {/* <Link to="/Course/CreateCourse" className="header-box-rgt">
           <p>
@@ -200,18 +201,13 @@ const AllCourses = () => {
               variant="contained"
               color="primary"
               component={Link}
-              to="/Course/CourseApproveList"
+              to="/Course/AllCourse"
             >
-              Course Approval List
+              Back
             </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              component={Link}
-              to="/Course/CoursePublisherList"
-            >
-              Course Publisher List
-            </Button>
+            {/* <Button variant="contained" color="secondary" component={Link} to="">
+          Course Publisher List
+        </Button> */}
           </Box>
 
           <Box
@@ -238,24 +234,6 @@ const AllCourses = () => {
             />
           </Box>
         </div>
-        {/* Delete Confirmation Dialog */}
-        <Dialog
-          open={confirmDialogOpen}
-          onClose={() => setConfirmDialogOpen(false)}
-        >
-          <DialogTitle>Confirm Delete</DialogTitle>
-          <DialogContent>
-            Are you sure you want to delete this course?
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setConfirmDialogOpen(false)} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={handleConfirmDelete} color="primary">
-              Confirm
-            </Button>
-          </DialogActions>
-        </Dialog>
 
         {/* Edit Dialog */}
         <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)}>
@@ -301,4 +279,4 @@ const AllCourses = () => {
   );
 };
 
-export default AllCourses;
+export default CoursePublisherList;

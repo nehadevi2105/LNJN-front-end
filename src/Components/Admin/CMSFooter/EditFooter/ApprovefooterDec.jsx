@@ -29,7 +29,8 @@ const ApproveFooterDec = () => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
   const [formData, setFormData] = useState({
     tittle_name: "",
     description: "",
@@ -127,7 +128,7 @@ const ApproveFooterDec = () => {
       formDataToSend.append("contenttype", formData.contenttype);
       formDataToSend.append("languagetype", formData.languagetype);
 
-      formDataToSend.append("usertype", "4");
+      formDataToSend.append("usertype",usertype);
       formDataToSend.append("action", "approve");
       const response = await APIClient.post(
         "/api/lowerfooter/updatefooter/" + id,

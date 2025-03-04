@@ -14,7 +14,7 @@ import {
   Dialog,
 } from "@mui/material";
 import { Col, Form, Row } from "react-bootstrap";
-import { ElectricBike } from "@mui/icons-material";
+//import { ElectricBike } from "@mui/icons-material";
 import JoditEditor from "jodit-react";
 import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
@@ -50,6 +50,8 @@ const Publishsubmenudata = () => {
     languagetype: "",
     filepdfpath:""
   });
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const [errors, setErrors] = useState({});
   const editor = useRef(null);
@@ -203,7 +205,7 @@ const Publishsubmenudata = () => {
       formDataToSend.append("menuurl", formData.menuurl);
       formDataToSend.append("submenu_id", formData.submenu_id);
       formDataToSend.append("languagetype", formData.languagetype);
-      formDataToSend.append("usertype", '4');
+      formDataToSend.append("usertype", usertype);
       formDataToSend.append("action", 'publish');
       if (formData.contenttype === "4") {
         formDataToSend.append("external_link", formData.external_link);

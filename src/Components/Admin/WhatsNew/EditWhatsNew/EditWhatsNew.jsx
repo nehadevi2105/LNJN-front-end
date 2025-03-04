@@ -30,6 +30,8 @@ const EditWhatsNew = () => {
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [existingFile, setExistingFile] = useState(null);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const [formData, setFormData] = useState({
     news_title: "",
@@ -205,7 +207,8 @@ const EditWhatsNew = () => {
         formDataToSend.append("news_title", formData.news_title);
         formDataToSend.append("contenttype", formData.contenttype);
         formDataToSend.append("languagetype", formData.languagetype);
-        formDataToSend.append("usertype", "1");
+        formDataToSend.append("usertype", usertype);
+        formDataToSend.append("action", "creatorupdate");
         if (formData.contenttype === 4) {
           formDataToSend.append("external_file", formData.external_file);
         } else if (formData.contenttype === 3) {

@@ -21,6 +21,8 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
   const [prevContentType, setPrevContentType] = useState('');
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
 
   const [formData, setFormData] = useState({
@@ -212,7 +214,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material
         formDataToSend.append('startdate', formData.startdate);
         formDataToSend.append('end_date', formData.end_date);
         formDataToSend.append('languagetype', formData.languagetype);
-        formDataToSend.append("usertype", '4');
+        formDataToSend.append("usertype", usertype);
         formDataToSend.append("action", 'publish');
         const response = await APIClient.post("/api/Tenders/updatetenderdata/" + id, formDataToSend, {
           headers: {

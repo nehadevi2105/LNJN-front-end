@@ -29,6 +29,8 @@ const ApproveWhatsNew = () => {
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [existingFile, setExistingFile] = useState(null);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const [formData, setFormData] = useState({
     news_title: "",
@@ -218,7 +220,7 @@ const ApproveWhatsNew = () => {
         } else if (formData.contenttype === 1) {
           formDataToSend.append("html", html);
         }
-        formDataToSend.append("usertype", "4");
+        formDataToSend.append("usertype", usertype);
         formDataToSend.append("action", "approve");
         formDataToSend.append("startdate", formData.startdate);
         formDataToSend.append("end_date", formData.end_date);
