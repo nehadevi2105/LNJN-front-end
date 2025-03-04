@@ -30,20 +30,20 @@ import { Button as Buttons } from "react-bootstrap";
 
 const CoursePublisherList = () => {
   const [courses, setCourses] = useState([]);
-  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  //const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [updatedName, setUpdatedName] = useState("");
   const [updatedDetails, setUpdatedDetails] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   // Fetch courses on mount
   useEffect(() => {
     async function fetchCourses() {
       try {
-        //debugger;
-        console.log(apis.getCourses);
-        const response = await APIClient.get(apis.getCourses);
+        const response = await APIClient.get(apis.getCoursePublish);
         // Map API response to include an "id" field for DataGrid
         const dataWithIds = response.data.map((row, index) => ({
           //id: index,         // For DataGrid internal use
@@ -63,38 +63,39 @@ const CoursePublisherList = () => {
   }, []);
 
   // Handle Delete
-  const handleDeleteClick = (course) => {
-    setSelectedCourse(course);
-    setConfirmDialogOpen(true);
-  };
+  // const handleDeleteClick = (course) => {
+  //   setSelectedCourse(course);
+  //   setConfirmDialogOpen(true);
+  // };
 
-  const handleConfirmDelete = async () => {
-    try {
-      const response = await APIClient.post(
-        `${apis.deleteCourse}/${selectedCourse.id}`,
-        null,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+  // const handleConfirmDelete = async () => {
+  //   try {
+  //     const response = await APIClient.post(
+  //       `${apis.deleteCourse}/${selectedCourse.id}`,
+  //       null,
+  //       {
+  //         headers: { "Content-Type": "application/json" },
+  //       }
+  //     );
 
-      if (response.status === 200) {
-        setCourses((prev) =>
-          prev.filter((course) => course.id !== selectedCourse.id)
-        );
-        toast.success("Course deleted successfully");
-      } else {
-        toast.error("Failed to delete course");
-      }
-    } catch (error) {
-      console.error("Error deleting course:", error);
-      toast.error(error.response?.data || "Failed to delete course");
-    } finally {
-      setConfirmDialogOpen(false);
-    }
-  };
+  //     if (response.status === 200) {
+  //       setCourses((prev) =>
+  //         prev.filter((course) => course.id !== selectedCourse.id)
+  //       );
+  //       toast.success("Course deleted successfully");
+  //     } else {
+  //       toast.error("Failed to delete course");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error deleting course:", error);
+  //     toast.error(error.response?.data || "Failed to delete course");
+  //   } finally {
+  //     setConfirmDialogOpen(false);
+  //   }
+  // };
 
   // Handle Edit
+
   const handleEditClick = (course) => {
     setSelectedCourse(course);
     setUpdatedName(course.name);
@@ -154,17 +155,17 @@ const CoursePublisherList = () => {
         </Button>
       ),
     },
-    {
-      field: "delete",
-      headerName: "Delete",
-      sortable: false,
-      width: 100,
-      renderCell: (params) => (
-        <Button color="error" onClick={() => handleDeleteClick(params.row)}>
-          <DeleteIcon style={{ cursor: "pointer" }} />
-        </Button>
-      ),
-    },
+    // {
+    //   field: "delete",
+    //   headerName: "Delete",
+    //   sortable: false,
+    //   width: 100,
+    //   renderCell: (params) => (
+    //     <Button color="error" onClick={() => handleDeleteClick(params.row)}>
+    //       <DeleteIcon style={{ cursor: "pointer" }} />
+    //     </Button>
+    //   ),
+    // },
   ];
 
   return (
@@ -233,24 +234,6 @@ const CoursePublisherList = () => {
             />
           </Box>
         </div>
-        {/* Delete Confirmation Dialog */}
-        <Dialog
-          open={confirmDialogOpen}
-          onClose={() => setConfirmDialogOpen(false)}
-        >
-          <DialogTitle>Confirm Delete</DialogTitle>
-          <DialogContent>
-            Are you sure you want to delete this course?
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setConfirmDialogOpen(false)} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={handleConfirmDelete} color="primary">
-              Confirm
-            </Button>
-          </DialogActions>
-        </Dialog>
 
         {/* Edit Dialog */}
         <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)}>

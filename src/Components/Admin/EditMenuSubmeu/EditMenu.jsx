@@ -44,7 +44,7 @@ const EditMenu = () => {
 
   const onChange = useCallback((html) => {
     setContent(html);
-  }, []);
+  }, []); 
 
   // const handleEditorChange = (content) => {
   //   setEditorContent(content);

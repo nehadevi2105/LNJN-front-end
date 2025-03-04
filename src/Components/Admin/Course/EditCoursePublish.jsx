@@ -13,12 +13,19 @@ const EditCoursePublish = () => {
   const [coursedetails, setCourseDescription] = useState("");
   const [deptid, setDepartmentId] = useState("");
   const [imgsrc, setFile] = useState(null);
-  const [existingImgSrc, setExistingImgSrc] = useState(null); // State to hold existing image URL
+  const [filepath, setcoursefilepath] = useState(null); // State to hold existing image URL
   const [loading, setLoading] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const [departments, setDepartments] = useState([]);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
+  
+  const handleImageChange = (event) => {
+    const imgsrc = event.target.files[0];
+    setFile(imgsrc);
+  };
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -30,7 +37,7 @@ const EditCoursePublish = () => {
           setCourseName(course.name);
           setCourseDescription(course.coursedetails);
           setDepartmentId(course.deptid);
-          setExistingImgSrc(course.imgsrc); // Set existing image URL
+          setcoursefilepath(course.filepath); // Set existing image URL
         } else {
           toast.error("Failed to fetch course details");
         }
@@ -76,12 +83,16 @@ const EditCoursePublish = () => {
     formData.append("name", name);
     formData.append("coursedetails", coursedetails);
     formData.append("deptid", deptid);
-    if (imgsrc instanceof File) {
-      formData.append("imgsrc", imgsrc);
+    if (imgsrc) {
+      formData.append("imgsrc", imgsrc); // Attach new file
+    } else if (filepath) {
+      formData.append("filepath", filepath); // Attach existing file path
     }
+    formData.append("usertype", usertype);
+    formData.append("action", "approve");
 
     try {
-      const response = await APIClient.post(`${apis.editCourse}/${id}`, formData, {
+      const response = await APIClient.post( apis.editCourseApprove + id, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -93,7 +104,7 @@ const EditCoursePublish = () => {
         setCourseDescription("");
         setDepartmentId("");
         setFile(null);
-        setExistingImgSrc(null);
+        setcoursefilepath(null);
       } else {
         toast.error("Failed to update course");
       }
@@ -178,24 +189,53 @@ const EditCoursePublish = () => {
                               </Form.Control.Feedback>
                             </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="imgsrc">
+                            {/* <Form.Group className="mb-3" controlId="imgsrc">
                               <Form.Label>Upload Course File</Form.Label>
                               <Form.Control
                                 type="file"
                                 name="imgsrc"
                                 onChange={handleFileChange}
                               />
-                            </Form.Group>
+                            </Form.Group> */}
 
                             {/* Display existing uploaded file */}
-                            {existingImgSrc && (
+                            {/* {setcoursefilepath && (
                               <div className="mb-3">
                                 <Form.Label>Existing Uploaded File</Form.Label>
                                 <div>
-                                  <img src={existingImgSrc} alt="Uploaded File" style={{ maxWidth: "100%", height: "auto" }} />
+                                  <img src={setcoursefilepath} alt="Uploaded File" style={{ maxWidth: "100%", height: "auto" }} />
                                 </div>
                               </div>
-                            )}
+                            )} */}
+
+                            <div className="mb-3">
+                              <a
+                                href={
+                                  filepath
+                                    ? `${APIClient.defaults.baseURL}${filepath}`
+                                    : "#"
+                                }
+                                className="form-control"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {filepath
+                                  ? "View Document"
+                                  : "No document available"}
+                              </a>
+                              <label className="form-label text-dark">
+                                Choose File
+                              </label>
+                              <input
+                                className="form-control"
+                                type="file"
+                                name="file"
+                                onChange={handleImageChange}
+                              />
+                              {/* {errors.file && (
+                  <div className="text-danger">{errors.file}</div>
+                )} */}
+                            </div>
 
                             <div className="d-flex justify-content-between">
                             <Link to="/Course/AllCourse">
