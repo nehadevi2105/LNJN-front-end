@@ -7,7 +7,7 @@ import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import "react-toastify/dist/ReactToastify.css";
 
-const EditCandidate = () => {
+const ApprovalEditCandidate = () => {
   const { id } = useParams(); // Candidate ID from route parameters
   const storedUserString = localStorage.getItem("usertype");
   const usertype = JSON.parse(storedUserString);
@@ -225,7 +225,7 @@ const EditCandidate = () => {
       ...candidateInfo,
       lstcand: formattedCandidateCourses,
       usertype: usertype,
-      ...(usertype === 4 && { action: 'creator' })
+      ...(usertype === 4 && { action: 'approve' })
     };
 
     try {
@@ -512,4 +512,4 @@ const EditCandidate = () => {
   );
 };
 
-export default EditCandidate;
+export default ApprovalEditCandidate;

@@ -7,7 +7,7 @@ import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import "react-toastify/dist/ReactToastify.css";
 
-const EditCandidate = () => {
+const PublisherEditCandidate = () => {
   const { id } = useParams(); // Candidate ID from route parameters
   const storedUserString = localStorage.getItem("usertype");
   const usertype = JSON.parse(storedUserString);
@@ -225,7 +225,7 @@ const EditCandidate = () => {
       ...candidateInfo,
       lstcand: formattedCandidateCourses,
       usertype: usertype,
-      ...(usertype === 4 && { action: 'creator' })
+      ...(usertype === 4 && { action: 'publish' })
     };
 
     try {
@@ -263,13 +263,13 @@ const EditCandidate = () => {
                       <ol className="breadcrumb">
                         <li className="breadcrumb-item">Home</li>
                         <li className="breadcrumb-item">Candidate</li>
-                        <li className="breadcrumb-item active">Edit Candidate</li>
+                        <li className="breadcrumb-item active">Publisher Edit Candidate</li>
                       </ol>
                     </nav>
                   </div>
         <Card>
           <Card.Body>
-            <h2 className="text-center text-uppercase mb-4">Edit Candidate</h2>
+            <h2 className="text-center text-uppercase mb-4">Publisher Edit Candidate</h2>
             <Form onSubmit={handleSubmit}>
               {/* Candidate Personal Info */}
               <Row className="mb-3">
@@ -471,7 +471,7 @@ const EditCandidate = () => {
               {/* Submit Button for the entire candidate form */}
               <div className="mt-4">
                 <Button variant="primary" type="submit" onClick={handleSubmit}>
-                  Submit Candidate
+                  Update Candidate
                 </Button>
               </div>
             </Form>
@@ -512,4 +512,4 @@ const EditCandidate = () => {
   );
 };
 
-export default EditCandidate;
+export default PublisherEditCandidate;

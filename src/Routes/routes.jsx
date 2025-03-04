@@ -97,7 +97,10 @@ import PublisherEditRoom from "../Components/Admin/Rooms/PublisherEditRoom";
 import AprovalBookroomlist from "../Components/Admin/BookRoom/AprovalBookroomlist";
 import ApprovalEditBookRoom from "../Components/Admin/BookRoom/ApprovalEditBookRoom";
 import PublisherBookroomlist from "../Components/Admin/BookRoom/PublisherBookroomlist";
-
+import Approvalcandidatelist from "../Components/Admin/Candidate/Approvalcandidatelist";
+import ApprovalEditCandidate from "../Components/Admin/Candidate/ApprovalEditCandidate";
+import Publishcandidatelist from "../Components/Admin/Candidate/Publishcandidatelist";
+import PublisherEditCandidate from "../Components/Admin/Candidate/PublisherEditCandidate";
 function Router() {
   return (
     <Routes>
@@ -171,6 +174,12 @@ function Router() {
       <Route path="/bannerdata" element={<BannerTable />} />
       <Route path="/Candidate/AllCandidates" element={<AllCandidates />} />
       <Route path="/Candidate/EditCandidate/:id" element={<EditCandidate />} />
+      <Route path = "/Approvalcandidatelist" element={<Approvalcandidatelist />} />
+      <Route path = "/Candidate/ApprovalEditCandidate/:id" element={<ApprovalEditCandidate />} />
+      <Route path = "/Publishcandidatelist" element={<Publishcandidatelist />} />
+      <Route path = "/Candidate/PublisherEditCandidate/:id" element={<PublisherEditCandidate />} />
+      
+
       <Route path="/Hostel/CreateHostel" element={<CreateHostel />} />
       <Route path="/Hostel/AllHostel" element={<AllHostel />} />
       {/* <Route path="/Hostel/EditHostel/:id" element={<EditHostel />} /> */}
