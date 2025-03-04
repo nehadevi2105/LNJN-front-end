@@ -103,6 +103,22 @@ import PublisherEditRoom from "../Components/Admin/Rooms/PublisherEditRoom";
 import AprovalBookroomlist from "../Components/Admin/BookRoom/AprovalBookroomlist";
 import ApprovalEditBookRoom from "../Components/Admin/BookRoom/ApprovalEditBookRoom";
 import PublisherBookroomlist from "../Components/Admin/BookRoom/PublisherBookroomlist";
+import Approvalcandidatelist from "../Components/Admin/Candidate/Approvalcandidatelist";
+import ApprovalEditCandidate from "../Components/Admin/Candidate/ApprovalEditCandidate";
+import Publishcandidatelist from "../Components/Admin/Candidate/Publishcandidatelist";
+import PublisherEditCandidate from "../Components/Admin/Candidate/PublisherEditCandidate";
+import CourseApproveList from "../Components/Admin/Course/CourseApproveList";
+import CoursePublishList from "../Components/Admin/Course/CoursePublishList";
+import EditCourseApprove from "../Components/Admin/Course/EditCourseApprove";
+import EditCoursePublish from "../Components/Admin/Course/EditCoursePublish";
+import Approvalcandidatelist from "../Components/Admin/Candidate/Approvalcandidatelist";
+import ApprovalEditCandidate from "../Components/Admin/Candidate/ApprovalEditCandidate";
+import Publishcandidatelist from "../Components/Admin/Candidate/Publishcandidatelist";
+import PublisherEditCandidate from "../Components/Admin/Candidate/PublisherEditCandidate";
+import CourseApproveList from "../Components/Admin/Course/CourseApproveList";
+import CoursePublishList from "../Components/Admin/Course/CoursePublishList";
+import EditCourseApprove from "../Components/Admin/Course/EditCourseApprove";
+import EditCoursePublish from "../Components/Admin/Course/EditCoursePublish";
 
 function Router() {
   return (
