@@ -37,6 +37,7 @@ const EditCandidate = () => {
   // Options fetched from API for dropdowns
   const [departments, setDepartments] = useState([]);
   const [courses, setCourses] = useState([]);
+  const [courses1, setCourses1] = useState([]);
 
   // Dialog and loading states
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
@@ -89,6 +90,22 @@ const EditCandidate = () => {
     };
 
     fetchDepartments();
+    
+  }, []);
+
+  // Fetch course and courses on mount
+  useEffect(() => {
+    const fetchcourses = async () => {
+      try {
+        const response = await APIClient.get(apis.getCourses);
+        setCourses1(response.data || []);
+      } catch (error) {
+        console.error("Error fetching departments:", error);
+         toast.error("Error fetching departments");
+      }
+    };
+
+    fetchcourses();
     
   }, []);
 
@@ -211,6 +228,7 @@ const EditCandidate = () => {
 
   // When candidate submission is confirmed, send data to backend
   const handleConfirmSubmit = async () => {
+    debugger;
     setConfirmDialogOpen(false);
     setLoading(true);
 
@@ -428,7 +446,7 @@ const EditCandidate = () => {
                     debugger;
                 // Lookup department and course from fetched arrays
                 const dept = departments.find(d => d.did === entry.deptid);
-                const course = courses.find(c => c.id === entry.courseid);
+                const course = courses1.find(c => c.id === entry.courseid);
                 //const course = courses.find(c => String(c.cid) === String(entry.courseid));
 
                 return (
