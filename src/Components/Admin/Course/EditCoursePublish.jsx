@@ -89,7 +89,7 @@ const EditCoursePublish = () => {
       formData.append("filepath", filepath); // Attach existing file path
     }
     formData.append("usertype", usertype);
-    formData.append("action", "approve");
+    formData.append("action", "publish");
 
     try {
       const response = await APIClient.post( apis.editCourseApprove + id, formData, {
