@@ -60,8 +60,8 @@ const Publishdata = () => {
     contenttype: "",
     html: "",
     file: "",
-    internal_link: "",
-    external_link: "",
+    internallink: "",
+    externallink: "",
     languagetype: "",
     filepdfpath: "",
   });
@@ -77,8 +77,8 @@ const Publishdata = () => {
       contenttype: "",
       html: "",
       file: "",
-      internal_link: "",
-      external_link: "",
+      internallink: "",
+      externallink: "",
       languagetype: "",
       filepdfpath: "",
     });
@@ -117,12 +117,12 @@ const Publishdata = () => {
       newErrors.languagetype = "Select a Language";
     }
 
-    if (formData.contenttype === "4" && !formData.external_link) {
-      newErrors.external_link = "External Link is required";
+    if (formData.contenttype === "4" && !formData.externallink) {
+      newErrors.externallink = "External Link is required";
     }
 
-    // if (formData.ContentType === '3' && !formData.internal_link) {
-    //   newErrors.internal_link = 'Internal Link is required';
+    // if (formData.ContentType === '3' && !formData.internallink) {
+    //   newErrors.internallink = 'Internal Link is required';
     // }
     // if (formData.contenttype === "2") {
     //   if (!file) {
@@ -185,9 +185,9 @@ const Publishdata = () => {
       formDataToSend.append("usertype", usertype);
       formDataToSend.append("action", "publish");
       if (formData.contenttype === "4") {
-        formDataToSend.append("external_link", formData.external_link);
+        formDataToSend.append("externallink", formData.externallink);
       } else if (formData.contenttype === "3") {
-        formDataToSend.append("internal_link", formData.internal_link);
+        formDataToSend.append("internallink", formData.internallink);
       } else if (formData.contenttype === "2") {
         if (file) {
           formDataToSend.append("file", file); // Attach new file
@@ -213,8 +213,8 @@ const Publishdata = () => {
       setFormData({
         menuname: "",
         ContentType: "",
-        external_link: "",
-        internal_link: "",
+        externallink: "",
+        internallink: "",
 
         submenu_id: 0,
         file: "",
@@ -269,20 +269,25 @@ const Publishdata = () => {
 
   return (
     <div className="formdata">
-    <div className="pagetitle-lft">
-            <nav>
-              <ol className="breadcrumb">
-                <li className="breadcrumb-item">Dashboard</li>
-                <li className="breadcrumb-item  ">CMS</li>
-                <li className="breadcrumb-item active ">Edit Publisher Sub-Menu</li>
-              </ol>
-            </nav>
-          </div>
-          <div className="d-flex justify-content-left" style={{ marginLeft: "0px" }}>
-              <Link to="/publisherlist">
-                <button type="button" className="btn btn-info">Back</button>
-              </Link>
-            </div>
+      <div className="pagetitle-lft">
+        <nav>
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">Dashboard</li>
+            <li className="breadcrumb-item  ">CMS</li>
+            <li className="breadcrumb-item active ">Edit Publisher Sub-Menu</li>
+          </ol>
+        </nav>
+      </div>
+      <div
+        className="d-flex justify-content-left"
+        style={{ marginLeft: "0px" }}
+      >
+        <Link to="/publisherlist">
+          <button type="button" className="btn btn-info">
+            Back
+          </button>
+        </Link>
+      </div>
       <div className="row justify-content-center">
         <div className="container-fluid bg-white">
           <div className="box-sec">
@@ -353,12 +358,12 @@ const Publishdata = () => {
                   className="form-control"
                   type="text"
                   placeholder="Enter External Link"
-                  name="external_link"
-                  value={formData.external_link}
+                  name="externallink"
+                  value={formData.externallink}
                   onChange={handleInputChange}
                 />
-                {errors.external_link && (
-                  <div className="text-danger">{errors.external_link}</div>
+                {errors.externallink && (
+                  <div className="text-danger">{errors.externallink}</div>
                 )}
               </div>
             )}
@@ -368,10 +373,10 @@ const Publishdata = () => {
               <div className="mb-3">
                 <select
                   className="form-control"
-                  name="internal_link"
-                  value={formData.internal_link}
+                  name="internallink"
+                  value={formData.internallink}
                   onChange={handleInputChange}
-                  // isInvalid={!!formErrors.internal_link}
+                  // isInvalid={!!formErrors.internallink}
                 >
                   <option value="" style={{ color: "black" }}>
                     Select a role
@@ -382,8 +387,8 @@ const Publishdata = () => {
                     </option>
                   ))}
                 </select>
-                {errors.internal_link && (
-                  <div className="text-danger">{errors.internal_link}</div>
+                {errors.internallink && (
+                  <div className="text-danger">{errors.internallink}</div>
                 )}
               </div>
             )}
