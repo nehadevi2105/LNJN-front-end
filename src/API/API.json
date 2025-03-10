@@ -24,6 +24,8 @@
   "editCourseApprove": "/api/Course/EditCourse/",
   "createCandidate": "/api/Candidate",
   "getCandidates": "/api/Candidate",
+  "getCandidatesapprovallist": "/api/Candidate/approvallist",
+  "getCandidatespublisherlist": "/api/Candidate/publisherlist",
   "getCandidatebyId": "/api/Candidate/",
   "editCandidate": "/api/Candidate/put/",
   "deleteCandidate": "/api/Candidate/delete",
