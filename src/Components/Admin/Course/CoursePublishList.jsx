@@ -62,38 +62,6 @@ const CoursePublisherList = () => {
     fetchCourses();
   }, []);
 
-  // Handle Delete
-  // const handleDeleteClick = (course) => {
-  //   setSelectedCourse(course);
-  //   setConfirmDialogOpen(true);
-  // };
-
-  // const handleConfirmDelete = async () => {
-  //   try {
-  //     const response = await APIClient.post(
-  //       `${apis.deleteCourse}/${selectedCourse.id}`,
-  //       null,
-  //       {
-  //         headers: { "Content-Type": "application/json" },
-  //       }
-  //     );
-
-  //     if (response.status === 200) {
-  //       setCourses((prev) =>
-  //         prev.filter((course) => course.id !== selectedCourse.id)
-  //       );
-  //       toast.success("Course deleted successfully");
-  //     } else {
-  //       toast.error("Failed to delete course");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error deleting course:", error);
-  //     toast.error(error.response?.data || "Failed to delete course");
-  //   } finally {
-  //     setConfirmDialogOpen(false);
-  //   }
-  // };
-
   // Handle Edit
 
   const handleEditClick = (course) => {
@@ -155,17 +123,6 @@ const CoursePublisherList = () => {
         </Button>
       ),
     },
-    // {
-    //   field: "delete",
-    //   headerName: "Delete",
-    //   sortable: false,
-    //   width: 100,
-    //   renderCell: (params) => (
-    //     <Button color="error" onClick={() => handleDeleteClick(params.row)}>
-    //       <DeleteIcon style={{ cursor: "pointer" }} />
-    //     </Button>
-    //   ),
-    // },
   ];
 
   return (
@@ -174,7 +131,7 @@ const CoursePublisherList = () => {
         <ol className="breadcrumb">
           <li className="breadcrumb-item">Home</li>
           <li className="breadcrumb-item">Course</li>
-          <li className="breadcrumb-item active">Publush Course List </li>
+          <li className="breadcrumb-item active">Publish Course List </li>
         </ol>
       </nav>
       <div className="formdata">

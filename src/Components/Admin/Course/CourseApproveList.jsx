@@ -17,7 +17,7 @@ import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+//import DeleteIcon from "@mui/icons-material/Delete";
 
 //  Move CustomToolbar function ABOVE UserTable
 // const CustomToolbar = () => (
@@ -63,36 +63,9 @@ const CourseApproveList = () => {
   }, []);
 
   // Handle Delete
-  const handleDeleteClick = (course) => {
-    setSelectedCourse(course);
-    setConfirmDialogOpen(true);
-  };
+  
 
-  const handleConfirmDelete = async () => {
-    try {
-      const response = await APIClient.post(
-        `${apis.deleteCourse}/${selectedCourse.id}`,
-        null,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-
-      if (response.status === 200) {
-        setCourses((prev) =>
-          prev.filter((course) => course.id !== selectedCourse.id)
-        );
-        toast.success("Course deleted successfully");
-      } else {
-        toast.error("Failed to delete course");
-      }
-    } catch (error) {
-      console.error("Error deleting course:", error);
-      toast.error(error.response?.data || "Failed to delete course");
-    } finally {
-      setConfirmDialogOpen(false);
-    }
-  };
+  
 
   // Handle Edit
   const handleEditClick = (course) => {
@@ -154,17 +127,7 @@ const CourseApproveList = () => {
         </Button>
       ),
     },
-    {
-      field: "delete",
-      headerName: "Delete",
-      sortable: false,
-      width: 100,
-      renderCell: (params) => (
-        <Button color="error" onClick={() => handleDeleteClick(params.row)}>
-          <DeleteIcon style={{ cursor: "pointer" }} />
-        </Button>
-      ),
-    },
+    
   ];
 
   return (
@@ -173,7 +136,7 @@ const CourseApproveList = () => {
         <ol className="breadcrumb">
           <li className="breadcrumb-item">Home</li>
           <li className="breadcrumb-item">Course</li>
-          <li className="breadcrumb-item active">Approval Course List </li>
+          <li className="breadcrumb-item active">Course Approval List </li>
         </ol>
       </nav>
       <div className="formdata">
@@ -233,24 +196,7 @@ const CourseApproveList = () => {
             />
           </Box>
         </div>
-        {/* Delete Confirmation Dialog */}
-        <Dialog
-          open={confirmDialogOpen}
-          onClose={() => setConfirmDialogOpen(false)}
-        >
-          <DialogTitle>Confirm Delete</DialogTitle>
-          <DialogContent>
-            Are you sure you want to delete this course?
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setConfirmDialogOpen(false)} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={handleConfirmDelete} color="primary">
-              Confirm
-            </Button>
-          </DialogActions>
-        </Dialog>
+        
 
         {/* Edit Dialog */}
         <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)}>
