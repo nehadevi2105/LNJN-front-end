@@ -96,7 +96,13 @@ const EditTender = () => {
     const errors = {};
 
     if (!formData.tender_tittle) {
-      errors.tender_tittle = "Name is required";
+      errors.tender_tittle = "Please enter Name";
+    } else if (!/^[A-Za-z\s]+$/.test(formData.tender_tittle)) {
+      errors.tender_tittle = "Only alphabet characters are allowed"; // Prevents numbers and special characters
+    } else if (parseInt(formData.languagetype) === 2) {
+      if (!/^[\u0900-\u097F\s]+$/.test(formData.tender_tittle)) {
+        errors.tender_tittle = "कृपया केवल हिंदी शब्द ही इनपुट करें";
+      }
     }
 
     if (!formData.contenttype) {

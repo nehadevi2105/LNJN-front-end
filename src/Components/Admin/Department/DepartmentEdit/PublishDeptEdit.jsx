@@ -41,6 +41,8 @@ const PublishDeptEdit = () => {
     const errors = {};
     if (!formData.dname.trim()) {
       errors.dname = 'Department name is required';
+    } else if (!/^[A-Za-z\s_]+$/.test(formData.dname)) {
+      errors.dname = "Only alphabet characters are allowed";
     }
     setFormErrors(errors);
     return Object.keys(errors).length === 0;

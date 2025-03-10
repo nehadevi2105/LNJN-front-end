@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const axiosInstance = axios.create({
   baseURL: "https://localhost:7191",
@@ -8,7 +9,7 @@ axiosInstance.interceptors.request.use(
   function (config) {
     const token = localStorage.getItem("token");
     if (token) {
-      config.headers["Authorization"] = `${token}`;
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
   },
@@ -24,7 +25,8 @@ axiosInstance.interceptors.response.use(
   function (error) {
     if (error.response && error.response.status === 401) {
       localStorage.clear();
-      window.location.reload("/"); // You might want to redirect to the login page
+     // window.location.reload("/"); // You might want to redirect to the login page
+     navigate("/"); // Redirect using React Router
     }
     return Promise.reject(error);
   }

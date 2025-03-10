@@ -110,9 +110,19 @@ const EditWhatsNew = () => {
 
   const validateForm = () => {
     const errors = {};
+    const namePattern = /^[a-zA-Z\s]+$/;
+    const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
 
     if (!formData.news_title) {
       errors.news_title = "Name is required";
+    } else if (!formData.news_title.match(namePattern)) {
+      errors.tittle_name = "Name should only contain alphabets and spaces";
+    } else if (specialCharRegex.test(formData.tittle_name)) {
+      errors.description = " Name should not contain special characters";
+    } else if (parseInt(formData.languagetype) === 2) {
+      if (!/^[\u0900-\u097F\s]+$/.test(formData.tittle_name)) {
+        errors.tittle_name = "कृपया केवल हिंदी शब्द ही इनपुट करें";
+      }
     }
     if (!formData.languagetype) {
       errors.languagetype = "Select a Language ";

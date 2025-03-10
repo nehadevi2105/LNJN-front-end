@@ -44,7 +44,7 @@ const EditMenu = () => {
 
   const onChange = useCallback((html) => {
     setContent(html);
-  }, []); 
+  }, []);
 
   // const handleEditorChange = (content) => {
   //   setEditorContent(content);
@@ -66,8 +66,8 @@ const EditMenu = () => {
     contenttype: "",
     html: "",
     file: "",
-    internal_link: "",
-    external_link: "",
+    internallink: "",
+    externallink: "",
     languagetype: "",
   });
 
@@ -83,10 +83,10 @@ const EditMenu = () => {
       contenttype: "",
       html: "",
       file: "",
-      internal_link: "",
-      external_link: "",
+      internallink: "",
+      externallink: "",
       languagetype: "",
-      filepdfpath: ""
+      filepdfpath: "",
     });
   }, []);
 
@@ -109,12 +109,12 @@ const EditMenu = () => {
       newErrors.languagetype = "Select a Language";
     }
 
-    if (formData.contenttype === "4" && !formData.external_link) {
-      newErrors.external_link = "External Link is required";
+    if (formData.contenttype === "4" && !formData.externallink) {
+      newErrors.externallink = "External Link is required";
     }
 
-    // if (formData.ContentType === '3' && !formData.internal_link) {
-    //   newErrors.internal_link = 'Internal Link is required';
+    // if (formData.ContentType === '3' && !formData.internallink) {
+    //   newErrors.internallink = 'Internal Link is required';
     // }
     // if (formData.contenttype === "2") {
     //   if (!file) {
@@ -177,17 +177,16 @@ const EditMenu = () => {
       formDataToSend.append("usertype", usertype);
       formDataToSend.append("action", "creatorupdate");
       if (formData.contenttype === "4") {
-        formDataToSend.append("external_link", formData.external_link);
+        formDataToSend.append("externallink", formData.externallink);
       } else if (formData.contenttype === "3") {
-        formDataToSend.append("internal_link", formData.internal_link);
+        formDataToSend.append("internallink", formData.internallink);
       } else if (formData.contenttype === "2") {
         if (file) {
           formDataToSend.append("file", file); // Attach new file
         } else if (formData.filepdfpath) {
           formDataToSend.append("filepdfpath", formData.filepdfpath); // Attach existing file path
         }
-      }
-      else if (formData.contenttype === "1") {
+      } else if (formData.contenttype === "1") {
         formDataToSend.append("html", formData.html);
       }
 
@@ -206,8 +205,8 @@ const EditMenu = () => {
       setFormData({
         menuname: "",
         ContentType: "",
-        external_link: "",
-        internal_link: "",
+        externallink: "",
+        internallink: "",
 
         submenu_id: 0,
         file: "",
@@ -324,12 +323,12 @@ const EditMenu = () => {
                   className="form-control"
                   type="text"
                   placeholder="Enter External Link"
-                  name="external_link"
-                  value={formData.external_link}
+                  name="externallink"
+                  value={formData.externallink}
                   onChange={handleInputChange}
                 />
-                {errors.external_link && (
-                  <div className="text-danger">{errors.external_link}</div>
+                {errors.externallink && (
+                  <div className="text-danger">{errors.externallink}</div>
                 )}
               </div>
             )}
@@ -339,10 +338,10 @@ const EditMenu = () => {
               <div className="mb-3">
                 <select
                   className="form-control"
-                  name="internal_link"
-                  value={formData.internal_link}
+                  name="internallink"
+                  value={formData.internallink}
                   onChange={handleInputChange}
-                // isInvalid={!!formErrors.internal_link}
+                  // isInvalid={!!formErrors.internallink}
                 >
                   <option value="" style={{ color: "black" }}>
                     Select a role
@@ -353,15 +352,14 @@ const EditMenu = () => {
                     </option>
                   ))}
                 </select>
-                {errors.internal_link && (
-                  <div className="text-danger">{errors.internal_link}</div>
+                {errors.internallink && (
+                  <div className="text-danger">{errors.internallink}</div>
                 )}
               </div>
             )}
 
             {/* Input for File */}
             {formData.contenttype === "2" && (
-
               <div className="mb-3">
                 <a
                   href={`${APIClient.defaults.baseURL}${formData.filepdfpath}`} // Ensure filepath is properly appended

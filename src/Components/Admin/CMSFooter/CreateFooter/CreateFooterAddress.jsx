@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
-import ViewListIcon from '@mui/icons-material/ViewList';
+//import ViewListIcon from '@mui/icons-material/ViewList';
 
 import DialogActions from '@mui/material/DialogActions';
 import Alert from '@mui/material/Alert';
-import HomeIcon from '@mui/icons-material/Home';
+//import HomeIcon from '@mui/icons-material/Home';
 import {
 
   Button,
@@ -27,7 +27,8 @@ import 'react-toastify/dist/ReactToastify.css';
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
   const [formData, setFormData] = useState({
     tittle_name: '',
     address: '',
@@ -42,10 +43,15 @@ import 'react-toastify/dist/ReactToastify.css';
   const validateForm = () => {
     const newErrors = {};
 
+
     if (!formData.tittle_name) {
-      newErrors.tittle_name = 'Title is required';
-    } else if (!/^[A-Za-z\s]+$/.test(formData.tittle_name.trim())) {
-      newErrors.tittle_name = 'Name should contain alphabets only';
+      newErrors.tittle_name = "Please enter Name";
+    } else if (!/^[A-Za-z\s]+$/.test(formData.tittle_name)) {
+      newErrors.tittle_name = "Only alphabet characters are allowed"; // Prevents numbers and special characters
+    } else if (parseInt(formData.languagetype) === 2) {
+      if (!/^[\u0900-\u097F\s]+$/.test(formData.tittle_name)) {
+        newErrors.tittle_name = "कृपया केवल हिंदी शब्द ही इनपुट करें";
+      }
     }
 
     if (!formData.mobile_no) {
@@ -56,6 +62,11 @@ import 'react-toastify/dist/ReactToastify.css';
   
     if (!formData.address) {
       newErrors.address = 'Address is required';
+    } else if (
+      !/^[\u0900-\u097F\s]+$/.test(formData.address) &&
+      parseInt(formData.languagetype) === 2
+    ) {
+      errors.address = "कृपया केवल हिंदी शब्द ही इनपुट करें";
     }
     if (!formData.languagetype ) {
       newErrors.languagetype = 'Select a Language';
@@ -90,6 +101,7 @@ import 'react-toastify/dist/ReactToastify.css';
         formDataToSend.append('footertype', formData.footertype);
         formDataToSend.append('contenttype', formData.contenttype);
         formDataToSend.append('languagetype', formData.languagetype);
+        formDataToSend.append("usertype", usertype);
         const response = await APIClient.post(apis.createfooter, formDataToSend, {
           headers: {
             'Content-Type': 'multipart/form-data',

@@ -9,9 +9,9 @@ import HomeIcon from '@mui/icons-material/Home';
 
  const PublishFooterAddress = () => {
   const {id}= useParams()
-  const [html, setHtml] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  //const [html, setHtml] = useState('');
+ // const [selectedFile, setSelectedFile] = useState(null);
+  //const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const storedUserString = localStorage.getItem("usertype");
@@ -37,12 +37,17 @@ import HomeIcon from '@mui/icons-material/Home';
     }
     if (!formData.address.trim()) {
       newErrors.address = 'Address is required';
+    } else if (
+      !/^[\u0900-\u097F\s]+$/.test(formData.address) &&
+      parseInt(formData.languagetype) === 2
+    ) {
+      newErrors.address = "कृपया केवल हिंदी शब्द ही इनपुट करें";
     }
     
     if (!formData.mobile_no) {
-      errors.mobile_no = "Mobile number is required";
+      newErrors.mobile_no = "Mobile number is required";
     } else if (!/^[0-9]{10}$/.test(formData.mobile_no)) {
-      errors.mobile_no = "Invalid mobile number format";
+      newErrors.mobile_no = "Invalid mobile number format";
     }
   
 

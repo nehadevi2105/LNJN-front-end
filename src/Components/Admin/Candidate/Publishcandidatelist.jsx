@@ -14,7 +14,7 @@ import { Button as Buttons} from "react-bootstrap";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const AllCandidates = () => {
+const Publishcandidatelist = () => {
   const [candidates, setCandidates] = useState([]);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
@@ -25,7 +25,7 @@ const AllCandidates = () => {
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
-        const response = await APIClient.get(apis.getCandidates);
+        const response = await APIClient.get(apis.getCandidatespublisherlist);
         // Map the API response to add an "id" field for DataGrid
         const dataWithIds = response.data.map((candidate, index) => ({
           srno: index + 1,
@@ -92,29 +92,29 @@ const AllCandidates = () => {
       renderCell: (params) => (
         <div>
           {/* Edit candidate link */}
+          {/* <Buttons variant="outline-primary" size="sm" as={Link} to={`/Candidate/PublisherEditCandidate/${params.row.id}`}>
+          <EditIcon style={{ cursor: "pointer" }} />
+          </Buttons> */}
+
+
           <Buttons
     variant="outline-primary"
     size="sm"
     as={Link}
-    to={`/Candidate/EditCandidate/${params.row.id}`}
+    to={`/Candidate/PublisherEditCandidate/${params.row.id}`}
     onClick={(e) => {
-      if (!(usertype === 1 || usertype === 4)) {
+      if (!(usertype === 3 || usertype === 4)) {
         e.preventDefault(); // Stop navigation for unauthorized users
       }
     }}
     style={{
-      opacity: usertype === 1 || usertype === 4 ? 1 : 0.5, // Make it visually disabled
+      opacity: usertype === 3 || usertype === 4 ? 1 : 0.5, // Make it visually disabled
       pointerEvents: "auto", // Keep pointer events enabled for onClick to work
     }}
   >
     <EditIcon style={{ cursor: usertype === 1 || usertype === 4 ? "pointer" : "not-allowed" }} />
   </Buttons>
 
-          {/* <Buttons variant="outline-primary" 
-          size="sm" as={Link} 
-          to={`/Candidate/EditCandidate/${params.row.id}`}>
-          <EditIcon style={{ cursor: "pointer" }} />
-          </Buttons> */}
           {/* Delete candidate button */}
           {/* <Buttons
             variant="outline-danger"
@@ -124,25 +124,6 @@ const AllCandidates = () => {
           >
             <DeleteIcon style={{ cursor: "pointer" }} />
           </Buttons> */}
-
-          <Buttons
-    variant="outline-danger"
-    size="sm"
-    style={{
-      marginLeft: 8,
-      opacity: usertype === 1 || usertype === 4 ? 1 : 0.5, // Make it visually disabled
-      pointerEvents: "auto", // Keep pointer events enabled for onClick
-    }}
-    onClick={(e) => {
-      if (usertype === 1 || usertype === 4) {
-        handleDeleteClick(params.row);
-      } else {
-        e.preventDefault(); // Prevent action for unauthorized users
-      }
-    }}
-  >
-    <DeleteIcon style={{ cursor: usertype === 1 || usertype === 4 ? "pointer" : "not-allowed" }} />
-  </Buttons>
         </div>
       )
     }
@@ -155,13 +136,13 @@ const AllCandidates = () => {
                 <li className="breadcrumb-item">Home</li>
                 <li className="breadcrumb-item">Candidate</li>
                 <li className="breadcrumb-item active">
-                  All Candidate List{" "}
+                Publish Candidate List{" "}
                 </li>
               </ol>
             </nav>
     <div>
       <div className="formdata">
-      <h2 className="maintitle mt-0 pt-0">Candidate List</h2>
+      <h2 className="maintitle mt-0 pt-0">Publish Candidate List</h2>
         <div className="">
         {/* <Link to="/Candidate/CreateCandidate" style={{ textDecoration: "none", color: "inherit" }}>
           <Button variant="primary">
@@ -169,17 +150,17 @@ const AllCandidates = () => {
           </Button>
         </Link>
       </div> */}
-      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 5, mb: 2 }}>
+      {/* <Box sx={{ display: 'flex', justifyContent: 'center', gap: 5, mb: 2 }}>
       <Button variant="contained" color="primary" component={Link} to="/Candidate/CreateCandidate">
           <AddIcon /> New Candidate
         </Button>
-        <Button variant="contained" color="primary" component={Link} to="/Approvalcandidatelist">
+        <Button variant="contained" color="primary" component={Link} to="Approvalcandidatelist">
           Candidate Approval List
         </Button>
-        <Button variant="contained" color="secondary" component={Link} to="/Publishcandidatelist">
+        <Button variant="contained" color="secondary" component={Link} to="Publishcandidatelist">
           Candidate Publisher List
         </Button>
-      </Box>
+      </Box> */}
 
       <Box sx={{ height: 600, width: "100%" }} style={{ backgroundColor: "#fff", padding: "16px" }}>
         <DataGrid
@@ -227,4 +208,4 @@ const AllCandidates = () => {
   );
 };
 
-export default AllCandidates;
+export default Publishcandidatelist;

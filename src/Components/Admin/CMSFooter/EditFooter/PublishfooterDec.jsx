@@ -79,6 +79,11 @@ const PublishFooterDec = () => {
 
     if (!formData.description) {
       errors.description = "Description is required";
+    } else if (
+      !/^[\u0900-\u097F\s]+$/.test(formData.description) &&
+      parseInt(formData.languagetype) === 2
+    ) {
+      errors.description = "कृपया केवल हिंदी शब्द ही इनपुट करें";
     }
 
     setErrors(errors);
@@ -128,15 +133,17 @@ const PublishFooterDec = () => {
       formDataToSend.append("contenttype", formData.contenttype);
       formDataToSend.append("languagetype", formData.languagetype);
 
-      formDataToSend.append('usertype', usertype);
-        formDataToSend.append('action', 'publish');
-        const response = await APIClient.post("/api/lowerfooter/updatefooter/"+id, formDataToSend, {
+      formDataToSend.append("usertype", usertype);
+      formDataToSend.append("action", "publish");
+      const response = await APIClient.post(
+        "/api/lowerfooter/updatefooter/" + id,
+        formDataToSend,
+        {
           headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
           },
-         
-    
-        });
+        }
+      );
       // console.log('Data saved:', response.data);
       toast.success("Data saved successfully!");
       setModalMessage("Data saved successfully!");
@@ -153,107 +160,84 @@ const PublishFooterDec = () => {
   return (
     <div className="card">
       <div className="card-body">
-        <div className="mb-3 mt-md-4">
-          <div className="box-sec">
-            <div className="container">
-              <div className="row">
-                <div className="col">
-                  <h1 className="text-center">Footer Description</h1>
-                </div>
-              </div>
-              <div className="row justify-content-center">
-                <div className="col-md-6">
-                  <div className="mb-3">
-                    <label className="form-label text-dark">
-                      Language Type
-                    </label>
-                    <select
-                      className="form-select"
-                      name="languagetype"
-                      value={formData.languagetype}
-                      onChange={handleInputChange}
-                    >
-                      <option value="">Select a Language</option>
-                      <option value="1">English</option>
-                      <option value="2">Hindi</option>
-                    </select>
-                    {errors.languagetype && (
-                      <div className="text-danger">{errors.languagetype}</div>
-                    )}
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label text-dark">Enter Title</label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      placeholder="Name"
-                      name="tittle_name"
-                      value={formData.tittle_name}
-                      onChange={handleInputChange}
-                    />
-                    {errors.tittle_name && (
-                      <div className="text-danger">{errors.tittle_name}</div>
-                    )}
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label text-dark">Description</label>
-                    <textarea
-                      className="form-control"
-                      type="text"
-                      placeholder="Description"
-                      name="description"
-                      value={formData.description}
-                      onChange={handleInputChange}
-                    />
-                    {errors.description && (
-                      <div className="text-danger">{errors.description}</div>
-                    )}
-                  </div>
-                  <div className="btnsubmit">
-                    <button
-                      className="btn btn-primary"
-                      onClick={handleOpenConfirmation}
-                    >
-                      Submit
-                    </button>
-
-                    <Dialog
-                      open={confirmDialogOpen}
-                      onClose={handleCloseConfirmation}
-                    >
-                      <DialogTitle>Confirm Submit</DialogTitle>
-                      <DialogContent>
-                        Are you sure you want to submit this data?
-                      </DialogContent>
-                      <DialogActions>
-                        <Button
-                          onClick={handleCloseConfirmation}
-                          color="primary"
-                        >
-                          Cancel
-                        </Button>
-                        <Button onClick={handleConfirmSubmit} color="primary">
-                          Confirm
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
-                    <Snackbar
-                      open={snackbarOpen}
-                      autoHideDuration={3000}
-                      onClose={() => setSnackbarOpen(false)}
-                    >
-                      <Alert
-                        severity="success"
-                        onClose={() => setSnackbarOpen(false)}
-                      >
-                        {modalMessage}
-                      </Alert>
-                    </Snackbar>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div className="row">
+          <div className="col">
+            <h1 className="text-center">Footer Description</h1>
           </div>
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label text-dark">Language Type</label>
+          <select
+            className="form-select"
+            name="languagetype"
+            value={formData.languagetype}
+            onChange={handleInputChange}
+          >
+            <option value="">Select a Language</option>
+            <option value="1">English</option>
+            <option value="2">Hindi</option>
+          </select>
+          {errors.languagetype && (
+            <div className="text-danger">{errors.languagetype}</div>
+          )}
+        </div>
+        <div className="mb-3">
+          <label className="form-label text-dark">Enter Title</label>
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Name"
+            name="tittle_name"
+            value={formData.tittle_name}
+            onChange={handleInputChange}
+          />
+          {errors.tittle_name && (
+            <div className="text-danger">{errors.tittle_name}</div>
+          )}
+        </div>
+        <div className="mb-3">
+          <label className="form-label text-dark">Description</label>
+          <textarea
+            className="form-control"
+            type="text"
+            placeholder="Description"
+            name="description"
+            value={formData.description}
+            onChange={handleInputChange}
+          />
+          {errors.description && (
+            <div className="text-danger">{errors.description}</div>
+          )}
+        </div>
+        <div className="btnsubmit">
+          <button className="btn btn-primary" onClick={handleOpenConfirmation}>
+            Submit
+          </button>
+
+          <Dialog open={confirmDialogOpen} onClose={handleCloseConfirmation}>
+            <DialogTitle>Confirm Submit</DialogTitle>
+            <DialogContent>
+              Are you sure you want to submit this data?
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseConfirmation} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={handleConfirmSubmit} color="primary">
+                Confirm
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Snackbar
+            open={snackbarOpen}
+            autoHideDuration={3000}
+            onClose={() => setSnackbarOpen(false)}
+          >
+            <Alert severity="success" onClose={() => setSnackbarOpen(false)}>
+              {modalMessage}
+            </Alert>
+          </Snackbar>
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ import APIClient from "../../../API/APIClient";
 import apis from "../../../API/API.json";
 import "react-toastify/dist/ReactToastify.css";
 
-const EditCandidate = () => {
+const ApprovalEditCandidate = () => {
   const { id } = useParams(); // Candidate ID from route parameters
   const storedUserString = localStorage.getItem("usertype");
   const usertype = JSON.parse(storedUserString);
@@ -94,20 +94,20 @@ const EditCandidate = () => {
   }, []);
 
   // Fetch course and courses on mount
-  useEffect(() => {
-    const fetchcourses = async () => {
-      try {
-        const response = await APIClient.get(apis.getCourses);
-        setCourses1(response.data || []);
-      } catch (error) {
-        console.error("Error fetching departments:", error);
-         toast.error("Error fetching departments");
-      }
-    };
+useEffect(() => {
+  const fetchcourses = async () => {
+    try {
+      const response = await APIClient.get(apis.getCourses);
+      setCourses1(response.data || []);
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+       toast.error("Error fetching departments");
+    }
+  };
 
-    fetchcourses();
-    
-  }, []);
+  fetchcourses();
+  
+}, []);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -228,7 +228,6 @@ const EditCandidate = () => {
 
   // When candidate submission is confirmed, send data to backend
   const handleConfirmSubmit = async () => {
-    debugger;
     setConfirmDialogOpen(false);
     setLoading(true);
 
@@ -243,7 +242,7 @@ const EditCandidate = () => {
       ...candidateInfo,
       lstcand: formattedCandidateCourses,
       usertype: usertype,
-      ...(usertype === 4 && { action: 'creator' })
+      ...(usertype === 4 && { action: 'approve' })
     };
 
     try {
@@ -530,4 +529,4 @@ const EditCandidate = () => {
   );
 };
 
-export default EditCandidate;
+export default ApprovalEditCandidate;
