@@ -23,11 +23,11 @@ const Custom = () => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [editorContent, setEditorContent] = useState("");
+  //const [editorContent, setEditorContent] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [dropdownOptions, setDropdownOptions] = useState([]);
-  const [formErrors, setFormErrors] = useState({});
+  //const [formErrors, setFormErrors] = useState({});
 
   const config = useMemo(
     () => ({

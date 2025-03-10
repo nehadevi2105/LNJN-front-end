@@ -27,7 +27,8 @@ const CreateMenu = () => {
   const [loading, setLoading] = useState(false);
   const [dropdownOptions, setDropdownOptions] = useState([]);
   //const [formErrors, setFormErrors] = useState({});
-
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
   const config = useMemo(
     () => ({
       readonly: false,
@@ -204,7 +205,7 @@ const CreateMenu = () => {
       formDataToSend.append("submenu_id", formData.submenu_id);
       formDataToSend.append("languagetype", formData.languagetype);
       formDataToSend.append("CreatedBy", "Neha");
-
+      formDataToSend.append("usertype", usertype);
       if (formData.contenttype === "4") {
         formDataToSend.append("externallink", formData.externallink);
       } else if (formData.contenttype === "3") {
@@ -399,7 +400,7 @@ const CreateMenu = () => {
                               >
                                 {"Menu Name" + ":-" + data.menuname}
                               </option>
-                            ))} 
+                            ))}
                           </select>
                           {errors.internallink && (
                             <div className="text-danger">

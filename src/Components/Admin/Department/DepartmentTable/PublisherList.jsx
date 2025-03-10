@@ -7,6 +7,8 @@ import APIClient from "../../../../API/APIClient";
 import apis from "../../../../API/API.json";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AddIcon from "@mui/icons-material/Add";
+import Button from "@mui/material/Button";
 
 const PublisherList = () => {
   const [departments, setDepartments] = useState([]);
@@ -65,6 +67,32 @@ const PublisherList = () => {
           </ol>
         </nav>
         <h1 className="mb-3">Department Publish List</h1>
+
+        <Box
+                  sx={{ display: "flex", justifyContent: "center", gap: 5, my: 3 }}
+                >
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    component={Link}
+                    to="/Department/DepartmentForm"
+                  >
+                    <AddIcon /> New Department
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    component={Link}
+                    to="/Department/AllDepartment"
+                  >
+                    Back
+                  </Button>
+                  {/* <Button variant="contained" color="secondary" component={Link} to="">
+                Course Publisher List
+              </Button> */}
+                </Box>
+
+
         <Box sx={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={departments}

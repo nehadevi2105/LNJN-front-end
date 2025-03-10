@@ -28,7 +28,7 @@ function EAlert(props) {
 const PublishFooterData = () => {
   const { id } = useParams();
   const [content, setContent] = useState("");
-  const [menudata, setMenudata] = useState("");
+  //const [menudata, setMenudata] = useState("");
   const [editorContent, setEditorContent] = useState("");
   const [html, setHtml] = useState("");
   const [file, setFile] = useState(null);
@@ -41,13 +41,13 @@ const PublishFooterData = () => {
   const [existingFile, setExistingFile] = useState(null);
   const storedUserString = localStorage.getItem("usertype");
   const usertype = JSON.parse(storedUserString);
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     tittle_name: "",
     contenttype: "",
     external_link: "",
-    internale_link: "",
+    internal_link: "",
     file: "",
     html: "",
     footertype: 3,
@@ -62,7 +62,7 @@ const PublishFooterData = () => {
       tittle_name: "",
       contenttype: "",
       external_link: "",
-      internale_link: "",
+      internal_link: "",
       file: "",
       html: "",
       footertype: 3,
@@ -93,9 +93,14 @@ const PublishFooterData = () => {
     const errors = {};
 
     if (!formData.tittle_name) {
-      errors.tittle_name = "Name is required";
+      errors.tittle_name = "Please enter Name";
+    } else if (!/^[A-Za-z\s]+$/.test(formData.tittle_name)) {
+      errors.tittle_name = "Only alphabet characters are allowed"; // Prevents numbers and special characters
+    } else if (parseInt(formData.languagetype) === 2) {
+      if (!/^[\u0900-\u097F\s]+$/.test(formData.tittle_name)) {
+        errors.tittle_name = "कृपया केवल हिंदी शब्द ही इनपुट करें";
+      }
     }
-
     if (!formData.contenttype) {
       errors.contenttype = "Select a content type";
     }
@@ -107,8 +112,8 @@ const PublishFooterData = () => {
       errors.external_link = "External Link is required";
     }
 
-    // if (formData.contenttype === "3" && !formData.internale_link) {
-    //   errors.internale_link = "Internal Link is required";
+    // if (formData.contenttype === "3" && !formData.internal_link) {
+    //   errors.internal_link = "Internal Link is required";
     // }
 
     // if (formData.contenttype === "2" && !file) {
@@ -146,7 +151,9 @@ const PublishFooterData = () => {
   };
 
   const handleOpenConfirmation = () => {
-    setConfirmDialogOpen(true);
+    if (validateForm()) {
+      setConfirmDialogOpen(true);
+    }
   };
 
   const handleCloseConfirmation = () => {
@@ -167,7 +174,7 @@ const PublishFooterData = () => {
       if (formData.contenttype === 4) {
         formDataToSend.append("external_link", formData.external_link);
       } else if (formData.contenttype === 3) {
-        formDataToSend.append("internale_link", formData.internale_link);
+        formDataToSend.append("internal_link", formData.internal_link);
       } else if (formData.contenttype === 2) {
         if (file) {
           formDataToSend.append("file", file); // Attach new file
@@ -232,12 +239,11 @@ const PublishFooterData = () => {
   // console.log(formData)
 
   return (
-
-
-
     <div className="row justify-content-center">
-
-      <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
+      <div
+        className="d-flex justify-content-left"
+        style={{ marginLeft: "100px" }}
+      >
         <Link to="/dashboard">
           <button type="button" className="btn btn-info">
             Back
@@ -249,7 +255,6 @@ const PublishFooterData = () => {
       <div className="formdata">
         <div className="card">
           <div className="card-body">
-
             <div className="row justify-content-center">
               <div>
                 <div className="mb-3">
@@ -337,19 +342,19 @@ const PublishFooterData = () => {
                       name="internal_link"
                       value={formData.internal_link}
                       onChange={handleInputChange}
-                    // isInvalid={!!formErrors.internal_link}
+                      // isInvalid={!!formErrors.internal_link}
                     >
                       <option value="" style={{ color: "black" }}>
                         Select a Menu Name
                       </option>
-                      {menudata.map((data) => (
+                      {dropdownOptions.map((data) => (
                         <option key={data.id} value={"/menu/" + data.menuurl}>
                           {"Menu Name" + ":-" + data.menuname}
                         </option>
                       ))}
                     </select>
-                    {errors.internale_link && (
-                      <div className="text-danger">{errors.internale_link}</div>
+                    {errors.internal_link && (
+                      <div className="text-danger">{errors.internal_link}</div>
                     )}
                   </div>
                 )}
@@ -442,7 +447,6 @@ const PublishFooterData = () => {
         </div>
       </div>
     </div>
-
   );
 };
 

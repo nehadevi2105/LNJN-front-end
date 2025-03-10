@@ -94,8 +94,14 @@ const ApproveCircular = () => {
   const validateForm = () => {
     const errors = {};
 
-    if (!formData.tittle) {
-      errors.tittle = "Name is required";
+    if (!formData.tittle)  {
+      errors.tender_tittle = "Please enter Name";
+    } else if (!/^[A-Za-z\s]+$/.test(formData.tittle)) {
+      errors.tittle = "Only alphabet characters are allowed"; // Prevents numbers and special characters
+    } else if (parseInt(formData.languagetype) === 2) {
+      if (!/^[\u0900-\u097F\s]+$/.test(formData.tittle)) {
+        errors.tittle = "कृपया केवल हिंदी शब्द ही इनपुट करें";
+      }
     }
 
     if (!formData.contenttype) {
