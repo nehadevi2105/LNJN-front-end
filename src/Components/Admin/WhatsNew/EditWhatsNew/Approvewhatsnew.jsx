@@ -108,45 +108,57 @@ const ApproveWhatsNew = () => {
   };
 
   const validateForm = () => {
-    const errors = {};
+    const newErrors = {};
 
+    // Validate menuname (only allow letters and spaces)
     if (!formData.news_title) {
-      errors.news_title = "Name is required";
+      newErrors.news_title = "Please enter Name";
+    } else if (!/^[A-Za-z\s]+$/.test(formData.news_title)) {
+      newErrors.news_title = "Only alphabet characters are allowed"; // Prevents numbers and special characters
+    } else if (parseInt(formData.languagetype) === 2) {
+      if (!/^[\u0900-\u097F\s]+$/.test(formData.news_title)) {
+        newErrors.news_title = "कृपया केवल हिंदी शब्द ही इनपुट करें";
+      }
     }
-    if (!formData.languagetype) {
-      errors.languagetype = "Select a Language ";
-    }
+
+    // Validate contenttype
     if (!formData.contenttype) {
-      errors.contenttype = "Select a content type";
+      newErrors.contenttype = "Select a content type";
     }
 
-    if (formData.contenttype === "4" && !formData.external_file) {
-      errors.external_file = "External Link is required";
+    // Validate languagetype
+    if (!formData.languagetype) {
+      newErrors.languagetype = "Select a Language";
     }
 
-    if (formData.contenttype === "3" && !formData.internale_file) {
+    // Validate external link (only if contenttype is "4")
+    if (formData.contenttype === "4" && !formData.external_link) {
+      newErrors.external_link = "External Link is required";
+    }
+
+       if (formData.contenttype === "3" && !formData.internale_file) {
       errors.internale_file = "Internal Link is required";
     }
 
-    // if (formData.contenttype === "2" && !file) {
-    //   errors.file = "File is required";
-    // }
-
-    if (formData.contenttype === "1" && !html) {
-      errors.html = "HTML content is required"; // Updated field name
+    // Validate file (only if contenttype is "2")
+    if (formData.contenttype === "2") {
+      if (!file) {
+        newErrors.file = "File is required";
+      } else if (file.type !== "application/pdf") {
+        newErrors.file = "Only PDF files are allowed";
+      }
     }
 
     if (!formData.startdate) {
-      errors.startdate = "Starting Date is required";
-    }
+          errors.startdate = "Starting Date is required";
+        }
+    
+        if (!formData.end_date) {
+          errors.end_date = "Ending Date is required";
+        }
 
-    if (!formData.end_date) {
-      errors.end_date = "Ending Date is required";
-    }
-
-    setErrors(errors);
-
-    return Object.keys(errors).length === 0;
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleImageChange = (event) => {
@@ -404,7 +416,7 @@ const ApproveWhatsNew = () => {
                                 {menudata.map((data) => (
                                   <option
                                     key={data.id}
-                                    value={"/menu/" + data.menu_url}
+                                    value={"/menu/" + data.menuurl}
                                   >
                                     {"Menu Name" + ":-" + data.menuname}
                                   </option>

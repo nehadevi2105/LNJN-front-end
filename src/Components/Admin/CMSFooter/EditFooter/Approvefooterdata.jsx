@@ -56,7 +56,7 @@ const ApproveFooterData = () => {
     tittle_name: "",
     contenttype: "",
     external_link: "",
-    internale_link: "",
+    internal_link: "",
     file: "",
     html: "",
     footertype: 3,
@@ -72,7 +72,7 @@ const ApproveFooterData = () => {
       tittle_name: "",
       contenttype: "",
       external_link: "",
-      internale_link: "",
+      internal_link: "",
       file: "",
       html: "",
       footertype: 3,
@@ -94,9 +94,19 @@ const ApproveFooterData = () => {
 
   const validateForm = () => {
     const errors = {};
+    const namePattern = /^[a-zA-Z\s]+$/;
+    const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
 
     if (!formData.tittle_name) {
       errors.tittle_name = "Name is required";
+    } else if (!formData.tittle_name.match(namePattern)) {
+      errors.tittle_name = "Name should only contain alphabets and spaces";
+    } else if (specialCharRegex.test(formData.tittle_name)) {
+      errors.description = " Name should not contain special characters";
+    } else if (parseInt(formData.languagetype) === 2) {
+      if (!/^[\u0900-\u097F\s]+$/.test(formData.tittle_name)) {
+        errors.tittle_name = "कृपया केवल हिंदी शब्द ही इनपुट करें";
+      }
     }
 
     if (!formData.contenttype) {
@@ -110,8 +120,8 @@ const ApproveFooterData = () => {
       errors.external_link = "External Link is required";
     }
 
-    // if (formData.contenttype === "3" && !formData.internale_link) {
-    //   errors.internale_link = "Internal Link is required";
+    // if (formData.contenttype === "3" && !formData.internal_link) {
+    //   errors.internal_link = "Internal Link is required";
     // }
 
     // if (formData.contenttype === "2" && !file) {
@@ -149,7 +159,9 @@ const ApproveFooterData = () => {
   };
 
   const handleOpenConfirmation = () => {
-    setConfirmDialogOpen(true);
+    if (validateForm()) {
+      setConfirmDialogOpen(true);
+    }
   };
 
   const handleCloseConfirmation = () => {
@@ -170,7 +182,7 @@ const ApproveFooterData = () => {
       if (formData.contenttype === 4) {
         formDataToSend.append("external_link", formData.external_link);
       } else if (formData.contenttype === 3) {
-        formDataToSend.append("internale_link", formData.internale_link);
+        formDataToSend.append("internal_link", formData.internal_link);
       } else if (formData.contenttype === 2) {
         if (file) {
           formDataToSend.append("file", file); // Attach new file
@@ -235,213 +247,215 @@ const ApproveFooterData = () => {
   // console.log(formData)
 
   return (
-<div>
-    <div className="row justify-content-center">
-           <div className="d-flex justify-content-left" style={{ marginLeft: "100px" }}>
-                 <Link to="/dashboard">
-                   <button type="button" className="btn btn-info">
-                     Back
-                   </button>
-                 </Link>
-                 <h1 className="flex-grow-1 text-center">Approve Footer Data </h1>
-               </div>
-             </div>
-  
-    <div className="formdata">
-      <div className="card">
-        <div className="card-body">
-         
-          <div className="row justify-content-center">
-            <div>
-              <div className="mb-3">
-                <label className="form-label text-dark">Language Type</label>
-                <select
-                  className="form-select"
-                  name="languagetype"
-                  value={formData.languagetype}
-                  onChange={handleInputChange}
-                >
-                  <option value="">Select a Language</option>
-                  <option value={1}>English</option>
-                  <option value={2}>Hindi</option>
-                </select>
-                {errors.languagetype && (
-                  <div className="text-danger">{errors.languagetype}</div>
-                )}
-              </div>
-              {/* Input for Name */}
-              <div className="mb-3">
-                <label className="form-label text-dark">Name</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  placeholder="Enter Name"
-                  name="tittle_name"
-                  value={formData.tittle_name}
-                  onChange={handleInputChange}
-                />
-                {errors.tittle_name && (
-                  <div className="text-danger">{errors.tittle_name}</div>
-                )}
-              </div>
+    <div>
+      <div className="row justify-content-center">
+        <div
+          className="d-flex justify-content-left"
+          style={{ marginLeft: "100px" }}
+        >
+          <Link to="/dashboard">
+            <button type="button" className="btn btn-info">
+              Back
+            </button>
+          </Link>
+          <h1 className="flex-grow-1 text-center">Approve Footer Data </h1>
+        </div>
+      </div>
 
-              {/* Input for Select a content type */}
-              <div className="mb-3">
-                <label className="form-label text-dark">
-                  Select a content type
-                </label>
-                <select
-                  className="form-select"
-                  name="contenttype"
-                  value={formData.contenttype}
-                  onChange={handleInputChange}
-                >
-                  <option value="">Select a content type</option>
-                  <option value={4}>External Link</option>
-                  <option value={3}>Internal Link</option>
-                  <option value={2}>File</option>
-                  <option value={1}>HTML</option>
-                </select>
-                {errors.contenttype && (
-                  <div className="text-danger">{errors.contenttype}</div>
-                )}
-              </div>
-
-              {/* Input for External Link */}
-              {parseInt(formData.contenttype) === 4 && (
+      <div className="formdata">
+        <div className="card">
+          <div className="card-body">
+            <div className="row justify-content-center">
+              <div>
                 <div className="mb-3">
-                  <label className="form-label text-dark">
-                    Enter External Link
-                  </label>
+                  <label className="form-label text-dark">Language Type</label>
+                  <select
+                    className="form-select"
+                    name="languagetype"
+                    value={formData.languagetype}
+                    onChange={handleInputChange}
+                  >
+                    <option value="">Select a Language</option>
+                    <option value={1}>English</option>
+                    <option value={2}>Hindi</option>
+                  </select>
+                  {errors.languagetype && (
+                    <div className="text-danger">{errors.languagetype}</div>
+                  )}
+                </div>
+                {/* Input for Name */}
+                <div className="mb-3">
+                  <label className="form-label text-dark">Name</label>
                   <input
                     className="form-control"
                     type="text"
-                    placeholder="Enter External Link"
-                    name="external_link"
-                    value={formData.external_link}
+                    placeholder="Enter Name"
+                    name="tittle_name"
+                    value={formData.tittle_name}
                     onChange={handleInputChange}
                   />
-                  {errors.external_link && (
-                    <div className="text-danger">{errors.external_link}</div>
+                  {errors.tittle_name && (
+                    <div className="text-danger">{errors.tittle_name}</div>
                   )}
                 </div>
-              )}
 
-              {/* Input for Internal Link */}
-              {parseInt(formData.contenttype) === 3 && (
+                {/* Input for Select a content type */}
                 <div className="mb-3">
                   <label className="form-label text-dark">
-                    Enter Internal Link
+                    Select a content type
                   </label>
                   <select
-                    className="form-control"
-                    name="internal_link"
-                    value={formData.internal_link}
+                    className="form-select"
+                    name="contenttype"
+                    value={formData.contenttype}
                     onChange={handleInputChange}
-                    // isInvalid={!!formErrors.internal_link}
                   >
-                    <option value="" style={{ color: "black" }}>
-                      Select a Menu Name
-                    </option>
-                    {menudata.map((data) => (
-                      <option key={data.id} value={"/menu/" + data.menuurl}>
-                        {"Menu Name" + ":-" + data.menuname}
-                      </option>
-                    ))}
+                    <option value="">Select a content type</option>
+                    <option value={4}>External Link</option>
+                    <option value={3}>Internal Link</option>
+                    <option value={2}>File</option>
+                    <option value={1}>HTML</option>
                   </select>
-                  {errors.internale_link && (
-                    <div className="text-danger">{errors.internale_link}</div>
+                  {errors.contenttype && (
+                    <div className="text-danger">{errors.contenttype}</div>
                   )}
                 </div>
-              )}
 
-              {/* Input for File */}
-              {formData.contenttype === 2 && (
-                <div className="mb-3">
-                  <a
-                    href={`${APIClient.defaults.baseURL}${formData.filepdfpath}`} // Ensure filepath is properly appended
-                    className="form-control"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {existingFile || "View Document"}
-                  </a>
-                  <label className="form-label text-dark">Choose File</label>
-                  <input
-                    className="form-control"
-                    type="file"
-                    name="file"
-                    onChange={handleImageChange}
-                  />
-                  {errors.file && (
-                    <div className="text-danger">{errors.file}</div>
-                  )}
-                </div>
-              )}
-
-              {/* HTML Editor Input */}
-              {parseInt(formData.contenttype) === 1 && (
-                <div className="mb-3">
-                  <label className="form-label text-dark">HTML Editor</label>
-                  <div>
-                    <JoditEditor
-                      ref={editor}
-                      value={formData.html} // Ensure the editor is initialized with correct content
-                      config={config}
-                      tabIndex={1}
-                      onChange={handleEditorChange}
+                {/* Input for External Link */}
+                {parseInt(formData.contenttype) === 4 && (
+                  <div className="mb-3">
+                    <label className="form-label text-dark">
+                      Enter External Link
+                    </label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      placeholder="Enter External Link"
+                      name="external_link"
+                      value={formData.external_link}
+                      onChange={handleInputChange}
                     />
+                    {errors.external_link && (
+                      <div className="text-danger">{errors.external_link}</div>
+                    )}
                   </div>
-                  {errors.editorContent && (
-                    <div className="text-danger">{errors.editorContent}</div>
-                  )}
-                </div>
-              )}
+                )}
 
-              {/* Submit Button */}
-              <div className="btnsubmit">
-                <button
-                  className="btn btn-primary"
-                  onClick={handleOpenConfirmation}
-                >
-                  Submit
-                </button>
+                {/* Input for Internal Link */}
+                {parseInt(formData.contenttype) === 3 && (
+                  <div className="mb-3">
+                    <label className="form-label text-dark">
+                      Enter Internal Link
+                    </label>
+                    <select
+                      className="form-control"
+                      name="internal_link"
+                      value={formData.internal_link}
+                      onChange={handleInputChange}
+                      // isInvalid={!!formErrors.internal_link}
+                    >
+                      <option value="" style={{ color: "black" }}>
+                        Select a Menu Name
+                      </option>
+                      {dropdownOptions.map((data) => (
+                        <option key={data.id} value={"/menu/" + data.menuurl}>
+                          {"Menu Name" + ":-" + data.menuname}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.internal_link && (
+                      <div className="text-danger">{errors.internal_link}</div>
+                    )}
+                  </div>
+                )}
 
-                <Dialog
-                  open={confirmDialogOpen}
-                  onClose={handleCloseConfirmation}
-                >
-                  <DialogTitle>Confirm Submit</DialogTitle>
-                  <DialogContent>
-                    Are you sure you want to submit this data?
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleCloseConfirmation} color="primary">
-                      Cancel
-                    </Button>
-                    <Button onClick={handleConfirmSubmit} color="primary">
-                      Confirm
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-                <Snackbar
-                  open={snackbarOpen}
-                  autoHideDuration={3000} // Adjust as needed
-                  onClose={() => setSnackbarOpen(false)}
-                >
-                  <Alert
-                    severity="success"
+                {/* Input for File */}
+                {formData.contenttype === 2 && (
+                  <div className="mb-3">
+                    <a
+                      href={`${APIClient.defaults.baseURL}${formData.filepdfpath}`} // Ensure filepath is properly appended
+                      className="form-control"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {existingFile || "View Document"}
+                    </a>
+                    <label className="form-label text-dark">Choose File</label>
+                    <input
+                      className="form-control"
+                      type="file"
+                      name="file"
+                      onChange={handleImageChange}
+                    />
+                    {errors.file && (
+                      <div className="text-danger">{errors.file}</div>
+                    )}
+                  </div>
+                )}
+
+                {/* HTML Editor Input */}
+                {parseInt(formData.contenttype) === 1 && (
+                  <div className="mb-3">
+                    <label className="form-label text-dark">HTML Editor</label>
+                    <div>
+                      <JoditEditor
+                        ref={editor}
+                        value={formData.html} // Ensure the editor is initialized with correct content
+                        config={config}
+                        tabIndex={1}
+                        onChange={handleEditorChange}
+                      />
+                    </div>
+                    {errors.editorContent && (
+                      <div className="text-danger">{errors.editorContent}</div>
+                    )}
+                  </div>
+                )}
+
+                {/* Submit Button */}
+                <div className="btnsubmit">
+                  <button
+                    className="btn btn-primary"
+                    onClick={handleOpenConfirmation}
+                  >
+                    Submit
+                  </button>
+
+                  <Dialog
+                    open={confirmDialogOpen}
+                    onClose={handleCloseConfirmation}
+                  >
+                    <DialogTitle>Confirm Submit</DialogTitle>
+                    <DialogContent>
+                      Are you sure you want to submit this data?
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleCloseConfirmation} color="primary">
+                        Cancel
+                      </Button>
+                      <Button onClick={handleConfirmSubmit} color="primary">
+                        Confirm
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                  <Snackbar
+                    open={snackbarOpen}
+                    autoHideDuration={3000} // Adjust as needed
                     onClose={() => setSnackbarOpen(false)}
                   >
-                    {modalMessage}
-                  </Alert>
-                </Snackbar>
+                    <Alert
+                      severity="success"
+                      onClose={() => setSnackbarOpen(false)}
+                    >
+                      {modalMessage}
+                    </Alert>
+                  </Snackbar>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </div>
   );
 };

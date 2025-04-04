@@ -4,10 +4,10 @@ import apis from "../../../../API/API.json";
 // import MyEditor, { HtmlEditor } from '../htmlEditor/htmlEditor';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ViewListIcon from "@mui/icons-material/ViewList";
+// import ViewListIcon from "@mui/icons-material/ViewList";
 import { Link, useParams } from "react-router-dom";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import HomeIcon from "@mui/icons-material/Home";
+//import HomeIcon from "@mui/icons-material/Home";
 
 import DialogActions from "@mui/material/DialogActions";
 
@@ -37,6 +37,7 @@ const EditFooterData = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [editorContent, setEditorContent] = useState("");
   const [existingFile, setExistingFile] = useState(null);
+  const [dropdownOptions, setDropdownOptions] = useState([]);
   const storedUserString = localStorage.getItem("usertype");
   const usertype = JSON.parse(storedUserString);
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const EditFooterData = () => {
     tittle_name: "",
     contenttype: "",
     external_link: "",
-    internale_link: "",
+    internal_link: "",
     file: "",
     html: "",
     footertype: 3,
@@ -60,7 +61,7 @@ const EditFooterData = () => {
       tittle_name: "",
       contenttype: "",
       external_link: "",
-      internale_link: "",
+      internal_link: "",
       file: "",
       html: "",
       footertype: 3,
@@ -89,7 +90,13 @@ const EditFooterData = () => {
     const errors = {};
 
     if (!formData.tittle_name) {
-      errors.tittle_name = "Name is required";
+      errors.tittle_name = "Please enter Name";
+    } else if (!/^[A-Za-z\s]+$/.test(formData.tittle_name)) {
+      errors.tittle_name = "Only alphabet characters are allowed"; // Prevents numbers and special characters
+    } else if (parseInt(formData.languagetype) === 2) {
+      if (!/^[\u0900-\u097F\s]+$/.test(formData.tittle_name)) {
+        errors.tittle_name = "कृपया केवल हिंदी शब्द ही इनपुट करें";
+      }
     }
 
     if (!formData.contenttype) {
@@ -103,8 +110,8 @@ const EditFooterData = () => {
       errors.external_link = "External Link is required";
     }
 
-    // if (formData.contenttype === '3' && !formData.internale_link) {
-    //   errors.internale_link = 'Internal Link is required';
+    // if (formData.contenttype === '3' && !formData.internal_link) {
+    //   errors.internal_link = 'Internal Link is required';
     // }
 
     // if (formData.contenttype === '2' && !file) {
@@ -142,7 +149,9 @@ const EditFooterData = () => {
   };
 
   const handleOpenConfirmation = () => {
+    if(validateForm()) {
     setConfirmDialogOpen(true);
+    }
   };
 
   const handleCloseConfirmation = () => {
@@ -163,7 +172,7 @@ const EditFooterData = () => {
       if (formData.contenttype === 4) {
         formDataToSend.append("external_link", formData.external_link);
       } else if (formData.contenttype === 3) {
-        formDataToSend.append("internale_link", formData.internale_link);
+        formDataToSend.append("internal_link", formData.internal_link);
       } else if (formData.contenttype === 2) {
         if (file) {
           formDataToSend.append("file", file); // Attach new file
@@ -175,7 +184,7 @@ const EditFooterData = () => {
       }
 
       formDataToSend.append("usertype", usertype);
-      formDataToSend.append('action', "creatorupdate");
+      formDataToSend.append("action", "creatorupdate");
       const response = await APIClient.post(
         "/api/lowerfooter/updatefooter/" + id,
         formDataToSend,
@@ -201,7 +210,7 @@ const EditFooterData = () => {
       try {
         const menuresponse = await APIClient.get(apis.getmenuname);
         setMenudata(menuresponse.data);
-        //setDropdownOptions(response.data);
+        setDropdownOptions(menuresponse.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
         //setLoading(false);
@@ -333,14 +342,14 @@ const EditFooterData = () => {
                     <option value="" style={{ color: "black" }}>
                       Select a Menu Name
                     </option>
-                    {menudata.map((data) => (
+                    {dropdownOptions.map((data) => (
                       <option key={data.id} value={"/menu/" + data.menuurl}>
                         {"Menu Name" + ":-" + data.menuname}
                       </option>
                     ))}
                   </select>
-                  {errors.internale_link && (
-                    <div className="text-danger">{errors.internale_link}</div>
+                  {errors.internal_link && (
+                    <div className="text-danger">{errors.internal_link}</div>
                   )}
                 </div>
               )}

@@ -77,6 +77,11 @@ const ApproveFooterServices = () => {
 
     if (!formData.description) {
       errors.description = "Description is required";
+    } else if (
+      !/^[\u0900-\u097F\s]+$/.test(formData.description) &&
+      parseInt(formData.languagetype) === 2
+    ) {
+      errors.description = "कृपया केवल हिंदी शब्द ही इनपुट करें";
     }
 
     setErrors(errors);
