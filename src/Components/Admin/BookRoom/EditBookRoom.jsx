@@ -13,11 +13,14 @@ const EditBookRoom = () => {
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const storedUserString = localStorage.getItem("usertype");
+  const usertype = JSON.parse(storedUserString);
 
   const [formData, setFormData] = useState({
     hostalid: "",
     roomid: "",
-    amount: ""
+    amount: "",
+    usertype: ''
   });
 
   const [hostels, setHostels] = useState([]);
@@ -26,12 +29,16 @@ const EditBookRoom = () => {
   useEffect(() => {
     const fetchBooking = async () => {
       try {
+        debugger;
         const response = await APIClient.get(`${apis.getbookroomlist}/${id}`);
         if (response.data) {
           setFormData({
             hostalid: response.data.hostalid,
             roomid: response.data.roomid,
             amount: response.data.amount,
+            usertype:usertype,
+            ...( (usertype === 4 || usertype === 1) && { action: 'creator' }) 
+            
           });
         } else {
           toast.error("Booking data is missing.");

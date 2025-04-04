@@ -111,6 +111,7 @@ import CourseApproveList from "../Components/Admin/Course/CourseApproveList";
 import CoursePublishList from "../Components/Admin/Course/CoursePublishList";
 import EditCourseApprove from "../Components/Admin/Course/EditCourseApprove";
 import EditCoursePublish from "../Components/Admin/Course/EditCoursePublish";
+import PublisherEditBookroom from "../Components/Admin/BookRoom/PublisherEditBookroom";
 
 
 function Router() {
@@ -199,6 +200,10 @@ function Router() {
       <Route
         path="/PublisherBookroomlist"
         element={<PublisherBookroomlist />}
+      />
+       <Route
+        path="/PublisherEditBookRoom/:id"
+        element={<PublisherEditBookroom />}
       />
 
       <Route path="/bannerdata" element={<BannerTable />} />

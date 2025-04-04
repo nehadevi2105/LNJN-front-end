@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 
-const ApprovalEditBookRoom = () => {
+const PublisherEditBookroom = () => {
   const { id } = useParams(); // Get booking ID from URL params
   const [formErrors, setFormErrors] = useState({});
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
@@ -36,7 +36,7 @@ const ApprovalEditBookRoom = () => {
             roomid: response.data.roomid,
             amount: response.data.amount,
             usertype:usertype,
-            ...(usertype === 4 && { action: 'approve' })
+            ...(usertype === 4 && { action: 'publish' })
           });
         } else {
           toast.error("Booking data is missing.");
@@ -250,4 +250,4 @@ const ApprovalEditBookRoom = () => {
   );
 };
 
-export default ApprovalEditBookRoom;
+export default PublisherEditBookroom;

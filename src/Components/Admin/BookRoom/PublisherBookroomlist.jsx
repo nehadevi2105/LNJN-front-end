@@ -98,7 +98,7 @@ const PublisherBookroomlist = () => {
     variant="outline-primary"
     size="sm"
     as={Link}
-    to={`/ApprovalEditBookRoom/${params.row.id}`}
+    to={`/PublisherEditBookroom/${params.row.id}`}
     onClick={(e) => {
       if (!(usertype === 2 || usertype === 4)) {
         e.preventDefault(); // Prevent navigation for unauthorized users
